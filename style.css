@@ -1,0 +1,27 @@
+body {
+	background-color: #eee;
+}
+
+#main_page {
+	margin-top: 100px;
+
+}
+.navbar {
+
+	-webkit-box-shadow: 0 8px 3px -6px #999;
+	-moz-box-shadow: 0 8px 3px -6px #999;
+	box-shadow: 0 8px 3px -6px #999;
+	
+	vertical-align: middle;
+	background-color: #fff;
+}
+#search {
+	line-height: 55px;
+	vertical-align: middle;
+}
+#search_input {
+	font-size: 16px;
+}
+#connexion {
+	margin-left: 10px;
+}
