@@ -1,19 +1,39 @@
 body {
 	background-color: #eee;
 }
-
+.vdivide {
+	margin-top: 10px;
+	width: 2px;
+	height: 30px;
+	border-right: 1px groove #333;
+}
 #main_page {
 	margin-top: 100px;
 
 }
-.navbar {
+#ajouter_img:hover, #ajouter_img:focus {
+	background-color: #ac2925;
+}
+#ajouter_img {
+	color: white;
+}
 
+
+.navbar {
 	-webkit-box-shadow: 0 8px 3px -6px #999;
 	-moz-box-shadow: 0 8px 3px -6px #999;
 	box-shadow: 0 8px 3px -6px #999;
 	
 	vertical-align: middle;
 	background-color: #fff;
+}
+.navbar li {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.navbar li a {
+	color: black;
 }
 #search {
 	line-height: 55px;
