@@ -3,7 +3,6 @@
 <html lang="fr">
 <?php include 'includes/header.php'; ?>
 
-
 <div class="container" id="main_page">
 	<h1>Ajouter une image</h1>
 	<p class="lead">Selectionnez une image à poster</p>
