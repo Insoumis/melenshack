@@ -47,7 +47,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['pseudo'])) {
 <?php } else { ?>
 <div class="container" id="main_page">
 		<p>Vous n'êtes pas connecter !</p>
-		Voulez-vous <a href="connect.php">vous connecter</a> ou <a href="register.php">vous inscrire</a> ?
+		Voulez-vous <a href="login.php">vous connecter</a> ou <a href="register.php">vous inscrire</a> ?
 </div>
 <?php } ?>
 
@@ -61,7 +61,7 @@ function readURL(input) {
 				alert("Fichier trop lourd !");
 				return;
 			}
-			$("#preview").attr("src", e.target.result).width(800);
+			$("#preview").attr("src", e.target.result).width(600);
 			$("#submit").removeClass("disabled");
 		}
 

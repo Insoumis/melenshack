@@ -17,11 +17,11 @@ if(!isset($_SESSION)){
 	</div>
 	<div id="navbar" class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="chaud.html">Populaire</a></li>
+			<li class="active"><a href="chaud.php">Populaire</a></li>
 			<li class="vdivide"></li>
-			<li><a href="nouveau.html">Nouveauté</a></li>
+			<li><a href="nouveau.php">Nouveauté</a></li>
 			<li class="vdivide"></li>
-			<li><a href="pif.html">Au Hasard</a></li>
+			<li><a href="pif.php">Au Hasard</a></li>
 			<li class="btn-danger"><a id="ajouter_img" href="upload.php">Ajouter une image</a></li>
 		</ul>
 		
