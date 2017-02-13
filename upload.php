@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <?php include 'includes/header.php'; ?>
 <script src='https://www.google.com/recaptcha/api.js'></script>

@@ -18,12 +18,4 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 
-<?php include 'includes/header.php'; ?>
-
-<div class="container" id="main_page">
-	<h1>MELUCHE FTW</h1>
-	<p class="lead">France insoumise</p>
-</div>
-
-</body>
-</html>
+<?php include("includes/header.php"); ?>

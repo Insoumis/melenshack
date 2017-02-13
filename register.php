@@ -2,16 +2,17 @@
 	include_once('includes/token.class.php');
 	$token = Token::generer('inscription')
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
-
-	<?php include 'includes/header.php';
-	if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
-    	   { ?>
-    	    <p>Vous etes déja connecter !</p>
-    	    Voulez vous <a href="disconnect.php">vous déconnecter</a> ?
-	<?php  }
-	else { ?>
+<?php include 'includes/header.php'; ?>
+<?php
+if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
+       { ?>
+        <p>Vous etes déja connecter !</p>
+        Voulez vous <a href="disconnect.php">vous déconnecter</a> ?
+<?php  }
+else { ?>
 <body>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 

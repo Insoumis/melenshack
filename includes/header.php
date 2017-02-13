@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <head>
 	<meta charset="utf-8">
 	<meta name="description" content="La banque d'images de la France Insoumise">
@@ -32,6 +33,34 @@
 					<li><a href="pif.html">Au Hasard</a></li>
 					<li class="btn-danger"><a id="ajouter_img" href="upload.php">Ajouter une image</a></li>
 				</ul>
+=======
+<?php
+if(!isset($_SESSION)){
+	session_start();
+}
+?>
+<body>
+<nav class="navbar navbar-light bg-faded navbar-fixed-top">
+	<div class ="container">
+	<div class="navbar-header">
+	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		<span class="sr-only">Activer la navigation</span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+	</button>
+	<a class="navbar-brand" href="index.php"><img src="melenshack.svg" id="logo"/></a>
+	</div>
+	<div id="navbar" class="collapse navbar-collapse">
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="chaud.php">Populaire</a></li>
+			<li class="vdivide"></li>
+			<li><a href="nouveau.php">Nouveauté</a></li>
+			<li class="vdivide"></li>
+			<li><a href="pif.php">Au Hasard</a></li>
+			<li class="btn-danger"><a id="ajouter_img" href="upload.php">Ajouter une image</a></li>
+		</ul>
+>>>>>>> c068ce063cfa4a60914eb01e5e3d396e740ddbba
 		
 
 				<div class="navbar-right">
@@ -47,4 +76,19 @@
 				</div>
 			</div>
 		</div>
+<<<<<<< HEAD
 	</nav>
+=======
+		</div>
+		<?php if (isset($_SESSION['id']) && isset($_SESSION['pseudo'])) { ?>
+			<a id="deconnection" class="btn btn-danger" role="button" href="disconnect_conf.php">Deconnexion</a>
+		<?php } else { ?>
+			<a id="connexion" class="btn btn-danger" role="button" href="login.php">Connexion</a>
+		<?php } ?>
+		</form>
+		</div>
+
+	</div>
+	</div>
+</nav>
+>>>>>>> c068ce063cfa4a60914eb01e5e3d396e740ddbba

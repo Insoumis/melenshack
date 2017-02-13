@@ -19,7 +19,6 @@
 
 		/*  Cette fonction vérifie le token
 			Passer en argument le temps de validité (en secondes)
-			Le referer attendu (adresse absolue)
 			Le nom optionnel si défini lors de la création du token */
 		public static function verifier($temps, $nom = '')
 		{
