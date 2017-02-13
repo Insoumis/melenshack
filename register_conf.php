@@ -43,6 +43,7 @@ if(Token::verifier(600, 'inscription'))
 									'email' => $email));
 									
 						$resultat = $req->fetch();
+						
 						if(!isset($_SESSION)){
 						  session_start();
 						}

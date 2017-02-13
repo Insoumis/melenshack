@@ -23,7 +23,7 @@ body {
 	-webkit-box-shadow: 0 8px 3px -6px #999;
 	-moz-box-shadow: 0 8px 3px -6px #999;
 	box-shadow: 0 8px 3px -6px #999;
-	border: none;	
+	
 	vertical-align: middle;
 	background-color: #fff;
 }
@@ -34,11 +34,6 @@ body {
 
 .navbar li a {
 	color: black;
-}
-.navbar-brand>img {
-	height: 80px;
-	margin-top: -25px;
-	width: auto;
 }
 #search {
 	line-height: 55px;

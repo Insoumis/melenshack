@@ -2,49 +2,65 @@
 include_once('includes/token.class.php');
 $token = Token::generer('inscription')
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title>MELUCHE <3</title>
+	<meta name="description" content="La banque d'images de la France Insoumise">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<?php include 'includes/header.php'; ?>
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="style.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous" defer async></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
 <?php
+include("header.php");
+
 if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
        { ?>
-        <p>Vous etes déja connecter !</p>
-        Voulez vous <a href="disconnect.php">vous déconnecter</a> ?
+		<div class="container" id="main_page">
+			<p>Vous etes déja connecter !</p>
+			Voulez vous <a href="disconnect_conf.php">vous déconnecter</a> ?
+		</div>
 <?php  }
 else { ?>
 <body>
-
-
-
 <div class="container" id="main_page">
-	<h1>Inscription</h1>
-	<h5>Vous avez déjà un compte ? <a href="login.php">Connectez-vous !</a></h5>
-	<form id="registerForm" action="register_conf.php"  method="post">
-	<div class="form-group col-xs-5">
-	<label for="pseudo"><h3>Nom d'utilisateur :</h3></label>
-	<input type="text" class="form-control" name="pseudo" id="pseudo" placeholder="Nom d'utilisateur" required autofocus>
-	<br>
-	<label for="pass"><h3>Mot de passe :</h3></label>
-	<input type="password" class="form-control" name="pass" id="pass" placeholder ="Mot de passe" required autofocus>
-	<br>
-
-	<label for="pass"><h3>Confirmation du mot de passe :</h3></label>
-	<input type="password" class="form-control" name="confpass" id="confpass" placeholder ="Retapez votre mot de passe" required autofocus>
-	<br>
-
-	<label for="email"><h3>Adresse mail :</h3></label>
-	<input type="email" class="form-control" name="email" id="email" placeholder ="Votre email" required autofocus>
-	<br>
-	<input type="hidden" name="token" id="token" value="<?php echo $token;?>">
-	<br>
-	<input type="submit" id="submit" class="btn btn-primary" name="submit" value="Inscription">
+	<div id="formulaire"> 
+		<h1>Inscription</h1>
+		<h5>Vous avez déjà un compte ? <a href="login.php">Connectez-vous !</a></h5>
+		<form name="registerForm" id="registerForm" action="register_conf.php" method = "post">
+		<div class="form-group col-xs-5">
+						<p>
+							<label for = "pseudo"><strong>Pseudo :</strong></label>
+							<input type = "text" name = "pseudo" id = "pseudo" required placeholder="Votre pseudo"/><br/>
+							
+							<label for = "pass"><strong>Mot de passe :</strong></label>
+							<input type ="password" name = "pass" id = "pass" required placeholder="Votre mot de passe"/><br/>
+							
+							<label for = "confpass"><strong>Confirmation du mot de passe :</strong></label>
+							<input type ="password" name = "confpass" id = "confpass" required placeholder="Retapez votre mot de passe"/><br/>
+							
+							<label for = "email"><strong>Email :</strong></label>
+							<input type ="text" name = "email" id = "email" required placeholder="Votre email"/><br/>
+							
+							<input type="hidden" name="token" id="token" value="<?php echo $token;?>"/>
+							<input type = "submit" value = "Envoyer"/>
+						</p>
+		</div>
+		</form>	
 	</div>
-	</form>
-
-	
 </div>
-
 <?php  } 
 if(!empty($_GET['erreur'])) {
 ?>
