@@ -1,18 +1,8 @@
-<head>
-
-<meta charset="utf-8">
-<title>Mélenshack</title>
-<meta name="description" content="La banque d'images de la France Insoumise">
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-
-<link rel="stylesheet" href="style.css">
-
-<script src="bower_compenents/bootstrap/dist/js/bootstrap.min.js" defer async></script>
-
-<script src="bower_components/jquery/3.1.1/jquery.min.js"></script>
-</head>
-
+<?php
+if(!isset($_SESSION)){
+	session_start();
+}
+?>
 <body>
 <nav class="navbar navbar-light bg-faded navbar-fixed-top">
 	<div class ="container">
@@ -44,7 +34,11 @@
 		<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 		</div>
 		</div>
-		<a id="connexion" class="btn btn-danger" role="button" href="login.php">Connexion</a>
+		<?php if (isset($_SESSION['id']) && isset($_SESSION['pseudo'])) { ?>
+			<a id="deconnection" class="btn btn-danger" role="button" href="disconnect_conf.php">Deconnexion</a>
+		<?php } else { ?>
+			<a id="connexion" class="btn btn-danger" role="button" href="login.php">Connexion</a>
+		<?php } ?>
 		</form>
 		</div>
 
