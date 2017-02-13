@@ -1,6 +1,6 @@
 <?php
 	include_once('includes/token.class.php');
-	$token = Token::generer('connexion')
+	$token = Token::generer('connexion');
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +14,7 @@
     	{
 			echo "
     	    <p>Vous êtes déja connecté !</p>
-    	    Voulez vous <a href="disconnect.php">vous déconnecter</a> ?";
+    	    Voulez vous <a href='disconnect.php'>vous déconnecter</a> ?";
 			exit();
 		} ?>
 <body>
