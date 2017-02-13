@@ -12,6 +12,5 @@ session_start();
 	else 
 	{
 		echo 'Erreur.';
-		header('Location:index.php');
 	}
 ?>
