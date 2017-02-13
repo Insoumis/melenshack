@@ -32,13 +32,19 @@ body {
 	background-color: #fff;
 }
 .navbar li {
+	box-sizing: border-box
 	margin-left: 0;
 	margin-right: 0;
 }
-
 .navbar li a {
 	color: black;
 }
+.actif, .actif:hover, .actif:focus {
+	-webkit-box-shadow: inset 0 -8px 0px -3px #d90000;
+	-moz-box-shadow: inset 0 -8px 0px -3px #d900.0;
+	box-shadow: inset 0 -8px 0px -3px #d90000;
+}
+
 .navbar-brand>img {
 	height: 80px;
 	margin-top: -25px;
@@ -63,16 +69,105 @@ body {
 	-webkit-box-shadow: 0 0px 10px 10px #bbb;
 	-moz-box-shadow: 0 0px 10px 10px #999;
 	box-shadow: 1px 1px 10px 1px #bbb;
-	width: 300px;
-	height: 350px;
+	width: 400px;
 	border-radius: 5px;
 	background-color: #fff;
 	margin: 20px;
 }
-.card-img {
-	max-width: 270px;
-	max-height: 300px;
+
+.card-header {
+	margin-bottom: 5px;
+	padding-left: 10px;
+	padding-top: 10px;
+	margin-bottom: 0;
 }
+.card-title {
+	font-weight: bold;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	margin: 0;
+	font-size: 30px;
+}
+.card-info {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+
+	margin: 0;
+	margin-left: 10px;
+	font-size: 12px;
+}
+.card-content {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	height: 270px;
+	line-height: 270px;
+	position: relative;
+	overflow: hidden;
+}
+.card-img {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	position: absolute;
+	min-width: 100%;
+	height: 100%;
+	display: none;
+}
+.card-footer {
+	font-weight: bold;
+	font-size: 15px;
+	margin: 0;
+	margin-top: 5px;
+	height: 25px;
+	margin-left: 10px;
+}
+.card-overlay {
+	background: rgba(0, 0, 0, 0.4);
+	opacity: 0;
+	display: none;
+	z-index: 100;
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 0;
+}
+.card-buttons {
+	text-align: justify;
+	position: relative;
+	width: 100%;
+}
+.card-buttons:after {
+	content: "";
+	width: 100%;
+	display: inline-block;
+}
+.card-share {
+	cursor: pointer;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	opacity: 0.7;
+	margin: 15px;
+	display: inline-block;
+	*display: online;
+	zoom: 1;
+	width: 100px;
+}
+.phi-points {
+	margin: 0;
+	height: 90%;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+
+
+
 
 .line-container {
 	text-align: justify;

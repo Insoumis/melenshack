@@ -2,7 +2,8 @@
 	<meta charset="utf-8">
 	<meta name="description" content="La banque d'images de la France Insoumise">
 	<title>Mélenshack</title>
-	
+	<link rel="icon" type="image/png" href="logo.png">
+
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="style.css">
 
@@ -29,11 +30,11 @@ if(!isset($_SESSION)){
 	</div>
 	<div id="navbar" class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="chaud.php">Populaire</a></li>
+			<li id="hot"><a href="index.php?sort=hot">Populaire</a></li>
 			<li class="vdivide"></li>
-			<li><a href="nouveau.php">Nouveauté</a></li>
+			<li id="new"><a href="index.php?sort=new">Nouveauté</a></li>
 			<li class="vdivide"></li>
-			<li><a href="pif.php">Au Hasard</a></li>
+			<li id="random"><a href="index.php?sort=random">Au Hasard</a></li>
 			<li class="btn-danger"><a id="ajouter_img" href="upload.php">Ajouter une image</a></li>
 		</ul>
 				<div class="navbar-right">
@@ -55,3 +56,4 @@ if(!isset($_SESSION)){
 	</div>
 	</div>
 </nav>
+
