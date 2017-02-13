@@ -52,7 +52,7 @@
 		<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 		</div>
 		</div>
-		<a id="connexion" class="btn btn-danger" role="button" href="connexion.html">Connexion</a>
+		<a id="connexion" class="btn btn-danger" role="button" href="login.php">Connexion</a>
 		</form>
 		</div>
 
