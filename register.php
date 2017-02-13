@@ -39,7 +39,7 @@ else { ?>
 	
 </div>
 
-Voulez vous <a href="login.php">connecter</a> ?
+Voulez-vous vous <a href="login.php">connecter</a> ?
 <?php  } 
 if(!empty($_GET['erreur'])) {
 ?>

@@ -14,7 +14,6 @@
 		} // exemple de l'utilisation du code : $token = Token::generer('inscription'); 
     /* Puis plus bas formulaire: <input type="hidden" name="token" id="token" value="<?php echo $token;?>"/> */
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		/*  Cette fonction vérifie le token
 			Passer en argument le temps de validité (en secondes)

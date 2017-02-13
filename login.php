@@ -34,7 +34,7 @@ else
 					</p>
 	</form>
 </div>
-Voulez vous <a href="register.php">inscrire</a> ?
+Voulez-vous vous <a href="register.php">inscrire</a> ?
 <?php  } ?>
 
 </body>
