@@ -11,7 +11,9 @@ body {
 }
 #main_page {
 	margin-top: 100px;
-
+	margin-left: 0;
+	margin-right: 0;
+	width: 100%;
 }
 #ajouter_img:hover, #ajouter_img:focus {
 	background-color: #ac2925;
@@ -55,4 +57,37 @@ body {
 #preview {
 	margin-top: 30px;
 	margin-bottom: 10px;
+}
+
+.card {
+	-webkit-box-shadow: 0 0px 10px 10px #bbb;
+	-moz-box-shadow: 0 0px 10px 10px #999;
+	box-shadow: 1px 1px 10px 1px #bbb;
+	width: 300px;
+	height: 350px;
+	border-radius: 5px;
+	background-color: #fff;
+	margin: 20px;
+}
+.card-img {
+	max-width: 270px;
+	max-height: 300px;
+}
+
+.line-container {
+	text-align: justify;
+	margin-left: 50px;
+	margin-right: 50px;
+}
+.line-container>.card {
+	display: inline-block;
+	vertical-align: top;
+	*display: inline;
+	zoom: 1;
+}
+
+.line-container:after {
+	content: "";
+	width: 100%;
+	display: inline-block;
 }

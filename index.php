@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-	<meta charset="utf-8">
-	<title>MELUCHE <3</title>
-	<meta name="description" content="La banque d'images de la France Insoumise">
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-	<link rel="stylesheet" href="style.css">
-
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous" defer async></script>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-</head>
 
 <?php include 'includes/header.php'; ?>
+<div id="main_page">
+<div class="line-container" id="card_container">
 
-<div class="container" id="main_page">
-	<h1>MELUCHE FTW</h1>
-	<p class="lead">France insoumise</p>
+
+
+</div>
 </div>
 
+<script>
+
+function addCard(title, imgSource, tags) {
+	var card = $("<div class='card'><h3 style='margin-bottom: 0' class='card-title'>"+title+"</h3><p style='margin-bottom: -15px'><small>il y a 3 heures</small></p><center><img class='card-img' width='300px' src='"+imgSource+"'></center><p>"+tags+"</p></div>");
+
+$("#card_container").append(card);
+
+}
+for(i = 0; i < 20; ++i) {
+	addCard("Titre", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Jean-Luc_M%C3%A9lenchon_-_avril_2012.jpg/220px-Jean-Luc_M%C3%A9lenchon_-_avril_2012.jpg", "tag1 tag2");
+}
+
+</script>
 </body>
 </html>

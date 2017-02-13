@@ -17,7 +17,6 @@
     	    Voulez vous <a href='disconnect.php'>vous déconnecter</a> ?";
 			exit();
 		} ?>
-<body>
 
 	<div class="container" id="main_page">
 		<h1>Connexion</h1>
