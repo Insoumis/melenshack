@@ -49,12 +49,12 @@ if (!in_array ($extension_image, $extensions_valides)) {
 }
 
 $titre = $_POST['titre'];
-if (strlen($titre) > 255 || str($titre) == 0) {
+if (strlen($titre) > 255 || strlen($titre) == 0) {
     header ('Location:upload.php?erreur=titre');
     exit();
 }
 
-$req = $bdd->prepare ('INSERT INTO images(titre, id_user, date_creation) VALUES(:titre, :id_user, CURDATE())');
+$req = $bdd->prepare ('INSERT INTO images(titre, id_user, date_creation) VALUES(:titre, :id_user, NOW())');
 $req->execute ([
     ':titre' => htmlspecialchars ($_POST['titre']),
     ':id_user' => $id_user,

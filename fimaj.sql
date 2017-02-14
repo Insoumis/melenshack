@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 13 Février 2017 à 00:58
+-- Généré le :  Mar 14 Février 2017 à 14:07
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -23,17 +23,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `ban`
+--
+
+CREATE TABLE `ban` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `images`
 --
 
 CREATE TABLE `images` (
   `id` int(11) NOT NULL,
   `titre` varchar(255) NOT NULL,
-  `url` varchar(255) NOT NULL,
-  `nb_vote_positf` int(11) NOT NULL,
-  `nb_vote_negatif` int(11) NOT NULL,
+  `nb_vote_positf` int(11) NOT NULL DEFAULT '0',
+  `nb_vote_negatif` int(11) NOT NULL DEFAULT '0',
   `id_user` int(11) NOT NULL,
-  `date_creation` timestamp NOT NULL
+  `date_creation` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -47,7 +57,7 @@ CREATE TABLE `users` (
   `pseudo` varchar(255) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `dateinscription` timestamp NOT NULL
+  `dateinscription` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -55,11 +65,17 @@ CREATE TABLE `users` (
 --
 
 --
+-- Index pour la table `ban`
+--
+ALTER TABLE `ban`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id_user` (`id_user`);
+
+--
 -- Index pour la table `images`
 --
 ALTER TABLE `images`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `url` (`url`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `users`
@@ -73,6 +89,11 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour les tables exportées
 --
 
+--
+-- AUTO_INCREMENT pour la table `ban`
+--
+ALTER TABLE `ban`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `images`
 --

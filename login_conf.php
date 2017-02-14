@@ -36,13 +36,26 @@ if(Token::verifier(600, 'connexion'))
 		}
 		else
 		{
-			if(!isset($_SESSION)){
-			  session_start();
+			$id = $resultat['id'];
+
+			$req = $bdd->prepare ('SELECT id FROM ban WHERE id_user = :id_user');
+			$req->execute ([
+				'id_user' => $id,
+			]);
+			$resultat = $req->fetch ();
+
+			if ($resultat) {
+				//La marteau du ban a frappé :)
+				header ('Location:login.php?erreur=true');
+				exit();
 			}
-			$_SESSION['id'] = $resultat['id'];
+
+			if (!isset($_SESSION)) {
+				session_start ();
+			}
+			$_SESSION['id'] = $id;
 			$_SESSION['pseudo'] = $pseudo;
-			echo 'SUCCESS'; // Connecté !
-			header('Location:index.php');
+			header ('Location:index.php');
 
 		}
 	}
