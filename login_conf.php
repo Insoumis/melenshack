@@ -4,6 +4,7 @@ ERREURS RENVOYEES :
 
 wrong
 token
+banned
 
 */
 
@@ -47,7 +48,7 @@ if(Token::verifier(600, 'connexion'))
 
 			if ($resultat) {
 				//La marteau du ban a frappé :)
-				header ('Location:login.php?erreur=true');
+				header ('Location:login.php?erreur=banned');
 				exit();
 			}
 

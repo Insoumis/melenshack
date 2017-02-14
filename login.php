@@ -25,8 +25,10 @@
 			$msg = "Nom d'utilisateur ou mot de passe invalide !";
 		else if($erreur == "token")
 			$msg = "Token invalide !";
+		else if($erreur == "banned")
+			$msg = "Vous avez été banni !";
 		else
-			$msg = "Veuillez réessayer";
+			$msg = "Veuillez réessayer.";
 	
 		echo "<div class='alert alert-danger erreur'>
 		  <strong>Erreur !</strong> $msg
