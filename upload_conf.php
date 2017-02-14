@@ -36,7 +36,6 @@ if ($decoded_response->success == false) {
 
 $max_size = 1000000;
 if ($img['size'] > $max_size) {
-    header ('HTTP/1.0 400 Bad Request');
     header ('Location:upload.php?erreur=size');
     exit();
 }

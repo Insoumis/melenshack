@@ -19,7 +19,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
 $erreur = $_GET['erreur'];
 if($erreur) {
 	if($erreur == "doublon")
-		$msg = "Adresse mail ou pseudo déjà utilisé !";
+		$msg = "Adresse mail ou nom d'utilisateur déjà utilisé !";
 	else if($erreur == "captcha")
 		$msg = "Captcha invalide ! Veuillez réessayer.";
 	else if($erreur == "pass")
