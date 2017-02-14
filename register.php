@@ -7,20 +7,39 @@
 <html lang="fr">
 <?php include 'includes/header.php';
 
-if($_GET['erreur']) {
-	echo "<div class='alert alert-danger'<strong>Erreur !</strong> Une erreur est survenue, veuillez réesayer.</div>";
-}
-?>
-
-
-
-<?php
 if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
-       { ?>
-        <p>Vous etes déja connecté !</p>
-        Voulez vous <a href="disconnect.php">vous déconnecter</a> ?
-<?php  }
-else { ?>
+{
+
+	echo "<div class='alert alert-success erreur'>
+	  <strong>Vous êtes déjà connecté !</strong> Voulez vous <a href='disconnect.php'>vous déconnecter</a> ?
+	  </div>";
+	exit();
+}
+
+$erreur = $_GET['erreur'];
+if($erreur) {
+	if($erreur == "doublon")
+		$msg = "Adresse mail ou pseudo déjà utilisé !";
+	else if($erreur == "captcha")
+		$msg = "Captcha invalide ! Veuillez réessayer.";
+	else if($erreur == "pass")
+		$msg = "Confirmation du mot de passe invalide !";
+	else if($erreur == "email")
+		$msg = "Adresse mail invalide !";
+	else if($erreur == "login")
+		$msg = "Login ou mot de passe invalide !";
+	else if($erreur == "Token")
+		$msg = "Token invalide !";
+	else
+		$msg = "Veuillez réessayer";
+
+	echo "<div class='alert alert-danger erreur'>
+	  <strong>Erreur !</strong> $msg
+	  </div>";
+}
+
+
+?>
 <body>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 
@@ -48,14 +67,6 @@ else { ?>
 			</div>
 		</form>	
 	</div>
-
-<?php  } 
-if(!empty($_GET['erreur'])) {
-?>
-<p> Erreur lors de l'inscription </p>
-<?php	
-}
-?>
 
 <script>
 

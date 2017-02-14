@@ -1,4 +1,18 @@
 <?php
+
+/*
+ERREURS RENVOYEES :
+
+captcha
+doublon
+pass
+email
+loginmdp
+token
+
+
+
+*/
 include("includes/identifiants.php");
 include_once('includes/securite.class.php');
 include_once('includes/token.class.php');
@@ -9,7 +23,7 @@ if(Token::verifier(600, 'inscription'))
   {
   	$captcha = $_POST['g-recaptcha-response'];
 	if (!$captcha) {
-    	header ('Location:register.php?erreur=true');
+    	header ('Location:register.php?erreur=captcha');
     	exit();
 	}
 	
@@ -17,7 +31,7 @@ if(Token::verifier(600, 'inscription'))
 	$response = file_get_contents ("https://www.google.com/recaptcha/api/siteverify?secret=6LefaBUUAAAAAOCU1GRih8AW-4pMJkiRRKHBmPiE&response=" . $captcha);
 	$decoded_response = json_decode ($response);
 	if ($decoded_response->success == false) {
-    	header ('Location:register.php?erreur=true');
+    	header ('Location:register.php?erreur=captcha');
     	exit();
 	}
 
@@ -71,30 +85,30 @@ if(Token::verifier(600, 'inscription'))
 			else 
 			{
 			   // Doublon Pseudo ou email
-			  header('Location:register.php?erreur=true');
+			  header('Location:register.php?erreur=doublon');
 			}
 		}
 		else 
 		{
 		  // Mauvais Mot de passe 
-		  header('Location:register.php?erreur=true');
+		  header('Location:register.php?erreur=pass');
 		}
 	}
 	else 
 	{
 	   // Mauvais email
-	   header('Location:register.php?erreur=true');
+	   header('Location:register.php?erreur=email');
 	}
   } 
   else 
   {
  // Mauvais Mot de passe ou Login
-	header('Location:register.php?erreur=true');
+	header('Location:register.php?erreur=loginmdp');
   }
 }
 else 
 {
     //Mauvais Token
-	header('Location:register.php?erreur=true');
+	header('Location:register.php?erreur=token');
 }
 ?>

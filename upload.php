@@ -3,7 +3,6 @@
 <?php include 'includes/header.php';
 
 $erreur = $_GET['erreur'];
-echo $erreur;
 if($erreur) {
 	if($erreur == "notlogged")
 		$msg = "Vous devez être connecté pour poster une image ! <a href='login.php'>Se connecter.</a>";
