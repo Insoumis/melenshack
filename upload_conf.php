@@ -1,4 +1,5 @@
 <?php
+include_once ("includes/constants.php");
 
 /*
 ERREURS RETOURNEES:
@@ -60,10 +61,40 @@ $req->execute ([
 ]);
 
 $id = $bdd->lastInsertId ();
+$id = sha1 ($id . SALT_ID);
 $direction = '/images/' . $id . "." . $extension_image;
 if(move_uploaded_file ($img['tmp_name'], __DIR__ . $direction))
 	echo "oui";
 else
 	echo "non";
 
+$imagebase = __DIR__ . $direction;
+list($width, $height) = getimagesize ($imagebase);
+
+if (($extension_image == "jpg") OR ($extension_image == "jpeg")) {
+    $source = imagecreatefromjpeg ($imagebase);
+} elseif ($extension_image == "png") {
+    $source = imagecreatefrompng ($imagebase);
+} elseif ($extension_image == "gif") {
+    $source = imagecreatefromgif ($imagebase);
+}
+
+if ($width >= $height)
+{
+    $ratio = $width/300;
+} else {
+    $ratio = $height/300;
+}
+$newwidth = $width/$ratio;
+$newheight = $height/$ratio;
+$thumb = imagecreatetruecolor ($newwidth, $newheight);
+imagecopyresized ($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+if (($extension_image == "jpg") OR ($extension_image == "jpeg")) {
+    imagejpeg ($thumb, __DIR__ . '/vignettes/' . $id . '.jpg');
+} elseif ($extension_image == "png") {
+    imagepng ($thumb, __DIR__ . '/vignettes/' . $id . '.png');
+} elseif ($extension_image == "gif") {
+    imagegif ($thumb, __DIR__ . '/vignettes/' . $id . '.gif');
+}
 ?>

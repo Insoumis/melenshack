@@ -16,6 +16,7 @@ token
 include("includes/identifiants.php");
 include_once('includes/securite.class.php');
 include_once('includes/token.class.php');
+include_once ("includes/constants.php");
 
 if(Token::verifier(600, 'inscription')) 
 {
@@ -43,8 +44,8 @@ if(Token::verifier(600, 'inscription'))
 		$pass = Securite::bdd($_POST['pass']);
 		$confpass = Securite::bdd($_POST['confpass']);
 
-		$pass_hache = hash('sha256','testsalt'. $pass); // !! changer le salt pour le site !!
-	    $confpass_hache = hash('sha256','testsalt' . $confpass); // !! changer le salt pour le site !!
+		$pass_hache = hash('sha256',SALT_PASS. $pass); // !! changer le salt pour le site !!
+	    $confpass_hache = hash('sha256',SALT_PASS . $confpass); // !! changer le salt pour le site !!
 
 		if ($pass_hache == $confpass_hache) 
 		{

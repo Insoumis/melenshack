@@ -10,6 +10,7 @@ token
 include("includes/identifiants.php");
 include_once('includes/token.class.php');
 include_once('includes/securite.class.php');
+include_once ("includes/constants.php");
 
 if(Token::verifier(600, 'connexion')) 
 {
@@ -18,7 +19,7 @@ if(Token::verifier(600, 'connexion'))
 
 		  $pass = Securite::bdd($_POST['pass']);
 		$pseudo = Securite::bdd($_POST['pseudo']);
-		$pass_hache = hash('sha256','testsalt' . $pass); // !! changer le salt pour le site !!
+		$pass_hache = hash('sha256',SALT_PASS . $pass); // !! changer le salt pour le site !!
 
 		// Vérification des identifiants
 		$req = $bdd->prepare('SELECT id FROM users WHERE pseudo = :pseudo AND pass = :pass');
