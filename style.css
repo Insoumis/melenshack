@@ -125,7 +125,7 @@ body {
 	-webkit-user-select: none;
 	user-select: none;
 	position: absolute;
-	min-width: 100%;
+	max-width: 100%;
 	height: 100%;
 	display: none;
 }
@@ -137,6 +137,7 @@ body {
 	margin-bottom: 1px;
 	height: 25px;
 	margin-left: 10px;
+	text-align: left;
 }
 .card-overlay {
 	background: rgba(0, 0, 0, 0.4);

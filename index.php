@@ -29,7 +29,7 @@ var j = `{
 	"dateCreation": "2017-02-14 16:05:00",
 	"pseudoUser": "Entropy",
 	"idUser": "45",
-	"url": "https://media.giphy.com/media/3oriNVEGuyvUIMnn1u/source.gif",
+	"url": "https://images-ext-2.discordapp.net/eyJ1cmwiOiJodHRwOi8vaW1hZ2Uubm9lbHNoYWNrLmNvbS9maWNoaWVycy8yMDE3LzA3LzE0ODcwMDg2MjgtbWVsdnNscG4wMy5wbmcifQ.1M3AX3KlZHHYRFo5JlECUB-vshE?width=390&height=467",
 	"points": "352",
 	"vote": "up"
 
@@ -41,6 +41,13 @@ function shareFacebook(e) {
 	e.stopPropagation();
 	var card = $(e.target).closest(".card");
 	console.log("Share FB"+card);
+
+	var titre = "";
+	var lien_img = "";
+	var img_brute = "";
+	var url = "https://www.facebook.com/dialog/feed?app_id=1849815745277262&link="+ lien_img+ "&picture=" + img_brute+"&name="+titre+"&caption=M%C3%A9lenshack&description=La%20banque%20d%27images%20de%20la%20France%20Insoumise&redirect_uri=" + lien_img;
+
+	window.open(url);
 }
 function shareTwitter(e) {
 	e.stopPropagation();
@@ -157,14 +164,12 @@ function addCard(c) {
 			</div>
 		</div>
 	
-		<div class='card-footer'>
-			` + points +` <img class='phi-points' src='assets/phi.png'/>
+		<div class='card-footer'>` + points +` <img class='phi-points' src='assets/phi.png'/>
 			<button type='button' class='btn btn-primary upvote ` + upvoteclass + `'><span class='glyphicon glyphicon-arrow-up'></span></button>
 			<button type='button' class='btn btn-danger downvote ` + downvoteclass + `'><span class='glyphicon glyphicon-arrow-down'></span></button>
 			<span class='card-info'>il y a ` + temps + ` par <a href='user.php?id=` + idUser +`'>` + pseudoUser +`</a></span>
 		</div>
-	</div>
-	`;
+	</div>`;
 
 	var card = $(html);
 
