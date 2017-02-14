@@ -120,6 +120,7 @@ body {
 	overflow: hidden;
 }
 .card-img {
+	position: relative;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;

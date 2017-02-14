@@ -46,7 +46,7 @@ if(!isset($_SESSION)){
 							</div>
 						</div>
 		<?php if (isset($_SESSION['id']) && isset($_SESSION['pseudo'])) { ?>
-			<a id="deconnection" class="btn btn-danger" role="button" href="disconnect_conf.php">Deconnexion</a>
+			<a id="deconnection" class="btn btn-danger" role="button" href="disconnect_conf.php">Déconnexion</a>
 		<?php } else { ?>
 			<a id="connexion" class="btn btn-danger" role="button" href="login.php">Connexion</a>
 		<?php } ?>

@@ -61,7 +61,9 @@ $req->execute ([
 
 $id = $bdd->lastInsertId ();
 $direction = '/images/' . $id . "." . $extension_image;
-move_uploaded_file ($img['tmp_name'], __DIR__ . $direction);
+if(move_uploaded_file ($img['tmp_name'], __DIR__ . $direction))
+	echo "oui";
+else
+	echo "non";
 
-header ('Location:view.php?id=' . $id);
 ?>
