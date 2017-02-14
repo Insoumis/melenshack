@@ -2,6 +2,25 @@
 <html lang="fr">
 
 <?php include 'includes/header.php'; ?>
+<script>
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId      : '1849815745277262',
+			xfbml      : true,
+			version    : 'v2.8'
+		});
+	FB.AppEvents.logPageView();
+	};
+
+	(function(d, s, id){
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+</script>
+
 <div id="main_page">
 <div class="line-container" id="card_container">
 
@@ -11,13 +30,17 @@
 
 <script>
 
-
+urlBase = location.href.substring(0, location.href.lastIndexOf("/")+1);
 $(window).on("load", function() {
 	for(i = 0; i < 30; ++i)
-		addCard(JSON.parse(j));	
+		addCard(JSON.parse(j));
+
 });
 
-
+//fix pour popover qui doit etre cliqué 2 fois pour etre ouvert
+$('body').on('hidden.bs.popover', function (e) {
+	$(e.target).data("bs.popover").inState.click = false;
+});
 
 //date actuelle
 var now = new Date();
@@ -42,27 +65,30 @@ function shareFacebook(e) {
 	//ne propage pas l'event à la carte
 	e.stopPropagation();
 	var card = $(e.target).closest(".card");
-	console.log("Share FB"+card);
+	var url = urlBase+"view.php?id=" + card.attr("id");
 
-	var titre = "";
-	var lien_img = "";
-	var img_brute = "";
-	var url = "https://www.facebook.com/dialog/feed?app_id=1849815745277262&link="+ lien_img+ "&picture=" + img_brute+"&name="+titre+"&caption=M%C3%A9lenshack&description=La%20banque%20d%27images%20de%20la%20France%20Insoumise&redirect_uri=" + lien_img;
-
-	window.open(url);
+	FB.ui(
+ 	{
+		method: 'share',
+		mobile_iframe: true,
+		hashtag: '#jlm2017',
+		href: url
+	}, function(response){});
 }
 function shareTwitter(e) {
+	console.log("oui");
 	e.stopPropagation();
 	var card = $(e.target).closest(".card");
-	console.log("Share Twitter"+card);
+	var url = urlBase+"view.php?id=" + card.attr("id");
+	window.open("https://twitter.com/share?url="+escape(url)+"&hashtags=jlm2017", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+
 }
 function copyClipboard(e) {
 	e.stopPropagation();
 	var card = $(e.target).closest(".card");
+	card.find('[data-toggle="popover"]').popover("toggle");
 	var img = card.find(".card-img");
-	console.log("Copy clipboard "+img.attr('src'));
 }
-
 
 //OVERLAY	
 function hoverIn(e) {
@@ -161,7 +187,7 @@ function addCard(c) {
 				<div class='card-buttons'>
 					<img id='share_fb' class='card-share'src='assets/Facebook.png'/>
 					<img id='share_twitter' class='card-share' src='assets/Twitter.png'/>
-					<img id='share_clipboard' class='card-share' src='assets/Clipboard.png'/>
+					<img data-html=true data-toggle='popover' data-placement='left' data-content='<input type="text" value="` +urlBase+`view.php?id=`+id +`" class="clipinput"/>' class='card-share' id='share_clipboard' src='assets/Clipboard.png'/>
 				</div>
 			</div>
 		</div>
@@ -175,15 +201,14 @@ function addCard(c) {
 
 	var card = $(html);
 
+
 	//assigne les events des boutons de partage
 	card.find("#share_fb").click(shareFacebook);
 	card.find("#share_twitter").click(shareTwitter);
 	card.find("#share_clipboard").click(copyClipboard);
 
 	//redirection quand on clique sur la carte vers la 'full screen'
-	var id = card.attr("id");
 	card.click(function() {
-		window.location.href = "view.php?id="+id;
 	});
 	
 
@@ -213,6 +238,7 @@ function addCard(c) {
 	
 		},
 		function() {
+			card.find('[data-toggle="popover"]').popover("hide");
 			$(this).find(".card-overlay").fadeTo(300, 0, function() {
 				$(this).find(".card-overlay").hide();
 			});
@@ -230,13 +256,13 @@ function addCard(c) {
 	
 	//centre l'image pour cropper à droite et à gauche
 	card.find(".card-img").each(function(i, img) {
-		console.log($(img));
 		$(img).css({
 			position: "relative",
 		});
 		$(img).show();
 	});
 
+	card.find('[data-toggle="popover"]').popover();
 
 }
 
