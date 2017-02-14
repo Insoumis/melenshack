@@ -54,14 +54,23 @@ if (strlen($titre) > 255 || strlen($titre) == 0) {
     exit();
 }
 
-$req = $bdd->prepare ('INSERT INTO images(titre, id_user, date_creation) VALUES(:titre, :id_user, NOW())');
+$req = $bdd->prepare ('INSERT INTO images(titre, id_user, nom_original, format, date_creation) VALUES(:titre, :id_user, :nom_original, :format, NOW())');
 $req->execute ([
     ':titre' => htmlspecialchars ($_POST['titre']),
     ':id_user' => $id_user,
+    ':nom_original' => htmlspecialchars ($img['name']), // A FAIRE ! : Verifier que < 255
+    ':format' => $extension_image,
 ]);
 
-$id = $bdd->lastInsertId ();
-$id = sha1 ($id . SALT_ID);
+$idbase = $bdd->lastInsertId ();
+$id = sha1 ($idbase . SALT_ID);
+
+$req = $bdd->prepare ('UPDATE images SET nom_hash = :nom_hash  WHERE id = :id ');
+$req->execute ([
+    'nom_hash' => $id,
+    'id' => $idbase,
+]);
+
 $direction = '/images/' . $id . "." . $extension_image;
 if(move_uploaded_file ($img['tmp_name'], __DIR__ . $direction))
 	echo "oui";

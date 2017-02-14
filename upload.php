@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="fr">
 <?php include 'includes/header.php';
+if (!empty($_GET['erreur'])) {
+	$erreur = $_GET['erreur'];
+	if ($erreur) {
+		if ($erreur == "notlogged")
+			$msg = "Vous devez être connecté pour poster une image ! <a href='login.php'>Se connecter.</a>";
+		else if ($erreur == "captcha")
+			$msg = "Captcha invalide ! Veuillez réessayer.";
+		else if ($erreur == "size")
+			$msg = "Image trop lourde !";
+		else if ($erreur == "format")
+			$msg = "L'image doit être en format PNG, JPG, JPEG ou GIF !";
+		else if ($erreur == "titre")
+			$msg = "Titre trop long !";
+		else
+			$msg = "Veuillez réessayer";
 
-$erreur = $_GET['erreur'];
-if($erreur) {
-	if($erreur == "notlogged")
-		$msg = "Vous devez être connecté pour poster une image ! <a href='login.php'>Se connecter.</a>";
-	else if($erreur == "captcha")
-		$msg = "Captcha invalide ! Veuillez réessayer.";
-	else if($erreur == "size")
-		$msg = "Image trop lourde !";
-	else if($erreur == "format")
-		$msg = "L'image doit être en format PNG, JPG, JPEG ou GIF !";
-	else if($erreur == "titre")
-		$msg = "Titre trop long !";
-	else
-		$msg = "Veuillez réessayer";
-
-	echo "<div class='alert alert-danger erreur'>
+		echo "<div class='alert alert-danger erreur'>
 	  <strong>Erreur !</strong> $msg
 	  </div>";
+	}
 }
-
 ?>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 	<div class="container" id="main_page">
