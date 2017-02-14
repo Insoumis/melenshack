@@ -15,9 +15,10 @@ if(Token::verifier(600, 'connexion'))
 
 		// Vérification des identifiants
 		$req = $bdd->prepare('SELECT id FROM users WHERE pseudo = :pseudo AND pass = :pass');
-		$req->execute(array(
+		$req->execute([
 			'pseudo' => $pseudo,
-			'pass' => $pass_hache));
+			'pass' => $pass_hache,
+		]);
 
 		$resultat = $req->fetch();
 
