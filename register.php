@@ -28,7 +28,7 @@ if($erreur) {
 		$msg = "Adresse mail invalide !";
 	else if($erreur == "login")
 		$msg = "Login ou mot de passe invalide !";
-	else if($erreur == "Token")
+	else if($erreur == "token")
 		$msg = "Token invalide !";
 	else
 		$msg = "Veuillez réessayer";

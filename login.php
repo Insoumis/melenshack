@@ -10,13 +10,29 @@
 
 	<?php include 'includes/header.php';
 
-		if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
-    	{
-			echo "
-    	    <p>Vous êtes déja connecté !</p>
-    	    Voulez vous <a href='disconnect.php'>vous déconnecter</a> ?";
-			exit();
-		} ?>
+	if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
+	{
+	
+		echo "<div class='alert alert-success erreur'>
+		  <strong>Vous êtes déjà connecté !</strong> Voulez vous <a href='disconnect.php'>vous déconnecter</a> ?
+		  </div>";
+		exit();
+	}
+	
+	$erreur = $_GET['erreur'];
+	if($erreur) {
+		if($erreur == "wrong")
+			$msg = "Nom d'utilisateur ou mot de passe invalide !";
+		else if($erreur == "token")
+			$msg = "Token invalide !";
+		else
+			$msg = "Veuillez réessayer";
+	
+		echo "<div class='alert alert-danger erreur'>
+		  <strong>Erreur !</strong> $msg
+		  </div>";
+	}
+?>
 
 	<div class="container" id="main_page">
 		<h1>Connexion</h1>

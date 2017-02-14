@@ -1,4 +1,11 @@
 <?php
+/*
+ERREURS RENVOYEES :
+
+wrong
+token
+
+*/
 
 include("includes/identifiants.php");
 include_once('includes/token.class.php');
@@ -25,7 +32,7 @@ if(Token::verifier(600, 'connexion'))
 		if (!$resultat)
 		{
 			//Mauvais identifiant ou mot de passe
-			header('Location:login.php?erreur=true');
+			header('Location:login.php?erreur=wrong');
 		}
 		else
 		{
@@ -43,7 +50,7 @@ if(Token::verifier(600, 'connexion'))
 
 else {
      //Mauvais Token
-	header('Location:login.php?erreur=true');
+	header('Location:login.php?erreur=token');
 }
 
 ?>
