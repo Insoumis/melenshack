@@ -57,6 +57,8 @@ var j = `{
 	"vote": "up"
 
 }`;
+// Exemple de cardsinfo.php :  {"id":"31","titre":"Ceci est un titre","dateCreation":"2017-02-14 23:59:17","pseudoUser":"aaaa","idUser":"1","urlTumbnail":"http:\/\/site.quelquechose\/vignettes\/e3ae30117a4064f5a5c425045af9e5cc54a9eba5.png","urlSource":"http:\/\/site.quelquechose\/images\/e3ae30117a4064f5a5c425045af9e5cc54a9eba5.png","pointsTotaux":0}
+// Points totaux = nombre_vote_positif - nombre_vote_negatif
 
 //partage l'image sur F
 function shareFacebook(e) {

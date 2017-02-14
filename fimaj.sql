@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 14 Février 2017 à 14:07
+-- Généré le :  Mar 14 Février 2017 à 23:03
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -43,7 +43,10 @@ CREATE TABLE `images` (
   `nb_vote_positf` int(11) NOT NULL DEFAULT '0',
   `nb_vote_negatif` int(11) NOT NULL DEFAULT '0',
   `id_user` int(11) NOT NULL,
-  `date_creation` datetime NOT NULL
+  `date_creation` datetime NOT NULL,
+  `nom_original` varchar(255) DEFAULT NULL,
+  `nom_hash` varchar(255) DEFAULT NULL,
+  `format` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -57,8 +60,22 @@ CREATE TABLE `users` (
   `pseudo` varchar(255) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `dateinscription` datetime NOT NULL
+  `dateinscription` datetime NOT NULL,
+  `grade` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `vote`
+--
+
+CREATE TABLE `vote` (
+  `id` int(11) NOT NULL,
+  `id_image` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `vote` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Index pour les tables exportées
@@ -86,6 +103,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Index pour la table `vote`
+--
+ALTER TABLE `vote`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT pour les tables exportées
 --
 
@@ -103,6 +126,11 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `vote`
+--
+ALTER TABLE `vote`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
