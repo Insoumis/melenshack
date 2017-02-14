@@ -5,8 +5,23 @@ include_once('includes/token.class.php');
 
 if(Token::verifier(600, 'inscription')) 
 {
-  if(!empty($_POST['pseudo']) AND !empty($_POST['pass']) AND !empty($_POST['confpass']) AND !empty($_POST['email']))
+  if(!empty($_POST['g-recaptcha-response']) && !empty($_POST['pseudo']) AND !empty($_POST['pass']) AND !empty($_POST['confpass']) AND !empty($_POST['email']))
   {
+  	$captcha = $_POST['g-recaptcha-response'];
+	if (!$captcha) {
+    	header ('Location:register.php?erreur=true');
+    	exit();
+	}
+	
+	// Verification de la validité du captcha
+	$response = file_get_contents ("https://www.google.com/recaptcha/api/siteverify?secret=6LefaBUUAAAAAOCU1GRih8AW-4pMJkiRRKHBmPiE&response=" . $captcha);
+	$decoded_response = json_decode ($response);
+	if ($decoded_response->success == false) {
+    	header ('Location:register.php?erreur=true');
+    	exit();
+	}
+
+
 	$email = $_POST['email'];
 	$pseudo = $_POST['pseudo'];
 	if (filter_var($email, FILTER_VALIDATE_EMAIL)) 

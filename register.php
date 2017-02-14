@@ -5,11 +5,19 @@
 
 <!DOCTYPE html>
 <html lang="fr">
-<?php include 'includes/header.php'; ?>
+<?php include 'includes/header.php';
+
+if($_GET['erreur']) {
+	echo "<div class='alert alert-danger'<strong>Erreur !</strong> Une erreur est survenue, veuillez réesayer.</div>";
+}
+?>
+
+
+
 <?php
 if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
        { ?>
-        <p>Vous etes déja connecter !</p>
+        <p>Vous etes déja connecté !</p>
         Voulez vous <a href="disconnect.php">vous déconnecter</a> ?
 <?php  }
 else { ?>

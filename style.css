@@ -21,7 +21,13 @@ body {
 #ajouter_img {
 	color: white;
 }
+.erreur {
+	text-align: center;
+	margin-top: 45px;
+	margin-left: 50px;
+	margin-right: 50px;
 
+}
 
 .navbar {
 	-webkit-box-shadow: 0 8px 3px -6px #999;
