@@ -1,7 +1,16 @@
 <?php
 include ("includes/identifiants.php");
+include_once("includes/constants.php");
 
 function getInfo($idhash) {
+
+    try
+    {
+        $bdd = new PDO('mysql:host=' . DB_HOST . ';dbname='. DB_NAME .';charset=utf8', DB_USER, DB_PASS, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    }
+    catch (PDOException $erreur) {
+            echo 'Ce service est momentanément indisponible. Veuillez nous excuser pour la gêne occasionnée.';
+    }
 
 	if (empty($idhash)) {
 		return -1;
@@ -37,7 +46,7 @@ function getInfo($idhash) {
 	    "idUser" => $resultat["id_user"],
 	    "urlThumbnail" => __DIR__ ."/vignettes/".$id . '.'. $resultat["format"],
 	    "urlSource" => __DIR__ ."/images/".$id. '.'. $resultat["format"],
-	    "pointsTotaux" => ($resultat["nb_vote_positf"] - $resultat["nb_vote_negatif"]) ,
+	    "pointsTotaux" => ($resultat["nb_vote_positif"] - $resultat["nb_vote_negatif"]) ,
 	);
 	
 	$infojson = json_encode($info);
