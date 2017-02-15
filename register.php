@@ -5,8 +5,12 @@
 
 <!DOCTYPE html>
 <html lang="fr">
-<?php include 'includes/header.php';
+<?php include 'includes/header.php'; ?>
 
+	
+	<div class="container" id="main_page">
+
+<?php
 if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
 {
 
@@ -43,7 +47,6 @@ if (!empty($_GET['erreur'])) {
 <body>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 
-	<div class="container" id="main_page">
 		<h1>Inscription</h1>
 		<h5>Vous avez déjà un compte ? <a href="login.php">Connectez-vous !</a></h5>
 		<form id="registerForm" action="register_conf.php"  method="post">

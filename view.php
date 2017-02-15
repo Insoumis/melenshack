@@ -9,7 +9,7 @@ $json = getInfo($idhash);
 $json = json_decode($json,true);
 
 $id = $json['id'];
-$titre = $json['titre']
+$titre = $json['titre'];
 $idUser = $json['idUser'];
 $pseudoUser = $json['pseudoUser'];
 $urlSource = $json['urlSource'];
@@ -62,7 +62,10 @@ if($now['year'] != then['year']) {
 
 <div class="big-img-container">
 	<h1 class="big-img-titre">200 000 insoumis ! GG à tous !</h1>
-
+	300 <img class='phi-points' src='assets/phi.png'/>
+	<button type='button' class='btn btn-primary upvote'><span class='glyphicon glyphicon-arrow-up'></span></button>
+	<button type='button' class='btn btn-danger downvote'><span class='glyphicon glyphicon-arrow-down'></span></button>
+	<p>Il y a 3 heures par Entropy</p>
 	<img class="big-img" src="http://s-www.republicain-lorrain.fr/images/F5653D5D-1E13-4B3B-87FD-6F0AD8C4D5E8/LRL_v0_13b/jean-luc-melenchon-a-tenu-un-double-meeting-ce-dimanche-photo-afp-1486304291.jpg" />
 
 </div>

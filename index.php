@@ -6,7 +6,18 @@
 <script src="bower_components/clipboard/dist/clipboard.min.js"></script>
 <script src="common_card.js"></script>
 
-<div id="main_page">
+<?php
+
+$id_user = $_SESSION['id'];
+if (!$id_user)
+	echo "<input id='connected' value='no'/>";
+else
+	echo "<input id='connected' value='yes'/>";
+	
+
+?> 
+
+<div class="container" id="main_page">
 <div class="line-container" id="card_container">
 
 
@@ -56,7 +67,7 @@ function hoverOut(e) {
 function addCard(c) {
 	var id= c.id;
 	var titre = c.titre;
-	var dateCreation = c.dateCreation;;
+	var dateCreation = c.dateCreation;
 	var pseudoUser = c.pseudoUser;
 	var idUser = c.idUser;
 	var points = c.points;

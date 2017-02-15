@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
-<?php include 'includes/header.php';
+<?php include 'includes/header.php';?>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+
+<div class="container" id="main_page">
+
+<?php
 if (!empty($_GET['erreur'])) {
 	$erreur = $_GET['erreur'];
 	if ($erreur) {
@@ -21,10 +27,14 @@ if (!empty($_GET['erreur'])) {
 	  <strong>Erreur !</strong> $msg
 	  </div>";
 	}
+} else if (!isset($_SESSION['id'])) {
+
+	echo "<div class='alert alert-danger erreur'>
+	  Vous devez être connecté pour pouvoir poster une image ! <a href='login.php'>Se connecter</a>.
+	  </div>";
+	exit();
 }
 ?>
-	<script src='https://www.google.com/recaptcha/api.js'></script>
-	<div class="container" id="main_page">
 		<h1>Ajouter une image</h1>
 		<p class="lead">Selectionnez une image à poster</p>
 		<form action="upload_conf.php" autocomplete="off" method="post" enctype="multipart/form-data">

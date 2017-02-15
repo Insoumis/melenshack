@@ -8,8 +8,12 @@
 	<meta name="google-signin-client_id" content="370224579216-3m4vo3a5isrnthstrg5jga9so291r4an.apps.googleusercontent.com">
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 
-	<?php include 'includes/header.php';
+	<?php include 'includes/header.php';?>
 
+	<div class="container" id="main_page">
+	
+	
+	<?php
 	if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
 	{
 	
@@ -35,7 +39,6 @@
 	}
 ?>
 
-	<div class="container" id="main_page">
 		<h1>Connexion</h1>
 		<h5>Pas de compte ? <a href="register.php">Inscrivez-vous !</a></h5>
 		<h5>Ou utilisez les réseaux sociaux :</h5>

@@ -126,6 +126,10 @@ function getTimeElapsed(date) {
 //Fonctions de vote
 function upVote(e) {
 	e.stopPropagation();
+	if($('#connected').val() == 'no') {
+		showVoteError();
+		return;
+	}
 	$(this).addClass("voted");
 	$(this).parent().find(".downvote").removeClass("voted");
 	//send vote to server
@@ -148,6 +152,10 @@ function upVote(e) {
 
 function downVote(e) {
 	e.stopPropagation();
+	if($('#connected').val() == 'no') {
+		showVoteError();
+		return;
+	}
 	$(this).addClass("voted");
 	$(this).parent().find(".upvote").removeClass("voted");
 	//send vote to server
@@ -166,4 +174,17 @@ function downVote(e) {
 		}
 	} */
 	http.send(params);
+}
+
+
+//affiche erreur si pas loggé
+function showVoteError() {
+	if($('#voteerror').length)
+		return;
+	var e = `<div id='voteerror' class='alert alert-warning erreur'>
+		  Vous devez être connecté pour pouvoir voter. <a href='login.php'>Se connecter</a>.
+		  </div>`;
+
+	var erreur = $(e);
+	$('#main_page').prepend(erreur);
 }

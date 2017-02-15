@@ -1,19 +1,33 @@
+/*
+	------
+	GLOBAL
+	------
+*/
+
 body {
 	background-color: #eee;
 }
 
+#main_page {
+	margin-top: 60px;
+
+}
+
+.container {
+	width: 100%;
+}
+
+/*
+	------
+	NAVBAR
+	------
+*/
 
 .vdivide {
 	margin-top: 10px;
 	width: 2px;
 	height: 30px;
 	border-right: 1px groove #333;
-}
-#main_page {
-	margin-top: 100px;
-	margin-left: 0;
-	margin-right: 0;
-	width: 100%;
 }
 #ajouter_img:hover, #ajouter_img:focus {
 	background-color: #ac2925;
@@ -23,10 +37,8 @@ body {
 }
 .erreur {
 	text-align: center;
-	margin-top: 55px;
 	margin-left: 50px;
 	margin-right: 50px;
-
 }
 #logo {
 	overflow: hidden;
@@ -71,10 +83,15 @@ body {
 #connexion {
 	margin-left: 10px;
 }
-#preview {
-	margin-top: 30px;
-	margin-bottom: 10px;
-}
+
+/*
+
+	------
+	CARTES
+	------
+
+*/
+
 
 .card {
 	cursor: pointer;
@@ -171,7 +188,7 @@ body {
 	zoom: 1;
 	width: 23%;
 }
-.phi-points {
+.card .phi-points {
 	margin: 0;
 	margin-left: -5px;
 	height: 90%;
@@ -215,6 +232,23 @@ body {
 }
 
 
+
+
+#voteerror {
+	margin-top: -30px;
+}
+
+
+/*
+
+	-----------
+	SOURCES IMG
+	-----------
+
+*/
+
+
+
 .big-img-container {
 	margin-top: 85px;
 	margin-left: 50px;
@@ -226,13 +260,4 @@ body {
 	max-width: 100%;
 
 }
-
-
-
-
-
-
-
-
-
 
