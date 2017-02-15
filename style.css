@@ -181,39 +181,19 @@ body {
 }
 .upvote.voted, .upvote.voted:hover, .upvote.voted:focus {
 	color: #7094db;
-	height: 100%;
-	width: 30px;
-	padding: 0;
-	margin: 0;
-	outline: 0;
 }
 
 .downvote.voted, .downvote.voted:hover, .downvote.voted:focus {
 	color: #ff4d4d;
+}
+
+.card .upvote, .card .downvote {
 	height: 100%;
 	width: 30px;
 	padding: 0;
 	margin: 0;
 	outline: 0;
 }
-
-.upvote, .downvote {
-	height: 100%;
-	width: 30px;
-	padding: 0;
-	margin: 0;
-	outline: 0;
-}
-.popover-content {
-	padding-left: 0px;
-	padding-right: 0px;
-}
-.clipinput {
-	border: none;
-	margin: 0;
-}
-
-
 
 
 .line-container {
@@ -233,3 +213,26 @@ body {
 	width: 100%;
 	display: inline-block;
 }
+
+
+.big-img-container {
+	margin-top: 85px;
+	margin-left: 50px;
+	margin-right: 50px;
+	text-align: center;
+}
+.big-img {
+	margin: auto;
+	max-width: 100%;
+
+}
+
+
+
+
+
+
+
+
+
+

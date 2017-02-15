@@ -18,10 +18,8 @@ function getInfo($idhash) {
 
 	$id = htmlspecialchars($idhash); // $_GET['id'] = sha1(SALT_ID.$id) donc faut inclure include_once ("includes/constants.php"); pour SALT_ID. "cardsinfo.php?id=". sha1(SALT_ID.$id)
 	
-	echo "test1";
 	$req = $bdd->prepare('SELECT * FROM images WHERE nom_hash = :nom_hash');
 	
-	echo "test2";
 	$req->execute([
 	    'nom_hash' => $id,
 	]);
@@ -39,14 +37,14 @@ function getInfo($idhash) {
 	$resultat2 = $req2->fetch();
 	
 	$info = array(
-	    "id" => $resultat["id"],
+	    "idhash" => $id,
 	    "titre" => $resultat["titre"],
 	    "dateCreation" => $resultat["date_creation"],
 	    "pseudoUser" => $resultat2["pseudo"],
 	    "idUser" => $resultat["id_user"],
-	    "urlThumbnail" => __DIR__ ."/vignettes/".$id . '.'. $resultat["format"],
-	    "urlSource" => __DIR__ ."/images/".$id. '.'. $resultat["format"],
-	    "pointsTotaux" => ($resultat["nb_vote_positif"] - $resultat["nb_vote_negatif"]) ,
+	    "urlThumbnail" => "/vignettes/".$id . '.'. $resultat["format"],
+	    "urlSource" => "/images/".$id. '.'. $resultat["format"],
+	    "pointsTotaux" => ($resultat["nb_vote_positf"] - $resultat["nb_vote_negatif"])
 	);
 	
 	$infojson = json_encode($info);
