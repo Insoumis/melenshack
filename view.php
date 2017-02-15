@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <?php include 'includes/header.php';
-//TODO: balises opengraph facebook et cards facebook
+include 'cardsinfo.php';
+
+$id = $_GET['id'];
+echo getInfo($id);
 ?>
-
-
-
 </html>

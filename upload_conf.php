@@ -1,4 +1,5 @@
 <?php
+
 include_once ("includes/constants.php");
 
 /*
@@ -72,10 +73,7 @@ $req->execute ([
 ]);
 
 $direction = '/images/' . $id . "." . $extension_image;
-if(move_uploaded_file ($img['tmp_name'], __DIR__ . $direction))
-	echo "oui";
-else
-	echo "non";
+move_uploaded_file ($img['tmp_name'],__DIR__ . $direction);
 
 $imagebase = __DIR__ . $direction;
 list($width, $height) = getimagesize ($imagebase);
@@ -90,9 +88,9 @@ if (($extension_image == "jpg") OR ($extension_image == "jpeg")) {
 
 if ($width >= $height)
 {
-    $ratio = $width/300;
+    $ratio = $width/VIGNETTE_WIDTH;
 } else {
-    $ratio = $height/300;
+    $ratio = $height/VIGNETTE_HEIGHT;
 }
 $newwidth = $width/$ratio;
 $newheight = $height/$ratio;
@@ -106,4 +104,6 @@ if (($extension_image == "jpg") OR ($extension_image == "jpeg")) {
 } elseif ($extension_image == "gif") {
     imagegif ($thumb, __DIR__ . '/vignettes/' . $id . '.gif');
 }
+
+header ('Location:view.php?id=' . $id);
 ?>
