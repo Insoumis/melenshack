@@ -10,9 +10,9 @@
 
 $id_user = $_SESSION['id'];
 if (!$id_user)
-	echo "<input id='connected' value='no'/>";
+	echo "<input id='connected' value='no' hidden/>";
 else
-	echo "<input id='connected' value='yes'/>";
+	echo "<input id='connected' value='yes' hidden/>";
 	
 
 ?> 
@@ -32,10 +32,6 @@ $(window).on("load", function() {
 
 });
 
-//fix pour popover qui doit etre cliqué 2 fois pour etre ouvert
-$('body').on('hidden.bs.popover', function (e) {
-	$(e.target).data("bs.popover").inState.click = false;
-});
 
 //test
 var j = `{
@@ -96,10 +92,10 @@ function addCard(c) {
 			</div>
 		</div>
 	
-		<div class='card-footer'>` + points +` <img class='phi-points' src='assets/phi.png'/>
+		<div class='card-footer'><span class='points'>` + points +`</span><img class='phi-points' src='assets/phi.png'/>
 			<button type='button' class='btn btn-primary upvote'><span class='glyphicon glyphicon-arrow-up'></span></button>
 			<button type='button' class='btn btn-danger downvote'><span class='glyphicon glyphicon-arrow-down'></span></button>
-			<span class='card-info'>il y a ` + temps + ` par <a href='user.php?id=` + idUser +`'>` + pseudoUser +`</a></span>
+			<div class='card-info'>il y a ` + temps + ` par <a href='user.php?id=` + idUser +`'>` + pseudoUser +`</a></div>
 		</div>
 	</div>`;
 
@@ -131,7 +127,7 @@ function addCard(c) {
 	card.find("#share_twitter").click(shareTwitter);
 
 	//redirection quand on clique sur la carte vers la 'full screen'
-	card.click(function() {
+	card.find('.card-content, .card-header').click(function() {
 		if(!card.find("#share_clipboard").is(':hover')) //hack pour ne pas bloquer clipboardjs avec un stoppropagation
 			window.location.href = 'view.php?id=' + id;
 	});

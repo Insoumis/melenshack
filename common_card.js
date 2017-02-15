@@ -35,7 +35,7 @@ window.fbAsyncInit = function() {
 function shareFacebook(e) {
 	//ne propage pas l'event à la carte
 	e.stopPropagation();
-	var card = $(e.target).closest(".card");
+	var card = $(e.target).closest(".card, .big-img-container");
 	var url = urlBase+"view.php?id=" + card.attr("id");
 
 	FB.ui(
@@ -48,9 +48,8 @@ function shareFacebook(e) {
 }
 
 function shareTwitter(e) {
-	console.log("oui");
 	e.stopPropagation();
-	var card = $(e.target).closest(".card");
+	var card = $(e.target).closest(".card, .big-img-container");
 	var url = urlBase+"view.php?id=" + card.attr("id");
 	window.open("https://twitter.com/share?url="+escape(url)+"&hashtags=jlm2017", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
 
@@ -130,11 +129,24 @@ function upVote(e) {
 		showVoteError();
 		return;
 	}
+	
+	
+	if(!$(this).hasClass('voted')) {
+		var points = $(this).closest('.card, .big-img-container').find('.points').html();
+		points = parseInt(points);
+		points ++;
+		if($(this).parent().find(".downvote").hasClass("voted"))
+			points ++;
+		console.log(points);
+		$(this).closest('.card, .big-img-container').find('.points').html(points);
+	}
+	
+	
 	$(this).addClass("voted");
 	$(this).parent().find(".downvote").removeClass("voted");
 	//send vote to server
 
-	var id = $(this).closest(".card").attr("id");
+	var id = $(this).closest(".card, .big-img-container").attr("id");
 
 	var http = new XMLHttpRequest();
 	var url = "vote_conf.php";
@@ -156,11 +168,24 @@ function downVote(e) {
 		showVoteError();
 		return;
 	}
+
+	if(!$(this).hasClass('voted')) {
+		var points = $(this).closest('.card, .big-img-container').find('.points').html();
+		points = parseInt(points);
+		points --;
+		if($(this).parent().find(".upvote").hasClass("voted"))
+			points --;
+		console.log(points);
+		$(this).closest('.card, .big-img-container').find('.points').html(points);
+	}
+
+
+
 	$(this).addClass("voted");
 	$(this).parent().find(".upvote").removeClass("voted");
 	//send vote to server
 
-	var id = $(this).closest(".card").attr("id");
+	var id = $(this).closest(".card, .big-img-container").attr("id");
 	
 	var http = new XMLHttpRequest();
 	var url = "vote_conf.php";
@@ -174,7 +199,8 @@ function downVote(e) {
 		}
 	} */
 	http.send(params);
-}
+
+	}
 
 
 //affiche erreur si pas loggé

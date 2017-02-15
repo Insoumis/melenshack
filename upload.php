@@ -40,7 +40,7 @@ if (!empty($_GET['erreur'])) {
 		<form action="upload_conf.php" autocomplete="off" method="post" enctype="multipart/form-data">
 			<div class="form-group col-xs-5">
 				<label for="titre"><h3>Titre de l'image:</h3></label>
-				<input type="text" class="form-control input-lg" name="titre" id="titre" required autofocus>
+				<input type="text" class="form-control input-lg" name="titre" id="titre" placeholder="Titre (recommendé < 20 caractères)" required autofocus>
 				<br>
 				<label class="btn btn-default btn-file">
 				    Parcourir<input id="file" name="file" type="file" style="display: none;">

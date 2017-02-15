@@ -36,6 +36,7 @@ body {
 	color: white;
 }
 .erreur {
+	margin-top: -30px;
 	text-align: center;
 	margin-left: 50px;
 	margin-right: 50px;
@@ -94,17 +95,18 @@ body {
 
 
 .card {
-	cursor: pointer;
 	-webkit-box-shadow: 0 0px 10px 10px #bbb;
 	-moz-box-shadow: 0 0px 10px 10px #999;
 	box-shadow: 1px 1px 10px 1px #bbb;
 	width: 350px;
 	border-radius: 5px;
+	overflow: hidden;
 	background-color: #fff;
 	margin: 20px;
 }
 
 .card-header {
+	cursor: pointer;
 	margin-bottom: 5px;
 	padding-left: 10px;
 	padding-top: 10px;
@@ -119,6 +121,7 @@ body {
 	font-size: 30px;
 }
 .card-info {
+	float: right;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -127,6 +130,7 @@ body {
 	font-size: 12px;
 }
 .card-content {
+	cursor: pointer;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
@@ -153,8 +157,11 @@ body {
 	margin-top: 1px;
 	margin-bottom: 1px;
 	height: 25px;
-	margin-left: 10px;
+	overflow: hide;
+	text-overflow: ellipsis;
 	text-align: left;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 .card-overlay {
 	background: rgba(0, 0, 0, 0.4);
@@ -190,7 +197,7 @@ body {
 }
 .card .phi-points {
 	margin: 0;
-	margin-left: -5px;
+	margin-left:0 px;
 	height: 90%;
 	-moz-user-select: none;
 	-webkit-user-select: none;
@@ -209,9 +216,11 @@ body {
 	width: 30px;
 	padding: 0;
 	margin: 0;
-	outline: 0;
 }
 
+.upvote, .downvote {
+	outline: 0;
+}
 
 .line-container {
 	text-align: center;
@@ -250,14 +259,55 @@ body {
 
 
 .big-img-container {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
 	margin-top: 85px;
 	margin-left: 50px;
 	margin-right: 50px;
-	text-align: center;
 }
 .big-img {
 	margin: auto;
 	max-width: 100%;
-
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 50px;
+	margin-top: 7px;
+}
+.big-img-titre {
+	text-align: center;
+	font-weight: bold;
+	font-size: 35px;
+}
+.big-img-info {
+	word-wrap: break-word;
+	position: relative;
+	font-size: 28px;
+	width: 100%;
+	margin: auto;
+}
+.big-img-container .phi-points {
+	height: 40px;
+	margin-left: -10px;
+	margin-right: 20px;
+}
+.temps {
+	text-align: left;
+	font-size: 14px;
+	margin-bottom: 15px;
+	margin-top: 25px;
+	float: left;
+}
+.big-img-header {
+	text-align: center;
 }
 
+.big-share {
+	float: right;
+	cursor: pointer;
+	height: 50px;
+	margin-left: 20px;
+}
+.big-share-group {
+	float: right;
+}

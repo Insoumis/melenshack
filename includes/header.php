@@ -57,3 +57,11 @@ if(!isset($_SESSION)){
 	</div>
 </nav>
 
+<script>
+console.log('uu');
+$(window).on('resize', function() {
+	console.log($('.navbar').height());
+	$('body').css("margin-top", $('.navbar').height()+40);
+}).resize();
+
+</script>
