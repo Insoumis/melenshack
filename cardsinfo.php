@@ -42,8 +42,8 @@ function getInfo($idhash) {
 	    "dateCreation" => $resultat["date_creation"],
 	    "pseudoUser" => $resultat2["pseudo"],
 	    "idUser" => $resultat["id_user"],
-	    "urlThumbnail" => "/vignettes/".$id . '.'. $resultat["format"],
-	    "urlSource" => "/images/".$id. '.'. $resultat["format"],
+	    "urlThumbnail" => "vignettes/".$id . '.'. $resultat["format"],
+	    "urlSource" => "images/".$id. '.'. $resultat["format"],
 	    "pointsTotaux" => ($resultat["nb_vote_positf"] - $resultat["nb_vote_negatif"])
 	);
 	
