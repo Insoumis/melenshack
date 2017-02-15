@@ -220,13 +220,39 @@ function addCard(c) {
 		$(this).addClass("voted");
 		$(this).parent().find(".downvote").removeClass("voted");
 		//send vote to server
+
+		var http = new XMLHttpRequest();
+		var url = "vote_conf.php";
+		var params = "id_image=31&vote=1";//remplacer 31 par id
+		http.open("POST", url, true);
+		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		/*
+		http.onreadystatechange = function() {
+			if(http.readyState == 4 && http.status == 200) {
+				alert(http.responseText);
+			}
+		} */
+		http.send(params);
 	})
 
 	card.find(".downvote").click(function(e) {
 		e.stopPropagation();
 		$(this).addClass("voted");
 		$(this).parent().find(".upvote").removeClass("voted");
-		//send vote to server
+
+		var http = new XMLHttpRequest();
+		var url = "vote_conf.php";
+		var params = "id_image=31&vote=-1"; //remplacer 31 par id
+		http.open("POST", url, true);
+		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	    /*
+		http.onreadystatechange = function() {
+			if(http.readyState == 4 && http.status == 200) {
+				alert(http.responseText);
+			}
+		} */
+		http.send(params);
+
 	});
 	//////////////
 	
