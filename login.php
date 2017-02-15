@@ -18,19 +18,20 @@
 		  </div>";
 		exit();
 	}
-	
-	$erreur = $_GET['erreur'];
-	if($erreur) {
-		if($erreur == "wrong")
-			$msg = "Nom d'utilisateur ou mot de passe invalide !";
-		else if($erreur == "token")
-			$msg = "Token invalide !";
-		else
-			$msg = "Veuillez réessayer";
-	
-		echo "<div class='alert alert-danger erreur'>
+	if (!empty($_GET['erreur'])) {
+		$erreur = $_GET['erreur'];
+		if ($erreur) {
+			if ($erreur == "wrong")
+				$msg = "Nom d'utilisateur ou mot de passe invalide !";
+			else if ($erreur == "token")
+				$msg = "Token invalide !";
+			else
+				$msg = "Veuillez réessayer";
+
+			echo "<div class='alert alert-danger erreur'>
 		  <strong>Erreur !</strong> $msg
 		  </div>";
+		}
 	}
 ?>
 

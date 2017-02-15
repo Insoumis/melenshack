@@ -15,29 +15,29 @@ if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
 	  </div>";
 	exit();
 }
+if (!empty($_GET['erreur'])) {
+	$erreur = $_GET['erreur'];
+	if ($erreur) {
+		if ($erreur == "doublon")
+			$msg = "Adresse mail ou nom d'utilisateur déjà utilisé !";
+		else if ($erreur == "captcha")
+			$msg = "Captcha invalide ! Veuillez réessayer.";
+		else if ($erreur == "pass")
+			$msg = "Confirmation du mot de passe invalide !";
+		else if ($erreur == "email")
+			$msg = "Adresse mail invalide !";
+		else if ($erreur == "login")
+			$msg = "Login ou mot de passe invalide !";
+		else if ($erreur == "token")
+			$msg = "Token invalide !";
+		else
+			$msg = "Veuillez réessayer";
 
-$erreur = $_GET['erreur'];
-if($erreur) {
-	if($erreur == "doublon")
-		$msg = "Adresse mail ou nom d'utilisateur déjà utilisé !";
-	else if($erreur == "captcha")
-		$msg = "Captcha invalide ! Veuillez réessayer.";
-	else if($erreur == "pass")
-		$msg = "Confirmation du mot de passe invalide !";
-	else if($erreur == "email")
-		$msg = "Adresse mail invalide !";
-	else if($erreur == "login")
-		$msg = "Login ou mot de passe invalide !";
-	else if($erreur == "token")
-		$msg = "Token invalide !";
-	else
-		$msg = "Veuillez réessayer";
-
-	echo "<div class='alert alert-danger erreur'>
+		echo "<div class='alert alert-danger erreur'>
 	  <strong>Erreur !</strong> $msg
 	  </div>";
+	}
 }
-
 
 ?>
 <body>

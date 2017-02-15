@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 14 Février 2017 à 23:03
+-- Généré le :  Mer 15 Février 2017 à 00:44
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -40,7 +40,7 @@ CREATE TABLE `ban` (
 CREATE TABLE `images` (
   `id` int(11) NOT NULL,
   `titre` varchar(255) NOT NULL,
-  `nb_vote_positf` int(11) NOT NULL DEFAULT '0',
+  `nb_vote_positif` int(11) NOT NULL DEFAULT '0',
   `nb_vote_negatif` int(11) NOT NULL DEFAULT '0',
   `id_user` int(11) NOT NULL,
   `date_creation` datetime NOT NULL,
