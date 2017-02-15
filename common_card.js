@@ -56,13 +56,6 @@ function shareTwitter(e) {
 
 }
 
-function copyClipboard(e) {
-	e.stopPropagation();
-	var card = $(e.target).closest(".card");
-	var img = card.find(".card-img");
-}
-
-
 
 
 //Retourne un string du temps passé depuis un timestamp

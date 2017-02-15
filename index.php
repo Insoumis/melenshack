@@ -28,7 +28,7 @@ $('body').on('hidden.bs.popover', function (e) {
 
 //test
 var j = `{
-	"id": "30",
+	"id": "3e2562f322a323124f23d2311e3132",
 	"titre": "200 000 insoumis ! GG à tous !",
 	"dateCreation": "2017-02-14 16:05:00",
 	"pseudoUser": "Entropy",
@@ -78,10 +78,9 @@ function addCard(c) {
 			<img class='card-img' src='` + url +`'>
 			<div class='card-overlay'>
 				<div class='card-buttons'>
-					<img id='share_fb' class='card-share'src='assets/Facebook.png'/>
-					<img id='share_twitter' class='card-share' src='assets/Twitter.png'/>
-					<input id="cb`+id+`" type="text" value="` +urlBase+`view.php?id=`+id +`" hidden/>
-					<img data-clipboard-target="cb`+id+`" class='card-share' id='share_clipboard' src='assets/Clipboard.png'/>
+					<img data-toggle='tooltip' title='Partager' id='share_fb' class='card-share'src='assets/Facebook.png'/>
+					<img data-toggle='tooltip' title='Partager' id='share_twitter' class='card-share' src='assets/Twitter.png'/>
+					<img data-toggle='tooltip' title='Copier le lien' data-trigger='hover' data-clipboard-text="` +urlBase+`view.php?id=`+id +`" class='card-share' id='share_clipboard' src='assets/Clipboard.png'/>
 				</div>
 			</div>
 		</div>
@@ -119,11 +118,11 @@ function addCard(c) {
 	//assigne les events des boutons de partage
 	card.find("#share_fb").click(shareFacebook);
 	card.find("#share_twitter").click(shareTwitter);
-	card.find("#share_clipboard").click(copyClipboard);
 
 	//redirection quand on clique sur la carte vers la 'full screen'
 	card.click(function() {
-		window.location.href = 'view.php?id=' + id;
+		if(!card.find("#share_clipboard").is(':hover')) //hack pour ne pas bloquer clipboardjs avec un stoppropagation
+			window.location.href = 'view.php?id=' + id;
 	});
 	
 
@@ -167,7 +166,15 @@ function addCard(c) {
 		$(img).show();
 	});
 
-	new Clipboard("#share-clipboard");
+	var cb = new Clipboard(card.find("#share_clipboard").get(0));
+	cb.on('success', function() {
+		card.find("#share_clipboard").attr("title", "Lien copié !").tooltip('fixTitle').tooltip('show');
+	});
+
+	card.find('#share_clipboard').on('mouseout', function() {
+		$(this).attr("title", "Copier le lien").tooltip('fixTitle');
+	})
+	card.find(".card-share").tooltip();
 }
 
 
