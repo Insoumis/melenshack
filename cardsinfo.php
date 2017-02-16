@@ -38,6 +38,7 @@ function getInfo($idhash) {
 	
 	$info = array(
 	    "idhash" => $id,
+		"id" => $resultat["id"],
 	    "titre" => $resultat["titre"],
 	    "dateCreation" => $resultat["date_creation"],
 	    "pseudoUser" => $resultat2["pseudo"],

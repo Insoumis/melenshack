@@ -5,7 +5,6 @@ include 'cardsinfo.php';
 
 $idhash = $_GET['id'];
 
-echo "<input id='idhash' value='$idhash' hidden/>";
 
 
 $json = getInfo($idhash);
@@ -19,6 +18,7 @@ $urlSource = $json['urlSource'];
 $points = $json['pointsTotaux'];
 
 
+echo "<input id='id' value='$id' hidden/>";
 
 
 $now = getdate();
@@ -80,7 +80,7 @@ else
 
 <div id="main_page" class="container">
 
-<div class="big-img-container" id='fd2fd2sfds2'>
+<div class="big-img-container" id=<?php echo "'$id'" ?>>
 	<h1 class="big-img-titre"><?php echo $titre ?></h1>
 
 	<div class="big-img-header">
@@ -109,7 +109,7 @@ else
 $(window).on('load', function() {
 
 
-var id = $('#idhash').val();
+var id = $('#id').val();
 
 //vérifie l'ancien vote
 $.post(
