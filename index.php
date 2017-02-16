@@ -16,7 +16,7 @@
 		echo "<input id='connected' value='yes' hidden/>";
 	
 	//input caché pour savoir la méthode de sort
-	if($_GET['sort']) {
+	if (isset($_GET['sort'])) {
 		$sort = $_GET['sort'];
 		if($sort == "new")
 			echo "<input id='sort' value='new' hidden/>";

@@ -15,7 +15,7 @@ $size = $_GET['size'];
 
 if ($sort == "hot") {
 
-    $req = $bdd->query ('SELECT nom_hash FROM images ORDER BY nb_vote_positif LIMIT ' . $startIndex . ',' .  $size );
+    $req = $bdd->query ('SELECT nom_hash FROM images ORDER BY pointsTotaux DESC LIMIT ' . $startIndex . ',' .  $size );
 
     while ($resultat = $req->fetch()) {
         echo getInfo($resultat["nom_hash"]).'</br>';
