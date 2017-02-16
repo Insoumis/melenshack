@@ -2,7 +2,7 @@
 include("includes/identifiants.php");
 include_once("includes/constants.php");
 include("cardsinfo.php");
-
+ini_set('display_errors', 1);
 
 
 if (empty($_POST['sort']) || !is_numeric($_POST['startIndex']) || !is_numeric($_POST['size'])) {
@@ -16,7 +16,7 @@ $json = array();
 
 if ($sort == "hot") {
 
-    $req = $bdd->query ('SELECT nom_hash FROM images ORDER BY nb_vote_positif LIMIT ' . $startIndex . ',' .  $size );
+    $req = $bdd->query ('SELECT nom_hash FROM images ORDER BY pointsTotaux DESC LIMIT ' . $startIndex . ',' .  $size );
 
     while ($resultat = $req->fetch()) {
         array_push($json, json_decode(getInfo($resultat["nom_hash"])));

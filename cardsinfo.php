@@ -45,7 +45,7 @@ function getInfo($idhash) {
 	    "idUser" => $resultat["id_user"],
 	    "urlThumbnail" => "vignettes/".$id . '.'. $resultat["format"],
 	    "urlSource" => "images/".$id. '.'. $resultat["format"],
-	    "pointsTotaux" => ($resultat["nb_vote_positif"] - $resultat["nb_vote_negatif"])
+	    "pointsTotaux" => $resultat["pointsTotaux"],
 	);
 	
 	$infojson = json_encode($info);

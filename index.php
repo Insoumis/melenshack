@@ -16,7 +16,7 @@
 		echo "<input id='connected' value='yes' hidden/>";
 	
 	//input caché pour savoir la méthode de sort
-	if($_GET['sort']) {
+	if (isset($_GET['sort'])) {
 		$sort = $_GET['sort'];
 		if($sort == "new")
 			echo "<input id='sort' value='new' hidden/>";
@@ -71,8 +71,8 @@ function getCards(size) {
 			'startIndex': parseInt(currentIndex)
 		},
 		success: function(data) {
+			console.log(data);
 			data = JSON.parse(data);
-			console.log(data[0]);
 			var i = 0;
 			for(x = 0; x < data.length; ++x) {
 				console.log(data[x]);
