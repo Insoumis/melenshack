@@ -61,39 +61,40 @@ var currentIndex = 0;
 //récupère les $size prochaines cartes depuis le serveur et les affiche
 function getCards(size) {
 	var sort = $("#sort").val();
-	
+
 	$.ajax({
 		url: "requestajax.php",
 		type: "POST",
 		data: {
-			size: size,
-			sort: sort,
-			startAt, currentIndex
+			'size': parseInt(size),
+			'sort': sort,
+			'startIndex': parseInt(currentIndex)
 		},
-		contentType:"application/json; charset=utf-8",
-		dataType:"json",
 		success: function(data) {
-			currentIndex += size;
 			data = JSON.parse(data);
-
-			for(var card in data)
-				addCard(card);
+			console.log(data[0]);
+			var i = 0;
+			for(x = 0; x < data.length; ++x) {
+				console.log(data[x]);
+				addCard(data[x]);
+				i++;
+			}
+			currentIndex += i;
 		}
 	})
-
 }
 
 
 
 //ajoute une carte à la page
 function addCard(c) {
-	var id= c.id;
+	var id= c.idhash;
 	var titre = c.titre;
 	var dateCreation = c.dateCreation;
 	var pseudoUser = c.pseudoUser;
 	var idUser = c.idUser;
-	var points = c.points;
-	var url = c.url;
+	var points = c.pointsTotaux;
+	var url = c.urlThumbnail;
 	var vote = c.vote;
 	
 	//string du temps passé depuis le post
@@ -190,8 +191,16 @@ function addCard(c) {
 	//ajoute la carte au container
 	$("#card_container").append(card);
 
-	//affiche l'image
-	card.find('img').show();
+	var img = card.find('.card-img');
+	img.on('load', function() {
+
+		if(img.width() > img.height())
+			img.css("width", "100%");
+		else
+			img.css("height", "100%");
+		
+		card.find('img').show();
+	});
 
 	//initialise le clipboard lié au bouton copier
 	var cb = new Clipboard(card.find("#share_clipboard").get(0));
