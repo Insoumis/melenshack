@@ -2,7 +2,7 @@
 	<meta charset="utf-8">
 	<meta name="description" content="La banque d'images de la France Insoumise">
 	<title>Mélenshack</title>
-	<link rel="icon" type="image/png" href="logo.png">
+	<link rel="icon" type="image/png" href="assets/logo.png">
 
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="style.css">
@@ -26,7 +26,7 @@ if(!isset($_SESSION)){
 		<span class="icon-bar"></span>
 		<span class="icon-bar"></span>
 	</button>
-	<a class="navbar-brand" href="index.php"><img src="melenshack.svg" id="logo"/></a>
+	<a class="navbar-brand" href="index.php"><img src="assets/melenshack.svg" id="logo"/></a>
 	</div>
 	<div id="navbar" class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
