@@ -106,9 +106,6 @@ else
 </div>
 
 <script>
-$(window).on('load', function() {
-
-
 var id = $('#id').val();
 
 //vérifie l'ancien vote
@@ -128,6 +125,9 @@ function returnVote(ancien) {
 	else if(ancien == -1)
 		$(".downvote").addClass("voted");	
 }
+
+$(window).on('load', function() {
+
 
 //VOTES
 $(".upvote").click(upVote);
