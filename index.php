@@ -88,7 +88,8 @@ function getCards(size) {
 
 //ajoute une carte à la page
 function addCard(c) {
-	var id= c.idhash;
+	var idhash= c.idhash;
+	var id = c.id;
 	var titre = c.titre;
 	var dateCreation = c.dateCreation;
 	var pseudoUser = c.pseudoUser;
@@ -159,7 +160,7 @@ function addCard(c) {
 	//redirection quand on clique sur la carte vers la 'full screen'
 	card.find('.card-content, .card-header').click(function() {
 		if(!card.find("#share_clipboard").is(':hover')) //hack pour ne pas bloquer clipboardjs avec un stoppropagation
-			window.location.href = 'view.php?id=' + id;
+			window.location.href = 'view.php?id=' + idhash;
 	});
 	
 
