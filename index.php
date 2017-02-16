@@ -1,60 +1,86 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<?php include 'includes/header.php'; ?>
-
 <script src="bower_components/clipboard/dist/clipboard.min.js"></script>
 <script src="common_card.js"></script>
 
 <?php
+	//head + navbar
+	include 'includes/header.php';
 
-$id_user = $_SESSION['id'];
-if (!$id_user)
-	echo "<input id='connected' value='no' hidden/>";
-else
-	echo "<input id='connected' value='yes' hidden/>";
+	//input caché pour savoir si user connecté
+	$id_user = $_SESSION['id'];
+	if (!$id_user)
+		echo "<input id='connected' value='no' hidden/>";
+	else
+		echo "<input id='connected' value='yes' hidden/>";
 	
-
+	//input caché pour savoir la méthode de sort
+	if($_GET['sort']) {
+		$sort = $_GET['sort'];
+		if($sort == "new")
+			echo "<input id='sort' value='new' hidden/>";
+		else if($sort == "random")
+			echo "<input id='sort' value='random' hidden/>";
+		else
+			echo "<input id='sort' value='hot' hidden/>";
+	} else {
+		echo "<input id='sort' value='hot' hidden/>";
+	}
 ?> 
 
+<!-- container principal -->
 <div class="container" id="main_page">
-<div class="line-container" id="card_container">
+	<!-- container qui aligne les cartes -->
+	<div class="line-container" id="card_container">
 
-
-</div>
+	</div>
 </div>
 
 <script>
 
+
 $(window).on("load", function() {
-	for(i = 0; i < 30; ++i)
-		addCard(JSON.parse(j));
+	//au chargement: affiche 30 cartes
+	getCards(30);
 
 });
 
 
-//test
-var j = `{
-	"id": "3e2562f322a323124f23d2311e3132",
-	"titre": "200 000 insoumis ! GG à tous !",
-	"dateCreation": "2017-02-14 16:05:00",
-	"pseudoUser": "Entropy",
-	"idUser": "45",
-	"url": "https://images-ext-2.discordapp.net/eyJ1cmwiOiJodHRwOi8vaW1hZ2Uubm9lbHNoYWNrLmNvbS9maWNoaWVycy8yMDE3LzA3LzE0ODcwMDg2MjgtbWVsdnNscG4wMy5wbmcifQ.1M3AX3KlZHHYRFo5JlECUB-vshE?width=390&height=467",
-	"points": "352",
-	"vote": "up"
+$(window).scroll(function() {
+	//quand l'user atteind le bas de la page, rajoute 20 cartes
+	if($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
+		getCards(20);
+	}
+});
 
-}`;
-// Exemple de cardsinfo.php :  {"id":"5e123f5e3a13a213","titre":"Ceci est un titre","dateCreation":"2017-02-14 23:59:17","pseudoUser":"aaaa","idUser":"1","urlTumbnail":"http:\/\/site.quelquechose\/vignettes\/e3ae30117a4064f5a5c425045af9e5cc54a9eba5.png","urlSource":"http:\/\/site.quelquechose\/images\/e3ae30117a4064f5a5c425045af9e5cc54a9eba5.png","pointsTotaux":0}
-// Points totaux = nombre_vote_positif - nombre_vote_negatif
 
-//partage l'image sur F
-//OVERLAY	
-function hoverIn(e) {
-	$(e.target).show();
-}
-function hoverOut(e) {
-	$(e.target).hide();
+//nb de cartes affichées
+var currentIndex = 0;
+
+//récupère les $size prochaines cartes depuis le serveur et les affiche
+function getCards(size) {
+	var sort = $("#sort").val();
+	
+	$.ajax({
+		url: "requestajax.php",
+		type: "POST",
+		data: {
+			size: size,
+			sort: sort,
+			startAt, currentIndex
+		},
+		contentType:"application/json; charset=utf-8",
+		dataType:"json",
+		success: function(data) {
+			currentIndex += size;
+			data = JSON.parse(data);
+
+			for(var card in data)
+				addCard(card);
+		}
+	})
+
 }
 
 
@@ -99,10 +125,10 @@ function addCard(c) {
 		</div>
 	</div>`;
 
-	var card = $(html);
 
+	var card = $(html);
 	
-	//vérifie l'ancien vote
+	//vérifie l'ancien vote de l'user
 	$.post(
 		'check_vote.php',
 		{
@@ -112,6 +138,7 @@ function addCard(c) {
 		'text'
 	);
 
+	//ajoute la classe 'voted' à l'ancien vote
 	function returnVote(ancien) {
 		ancien = parseInt(ancien);
 		if(ancien == 1)
@@ -120,11 +147,13 @@ function addCard(c) {
 			card.find(".downvote").addClass("voted");	
 	}
 
-	
-
-	//assigne les events des boutons de partage
+	//assigne les fonctions de vote aux boutons
 	card.find("#share_fb").click(shareFacebook);
 	card.find("#share_twitter").click(shareTwitter);
+
+	//assigne les fonctions de vote aux boutons
+	card.find(".upvote").click(upVote);
+	card.find(".downvote").click(downVote);
 
 	//redirection quand on clique sur la carte vers la 'full screen'
 	card.find('.card-content, .card-header').click(function() {
@@ -134,87 +163,54 @@ function addCard(c) {
 	
 
 
-
-	//VOTES
-	card.find(".upvote").click(upVote);
-
-	card.find(".downvote").click(downVote);
-	//////////////
-	
-	
-	
+	//fonctions hoverIn, hoverOut de l'overlay (fade in / out)
 	card.find('.card-content').hover(function() {
+			//HOVER IN
 			$(this).find(".card-overlay").show();
 	        $(this).find(".card-overlay").fadeTo(200, 1);
-	
 		},
 		function() {
+			//HOVER OUT
 			card.find('[data-toggle="popover"]').popover("hide");
 			$(this).find(".card-overlay").fadeTo(300, 0, function() {
 				$(this).find(".card-overlay").hide();
 			});
 	});
+
+	//fonctions hoverIn, hoverOut des boutons de partage (fade in / out)
 	card.find('.card-share').hover(function() {
+			//HOVER IN
 	        $(this).fadeTo(100, 1);
 		},
 		function() {
+			//HOVER OUT
 			$(this).fadeTo(200, 0.7);
 	});
-	/////////////////////
 
 	//ajoute la carte au container
 	$("#card_container").append(card);
-	
-	//centre l'image pour cropper à droite et à gauche
-	card.find(".card-img").each(function(i, img) {
-		$(img).css({
-			position: "relative",
-		});
-		$(img).show();
-	});
 
+	//affiche l'image
+	card.find('img').show();
+
+	//initialise le clipboard lié au bouton copier
 	var cb = new Clipboard(card.find("#share_clipboard").get(0));
 	cb.on('success', function() {
+		//change le titre du tooltip quand on a copié
 		card.find("#share_clipboard").attr("title", "Lien copié !").tooltip('fixTitle').tooltip('show');
 	});
 
+	//remet le titre original au hoverOut
 	card.find('#share_clipboard').on('mouseout', function() {
 		$(this).attr("title", "Copier le lien").tooltip('fixTitle');
 	})
+
+	//initialise les tooltips des boutons de partage
 	card.find(".card-share").tooltip();
 }
 
-
-$(window).scroll(function() {
-	if($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
-		for(i = 0; i < 20; ++i)
-			addCard(JSON.parse(j));	
-	}
-});
-
-function getParameterByName(name) {
-	
-	var url = window.location.href;
-	
-	name = name.replace(/[\[\]]/g, "\\$&");
-	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-	results = regex.exec(url);
-	if (!results) return null;
-	if (!results[2]) return '';
-	return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-var sort = getParameterByName("sort");
-
-//change l'onglet actif
-if(sort == null || sort == "hot") {
-	$("#hot").addClass("actif");
-} else if(sort == "new") {
-	$("#new").addClass("actif");
-} else if(sort == "random") {
-	$("#random").addClass("actif");
-}
-
 </script>
+
+
 </body>
 </html>

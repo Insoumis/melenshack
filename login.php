@@ -41,10 +41,10 @@
 
 		<h1>Connexion</h1>
 		<h5>Pas de compte ? <a href="register.php">Inscrivez-vous !</a></h5>
-		<h5>Ou utilisez les réseaux sociaux :</h5>
+	<!--	<h5>Ou utilisez les réseaux sociaux :</h5>
 	
 		<div class="g-signin2" data-onsuccess="onSignInGoogle"></div>
-
+	-->
 		<form id="loginForm" action="login_conf.php"  method="post">
 			<div class="form-group col-xs-5">
 				<label for="pseudo"><h3>Nom d'utilisateur :</h3></label>
