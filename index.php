@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<script src="bower_components/clipboard/dist/clipboard.min.js"></script>
 <script src="common_card.js"></script>
 
 <?php
