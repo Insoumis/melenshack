@@ -38,7 +38,7 @@
 					
 						<?php if(!$connexionButton) : ?>
 						
-						<a id="deconnection" class="btn btn-danger" role="button" href="disconnect_conf.php">Déconnexion</a>
+						<a id="deconnection" class="btn btn-danger" role="button" href="MODELS/disconnect_conf.php">Déconnexion</a>
 						<input id="connected" value="yes" hidden/>	
 						<?php else : ?>
 						<a id="connexion" class="btn btn-danger" role="button" href="login.php">Connexion</a>

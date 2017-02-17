@@ -9,10 +9,4 @@ require 'VIEWS/register_view.php';
 ?>
 
 <script src='https://www.google.com/recaptcha/api.js'></script>
-<script>
-
-function recaptchaCallback() {
-	$("#submit").prop("disabled", false);
-}
-
-</script>
+<script src="CONTROLLERS/JS/register.js"></script>

@@ -15,7 +15,10 @@ titre
 include ("includes/identifiants.php");
 include_once ('includes/securite.class.php');
 
-$img = $_FILES['file'];
+if(!empty($_FILES['file']))
+	$img = $_FILES['file'];
+else
+	$img = file_get_contents($_POST['url']);
 
 if (!isset($_SESSION)) {
     session_start ();
@@ -97,11 +100,11 @@ $thumb = imagecreatetruecolor ($newwidth, $newheight);
 imagecopyresized ($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
 if (($extension_image == "jpg") OR ($extension_image == "jpeg")) {
-    imagejpeg ($thumb, __DIR__ . '/vignettes/' . $id . '.jpg');
+    imagejpeg ($thumb, __DIR__ . '/../vignettes/' . $id . '.jpg');
 } elseif ($extension_image == "png") {
-    imagepng ($thumb, __DIR__ . '/vignettes/' . $id . '.png');
+    imagepng ($thumb, __DIR__ . '/../vignettes/' . $id . '.png');
 } elseif ($extension_image == "gif") {
-    imagegif ($thumb, __DIR__ . '/vignettes/' . $id . '.gif');
+    imagegif ($thumb, __DIR__ . '/../vignettes/' . $id . '.gif');
 }
 
 header ('Location:../view.php?id=' . $id);

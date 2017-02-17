@@ -24,6 +24,9 @@
 					</label>
 					<label for="file">Veuillez selectionner une image JPG, PNG ou GIF</label>
 					<br>
+					OU
+					<input type="url" name="url" id="url" class="form-control input-md">
+					<label for="url">Veuillez entrer l'URL de l'image</label>
 					<img id="preview" />
 					<br>
 					<div class="g-recaptcha" data-sitekey="6LefaBUUAAAAALVKIo2DiW_hWLs2kijFTrlUHGMb" data-callback="recaptchaCallback"></div>

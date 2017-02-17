@@ -139,27 +139,29 @@ function upVote(e) {
 			points ++;
 		console.log(points);
 		$(this).closest('.card, .big-img-container').find('.points').html(points);
+	
+	
+	
+		$(this).addClass("voted");
+		$(this).parent().find(".downvote").removeClass("voted");
+		//send vote to server
+	
+		var id = $(this).closest(".card, .big-img-container").attr("id");
+	
+		var http = new XMLHttpRequest();
+		var url = "vote_conf.php";
+		var params = "id_image="+id+"&vote=1";
+		http.open("POST", url, true);
+		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		/*
+		http.onreadystatechange = function() {
+			if(http.readyState == 4 && http.status == 200) {
+				alert(http.responseText);
+			}
+		} */
+		http.send(params);
+
 	}
-	
-	
-	$(this).addClass("voted");
-	$(this).parent().find(".downvote").removeClass("voted");
-	//send vote to server
-
-	var id = $(this).closest(".card, .big-img-container").attr("id");
-
-	var http = new XMLHttpRequest();
-	var url = "vote_conf.php";
-	var params = "id_image="+id+"&vote=1";
-	http.open("POST", url, true);
-	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	/*
-	http.onreadystatechange = function() {
-		if(http.readyState == 4 && http.status == 200) {
-			alert(http.responseText);
-		}
-	} */
-	http.send(params);
 }
 
 function downVote(e) {
@@ -177,30 +179,28 @@ function downVote(e) {
 			points --;
 		console.log(points);
 		$(this).closest('.card, .big-img-container').find('.points').html(points);
-	}
-
-
-
-	$(this).addClass("voted");
-	$(this).parent().find(".upvote").removeClass("voted");
-	//send vote to server
-
-	var id = $(this).closest(".card, .big-img-container").attr("id");
 	
-	var http = new XMLHttpRequest();
-	var url = "vote_conf.php";
-	var params = "id_image="+id+"&vote=-1";
-	http.open("POST", url, true);
-	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	/*
-	http.onreadystatechange = function() {
-		if(http.readyState == 4 && http.status == 200) {
-			alert(http.responseText);
-		}
-	} */
-	http.send(params);
 
+		$(this).addClass("voted");
+		$(this).parent().find(".upvote").removeClass("voted");
+		//send vote to server
+	
+		var id = $(this).closest(".card, .big-img-container").attr("id");
+		
+		var http = new XMLHttpRequest();
+		var url = "vote_conf.php";
+		var params = "id_image="+id+"&vote=-1";
+		http.open("POST", url, true);
+		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		/*
+		http.onreadystatechange = function() {
+			if(http.readyState == 4 && http.status == 200) {
+				alert(http.responseText);
+			}
+		} */
+		http.send(params);
 	}
+}
 
 
 //affiche erreur si pas loggé
