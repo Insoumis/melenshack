@@ -44,18 +44,22 @@ if (strlen($titre) > 255 || strlen($titre) == 0) {
 if (isset($_POST['url'])) {
     $url = htmlspecialchars($_POST['url']);
 
-    $img = file_get_contents($url);
-
     $a = getimagesize($url);
     $image_type = $a[2];
 
-    if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP)))
+    if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG , IMAGETYPE_JPG , IMAGETYPE_PNG , IMAGETYPE_BMP)))
     {
         //Good !
     } else {
         header ('Location:../upload.php?erreur=notimage');
         exit();
     }
+
+    if ($a > MAX_SIZE) {
+        header ('Location:../upload.php?erreur=size');
+        exit();
+    }
+
     $req = $bdd->prepare('SELECT id FROM images WHERE url = :url');
     $req->execute([
         ':url' => $url,
