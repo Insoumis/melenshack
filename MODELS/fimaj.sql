@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 16 Février 2017 à 16:18
+-- Généré le :  Ven 17 Février 2017 à 21:48
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -47,7 +47,9 @@ CREATE TABLE `images` (
   `nom_original` varchar(255) DEFAULT NULL,
   `nom_hash` varchar(255) DEFAULT NULL,
   `format` varchar(10) DEFAULT NULL,
-  `pointsTotaux` int(11) NOT NULL DEFAULT '0'
+  `pointsTotaux` int(11) NOT NULL DEFAULT '0',
+  `genre` varchar(255) NOT NULL,
+  `url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -93,7 +95,8 @@ ALTER TABLE `ban`
 -- Index pour la table `images`
 --
 ALTER TABLE `images`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `url` (`url`);
 
 --
 -- Index pour la table `users`
