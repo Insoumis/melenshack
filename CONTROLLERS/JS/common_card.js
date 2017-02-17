@@ -147,9 +147,8 @@ function upVote(e) {
 		//send vote to server
 	
 		var id = $(this).closest(".card, .big-img-container").attr("id");
-	
 		var http = new XMLHttpRequest();
-		var url = "vote_conf.php";
+		var url = "MODELS/vote_conf.php";
 		var params = "id_image="+id+"&vote=1";
 		http.open("POST", url, true);
 		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -188,7 +187,7 @@ function downVote(e) {
 		var id = $(this).closest(".card, .big-img-container").attr("id");
 		
 		var http = new XMLHttpRequest();
-		var url = "vote_conf.php";
+		var url = "MODELS/vote_conf.php";
 		var params = "id_image="+id+"&vote=-1";
 		http.open("POST", url, true);
 		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
