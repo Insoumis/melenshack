@@ -16,7 +16,7 @@ var id = $('.big-img-container').attr('id');
 
 //vérifie l'ancien vote
 $.post(
-	'check_vote.php',
+	'MODELS/check_vote.php',
 	{
 		id_image: id
 	},

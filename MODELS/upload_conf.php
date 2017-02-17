@@ -71,7 +71,7 @@ $req->execute ([
     'id' => $idbase,
 ]);
 
-$direction = '/images/' . $id . "." . $extension_image;
+$direction = '/../images/' . $id . "." . $extension_image;
 move_uploaded_file ($img['tmp_name'],__DIR__ . $direction);
 
 $imagebase = __DIR__ . $direction;

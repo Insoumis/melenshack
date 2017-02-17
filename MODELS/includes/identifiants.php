@@ -1,5 +1,5 @@
 <?php
-include_once("includes/constants.php");
+include_once("constants.php");
 
 $NomServeur = $_SERVER['SERVER_NAME'] ; 
 $local = ( (substr($NomServeur, 0, 7) == '192.168') || ($NomServeur == 'localhost') || (substr($NomServeur, 0, 3) == '127') );
