@@ -22,12 +22,13 @@
 					<label class="btn btn-default btn-file">
 					    Parcourir<input id="file" name="file" type="file" style="display: none;">
 					</label>
-					<label for="file">Veuillez selectionner une image JPG, PNG ou GIF</label>
+					<label for="file">Veuillez selectionner une image JPG ou PNG</label>
 					<br>
 					OU
 					<input type="url" name="url" id="url" class="form-control input-md">
-					<label for="url">Veuillez entrer l'URL de l'image</label>
+					<label for="url">Veuillez entrer l'URL de l'image (JPG, PNG, BMP ou GIF)</label>
 					<img id="preview" />
+					<label for="file">Si après avoir uploadé l'image ou après avoir mit l'url, l'image ne s'affiche pas, c'est qu'elle n'est pas valide.</label>
 					<br>
 					<div class="g-recaptcha" data-sitekey="6LefaBUUAAAAALVKIo2DiW_hWLs2kijFTrlUHGMb" data-callback="recaptchaCallback"></div>
 					<br>

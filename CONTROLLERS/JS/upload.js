@@ -22,12 +22,22 @@ function readURL(input) {
 		}
 
 		reader.readAsDataURL(input.files[0]);
-	} else {
+	} else if(input) {
+		var x = document.getElementById("url").value;
+		$("#preview").attr("src", x).width(800);
+		image = true;
+		checkSubmit();
+	}
+	else {
 		image = false;
 	}
 }
 
 $("#file").change(function() {
+	readURL(this);
+});
+
+$("#url").change(function() {
 	readURL(this);
 });
 

@@ -14,11 +14,15 @@ if(isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 		else if ($erreur == "captcha")
 			$errmsg = "Captcha invalide ! Veuillez réessayer.";
 		else if ($erreur == "size")
-			$errmsg = "Image trop lourde !";
+			$errmsg = "Image trop lourde ou poids inconnu !";
 		else if ($erreur == "format")
 			$errmsg = "L'image doit être en format PNG, JPG, JPEG ou GIF !";
 		else if ($erreur == "titre")
 			$errmsg = "Titre trop long !";
+		else if ($erreur == "exite")
+			$errmsg = "Une image avec la même url existe déja!";
+		else if ($erreur == "notimage")
+			$errmsg = "Le lien ne renvoit pas vers une image!";
 		else
 			$errmsg = "Veuillez réessayer";
 

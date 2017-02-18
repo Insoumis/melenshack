@@ -35,19 +35,34 @@ function getInfo($idhash) {
 	    'id_user' => $resultat["id_user"],
 	]);
 	$resultat2 = $req2->fetch();
-	
-	$info = array(
-	    "idhash" => $id,
-		"id" => $resultat["id"],
-	    "titre" => $resultat["titre"],
-	    "dateCreation" => $resultat["date_creation"],
-	    "pseudoUser" => $resultat2["pseudo"],
-	    "idUser" => $resultat["id_user"],
-	    "urlThumbnail" => "vignettes/".$id . '.'. $resultat["format"],
-	    "urlSource" => "images/".$id. '.'. $resultat["format"],
-	    "pointsTotaux" => $resultat["pointsTotaux"],
-	);
-	
+
+	if ($resultat["genre"] == "url") {
+
+		$info = array(
+			"idhash" => $id,
+			"id" => $resultat["id"],
+			"titre" => $resultat["titre"],
+			"dateCreation" => $resultat["date_creation"],
+			"pseudoUser" => $resultat2["pseudo"],
+			"idUser" => $resultat["id_user"],
+			"urlThumbnail" => $resultat["url"],
+			"urlSource" => $resultat["url"],
+			"pointsTotaux" => $resultat["pointsTotaux"],
+		);
+
+	} else {
+		$info = array(
+			"idhash" => $id,
+			"id" => $resultat["id"],
+			"titre" => $resultat["titre"],
+			"dateCreation" => $resultat["date_creation"],
+			"pseudoUser" => $resultat2["pseudo"],
+			"idUser" => $resultat["id_user"],
+			"urlThumbnail" => "vignettes/" . $id . '.' . $resultat["format"],
+			"urlSource" => "images/" . $id . '.' . $resultat["format"],
+			"pointsTotaux" => $resultat["pointsTotaux"],
+		);
+	}
 	$infojson = json_encode($info);
 	
 	return $infojson;
