@@ -51,9 +51,19 @@ function shareTwitter(e) {
 	e.stopPropagation();
 	var card = $(e.target).closest(".card, .big-img-container");
 	var url = urlBase+"view.php?id=" + card.attr("id");
-	window.open("https://twitter.com/share?url="+escape(url)+"&hashtags=jlm2017", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+	window.open("https://twitter.com/share?url="+escape(url)+"&hashtags=jlm2017", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 
 }
+
+function shareGplus(e) {
+	e.stopPropagation();
+	var card = $(e.target).closest(".card, .big-img-container");
+	var url = urlBase+"view.php?id=" + card.attr("id");
+	window.open("https://plus.google.com/share?url="+escape(url), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+
+
+}
+
 
 
 

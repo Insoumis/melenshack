@@ -70,13 +70,14 @@ function addCard(c) {
 	var idUser = c.idUser;
 	var points = c.pointsTotaux;
 	var url = c.urlThumbnail;
+	var urlSource = c.urlSource;
 	
 	//string du temps passé depuis le post
 	var temps = getTimeElapsed(dateCreation);
 	
 	//récupère le template
 	var card = $('.template').clone();
-	card.attr('id', id);
+	card.attr('id', idhash);
 	card.find('.card-img>img').attr('src', url);
 	card.find('.card-title').html(titre);
 	card.find('.card-author>a').attr('src', 'user.php?id=' + idUser)
@@ -106,12 +107,12 @@ function addCard(c) {
 	//assigne les fonctions de vote aux boutons
 	card.find(".card-facebook").click(shareFacebook);
 	card.find(".card-twitter").click(shareTwitter);
-	//card.find(".card-gplus").click(shareGplus);
+	card.find(".card-gplus").click(shareGplus);
 
 
 	//bouton SHARE
-	$(".card-share-plus").click(function(e) {
-		animateShare($(e.target).closest(".card"));
+	card.find(".card-share-plus").click(function(e) {
+		animateShare($(this).closest(".card"));
 	});
 	
 	//ferme les share si on clique ailleurs
@@ -122,7 +123,7 @@ function addCard(c) {
 
 
 	//bouton THUMBUP
-	$(".card-thumb-up").click(function() {
+	card.find(".card-thumb-up").click(function() {
 		if(!$(this).hasClass("voted")) {
 			$(this).addClass("voted");
 			$(this).siblings(".card-thumb-down").removeClass("voted");
@@ -136,7 +137,7 @@ function addCard(c) {
 	});
 
 	//bouton THUMBDOWN
-	$(".card-thumb-down").click(function() {
+	card.find(".card-thumb-down").click(function() {
 		if(!$(this).hasClass("voted")) {
 			$(this).addClass("voted");
 			$(this).siblings(".card-thumb-up").removeClass("voted");
@@ -149,7 +150,7 @@ function addCard(c) {
 	});
 	
 	//bouton OPEN
-	$(".card-open").click(function() {
+	card.find(".card-open").click(function() {
 		var card = $(this).closest(".card");
 		var width = 1000;
 		var height = 1000;
@@ -164,7 +165,7 @@ function addCard(c) {
 	});
 
 	//HOVER THUMBUP
-	$(".card-thumb-up").hover(function() {
+	card.find(".card-thumb-up").hover(function() {
 		$(this).closest(".card").css({
 					"-webkit-box-shadow": "0 0 15px 5px #23b9d0",
 					"-moz-box-shadow": "0 0 15px 5px #23b9d0",
@@ -182,7 +183,7 @@ function addCard(c) {
 
 
 	//HOVER THUMBDOWN
-	$(".card-thumb-down").hover(function() {
+	card.find(".card-thumb-down").hover(function() {
 			$(this).closest(".card").css({
 						"-webkit-box-shadow": "0 0 15px 5px #e23d22",
 						"-moz-box-shadow": "0 0 15px 5px #e23d22",
