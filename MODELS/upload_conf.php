@@ -15,6 +15,20 @@ titre
 include ("includes/identifiants.php");
 include_once ('includes/securite.class.php');
 
+function retrieve_remote_file_size($url){
+    $ch = curl_init($url);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, TRUE);
+    curl_setopt($ch, CURLOPT_NOBODY, TRUE);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+    $data = curl_exec($ch);
+    $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+
+    curl_close($ch);
+    return ($size/10);
+}
 
 if (!isset($_SESSION)) {
     session_start ();
@@ -44,19 +58,20 @@ if (strlen($titre) > 255 || strlen($titre) == 0) {
 if (isset($_POST['url'])) {
     $url = htmlspecialchars($_POST['url']);
 
-    $a = getimagesize($url);
-    $image_type = $a[2];
+    $a = retrieve_remote_file_size($url); // Vérification de la taille de l'image
+    if ($a> MAX_SIZE) {
+        header ('Location:../upload.php?erreur=size');
+        exit();
+    }
 
-    if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG , IMAGETYPE_JPG , IMAGETYPE_PNG , IMAGETYPE_BMP)))
+    $b = getimagesize($url); // Vérification de l'extension
+    $image_type = $b[2];
+
+    if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG , IMAGETYPE_PNG , IMAGETYPE_BMP)))
     {
         //Good !
     } else {
         header ('Location:../upload.php?erreur=notimage');
-        exit();
-    }
-
-    if ($a > MAX_SIZE) {
-        header ('Location:../upload.php?erreur=size');
         exit();
     }
 
