@@ -121,6 +121,15 @@ function getTimeElapsed(date) {
 	return temps;
 }
 
+function vote(id, vote) {
+	var http = new XMLHttpRequest();
+	var url = "MODELS/vote_conf.php";
+	var params = "id_image="+id+"&vote="+vote;
+	http.open("post", url, true);
+	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	http.send(params);
+}
+
 
 //Fonctions de vote
 function upVote(e) {
@@ -150,12 +159,12 @@ function upVote(e) {
 		var http = new XMLHttpRequest();
 		var url = "MODELS/vote_conf.php";
 		var params = "id_image="+id+"&vote=1";
-		http.open("POST", url, true);
+		http.open("post", url, true);
 		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		/*
 		http.onreadystatechange = function() {
-			if(http.readyState == 4 && http.status == 200) {
-				alert(http.responseText);
+			if(http.readystate == 4 && http.status == 200) {
+				alert(http.responsetext);
 			}
 		} */
 		http.send(params);
