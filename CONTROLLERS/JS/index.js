@@ -59,6 +59,10 @@ function getCards(size) {
 	})
 }
 
+//sotp le gif playing meme si souris quitte vite
+$('body').hover(function() {
+	$('.playing').mouseleave();
+});
 
 //ajoute une carte à la page
 function addCard(c) {
@@ -152,35 +156,63 @@ function addCard(c) {
 	//bouton OPEN
 	card.find(".card-open").click(function() {
 		var card = $(this).closest(".card");
-		var bigImg = $('<img/>');
-		bigImg.attr('src', urlSource);
-		bigImg.addClass('card-img');
-		bigImg.on('load', function() {
-			var width = $(this).get(0).width;
-			var height = $(this).get(0).height;
 
-			var containerWidth = $('.card-container').width();
+		if(!card.hasClass("opened")) {
+			card.addClass("opened");
 
-			if(width > 0.8 * containerWidth) {
-				height = height / width * 0.8 * containerWidth;
-				width = 0.8 * containerWidth;
-			} else if(width < 0.6 * containerWidth) {
-				height = height / width * 0.6 * containerWidth;
-				width = 0.6 * containerWidth;
+			card.find('.card-open').attr('title', 'Réduire').tooltip('fixTitle').tooltip('hide');
+			var bigImg = $('<img/>');
+			bigImg.attr('src', urlSource);
+			bigImg.addClass('card-img');
+			bigImg.on('load', function() {
+				var width = $(this).get(0).width;
+				var height = $(this).get(0).height;
+	
+				var containerWidth = $('.card-container').width();
+	
+				if(width > 0.8 * containerWidth) {
+					height = height / width * 0.8 * containerWidth;
+					width = 0.8 * containerWidth;
+					width = 0.6 * containerWidth;
+	
+				}
+	
+				
+				card.find('.card-img').replaceWith(bigImg);
+	
+				var marginLeft = $(this).closest(".card").parent().width() - width;
+				marginLeft /= 2;
+				card.css({width:'auto', 'position': 'absolute', 'z-index': '3'});
+				$('.overlay').addClass("overlay_active");
+				card.find('.card-img').css('width', width+'px');
+			});
+		} else {
 
-			}
-
+			card.removeClass("opened");
 			
-			card.find('.card-img').replaceWith(bigImg);
+			card.find('.card-open').attr('title', 'Agrandir').tooltip('fixTitle').tooltip('hide');
+			var img = $('<img/>');
+			img.attr('src', url);
+			img.addClass('card-img');
+			img.on('load', function() {
+				var width = $(this).get(0).width;
+				var height = $(this).get(0).height;
+	
+				var containerWidth = $('.card-container').width();
+	
+				card.find('.card-img').replaceWith(img);
+	
+				var marginLeft = $(this).closest(".card").parent().width() - width;
+				marginLeft /= 2;
+				card.css({width:'350px', 'z-index': '0'});
+				card.find('.card-image').css('max-height', '530px');
+				$('.overlay').removeClass("overlay_active");
+				card.find('.card-img').css('width', '330px');
+			});
 
-			var marginLeft = $(this).closest(".card").parent().width() - width;
-			marginLeft /= 2;
-			card.css({'position': 'absolute', 'z-index': '3', 'max-height': 'none'});
-			$('.overlay').addClass("overlay_active");
-			card.animate({width: width+'px', left: marginLeft+'px'}, 400, 'easeInOutQuad');
 
-		});
-		
+
+		}
 	});
 
 	//HOVER THUMBUP
@@ -217,6 +249,8 @@ function addCard(c) {
 						});
 	
 	});
+
+
 	
 	
 
@@ -224,7 +258,34 @@ function addCard(c) {
 	card.removeClass('template');
 	card.addClass('card');
 	card.show();
+	
+	//HOVER IMG
+	card.mouseenter(function(e) {
+		var ext = urlSource.split('.').pop();
+		if(ext == 'gif') {
+			$(this).addClass("playing");
+			var bigImg = $('<img/>');
+			bigImg.attr('src', urlSource);
+			bigImg.addClass('card-img');
+			bigImg.on('load', function() {
+				card.find('.card-img').replaceWith(bigImg);
+			});
+			e.stopPropagation();
+		}
+	});
 
+	card.mouseleave(function() {
+		var ext = urlSource.split('.').pop();
+		if(ext == 'gif') {
+			$(this).removeClass('playing');
+			var img = $('<img/>');
+			img.attr('src', url);
+			img.addClass('card-img');
+			img.on('load', function() {
+				card.find('.card-img').replaceWith(img);
+			});
+		}
+	});
 	$(card).imagesLoaded().progress(function() {
 		$(gridLayout).masonry('reloadItems');
 		$(gridLayout).masonry('layout');
@@ -274,7 +335,7 @@ function animateShare(card) {
 
 		btn.addClass("on");
 
-		if(currentCardShare != null) //si un autre share menu est ouvret, on le ferme
+		if(currentCardShare != null) //si un autre share menu est ouvert, on le ferme
 			animateShare(currentCardShare);
 		currentCardShare = card;
 
@@ -282,8 +343,11 @@ function animateShare(card) {
 		card.find(".card-link, .card-open, .card-votes").hide("fade", 150, function() {
 			if(!anim) {
 				anim = true;
-				btn.animate({left: '10px', color: '#e23d22'}, 250, 'easeInOutQuad',
-				function() { btn.removeClass("animating"); });
+				btn.animate({left: '10px', 'color': '#e23d22' }, 250, 'easeInOutQuad',
+				function() { 
+					btn.addClass("red");
+					btn.removeClass("animating"); 
+				});
 				card.find(".card-share-buttons").show("fade", 200);
 			}
 		});
@@ -317,8 +381,10 @@ function animateShare(card) {
 		"-webkit-animation-fill-mode": "forwards",
 	
 		}).attr("title", "Partager").tooltip("fixTitle")
-		.delay(150).animate({left: "160px", color: "black"}, 250, 'easeInOutQuad', 
+		.delay(150).animate({left: "160px", 'color': 'black'}, 250, 'easeInOutQuad', 
 			function() {
+				btn.removeClass("red");
+				btn.removeAttr("style");	
 				btn.removeClass("animating");
 			});
 		card.find(".card-link, .card-open, .card-votes").delay(200).show("fade", 150);

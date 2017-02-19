@@ -287,7 +287,9 @@ li.actif>a:hover {
 	margin-left: 10px;
 	float: left;
 }
-
+.red, .red:hover {
+	color: #e23d22;
+}
 
 .card-link {
 	position: absolute;

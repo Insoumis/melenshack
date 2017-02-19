@@ -12,22 +12,21 @@
 	
 		<div class="template">
 			<div class="card-img">
-				<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Jean-Luc_Melenchon_Front_de_Gauche_2009-03-08.jpg/170px-Jean-Luc_Melenchon_Front_de_Gauche_2009-03-08.jpg" />
+				<img />
 			</div>
 
 			<div class="card-title">
-				La France Insoumisfdsfsssssssssssssssssssssssssssssssssse
 			</div>
 	
 			<div class="card-author">
-				<a href="#">Entropy</a>
+				<a href="#"></a>
 			</div>
 
 			<div class="card-footer">
 				<div class="card-share">
 			
 					<span data-toggle="tooltip" title="Copier le lien" class="glyphicon glyphicon-link card-link" ></span>
-					<span data-toggle="tooltip" title="Ouvrir en grand" class="glyphicon glyphicon-fullscreen card-open" ></span>
+					<span data-toggle="tooltip" title="Agrandir" class="glyphicon glyphicon-fullscreen card-open" ></span>
 					<span data-toggle="tooltip" title="Partager" class="glyphicon glyphicon-share-alt card-share-plus" ></span>
 				</div>
 				<div class="card-votes">
