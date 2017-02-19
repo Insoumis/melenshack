@@ -152,16 +152,35 @@ function addCard(c) {
 	//bouton OPEN
 	card.find(".card-open").click(function() {
 		var card = $(this).closest(".card");
-		var width = 1000;
-		var height = 1000;
+		var bigImg = $('<img/>');
+		bigImg.attr('src', urlSource);
+		bigImg.addClass('card-img');
+		bigImg.on('load', function() {
+			var width = $(this).get(0).width;
+			var height = $(this).get(0).height;
+
+			var containerWidth = $('.card-container').width();
+
+			if(width > 0.8 * containerWidth) {
+				height = height / width * 0.8 * containerWidth;
+				width = 0.8 * containerWidth;
+			} else if(width < 0.6 * containerWidth) {
+				height = height / width * 0.6 * containerWidth;
+				width = 0.6 * containerWidth;
+
+			}
+
+			
+			card.find('.card-img').replaceWith(bigImg);
+
+			var marginLeft = $(this).closest(".card").parent().width() - width;
+			marginLeft /= 2;
+			card.css({'position': 'absolute', 'z-index': '3', 'max-height': 'none'});
+			$('.overlay').addClass("overlay_active");
+			card.animate({width: width+'px', left: marginLeft+'px'}, 400, 'easeInOutQuad');
+
+		});
 		
-		var marginLeft = $(this).closest(".card").parent().width() - width;
-		marginLeft /= 2;
-		card.css({'position': 'absolute', 'z-index': '3'});
-		$('.overlay').addClass("overlay_active");
-		card.animate({width: width+'px', height: height+'px', left: marginLeft+'px'}, 400, 'easeInOutQuad');
-
-
 	});
 
 	//HOVER THUMBUP

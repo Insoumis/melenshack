@@ -28,5 +28,5 @@ else if($baseName == "index.php" && $sort == "random")
 else if($baseName == "index.php")
 	$isHotActive = true;
 
-
+?>
 

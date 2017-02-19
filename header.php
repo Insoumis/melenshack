@@ -12,3 +12,6 @@ require 'CONTROLLERS/navbar_controller.php';
 require 'VIEWS/navbar_view.php';
 
 $NAVBAR = ob_get_clean();
+
+?>
+

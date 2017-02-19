@@ -22,15 +22,20 @@ body {
 	NAVBAR
 	------
 */
-
 .vdivide {
 	margin-top: 10px;
 	width: 2px;
 	height: 30px;
 	border-right: 1px groove #333;
 }
-#ajouter_img:hover, #ajouter_img:focus {
+#ajouter_img:hover, #ajouter_img:focus{
 	background-color: #ac2925;
+}
+#coli>a, #decoli>a {
+	color: white;
+}
+#coli>a:hover, #coli>a:focus, #decoli>a:hover, #decoli>a:focus {
+	background-color: #c9302c;
 }
 #ajouter_img {
 	color: white;
@@ -43,7 +48,15 @@ body {
 #logo {
 	overflow: hidden;
 }
+nav {
+	white-space: nowrap;
+}
+
+.container {
+	padding-right: 0;
+}
 .navbar {
+	white-space: nowrap;
 	-webkit-box-shadow: 0 8px 3px -6px #999;
 	-moz-box-shadow: 0 8px 3px -6px #999;
 	box-shadow: 0 8px 3px -6px #999;
@@ -51,19 +64,43 @@ body {
 	vertical-align: middle;
 	background-color: #fff;
 }
+.navbar .glyphicon.icon {
+	font-size: 20px;
+}
+.navbar-toggle {
+	border-color: #ddd !important;
+}
+.navbar-toggle:hover {
+	background-color: #ddd;
+}
+.icon-bar {
+	color: black !important;
+	background: black;
+
+}
+.navbar ul {
+	margin-right: 0px;
+}
 .navbar li {
-	box-sizing: border-box
+	box-sizing: border-box;
 	margin-left: 0;
 	margin-right: 0;
 }
 .navbar li a {
-	color: black;
+	color: black ;
 }
 .actif, .actif:hover, .actif:focus {
 	-webkit-box-shadow: inset 0 -8px 0px -3px #d90000;
-	-moz-box-shadow: inset 0 -8px 0px -3px #d900.0;
+	-moz-box-shadow: inset 0 -8px 0px -3px #d90000;
 	box-shadow: inset 0 -8px 0px -3px #d90000;
 }
+
+li.actif>a:hover {
+	-webkit-box-shadow: inset 0 -8px 0px -3px #d90000;
+	-moz-box-shadow: inset 0 -8px 0px -3px #d90000;
+	box-shadow: inset 0 -8px 0px -3px #d90000;
+}
+
 .navbar a {
 	overflow: hidden;
 }
@@ -74,15 +111,44 @@ body {
 	width: auto;
 }
 #search {
-	line-height: 55px;
-	vertical-align: middle;
+	margin-top: 10px;
+	vertical-align: center;
+	margin-right: 20px;
 }
-#search_input {
-	font-size: 16px;
+#searchinput {
+	margin-top: 10px;
+	margin-right: 20%;
+	margin-left: 20%;
+	width: 60%;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 17px;
+	color: black;
+	padding-left: 10px;
+	padding-right: 10px;
+	height: 30px;
+	border-radius: 15px;
+	border: 1px solid #d90000;
 }
-#connexion {
-	margin-left: 10px;
+#searchinput:focus {
+	border: 2px solid #d90000;
+	outline-width: 0px;
 }
+
+#connexion, #deconnexion {
+	margin-left: 0px;
+}
+
+#right {
+	margin: 0;
+	color: white;
+}
+#right>li {
+	float: right;
+}
+
+#coli {
+}
+
 
 /*
 
