@@ -55,7 +55,7 @@ if (strlen($titre) > 255 || strlen($titre) == 0) {
     exit();
 }
 
-if (isset($_POST['url'])) {
+if (!empty($_POST['url'])) {
     $url = htmlspecialchars($_POST['url']);
 
     $a = retrieve_remote_file_size($url); // Vérification de la taille de l'image
@@ -102,7 +102,7 @@ if (isset($_POST['url'])) {
         'nom_hash' => $id,
         'id' => $idbase,
     ]);
-} elseif (isset($_POST['url']) AND isset($_FILES['file'] )) {
+} elseif (!empty($_POST['url']) AND !empty($_FILES['file'] )) {
     header ('Location:../upload.php?erreur='); // Soit url, soit image, pas les 2 en meme temps
     exit();
 } else {

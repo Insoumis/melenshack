@@ -9,7 +9,7 @@ body {
 }
 
 #main_page {
-	margin-top: 60px;
+	padding-top: 60px;
 
 }
 
@@ -49,6 +49,7 @@ body {
 	overflow: hidden;
 }
 nav {
+	z-index: 5;
 	white-space: nowrap;
 }
 
@@ -156,6 +157,118 @@ li.actif>a:hover {
 
 
 */
+.big-card-container {
+	position: absolute;
+	z-index: 5;
+	height: 100%;
+	top: 0;
+	left: 50%;
+	width: 50%;
+	padding-top: 50px;
+}
+
+.big-card-overlay {
+	position: fixed;
+	padding: 20px;
+	top: 50px;
+	bottom: 0px;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	background: rgba(0, 0, 0, 0.6);
+	overflow-y: scroll;
+}
+
+.big-card {
+	position: relative;
+	display: inline-block;
+	font-family: "Source Sans Pro", serif;
+	margin: auto;
+	padding: 10px;
+	margin-bottom: 50px;
+	background: #fff;
+	max-width: 100%;
+}
+
+.big-card-title {
+	font-weight: bold;
+	font-size: 50px;
+	line-height: 50px;
+	max-height: 100px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.big-card-close {
+	float: right;
+	margin-left: 20px;
+	font-size: 20px;
+	cursor: pointer;
+	user-select: none;
+}
+
+.big-card-close:hover {
+	color: grey;
+}
+
+.big-card-signal {
+	float: left;
+	font-size: 20px;
+	user-select: none;
+}
+.big-card-signal:hover {
+	color: orange;
+}
+
+.big-card-infos>a:hover, .big-card-infos>a:focus {
+	text-decoration: none;
+}
+.big-card-infos {
+	font-size: 16px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.big-card-share>img {
+	height: 40px;
+	margin-top: -15px;
+	cursor: pointer;
+	margin-left: 10px;
+	user-select: none;
+}
+.big-card-share {
+	float: center;
+	font-size: 30px;
+	margin-bottom: 10px;
+	line-height: 40px;
+	user-select: none;
+}
+.big-card-share>span {
+	cursor: pointer;
+	user-select: none;
+}
+
+.big-card-img {
+	max-width: 100%;
+	user-select: none;
+}
+.big-card-img>img {
+	height: auto;
+	max-width: 100%;
+	user-select: none;
+}
+.big-card-votes {
+	float: right;
+	font-size: 30px;
+	user-select: none;
+}
+
+.big-card-points {
+	float:right;
+	margin-right: 20px;
+	font-size: 25px;
+}
+
+
 .template {
 	display: none;
 }
@@ -167,29 +280,12 @@ li.actif>a:hover {
 	display: inline-block;
 
 }
-.overlay {
-	margin: 0;
-}
-
-.overlay_active:after {
-	content: " ";
-	z-index: 2;
-	background: rgba(150, 150, 150, 0.5);
-	display: block;
-	position: absolute;
-	height: 100%;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-}
 
 .card {
 	display: inline-block;
 	vertical-align: top;
 	*display: inline;
 	zoom: 1;
-	position: relative;
 	font-family: "Roboto", serif;
 	-webkit-box-shadow: 0 0 8px 5px #ccc;
 	-moz-box-shadow: 0 0 8px 5px #ccc;
@@ -201,7 +297,13 @@ li.actif>a:hover {
 	width: 350px;
 	min-height: 150px;
 	float:left;
-	//height: 450px;
+}
+
+.card-big {
+	font-family: "Roboto", serif;
+	padding: 10px;
+	padding-bottom: 50px;
+	background: #fff;
 }
 
 .card-img>img {
@@ -213,7 +315,6 @@ li.actif>a:hover {
 	overflow: hidden;
 	width: 100%;
 }
-
 .card-title {
 	text-align: left;
 	word-wrap: break-word;
@@ -223,6 +324,12 @@ li.actif>a:hover {
 	font-size: 25px;
 	line-height: 25px;
 	max-height: 50px;
+}
+
+.opened .card-title {
+	font-size: 40px;
+	line-height: 40px;
+	max-height: 40px;
 }
 
 .card-author {

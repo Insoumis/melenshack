@@ -4,7 +4,7 @@
 	<title>Mélenshack</title>
 	<link rel="icon" type="image/png" href="assets/logo.png">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
-
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/style.css">
 

@@ -4,11 +4,39 @@ var gridLayout = $('.card-container');
 
 $(document).ready(function() {
 
+	$('.big-card-container').click(function() {	
+		$('.big-card-container').hide();
+	});
+
+	$('.big-card').click(function(e) {
+		e.stopPropagation();
+	});
+
+	$('.big-card-close').click(function() {
+		$('.big-card-container').hide();
+	});
+	
+	$(".big-card-signal").click(function() {
+		//send report to server
+
+	});
+	
+	$(".big-card-facebook").click(shareFacebook);
+	$(".big-card-twitter").click(shareTwitter);
+	$(".big-card-gplus").click(shareGplus);
+	
+	
+	$('[data-toggle="tooltip"]').tooltip();
+
+	$(window).resize(function() {
+		var ratio = $('.big-card-img>img').get(0).height / $('.big-card-img>img').get(0).width; 
+		//$('.big-card-img>img').height(ratio * $('.big-card-img>img').width());
+	}).resize();
 
 	//au chargement: affiche 30 cartes
 	//layout
 	gridLayout.masonry({
-		itemSelector: '.card',
+		itemSelector: '.card:not(.opened)',
 		columnWidth: 370,
 		fitWidth: true,
 		stagger: 30
@@ -84,7 +112,7 @@ function addCard(c) {
 	card.attr('id', idhash);
 	card.find('.card-img>img').attr('src', url);
 	card.find('.card-title').html(titre);
-	card.find('.card-author>a').attr('src', 'user.php?id=' + idUser)
+	card.find('.card-author>a').attr('href', 'user.php?id=' + idUser)
 							   .html(pseudoUser);
 	card.find('.card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
 
@@ -135,7 +163,7 @@ function addCard(c) {
 			card.css('background', '#23b9d0');
 			card.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
 
-			vote(card.attr('id'), 1);
+			vote(id, 1);
 
 		}
 	});
@@ -149,70 +177,73 @@ function addCard(c) {
 			card.css('background', '#e23d22');
 			card.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
 			
-			vote(card.attr('id'), -1);
+			vote(id, -1);
 		}
 	});
 	
 	//bouton OPEN
 	card.find(".card-open").click(function() {
-		var card = $(this).closest(".card");
-
-		if(!card.hasClass("opened")) {
-			card.addClass("opened");
-
-			card.find('.card-open').attr('title', 'Réduire').tooltip('fixTitle').tooltip('hide');
-			var bigImg = $('<img/>');
-			bigImg.attr('src', urlSource);
-			bigImg.addClass('card-img');
-			bigImg.on('load', function() {
-				var width = $(this).get(0).width;
-				var height = $(this).get(0).height;
-	
-				var containerWidth = $('.card-container').width();
-	
-				if(width > 0.8 * containerWidth) {
-					height = height / width * 0.8 * containerWidth;
-					width = 0.8 * containerWidth;
-					width = 0.6 * containerWidth;
+		var card = $(this).closest(".card, .card-big");
+		$(this).tooltip('hide');
+			var big = $('.big-card');
+			big.attr('id', idhash);
+			big.find('.big-card-title').html(titre);
+			big.find('.big-card-tmps').html(temps)
+			big.find('.big-card-author').attr('href', 'user.php?id'+idUser).html(pseudoUser);
+			//bouton THUMBUP
+			big.find(".card-thumb-up").click(function() {
+				if(!$(this).hasClass("voted")) {
+					$(this).addClass("voted");
+					$(this).siblings(".card-thumb-down").removeClass("voted");
+					var card = $(this).closest(".card");
+					big.css('background', '#23b9d0');
+					big.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
+					vote(id, 1);
 	
 				}
-	
-				
-				card.find('.card-img').replaceWith(bigImg);
-	
-				var marginLeft = $(this).closest(".card").parent().width() - width;
-				marginLeft /= 2;
-				card.css({width:'auto', 'position': 'absolute', 'z-index': '3'});
-				$('.overlay').addClass("overlay_active");
-				card.find('.card-img').css('width', width+'px');
 			});
-		} else {
 
-			card.removeClass("opened");
+			//bouton THUMBDOWN
+			big.find(".card-thumb-down").click(function() {
+				if(!$(this).hasClass("voted")) {
+					$(this).addClass("voted");
+					$(this).siblings(".card-thumb-up").removeClass("voted");
+					var card = $(this).closest(".card");
+					big.css('background', '#e23d22');
+					big.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
 			
-			card.find('.card-open').attr('title', 'Agrandir').tooltip('fixTitle').tooltip('hide');
-			var img = $('<img/>');
-			img.attr('src', url);
-			img.addClass('card-img');
-			img.on('load', function() {
-				var width = $(this).get(0).width;
-				var height = $(this).get(0).height;
-	
-				var containerWidth = $('.card-container').width();
-	
-				card.find('.card-img').replaceWith(img);
-	
-				var marginLeft = $(this).closest(".card").parent().width() - width;
-				marginLeft /= 2;
-				card.css({width:'350px', 'z-index': '0'});
-				card.find('.card-image').css('max-height', '530px');
-				$('.overlay').removeClass("overlay_active");
-				card.find('.card-img').css('width', '330px');
+					vote(id, -1);
+				}
 			});
+	
+			//vérifie l'ancien vote de l'user
+			$.post(
+				'MODELS/check_vote.php',
+				{
+					id_image: id
+				},
+				returnVote,
+				'text'
+			);
 
-
-
-		}
+			//ajoute la classe 'voted' à l'ancien vote
+			function returnVote(ancien) {
+				ancien = parseInt(ancien);
+				if(ancien == 1) {
+					big.find(".card-thumb-up").addClass("voted");
+					big.find(".card-thumb-down").removeClass("voted");
+				} else if(ancien == -1) {
+					big.find(".card-thumb-down").addClass("voted");
+					big.find(".card-thumb-up").removeClass("voted");
+				}
+			}
+			
+			big.find('.big-card-points').html(points);
+			big.find('.big-card-img').attr('src', urlSource).on('load',
+				function() {
+					$('.big-card-container').show();
+				});
+			
 	});
 
 	//HOVER THUMBUP
@@ -262,7 +293,7 @@ function addCard(c) {
 	//HOVER IMG
 	card.mouseenter(function(e) {
 		var ext = urlSource.split('.').pop();
-		if(ext == 'gif') {
+		if(ext == 'gif' && !$(this).hasClass("opened")) {
 			$(this).addClass("playing");
 			var bigImg = $('<img/>');
 			bigImg.attr('src', urlSource);
@@ -276,7 +307,7 @@ function addCard(c) {
 
 	card.mouseleave(function() {
 		var ext = urlSource.split('.').pop();
-		if(ext == 'gif') {
+		if(ext == 'gif' && !$(this).hasClass("opened")) {
 			$(this).removeClass('playing');
 			var img = $('<img/>');
 			img.attr('src', url);
@@ -291,8 +322,6 @@ function addCard(c) {
 		$(gridLayout).masonry('layout');
 	});
 
-	$(gridLayout).masonry('reloadItems');
-	$(gridLayout).masonry('layout');
 
 	//initialise le clipboard lié au bouton copier
 	var cb = new Clipboard(card.find(".card-link").get(0));

@@ -35,7 +35,7 @@ window.fbAsyncInit = function() {
 function shareFacebook(e) {
 	//ne propage pas l'event à la carte
 	e.stopPropagation();
-	var card = $(e.target).closest(".card, .big-img-container");
+	var card = $(e.target).closest(".card, .big-card");
 	var url = urlBase+"view.php?id=" + card.attr("id");
 
 	FB.ui(
@@ -49,7 +49,7 @@ function shareFacebook(e) {
 
 function shareTwitter(e) {
 	e.stopPropagation();
-	var card = $(e.target).closest(".card, .big-img-container");
+	var card = $(e.target).closest(".card, .big-card");
 	var url = urlBase+"view.php?id=" + card.attr("id");
 	window.open("https://twitter.com/share?url="+escape(url)+"&hashtags=jlm2017", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 
@@ -57,7 +57,7 @@ function shareTwitter(e) {
 
 function shareGplus(e) {
 	e.stopPropagation();
-	var card = $(e.target).closest(".card, .big-img-container");
+	var card = $(e.target).closest(".card, .big-card");
 	var url = urlBase+"view.php?id=" + card.attr("id");
 	window.open("https://plus.google.com/share?url="+escape(url), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 
@@ -151,13 +151,13 @@ function upVote(e) {
 	
 	
 	if(!$(this).hasClass('voted')) {
-		var points = $(this).closest('.card, .big-img-container').find('.points').html();
+		var points = $(this).closest('.card, .big-card').find('.points, .big-card-points').html();
 		points = parseInt(points);
 		points ++;
 		if($(this).parent().find(".downvote").hasClass("voted"))
 			points ++;
 		console.log(points);
-		$(this).closest('.card, .big-img-container').find('.points').html(points);
+		$(this).closest('.card, .big-card').find('.points, .big-card-points').html(points);
 	
 	
 	

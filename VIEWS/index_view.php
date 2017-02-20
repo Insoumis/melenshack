@@ -7,7 +7,42 @@
 
 
 	<!-- container principal -->
-	<div class="card-container" id="main_page">
+
+	<div id='main_page'>
+	
+	<div class="big-card-container" hidden>
+	<div class="big-card-overlay">
+		<div class="big-card">
+				
+			<div class="big-card-share">
+				<span data-placement='bottom' data-toggle="tooltip" title="Signaler" class="big-card-signal glyphicon glyphicon-warning-sign"></span>
+				<img data-placement='bottom' data-toggle="tooltip" title="Facebook" class="big-card-facebook" src="assets/Facebook.png"/>
+				<img data-placement='bottom' data-toggle="tooltip" title="Twitter" class="big-card-twitter" src="assets/Twitter.png"/>
+				<img data-placement='bottom' data-toggle="tooltip" title="Google Plus" class="big-card-gplus" src="assets/Google_plus.png"/>
+
+				<span data-placement='bottom' data-toggle="tooltip" title="Fermer" class="big-card-close glyphicon glyphicon-remove"></span>
+			</div>
+
+			<div class="big-card-title">
+				Mélenshack, ce site de génie, waow
+			</div>
+			<div class="big-card-infos">
+			Il y a <span class="big-card-tmps">3 heures</span> par <a class="big-img-author" href='#'>Entropy</a>
+			</div>
+
+			<div class="big-card-votes">
+				<span data-toggle="tooltip" title="J'aime" class="glyphicon glyphicon-thumbs-up card-thumb-up" ></span>
+		   
+				<span data-toggle="tooltip" title="J'aime pas" class="glyphicon glyphicon-thumbs-down card-thumb-down" ></span>
+			</div>
+			<div class="big-card-points">352</div>
+			<div class="big-card-img">
+				<img class='big-card-img' src="http://www.personalcreations.com/blog/wp-content/uploads/2014/09/how-long-to-read.png" />
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="card-container">
 		<input id='sort' value=<?php echo "'$sort'" ?> hidden/>
 	
 		<div class="template">
@@ -47,6 +82,6 @@
 
 </div>
 
-
+</div>
 </body>
 </html>

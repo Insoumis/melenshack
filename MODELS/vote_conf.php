@@ -4,17 +4,20 @@ include_once ('includes/token.class.php');
 include_once ("includes/constants.php");
 
 function pointsTotauxUpdate($id_image) {
-    try
-    {
-        $bdd = new PDO('mysql:host=' . DB_HOST . ';dbname='. DB_NAME .';charset=utf8', DB_USER, DB_PASS, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-    }
-    catch (PDOException $erreur) {
-        echo 'Ce service est momentanément indisponible. Veuillez nous excuser pour la gêne occasionnée.';
-    }
 
-    $req = $bdd->prepare ('SELECT * FROM vote WHERE id_image = :id_image');
+	try
+	{
+		$bdd = new PDO('mysql:host=' . DB_HOST . ';dbname='. DB_NAME .';charset=utf8', DB_USER, DB_PASS, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+	}
+	catch (PDOException $erreur) {
+		echo 'Ce service est momentanément indisponible. Veuillez nous excuser pour la gêne occasionnée.';
+	}
+	
+
+
+    $req = $bdd->prepare ('SELECT * FROM images WHERE id = :id_image');
     $req->execute ([
-        'id_image' => $id_image,
+        ':id_image' => $id_image,
     ]);
     $resultat = $req->fetch ();
     
@@ -53,7 +56,7 @@ if (!$id_user) {
 
 $req = $bdd->prepare ('SELECT id FROM images WHERE id = :id_image ');
 $req->execute ([
-    'id_image' => $_POST['id_image'],
+    ':id_image' => $_POST['id_image'],
 ]);
 $resultat = $req->fetch ();
 
@@ -64,8 +67,8 @@ if (!$resultat) {
 
 $req = $bdd->prepare ('SELECT * FROM vote WHERE id_image = :id_image AND id_user = :id_user');
 $req->execute ([
-    'id_image' => $_POST['id_image'],
-    'id_user' => $id_user,
+    ':id_image' => $_POST['id_image'],
+    ':id_user' => $id_user,
 ]);
 
 $resultat = $req->fetch ();
