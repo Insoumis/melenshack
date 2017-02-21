@@ -41,9 +41,12 @@ body {
 	color: white;
 }
 .erreur {
+	position: absolute;
+	top: 55px;
+	z-index: 50;
+	left: 20%;
+	width: 60%;
 	text-align: center;
-	margin-left: 50px;
-	margin-right: 50px;
 }
 #logo {
 	overflow: hidden;

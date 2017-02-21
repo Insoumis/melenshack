@@ -16,8 +16,10 @@ if (isset($_SESSION['id']) && isset($_SESSION['pseudo'])) {
 		$errmsg = "Nom d'utilisateur ou mot de passe invalide !";
 	else if ($erreur == "token")
 		$errmsg = "Token invalide ! Veuillez réessayer";
+	else if ($erreur == "banned")
+		$errmsg = "Vous avez été banni !";
 	else
-		$errmsg = "Veuillez réessayeri !";
+		$errmsg = "Veuillez réessayer !";
 }
 ?>
 <script src="https://apis.google.com/js/platform.js" async defer></script>

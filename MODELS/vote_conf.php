@@ -46,13 +46,14 @@ if (!isset($_SESSION)) {
     session_start ();
 }
 if (!$_SESSION) {
+    header("HTTP/1.0 403 Forbidden");
     exit();
-};
+}
 $id_user = $_SESSION['id'];
 if (!$id_user) {
-    // User non connecté
+    header("HTTP/1.0 403 Forbidden");
     exit();
-};
+}
 
 $req = $bdd->prepare ('SELECT id FROM images WHERE nom_hash = :idhash');
 $req->execute ([
@@ -61,7 +62,7 @@ $req->execute ([
 $resultat = $req->fetch ();
 
 if (!$resultat) {
-    //$_POST['id_image'] ne correpond pas à une image valide
+    header("HTTP/1.0 400 Bad Request");
     exit();
 }
 $id = $resultat['id'];
@@ -130,4 +131,3 @@ if (!$resultat OR $resultat == null) // Si User n'a pas encore voté sur cette i
         }
     }
 }
-?>

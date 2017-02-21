@@ -41,6 +41,25 @@ if (!$captcha) {
     header ('Location:../upload.php?erreur=captcha');
     exit();
 }
+
+$req = $bdd->prepare ('SELECT id FROM ban WHERE id_user = :id_user');
+$req->execute ([
+	'id_user' => $id_user,
+]);
+$resultat = $req->fetch ();
+
+if ($resultat) {
+	//La marteau du ban a frappé :)
+	header ('Location:../upload.php?erreur=banned');
+	exit();
+}
+
+
+
+
+
+
+
 // Verification de la validité du captcha
 $response = file_get_contents ("https://www.google.com/recaptcha/api/siteverify?secret=6LefaBUUAAAAAOCU1GRih8AW-4pMJkiRRKHBmPiE&response=" . $captcha);
 $decoded_response = json_decode ($response);
@@ -82,7 +101,7 @@ if (!empty($_POST['url'])) {
     $resultat = $req->fetch();
 
     if ($resultat) {
-        header ('Location:../upload.php?erreur=exite'); // Image existe déja.
+        header ('Location:../upload.php?erreur=existe'); // Image existe déja.
         exit();
     }
 

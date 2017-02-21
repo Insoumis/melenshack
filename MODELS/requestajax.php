@@ -45,7 +45,7 @@ if ($sort == "hot") {
 	}
 	echo json_encode($json);
 } elseif ($sort == "report" && $grade > 0) {
-    $req = $bdd->query ("SELECT images.nom_hash, count(*) FROM images inner join report on images.id = report.id_image GROUP BY images.id ORDER BY count(*) DESC LIMIT " . $startIndex ." , " . $size);
+    $req = $bdd->query ("SELECT images.nom_hash, count(*) FROM images inner join report on images.id = report.id_image WHERE supprime=0 GROUP BY images.id ORDER BY count(*) DESC LIMIT " . $startIndex ." , " . $size);
     
 
     while ($resultat = $req->fetch()) {

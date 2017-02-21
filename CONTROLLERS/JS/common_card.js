@@ -306,7 +306,8 @@ function downVote(e) {
 function showVoteError() {
 	if($('#voteerror').length)
 		return;
-	var e = `<div id='voteerror' class='alert alert-warning erreur'>
+	var e = `<div id='voteerror' class='alert alert-danger erreur'>
+	      <a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
 		  Vous devez être connecté pour pouvoir voter. <a href='login.php'>Se connecter</a>.
 		  </div>`;
 

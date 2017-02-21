@@ -19,10 +19,12 @@ if(isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 			$errmsg = "L'image doit être en format PNG, JPG, JPEG ou GIF !";
 		else if ($erreur == "titre")
 			$errmsg = "Titre trop long !";
-		else if ($erreur == "exite")
+		else if ($erreur == "existe")
 			$errmsg = "Une image avec la même url existe déja!";
 		else if ($erreur == "notimage")
 			$errmsg = "Le lien ne renvoit pas vers une image!";
+		else if ($erreur == "banned")
+			$errmsg = "Vous avez été banni";
 		else
 			$errmsg = "Veuillez réessayer";
 
