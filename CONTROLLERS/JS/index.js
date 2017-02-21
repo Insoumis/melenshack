@@ -1,8 +1,27 @@
 
 var currentCardShare;
-var gridLayout = $('.card-container');
+var gridLayout;
 
 $(document).ready(function() {
+	gridLayout = $('.card-container');
+	//layout
+	gridLayout.masonry({
+		itemSelector: '.card',
+		columnWidth: 370,
+		fitWidth: true,
+		stagger: 30
+	});
+
+	$('#searchinput').on('change paste keyup', function() {
+		$('.card').each(function(i, card) {
+			if(!($(card).find('.card-title').html()).includes($('#searchinput').val()))
+				card.remove();
+		});
+		currentIndex = 0;
+		getCards(30);
+		$(gridLayout).masonry('reloadItems');
+		$(gridLayout).masonry('layout');
+	});
 
 	/*
 		initialise la big-card
@@ -91,13 +110,7 @@ $(document).ready(function() {
 		if(currentCardShare != null)
 			animateShare(currentCardShare);
 	});
-	//layout
-	gridLayout.masonry({
-		itemSelector: '.card',
-		columnWidth: 370,
-		fitWidth: true,
-		stagger: 30
-	});
+	
 
 	
 
@@ -120,6 +133,7 @@ var currentIndex = 0;
 //récupère les $size prochaines cartes depuis le serveur et les affiche
 function getCards(size) {
 	var sort = $('#sort').val();
+	var search = $('#searchinput').val();
 
 	$.ajax({
 		url: 'MODELS/requestajax.php',
@@ -127,14 +141,17 @@ function getCards(size) {
 		data: {
 			'size': size,
 			'sort': sort,
-			'startIndex': currentIndex
+			'startIndex': currentIndex,
+			'search': search
 		},
 		success: function(data) {
 			data = JSON.parse(data);
 			var i = 0;
 			for(x = 0; x < data.length; ++x) {
-				addCard(data[x]);
-				i++;
+				if(!$('.card-container').has('#'+data[x].idhash).length) {
+					addCard(data[x]);
+					i++;
+				}
 			}
 			currentIndex += i;
 		}

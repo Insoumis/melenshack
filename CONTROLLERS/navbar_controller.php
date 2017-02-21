@@ -20,6 +20,9 @@ $isHotActive = false;
 $isNewActive = false;
 $isRandomActive = false;
 
+$showSearch = false;
+if($baseName == "index.php")
+	$showSearch = true;
 
 if($baseName == "index.php" && $sort == "new")
 	$isNewActive = true;

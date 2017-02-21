@@ -21,10 +21,12 @@
 					</li>
 					<li title="Ajouter une image" class="btn-danger"><a id="ajouter_img" href="upload.php"><div class="hidden-sm hidden-xs">Ajouter une image</div><span class="glyphicon glyphicon-floppy-save visible-sm visible-xs icon"></span></a></li>
 				</ul>
-			<div style="flex: 1">
+				<div style="flex: 1">
+				<?php if($showSearch): ?>
 						<input id="searchinput" placeholder="Rechercher..." type="text" name="search" autocomplete="off"/>
 
-			</div>
+				<?php endif ?>
+				</div>
 				<ul class="nav navbar-nav pull-right" id="right">
 
 						<?php if(!$connexionButton) : ?>
