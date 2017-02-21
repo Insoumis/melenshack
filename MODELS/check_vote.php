@@ -16,9 +16,9 @@ if (!$id_user) {
 	exit();
 };
 
-$req = $bdd->prepare ('SELECT id FROM images WHERE id = :id_image ');
+$req = $bdd->prepare ('SELECT id FROM images WHERE nom_hash = :idhash');
 $req->execute ([
-    ':id_image' => $_POST['id_image'],
+    ':idhash' => $_POST['idhash'],
 ]);
 $resultat = $req->fetch ();
 
@@ -28,9 +28,11 @@ if (!$resultat) {
     exit();
 }
 
+$id = $resultat['id'];
+
 $req = $bdd->prepare ('SELECT * FROM vote WHERE id_image = :id_image AND id_user = :id_user');
 $req->execute ([
-    ':id_image' => $_POST['id_image'],
+    ':id_image' => $id,
     ':id_user' => $id_user,
 ]);
 
@@ -45,4 +47,4 @@ if (!$resultat OR $resultat == null) // Si User n'a pas encore voté sur cette i
 	echo $ancien_vote;
 	exit();
 }
-?>
+

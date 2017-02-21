@@ -81,6 +81,19 @@ CREATE TABLE `vote` (
   `vote` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `report`
+--
+
+CREATE TABLE `report` (
+  `id` int(11) NOT NULL,
+  `id_image` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
 --
 -- Index pour les tables exportées
 --
@@ -114,6 +127,11 @@ ALTER TABLE `vote`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `report`
+--
+ALTER TABLE `report`
+  ADD PRIMARY KEY (`id`);
+--
 -- AUTO_INCREMENT pour les tables exportées
 --
 
@@ -136,6 +154,11 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `vote`
 --
 ALTER TABLE `vote`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `report`
+--
+ALTER TABLE `report`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

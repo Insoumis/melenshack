@@ -158,10 +158,10 @@ function thumbDown(id, card) {
 	
 
 
-function checkVote(id, card) {
+function checkVote(card) {
 	$.post(
 		'MODELS/check_vote.php',
-		{id_image: id},
+		{idhash: card.attr('id')},
 		returnVote,
 		'text'
 	);
@@ -183,7 +183,7 @@ function checkVote(id, card) {
 function vote(id, vote) {
 	var http = new XMLHttpRequest();
 	var url = "MODELS/vote_conf.php";
-	var params = "id_image="+id+"&vote="+vote;
+	var params = "idhash="+id+"&vote="+vote;
 	http.open("post", url, true);
 	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	http.send(params);

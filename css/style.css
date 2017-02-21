@@ -227,6 +227,9 @@ li.actif>a:hover {
 .big-card-remove:hover {
 	color: red;
 }
+.big-card-signal.voted {
+	color: orange;
+}
 
 .big-card-infos>a:hover, .big-card-infos>a:focus {
 	text-decoration: none;

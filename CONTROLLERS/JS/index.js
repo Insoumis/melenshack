@@ -11,6 +11,7 @@ $(document).ready(function() {
 	//ferme la bigimg si on clique à coté
 	$('.big-card-container').click(function() {	
 		$('.big-card-container').hide();
+		checkVote($('.big-card').data('card'));
 	});
 	$('.big-card').click(function(e) {
 		e.stopPropagation();
@@ -19,11 +20,23 @@ $(document).ready(function() {
 	//ferme la bigimg si on clique sur la croix
 	$('.big-card-close').click(function() {
 		$('.big-card-container').hide();
+		checkVote($('.big-card').data('card'));
 	});
 
 	//signalement
 	$('.big-card-signal').click(function() {
 		//send report to server
+		$.post(
+		'MODELS/report_conf.php',
+		{
+			idhash: $('.big-card').attr('id'),
+		},
+		function(e) {
+			$('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle').tooltip('show');
+		},
+		'text'
+		);
+
 
 	});
 	
@@ -145,7 +158,7 @@ function addCard(c) {
 
 	
 	//vérifie l'ancien vote de l'user
-	checkVote(id, card);
+	checkVote(card);
 
 	//assigne les fonctions de vote aux boutons
 	card.find(".card-facebook").click(shareFacebook);
@@ -159,10 +172,10 @@ function addCard(c) {
 	});
 	
 	//bouton THUMBUP
-	card.find(".card-thumb-up").click(function(){thumbUp(id, card)});
+	card.find(".card-thumb-up").click(function(){thumbUp(idhash, card)});
 
 	//bouton THUMBDOWN
-	card.find(".card-thumb-down").click(function() {thumbDown(id, card)});
+	card.find(".card-thumb-down").click(function() {thumbDown(idhash, card)});
 	
 	//bouton OPEN
 	card.find(".card-open").click(function() {
@@ -170,6 +183,7 @@ function addCard(c) {
 		$(this).tooltip('hide');
 			var big = $('.big-card');
 			big.attr('id', idhash);
+			big.data('card', card);
 			big.find('.big-card-title').html(titre);
 			big.find('.big-card-tmps').html(temps)
 			big.find('.big-card-author').attr('href', 'user.php?id'+idUser).html(pseudoUser);
@@ -189,10 +203,11 @@ function addCard(c) {
 					var card = $(this).closest(".card");
 					big.css('background', '#23b9d0');
 					big.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
-					vote(id, 1);
+					vote(idhash, 1);
 	
 				}
 			});
+
 
 			//bouton THUMBDOWN
 			big.find(".card-thumb-down").click(function() {
@@ -209,29 +224,25 @@ function addCard(c) {
 					big.css('background', '#e23d22');
 					big.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
 			
-					vote(id, -1);
+					vote(idhash, -1);
 				}
 			});
 	
 			//vérifie l'ancien vote de l'user
+			checkVote(big);
+
+			//vérifier l'ancien report
 			$.post(
-				'MODELS/check_vote.php',
-				{
-					id_image: id
-				},
-				returnVote,
+				'MODELS/check_report.php',
+				{idhash: idhash},
+				returnReport,
 				'text'
 			);
-
-			//ajoute la classe 'voted' à l'ancien vote
-			function returnVote(ancien) {
+	
+			function returnReport(ancien) {
 				ancien = parseInt(ancien);
 				if(ancien == 1) {
-					big.find(".card-thumb-up").addClass("voted");
-					big.find(".card-thumb-down").removeClass("voted");
-				} else if(ancien == -1) {
-					big.find(".card-thumb-down").addClass("voted");
-					big.find(".card-thumb-up").removeClass("voted");
+					$('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle');
 				}
 			}
 			
