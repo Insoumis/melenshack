@@ -15,7 +15,7 @@ $json = array();
 
 if ($sort == "hot") {
 
-    $req = $bdd->query ('SELECT nom_hash FROM images ORDER BY pointsTotaux DESC LIMIT ' . $startIndex . ',' .  $size );
+    $req = $bdd->query ('SELECT nom_hash FROM images WHERE supprime=0 ORDER BY pointsTotaux DESC LIMIT ' . $startIndex . ',' .  $size );
 
     while ($resultat = $req->fetch()) {
         array_push($json, json_decode(getInfo($resultat["nom_hash"])));
@@ -24,7 +24,7 @@ if ($sort == "hot") {
 
 } elseif ($sort == "new") {
 
-    $req = $bdd->query ('SELECT nom_hash FROM images ORDER BY date_creation DESC LIMIT ' . $startIndex . ',' . $size );
+    $req = $bdd->query ('SELECT nom_hash FROM images WHERE supprime=0 ORDER BY date_creation DESC LIMIT ' . $startIndex . ',' . $size );
 
     while ($resultat = $req->fetch()) {
 		array_push($json, json_decode(getInfo($resultat["nom_hash"])));
@@ -33,7 +33,7 @@ if ($sort == "hot") {
 
 } elseif ($sort == "random") {
 
-    $req = $bdd->query ('SELECT nom_hash FROM images ORDER BY RAND() DESC LIMIT ' . $size );
+    $req = $bdd->query ('SELECT nom_hash FROM images WHERE supprime=0 ORDER BY RAND() DESC LIMIT ' . $size );
 
     while ($resultat = $req->fetch()) {
 		array_push($json, json_decode(getInfo($resultat["nom_hash"])));

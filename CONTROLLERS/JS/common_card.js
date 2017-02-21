@@ -130,6 +130,55 @@ function getTimeElapsed(date) {
 
 	return temps;
 }
+function thumbUp(id, card) {
+	var btn = card.find('.card-thumb-up');
+	if(!btn.hasClass("voted")) {
+		btn.addClass("voted");
+		btn.siblings(".card-thumb-down").removeClass("voted");
+		card.css('background', '#23b9d0');
+		card.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
+
+		vote(id, 1);
+
+	}
+}
+
+	
+function thumbDown(id, card) {
+	var btn = card.find('.card-thumb-down');
+	if(!btn.hasClass("voted")) {
+		btn.addClass("voted");
+		btn.siblings(".card-thumb-up").removeClass("voted");
+		card.css('background', '#e23d22');
+		card.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
+		
+		vote(id, -1);
+	}
+}
+	
+
+
+function checkVote(id, card) {
+	$.post(
+		'MODELS/check_vote.php',
+		{id_image: id},
+		returnVote,
+		'text'
+	);
+	
+	function returnVote(ancien) {
+		ancien = parseInt(ancien);
+		if(ancien == 1) {
+			$(card).find('.card-thumb-up').addClass('voted');
+			$(card).find('.card-thumb-down').removeClass('voted');
+		} else if(ancien == -1) {
+			$(card).find('.card-thumb-down').addClass('voted');
+			$(card).find('.card-thumb-up').removeClass('voted');
+			
+		}
+	}
+}
+
 
 function vote(id, vote) {
 	var http = new XMLHttpRequest();

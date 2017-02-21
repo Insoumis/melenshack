@@ -48,6 +48,7 @@ function getInfo($idhash) {
 			"urlThumbnail" => $resultat["url"],
 			"urlSource" => $resultat["url"],
 			"pointsTotaux" => $resultat["pointsTotaux"],
+			"supprime" => $resultat["supprime"]
 		);
 
 	} else {
@@ -61,6 +62,7 @@ function getInfo($idhash) {
 			"urlThumbnail" => "vignettes/" . $id . '.' . $resultat["format"],
 			"urlSource" => "images/" . $id . '.' . $resultat["format"],
 			"pointsTotaux" => $resultat["pointsTotaux"],
+			"supprime" => $resultat["supprime"]
 		);
 	}
 	$infojson = json_encode($info);

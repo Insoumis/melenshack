@@ -13,12 +13,12 @@ if (!$_SESSION) {
 $id_user = $_SESSION['id'];
 if (!$id_user) {
     echo 0;
-    exit();
+	exit();
 };
 
 $req = $bdd->prepare ('SELECT id FROM images WHERE id = :id_image ');
 $req->execute ([
-    'id_image' => $_POST['id_image'],
+    ':id_image' => $_POST['id_image'],
 ]);
 $resultat = $req->fetch ();
 
@@ -30,8 +30,8 @@ if (!$resultat) {
 
 $req = $bdd->prepare ('SELECT * FROM vote WHERE id_image = :id_image AND id_user = :id_user');
 $req->execute ([
-    'id_image' => $_POST['id_image'],
-    'id_user' => $id_user,
+    ':id_image' => $_POST['id_image'],
+    ':id_user' => $id_user,
 ]);
 
 $resultat = $req->fetch ();

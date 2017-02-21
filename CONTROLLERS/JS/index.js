@@ -4,39 +4,72 @@ var gridLayout = $('.card-container');
 
 $(document).ready(function() {
 
+	/*
+		initialise la big-card
+
+	*/
+	//ferme la bigimg si on clique à coté
 	$('.big-card-container').click(function() {	
 		$('.big-card-container').hide();
 	});
-
 	$('.big-card').click(function(e) {
 		e.stopPropagation();
 	});
 
+	//ferme la bigimg si on clique sur la croix
 	$('.big-card-close').click(function() {
 		$('.big-card-container').hide();
 	});
-	
-	$(".big-card-signal").click(function() {
+
+	//signalement
+	$('.big-card-signal').click(function() {
 		//send report to server
 
 	});
 	
-	$(".big-card-facebook").click(shareFacebook);
-	$(".big-card-twitter").click(shareTwitter);
-	$(".big-card-gplus").click(shareGplus);
+	$('.big-card-remove').click(function() {
+		//send remove to server
+		$.post(
+		'MODELS/supprime_conf.php',
+		{
+			idhash: $('.big-card').attr('id'),
+			value: 1
+		},
+		function(e) {
+			$('.big-card-container').hide();
+			$('.card').each(function(i, card) {
+				if($(card).attr('id') == $('.big-card').attr('id'))
+					$(card).remove();
+					$(gridLayout).masonry('reloadItems');
+					$(gridLayout).masonry('layout');
+			});
+		},
+		'text'
+		);
 	
+	});
 	
+	//partages réseaux sociaux
+	$('.big-card-facebook').click(shareFacebook);
+	$('.big-card-twitter').click(shareTwitter);
+	$('.big-card-gplus').click(shareGplus);
+	
+	//initalise les tooltips
 	$('[data-toggle="tooltip"]').tooltip();
 
-	$(window).resize(function() {
-		var ratio = $('.big-card-img>img').get(0).height / $('.big-card-img>img').get(0).width; 
-		//$('.big-card-img>img').height(ratio * $('.big-card-img>img').width());
-	}).resize();
-
-	//au chargement: affiche 30 cartes
+	//stop le gif playing meme si souris quitte vite
+	$('body').hover(function() {
+		$('.playing').mouseleave();
+	});
+	
+	//ferme les share si on clique ailleurs
+	$('.card-container').click(function() {
+		if(currentCardShare != null)
+			animateShare(currentCardShare);
+	});
 	//layout
 	gridLayout.masonry({
-		itemSelector: '.card:not(.opened)',
+		itemSelector: '.card',
 		columnWidth: 370,
 		fitWidth: true,
 		stagger: 30
@@ -45,16 +78,15 @@ $(document).ready(function() {
 	
 
 
+	//au chargement: affiche 30 cartes
 	getCards(30);
 
 });
 
 
+//quand l'user atteind le bas de la page, rajoute 20 cartes
 $(window).scroll(function() {
-	//quand l'user atteind le bas de la page, rajoute 20 cartes
-	if($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
-		getCards(20);
-	}
+	getCards(20);
 });
 
 
@@ -63,34 +95,29 @@ var currentIndex = 0;
 
 //récupère les $size prochaines cartes depuis le serveur et les affiche
 function getCards(size) {
-	var sort = $("#sort").val();
+	var sort = $('#sort').val();
 
 	$.ajax({
-		url: "MODELS/requestajax.php",
-		type: "POST",
+		url: 'MODELS/requestajax.php',
+		type: 'POST',
 		data: {
 			'size': parseInt(size),
 			'sort': sort,
 			'startIndex': parseInt(currentIndex)
 		},
 		success: function(data) {
-			console.log(data);
 			data = JSON.parse(data);
 			var i = 0;
 			for(x = 0; x < data.length; ++x) {
-				console.log(data[x]);
 				addCard(data[x]);
 				i++;
 			}
 			currentIndex += i;
 		}
-	})
+	});
 }
 
-//sotp le gif playing meme si souris quitte vite
-$('body').hover(function() {
-	$('.playing').mouseleave();
-});
+
 
 //ajoute une carte à la page
 function addCard(c) {
@@ -118,23 +145,7 @@ function addCard(c) {
 
 	
 	//vérifie l'ancien vote de l'user
-	$.post(
-		'MODELS/check_vote.php',
-		{
-			id_image: id
-		},
-		returnVote,
-		'text'
-	);
-
-	//ajoute la classe 'voted' à l'ancien vote
-	function returnVote(ancien) {
-		ancien = parseInt(ancien);
-		if(ancien == 1)
-			card.find(".card-thumb-up").addClass("voted");
-		else if(ancien == -1)
-			card.find(".card-thumb-down").addClass("voted");	
-	}
+	checkVote(id, card);
 
 	//assigne les fonctions de vote aux boutons
 	card.find(".card-facebook").click(shareFacebook);
@@ -147,39 +158,11 @@ function addCard(c) {
 		animateShare($(this).closest(".card"));
 	});
 	
-	//ferme les share si on clique ailleurs
-	$(".container").click(function() {
-		if(currentCardShare != null)
-			animateShare(currentCardShare);
-	});
-
-
 	//bouton THUMBUP
-	card.find(".card-thumb-up").click(function() {
-		if(!$(this).hasClass("voted")) {
-			$(this).addClass("voted");
-			$(this).siblings(".card-thumb-down").removeClass("voted");
-			var card = $(this).closest(".card");
-			card.css('background', '#23b9d0');
-			card.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
-
-			vote(id, 1);
-
-		}
-	});
+	card.find(".card-thumb-up").click(function(){thumbUp(id, card)});
 
 	//bouton THUMBDOWN
-	card.find(".card-thumb-down").click(function() {
-		if(!$(this).hasClass("voted")) {
-			$(this).addClass("voted");
-			$(this).siblings(".card-thumb-up").removeClass("voted");
-			var card = $(this).closest(".card");
-			card.css('background', '#e23d22');
-			card.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
-			
-			vote(id, -1);
-		}
-	});
+	card.find(".card-thumb-down").click(function() {thumbDown(id, card)});
 	
 	//bouton OPEN
 	card.find(".card-open").click(function() {
@@ -192,8 +175,16 @@ function addCard(c) {
 			big.find('.big-card-author').attr('href', 'user.php?id'+idUser).html(pseudoUser);
 			//bouton THUMBUP
 			big.find(".card-thumb-up").click(function() {
+				var currentV = parseInt(big.find('.big-card-points').html());
 				if(!$(this).hasClass("voted")) {
 					$(this).addClass("voted");
+
+					if($(this).siblings(".card-thumb-down").hasClass("voted"))
+						currentV ++;
+
+					currentV++;
+					big.find('.big-card-points').html(currentV);
+					
 					$(this).siblings(".card-thumb-down").removeClass("voted");
 					var card = $(this).closest(".card");
 					big.css('background', '#23b9d0');
@@ -205,7 +196,13 @@ function addCard(c) {
 
 			//bouton THUMBDOWN
 			big.find(".card-thumb-down").click(function() {
+				var currentV = parseInt(big.find('.big-card-points').html());
 				if(!$(this).hasClass("voted")) {
+					if($(this).siblings(".card-thumb-up").hasClass("voted"))
+						currentV --;
+
+					currentV--;
+					big.find('.big-card-points').html(currentV);
 					$(this).addClass("voted");
 					$(this).siblings(".card-thumb-up").removeClass("voted");
 					var card = $(this).closest(".card");
@@ -286,8 +283,8 @@ function addCard(c) {
 	
 
 	$('.card-container').append(card);
-	card.removeClass('template');
 	card.addClass('card');
+	card.removeClass('template');
 	card.show();
 	
 	//HOVER IMG
@@ -350,79 +347,74 @@ function addCard(c) {
 
 //ouvre/ferme le menu share de la carte
 function animateShare(card) {
-	var btn = card.find(".card-share-plus");
+	var btn = card.find('.card-share-plus');
 
-	if(btn.hasClass("animating")) //déjà en animation
+	if(btn.hasClass('animating')) //déjà en animation
 		return;
 
-	var card = btn.closest(".card");
+	var card = btn.closest('.card');
 	
-	btn.tooltip("hide");
-	btn.addClass("animating");
+	btn.tooltip('hide');
+	btn.addClass('animating');
 
-	if(!btn.hasClass("on")) { //si il n'est pas ouvert, on ouvre
+	if(!btn.hasClass('on')) { //si il n'est pas ouvert, on ouvre
 
-		btn.addClass("on");
+		btn.addClass('on');
 
 		if(currentCardShare != null) //si un autre share menu est ouvert, on le ferme
 			animateShare(currentCardShare);
 		currentCardShare = card;
 
 		var anim = false;
-		card.find(".card-link, .card-open, .card-votes").hide("fade", 150, function() {
+		card.find('.card-link, .card-open, .card-votes').hide('fade', 150, function() {
 			if(!anim) {
 				anim = true;
-				btn.animate({left: '10px', 'color': '#e23d22' }, 250, 'easeInOutQuad',
+				btn.animate({left: '10px', color: '#e23d22' }, 250, 'easeInOutQuad',
 				function() { 
-					btn.addClass("red");
-					btn.removeClass("animating"); 
+					btn.addClass('red');
+					btn.removeClass('animating'); 
 				});
-				card.find(".card-share-buttons").show("fade", 200);
+				card.find('.card-share-buttons').show('fade', 200);
 			}
 		});
 		
 		btn.css({
 		
-		"-moz-animation-name": "rotateglyph",
-		"-moz-animation-duration": "0.15s",
-		"-moz-animation-iteration-count": "1",
-		"-moz-animation-fill-mode": "forwards",
+		'-moz-animation-name': 'rotateglyph',
+		'-moz-animation-duration': '0.15s',
+		'-moz-animation-iteration-count': '1',
+		'-moz-animation-fill-mode': 'forwards',
 	
-		"-webkit-animation-name": "rotateglyph",
-		"-webkit-animation-duration": "0.15s",
-		"-webkit-animation-iteration-count": "1",
-		"-webkit-animation-fill-mode": "forwards"
+		'-webkit-animation-name': 'rotateglyph',
+		'-webkit-animation-duration': '0.15s',
+		'-webkit-animation-iteration-count': '1',
+		'-webkit-animation-fill-mode': 'forwards'
 	
-		}).attr("title", "Retour").tooltip("fixTitle");
+		}).attr('title', 'Retour').tooltip('fixTitle');
 	} else { // on ferme
 
 		currentCardShare = null;
-		btn.removeClass("on")
+		btn.removeClass('on')
 		btn.css({
-		"-moz-animation-name": "rotateglyph2",
-		"-moz-animation-duration": "0.15s",
-		"-moz-animation-iteration-count": "1",
-		"-moz-animation-fill-mode": "forwards",
+		'-moz-animation-name': 'rotateglyph2',
+		'-moz-animation-duration': '0.15s',
+		'-moz-animation-iteration-count': '1',
+		'-moz-animation-fill-mode': 'forwards',
 	
-		"-webkit-animation-name": "rotateglyph2",
-		"-webkit-animation-duration": "0.15s",
-		"-webkit-animation-iteration-count": "1",
-		"-webkit-animation-fill-mode": "forwards",
+		'-webkit-animation-name': 'rotateglyph2',
+		'-webkit-animation-duration': '0.15s',
+		'-webkit-animation-iteration-count': '1',
+		'-webkit-animation-fill-mode': 'forwards'
 	
-		}).attr("title", "Partager").tooltip("fixTitle")
-		.delay(150).animate({left: "160px", 'color': 'black'}, 250, 'easeInOutQuad', 
+		}).attr('title', 'Partager').tooltip('fixTitle')
+		.delay(150).animate({left: '160px', color: 'black'}, 250, 'easeInOutQuad', 
 			function() {
-				btn.removeClass("red");
-				btn.removeAttr("style");	
-				btn.removeClass("animating");
+				btn.removeClass('red');
+				btn.removeAttr('style');	
+				btn.removeClass('animating');
 			});
-		card.find(".card-link, .card-open, .card-votes").delay(200).show("fade", 150);
-		card.find(".card-share-buttons").hide("fade", 200);
+		card.find('.card-link, .card-open, .card-votes').delay(200).show('fade', 150);
+		card.find('.card-share-buttons').hide('fade', 200);
 	}
 }
 
-//ferme les share si on clique ailleurs
-$(".card-container").click(function() {
-	if(currentCardShare != null)
-		animateShare(currentCardShare);
-});

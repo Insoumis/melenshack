@@ -216,8 +216,16 @@ li.actif>a:hover {
 	font-size: 20px;
 	user-select: none;
 }
+.big-card-remove {
+	float: left;
+	font-size: 20px;
+	user-select: none;
+}
 .big-card-signal:hover {
 	color: orange;
+}
+.big-card-remove:hover {
+	color: red;
 }
 
 .big-card-infos>a:hover, .big-card-infos>a:focus {

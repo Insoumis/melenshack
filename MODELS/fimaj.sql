@@ -49,7 +49,8 @@ CREATE TABLE `images` (
   `format` varchar(10) DEFAULT NULL,
   `pointsTotaux` int(11) NOT NULL DEFAULT '0',
   `genre` varchar(255) NOT NULL,
-  `url` varchar(255) DEFAULT NULL
+  `url` varchar(255) DEFAULT NULL,
+  `supprime` int(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

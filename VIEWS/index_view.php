@@ -15,7 +15,11 @@
 		<div class="big-card">
 				
 			<div class="big-card-share">
+				<?php if(!$showSupprime): ?>
 				<span data-placement='bottom' data-toggle="tooltip" title="Signaler" class="big-card-signal glyphicon glyphicon-warning-sign"></span>
+				<?php else: ?>
+				<span data-placement='bottom' data-toggle="tooltip" title="Supprimer" class="big-card-remove glyphicon glyphicon-trash"></span>
+				<?php endif ?>
 				<img data-placement='bottom' data-toggle="tooltip" title="Facebook" class="big-card-facebook" src="assets/Facebook.png"/>
 				<img data-placement='bottom' data-toggle="tooltip" title="Twitter" class="big-card-twitter" src="assets/Twitter.png"/>
 				<img data-placement='bottom' data-toggle="tooltip" title="Google Plus" class="big-card-gplus" src="assets/Google_plus.png"/>
