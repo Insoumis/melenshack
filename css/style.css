@@ -221,6 +221,9 @@ li.actif>a:hover {
 	font-size: 20px;
 	user-select: none;
 }
+.big-card-remove.voted {
+	color: red;
+}
 .big-card-signal:hover {
 	color: orange;
 }

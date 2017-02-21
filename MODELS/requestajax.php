@@ -52,5 +52,15 @@ if ($sort == "hot") {
 		array_push($json, json_decode(getInfo($resultat["nom_hash"])));
 	}
 	echo json_encode($json);
+} elseif($sort == "deleted" && $grade > 0) {
+	$req = $bdd->query ("SELECT nom_hash FROM images WHERE supprime=1 ORDER BY date_creation DESC LIMIT " . $startIndex . " , ". $size );
+    
+
+    while ($resultat = $req->fetch()) {
+		array_push($json, json_decode(getInfo($resultat["nom_hash"])));
+    }
+	echo json_encode($json);
+
+
 }
 ?>

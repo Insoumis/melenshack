@@ -46,12 +46,18 @@ $(document).ready(function() {
 	});
 	
 	$('.big-card-remove').click(function() {
+		
+		var value = 1;
+		if($(this).hasClass("voted"))
+			value = 0;
+
+
 		//send remove to server
 		$.post(
 		'MODELS/supprime_conf.php',
 		{
 			idhash: $('.big-card').attr('id'),
-			value: 1
+			value: value
 		},
 		function(e) {
 			$('.big-card-container').hide();
