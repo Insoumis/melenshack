@@ -25,7 +25,7 @@ if($baseName == "index.php" && $sort == "new")
 	$isNewActive = true;
 else if($baseName == "index.php" && $sort == "random")
 	$isRandomActive = true;
-else if($baseName == "index.php")
+else if($baseName == "index.php" && $sort == "hot")
 	$isHotActive = true;
 
 ?>

@@ -132,7 +132,23 @@ function getTimeElapsed(date) {
 }
 function thumbUp(id, card) {
 	var btn = card.find('.card-thumb-up');
+
+	if($('#connected').val() == "no") {
+		showVoteError();
+		return;
+	}
 	if(!btn.hasClass("voted")) {
+		var currentV = parseInt(card.find('.big-card-points').html());
+		if(!currentV)
+			currentV = card.data('points');
+		if(card.find(".card-thumb-down").hasClass("voted")) {
+			currentV ++;
+		}
+	
+		currentV++;
+		card.find('.big-card-points').html(currentV);
+		card.data('points', currentV);
+					
 		btn.addClass("voted");
 		btn.siblings(".card-thumb-down").removeClass("voted");
 		card.css('background', '#23b9d0');
@@ -146,7 +162,23 @@ function thumbUp(id, card) {
 	
 function thumbDown(id, card) {
 	var btn = card.find('.card-thumb-down');
+
+	if($('#connected').val() == "no") {
+		showVoteError();
+		return;
+	}
+	
 	if(!btn.hasClass("voted")) {
+		var currentV = parseInt(card.find('.big-card-points').html());
+		if(!currentV)
+			currentV = card.data('points');
+		if(card.find(".card-thumb-up").hasClass("voted"))
+			currentV --;
+	
+		currentV--;
+		card.find('.big-card-points').html(currentV);
+		card.data('points', currentV);
+			
 		btn.addClass("voted");
 		btn.siblings(".card-thumb-up").removeClass("voted");
 		card.css('background', '#e23d22');

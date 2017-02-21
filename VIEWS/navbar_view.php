@@ -42,6 +42,7 @@
 			</div> <!-- navbar -->
 		</div> <!-- container -->
 	</nav>
+
 	
 <script defer>
 	$('#searchinput').on('keypress', function(e) {

@@ -25,6 +25,11 @@ $(document).ready(function() {
 
 	//signalement
 	$('.big-card-signal').click(function() {
+		if($('#connected').val() == 'no') {
+			showVoteError();
+			return;
+		}
+		
 		//send report to server
 		$.post(
 		'MODELS/report_conf.php',
@@ -114,9 +119,9 @@ function getCards(size) {
 		url: 'MODELS/requestajax.php',
 		type: 'POST',
 		data: {
-			'size': parseInt(size),
+			'size': size,
 			'sort': sort,
-			'startIndex': parseInt(currentIndex)
+			'startIndex': currentIndex
 		},
 		success: function(data) {
 			data = JSON.parse(data);
@@ -156,7 +161,7 @@ function addCard(c) {
 							   .html(pseudoUser);
 	card.find('.card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
 
-	
+	card.data('points', points);
 	//vérifie l'ancien vote de l'user
 	checkVote(card);
 
@@ -189,43 +194,15 @@ function addCard(c) {
 			big.find('.big-card-author').attr('href', 'user.php?id'+idUser).html(pseudoUser);
 			//bouton THUMBUP
 			big.find(".card-thumb-up").click(function() {
-				var currentV = parseInt(big.find('.big-card-points').html());
-				if(!$(this).hasClass("voted")) {
-					$(this).addClass("voted");
-
-					if($(this).siblings(".card-thumb-down").hasClass("voted"))
-						currentV ++;
-
-					currentV++;
-					big.find('.big-card-points').html(currentV);
-					
-					$(this).siblings(".card-thumb-down").removeClass("voted");
-					var card = $(this).closest(".card");
-					big.css('background', '#23b9d0');
-					big.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
-					vote(idhash, 1);
-	
-				}
+				thumbUp(idhash, big);
+				card.data('points', big.find('.big-card-points').html());
 			});
 
 
 			//bouton THUMBDOWN
 			big.find(".card-thumb-down").click(function() {
-				var currentV = parseInt(big.find('.big-card-points').html());
-				if(!$(this).hasClass("voted")) {
-					if($(this).siblings(".card-thumb-up").hasClass("voted"))
-						currentV --;
-
-					currentV--;
-					big.find('.big-card-points').html(currentV);
-					$(this).addClass("voted");
-					$(this).siblings(".card-thumb-up").removeClass("voted");
-					var card = $(this).closest(".card");
-					big.css('background', '#e23d22');
-					big.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
-			
-					vote(idhash, -1);
-				}
+				thumbDown(idhash, big);
+				card.data('points', big.find('.big-card-points').html());
 			});
 	
 			//vérifie l'ancien vote de l'user
@@ -246,7 +223,7 @@ function addCard(c) {
 				}
 			}
 			
-			big.find('.big-card-points').html(points);
+			big.find('.big-card-points').html(card.data('points'));
 			big.find('.big-card-img').attr('src', urlSource).on('load',
 				function() {
 					$('.big-card-container').show();

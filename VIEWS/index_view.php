@@ -9,7 +9,7 @@
 	<!-- container principal -->
 
 	<div id='main_page'>
-	
+
 	<div class="big-card-container" hidden>
 	<div class="big-card-overlay">
 		<div class="big-card">

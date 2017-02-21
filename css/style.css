@@ -325,6 +325,7 @@ li.actif>a:hover {
 	max-height: 530px;
 	overflow: hidden;
 	width: 100%;
+	user-select: none;
 }
 .card-title {
 	text-align: left;
