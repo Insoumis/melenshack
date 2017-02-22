@@ -292,11 +292,11 @@ function addCard(c) {
 
 	
 	
-
+	
 	$('.card-container').append(card);
+	
 	card.addClass('card');
 	card.removeClass('template');
-	card.show();
 	
 	//HOVER IMG
 	card.mouseenter(function(e) {

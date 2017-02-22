@@ -1,4 +1,6 @@
 <?php
+$grade = 0;
+require 'MODELS/check_grade.php';
 
 
 if(!isset($_SESSION))

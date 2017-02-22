@@ -11,5 +11,5 @@ define ('DB_PASS', '');
 define ('VIGNETTE_WIDTH', 1000);
 define ('VIGNETTE_HEIGHT', 1000);
 
-define ('MAX_SIZE' , 1000000); //en octet, pour upload
+define ('MAX_SIZE' , 10000000); //en octet, pour upload
 ?>

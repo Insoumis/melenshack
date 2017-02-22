@@ -19,7 +19,7 @@
 					<li title="Au Hasard" id="random" <?php if($isRandomActive) echo "class='actif'"; ?>>
 						<a href="index.php?sort=random"><div class="hidden-sm hidden-xs">Au Hasard</div><span class="glyphicon glyphicon-random visible-sm visible-xs icon"></span></a>
 					</li>
-					<li title="Ajouter une image" class="btn-danger"><a id="ajouter_img" href="upload.php"><div class="hidden-sm hidden-xs">Ajouter une image</div><span class="glyphicon glyphicon-floppy-save visible-sm visible-xs icon"></span></a></li>
+					<li title="Ajouter une image" class="btn-danger"><a id="ajouter_img" href="upload.php"><div class="hidden-sm hidden-xs">Ajouter une image</div><span class="glyphicon glyphicon-cloud-upload visible-sm visible-xs icon"></span></a></li>
 				</ul>
 				<div style="flex: 1">
 				<?php if($showSearch): ?>
@@ -28,7 +28,6 @@
 				<?php endif ?>
 				</div>
 				<ul class="nav navbar-nav pull-right" id="right">
-
 						<?php if(!$connexionButton) : ?>
 						<li id="decoli" class="btn-danger">
 						<a title="Déconnexion" id="deconnection" href="MODELS/disconnect_conf.php"><div class="hidden-xs">Déconnexion</div><span class="visible-xs glyphicon glyphicon-log-out icon"></span></a>
@@ -40,6 +39,11 @@
 						</li>
 						<input id="connected" value="no" hidden />
 						<?php endif; ?>
+						<?php if($grade > 0): ?>
+						<li>
+						<a title="Modération" id="moderation" href="admin.php"><span class="glyphicon glyphicon-cog"></span></a>
+						</li>
+						<?php endif ?>
 						</ul>
 			</div> <!-- navbar -->
 		</div> <!-- container -->

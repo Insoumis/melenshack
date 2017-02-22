@@ -1,35 +1,47 @@
 <!DOCTYPE html>
 <html lang="fr">
-<?php echo $HEAD ?>
-<body>
-	<?php echo $NAVBAR ?>
-	<div class="container" id="main_page">
+	<?php echo $HEAD ?>
+	<body>
+		<?php echo $NAVBAR ?>
+		<div class="container" id="main_page">
 
-		<?php if(!empty($errmsg)): ?>
+			<?php if(!empty($errmsg)): ?>
 			<div class='alert alert-danger erreur'>
+				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
 				<?php echo $errmsg ?>
 			</div>
-		<?php endif ?>
-		<?php if($showPage): ?>
+			<?php endif ?>
+			<?php if($showPage): ?>
 
-			<h1>Ajouter une image</h1>
-			<p class="lead">Selectionnez une image à poster</p>
-			<form action="MODELS/upload_conf.php" autocomplete="off" method="post" enctype="multipart/form-data">
+			<form class="upload" action="MODELS/upload_conf.php" autocomplete="off" method="post" enctype="multipart/form-data">
+				<h1>Ajouter une image</h1>
 				<div class="form-group col-xs-5">
-					<label for="titre"><h3>Titre de l'image:</h3></label>
-					<input type="text" class="form-control input-lg" name="titre" id="titre" placeholder="Titre (recommendé < 20 caractères)" required autofocus>
-					<br>
-					<label class="btn btn-default btn-file">
-					    Parcourir<input id="file" name="file" type="file" style="display: none;">
+					<label for="titre">Titre de l'image:</label>
+					<input type="text" class="form-control input-lg" name="titre" id="titre" placeholder="Titre de votre post" required autofocus>
+					<input type="url" name="url" id="url" hidden>
+
+					<p id="formats"><small>Formats acceptés: JPG, PNG, BMP, GIF. Poids max: <?php echo $maxsize/1000000 ?> Mo</small></p>
+					<label for="file" id="drop">
+						<div>
+							<p>
+							<label for="file" id="filelabel">	
+								<strong><span class="glyphicon glyphicon-folder-open"></span>Choisissez une image</strong>													<input id="file" name="file" type="file" style="display: none;">
+							</label> ou glissez la ici</p>
+
+							<div id="nameContainer" hidden>
+								<p><span class="glyphicon glyphicon-ok"></span><span id="name"></span></p>
+							</div>
+							<div id="errorContainer" hidden>
+								<p><span class="glyphicon glyphicon-remove"></span><span id="error"></span></p>
+							</div>
+						</div>
 					</label>
-					<label for="file">Veuillez selectionner une image JPG ou PNG</label>
-					<br>
-					OU
-					<input type="url" name="url" id="url" class="form-control input-md">
-					<label for="url">Veuillez entrer l'URL de l'image (JPG, PNG, BMP ou GIF)</label>
+
+					<div id="urlgroup" class="form-group form-inline">
+						<label for="url" id="urltext">ou entrez l'URL de l'image:</label>
+						<input type="url" id="url" name="url" class="form-control"/>
+					</div>
 					<img id="preview" />
-					<label for="file">Si après avoir uploadé l'image ou après avoir mis l'url, l'image ne s'affiche pas, c'est qu'elle n'est pas valide.</label>
-					<br>
 					<div class="g-recaptcha" data-sitekey="6LefaBUUAAAAALVKIo2DiW_hWLs2kijFTrlUHGMb" data-callback="recaptchaCallback"></div>
 					<br>
 					<input type="submit" id="submit" class="btn btn-primary btn-lg" name="submit" value="Poster l'image" accept="image/*" required disabled>
@@ -37,7 +49,7 @@
 				<input type="hidden" id="max" name="taille_max" value=<?php echo "'$maxsize'" ?> />
 			</form>
 
-		<?php endif ?>
-	</div>
-</body>
+			<?php endif ?>
+		</div>
+	</body>
 </html>

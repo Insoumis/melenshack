@@ -10,6 +10,7 @@ body {
 
 #main_page {
 	padding-top: 60px;
+	font-family: "Source Sans Pro", serif;
 
 }
 
@@ -42,8 +43,8 @@ body {
 }
 .erreur {
 	position: absolute;
-	top: 55px;
-	z-index: 50;
+	top: 20px;
+	z-index: 500000000;
 	left: 20%;
 	width: 60%;
 	text-align: center;
@@ -564,4 +565,102 @@ li.actif>a:hover {
 	cursor: pointer;
 	height: 50px;
 	margin-left: 20px;
+}
+
+
+.upload>h1 {
+	font-size: 40px;
+}
+.upload .sub {
+	font-size: 15px;
+	margin-bottom: 30px;
+}
+.upload label {
+	font-size: 18px;
+}
+.upload .glyphicon {
+	margin-right: 10px;
+}
+.upload {
+	text-align: center;
+	width: 100%;
+}
+.upload .form-group {
+	margin: 0 auto;
+	float: none;
+}
+
+#titre {
+	margin-bottom: 20px;
+	font-size: 25px;
+}
+
+#drop {
+	width: 100%;
+	padding: 25% 10px;
+	border: 3px dashed grey;
+	position: relative;
+	font-size: 25px;
+	font-weight: normal;
+	margin-top: 0;
+}
+
+#drop:hover {
+	border: 3px dashed #555;
+}
+#drop label {
+	cursor: pointer;
+	font-size: 25px;
+	margin-bottom: 0;
+}
+#drop label:hover, #drop label:focus {
+	text-decoration: underline;
+}
+
+#nameContainer, #errorContainer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+#nameContainer p, #errorContainer p {
+	left: -50%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-right: 20px;
+	white-space: nowrap;
+}
+#nameContainer {
+	color: green;
+}
+#errorContainer {
+	color: red;
+}
+#urltext {
+	font-size: 13px;
+	font-weight: normal;
+	margin-right: 5px;
+}
+#formats {
+	margin: 0;
+	padding: 0;
+}
+#url {
+	height: 20px;
+	font-size: 13px;
+	padding: 0 5px;
+	margin: 0;
+	margin-top: -2px;
+	flex: 1;
+}
+#urlgroup {
+	padding:0;
+	margin: 0;
+	width: 100%;
+	text-align: left;
+	display: flex;
+}
+.g-recaptcha {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	display: inline-block;
 }

@@ -8,6 +8,7 @@
 	
 		<?php if(!empty($errmsg)): ?>
 			<div class='alert alert-danger erreur'>
+	      <a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
 				<?php echo $errmsg ?>
 			</div>
 		<?php endif ?>
