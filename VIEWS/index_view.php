@@ -17,6 +17,7 @@
 			<div class="big-card-share">
 				<?php if(!$showSupprime): ?>
 				<span data-placement='bottom' data-toggle="tooltip" title="Signaler" class="big-card-signal glyphicon glyphicon-warning-sign"></span>
+				<span data-placement='bottom' data-toggle="tooltip" title="Supprimer" class="big-card-remove glyphicon glyphicon-trash"></span>
 				<?php else: ?>
 
 					<?php if($sort == "deleted"): ?>

@@ -27,6 +27,8 @@ $(document).ready(function() {
 		initialise la big-card
 
 	*/
+
+	$('.big-card-remove').hide();
 	//ferme la bigimg si on clique à coté
 	$('.big-card-container').click(function() {	
 		$('.big-card-container').hide();
@@ -215,6 +217,10 @@ function addCard(c) {
 			big.find('.big-card-title').html(titre);
 			big.find('.big-card-tmps').html(temps)
 			big.find('.big-card-author').attr('href', 'user.php?id'+idUser).html(pseudoUser);
+			if(idUser == $('#id_user').val()) {
+				big.find('.big-card-remove').show();
+				big.find('.big-card-signal').hide();
+			}
 			//bouton THUMBUP
 			big.find(".card-thumb-up").click(function() {
 				thumbUp(idhash, big);

@@ -45,6 +45,7 @@
 						</li>
 						<?php endif ?>
 						</ul>
+						<input id="id_user" value=<?php echo "'$id_user'" ?> hidden />
 			</div> <!-- navbar -->
 		</div> <!-- container -->
 	</nav>

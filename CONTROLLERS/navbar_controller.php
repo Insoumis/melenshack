@@ -7,9 +7,12 @@ if(!isset($_SESSION))
 	session_start();
 
 $connexionButton = true;
+$id_user = "";
 
-if(isset($_SESSION['id']) && isset($_SESSION['pseudo']))
+if(isset($_SESSION['id']) && isset($_SESSION['pseudo'])) {
 	$connexionButton = false;
+	$id_user = $_SESSION['id'];
+}
 
 $sort = "hot";
 if(isset($_GET['sort']))
@@ -32,6 +35,4 @@ else if($baseName == "index.php" && $sort == "random")
 	$isRandomActive = true;
 else if($baseName == "index.php" && $sort == "hot")
 	$isHotActive = true;
-
-?>
 
