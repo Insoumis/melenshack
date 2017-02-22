@@ -304,8 +304,6 @@ function downVote(e) {
 
 //affiche erreur si pas loggé
 function showVoteError() {
-	if($('#voteerror').length)
-		return;
 	var e = `<div id='voteerror' class='alert alert-danger erreur'>
 	      <a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
 		  Vous devez être connecté pour pouvoir voter. <a href='login.php'>Se connecter</a>.
@@ -313,4 +311,7 @@ function showVoteError() {
 
 	var erreur = $(e);
 	$('#main_page').prepend(erreur);
+	erreur.delay(2000).animate({'opacity': '0'}, 1000, function() {
+		erreur.remove();		
+	});
 }

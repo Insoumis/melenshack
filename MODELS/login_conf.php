@@ -20,13 +20,11 @@ if(Token::verifier(600, 'connexion'))
 
 		  $pass = Securite::bdd($_POST['pass']);
 		$pseudo = Securite::bdd($_POST['pseudo']);
-		$pass_hache = hash('sha256',SALT_PASS . $pass); // !! changer le salt pour le site !!
 
 		// Vérification des identifiants
-		$req = $bdd->prepare('SELECT id FROM users WHERE pseudo = :pseudo AND pass = :pass');
+		$req = $bdd->prepare('SELECT id, pass FROM users WHERE pseudo = :pseudo');
 		$req->execute([
 			'pseudo' => $pseudo,
-			'pass' => $pass_hache,
 		]);
 
 		$resultat = $req->fetch();
@@ -35,9 +33,18 @@ if(Token::verifier(600, 'connexion'))
 		{
 			//Mauvais identifiant ou mot de passe
 			header('Location:../login.php?erreur=wrong');
+			exit();
 		}
 		else
 		{
+			$pass_hash = $resultat['pass'];
+
+			if(!password_verify($pass, $pass_hash)) {
+				header('Location:../login.php?erreur=wrong');
+				exit();
+			}
+
+
 			$id = $resultat['id'];
 
 			$req = $bdd->prepare ('SELECT id FROM ban WHERE id_user = :id_user');

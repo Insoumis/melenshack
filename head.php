@@ -2,7 +2,7 @@
 	<meta charset="utf-8">
 	<meta name="description" content="La banque d'images de la France Insoumise">
 	<title>Mélenshack</title>
-	<link rel="icon" type="image/png" href="assets/logo.png">
+	<link rel="icon" type="image/png" href="assets/melenshack_small.png">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="css/bootstrap.css">

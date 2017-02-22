@@ -50,6 +50,13 @@ $(document).ready(function() {
 			showVoteError();
 			return;
 		}
+		if($(this).hasClass('voted'))
+			return;
+
+		var conf = false;
+		conf = confirm('Voulez-vous vraiment signaler ce post ?');
+		if(!conf)
+			return;
 		
 		//send report to server
 		$.post(
@@ -67,11 +74,16 @@ $(document).ready(function() {
 	});
 	
 	$('.big-card-remove').click(function() {
-		
+		var conf = false;	
 		var value = 1;
-		if($(this).hasClass("voted"))
+		if($(this).hasClass("voted")) {
+			conf = confirm("Voulez-vous vraiment restaurer ce post ?");
 			value = 0;
-
+		} else {
+			conf = confirm("Voulez-vous vraiment supprimer ce post ?");
+		}
+		if(!conf)
+			return;
 
 		//send remove to server
 		$.post(
@@ -249,6 +261,9 @@ function addCard(c) {
 				ancien = parseInt(ancien);
 				if(ancien == 1) {
 					$('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle');
+				} else {
+					$('.big-card-signal').removeClass('voted').attr('title', 'Signaler').tooltip('fixTitle');
+
 				}
 			}
 			

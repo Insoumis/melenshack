@@ -44,11 +44,10 @@ if(Token::verifier(600, 'inscription'))
 		$pass = Securite::bdd($_POST['pass']);
 		$confpass = Securite::bdd($_POST['confpass']);
 
-		$pass_hache = hash('sha256',SALT_PASS. $pass); // !! changer le salt pour le site !!
-	    $confpass_hache = hash('sha256',SALT_PASS . $confpass); // !! changer le salt pour le site !!
 
-		if ($pass_hache == $confpass_hache) 
+		if ($pass == $confpass) 
 		{
+			
 			$req = $bdd->prepare('SELECT id FROM users WHERE pseudo = :pseudo OR email = :email');
 			$req->execute([
 				'pseudo' => $pseudo,
@@ -58,6 +57,8 @@ if(Token::verifier(600, 'inscription'))
 			$resultat = $req->fetch();
 			if (!$resultat)
 			{
+			
+			 $pass_hache = password_hash($pass, PASSWORD_DEFAULT);
 			 // Insertion du message à l'aide d'une requête préparée
 			 $req = $bdd->prepare('INSERT INTO users(pseudo, pass, email, dateinscription) VALUES(:pseudo, :pass, :email, NOW())');
 					$req->execute([
