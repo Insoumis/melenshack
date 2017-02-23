@@ -58,7 +58,9 @@ if(Token::verifier(600, 'inscription'))
 			if (!$resultat)
 			{
 			
-			 $pass_hache = password_hash($pass, PASSWORD_DEFAULT);
+				$pass_hache = password_hash(
+					base64_encode(hash('sha384', $pass, true))
+								, PASSWORD_DEFAULT);
 			 // Insertion du message à l'aide d'une requête préparée
 			 $req = $bdd->prepare('INSERT INTO users(pseudo, pass, email, dateinscription) VALUES(:pseudo, :pass, :email, NOW())');
 					$req->execute([

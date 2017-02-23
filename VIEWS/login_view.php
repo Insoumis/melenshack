@@ -27,6 +27,7 @@
 					<br>
 					<label for="pass"><h3>Mot de passe :</h3></label>
 					<input type="password" class="form-control" name="pass" id="pass" placeholder ="Mot de passe" required autofocus>
+					<input type="checkbox" name="rememberme" value="rememberme">Se souvenir de moi
 					<input type="hidden" name="token" id="token" value="<?php echo $token?>">
 					<br>
 					<input type="submit" id="submit" class="btn btn-primary" name="submit" value="Connexion">

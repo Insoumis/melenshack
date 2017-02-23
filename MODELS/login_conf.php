@@ -39,7 +39,7 @@ if(Token::verifier(600, 'connexion'))
 		{
 			$pass_hash = $resultat['pass'];
 
-			if(!password_verify($pass, $pass_hash)) {
+			if(!password_verify(base64_encode(hash('sha384', $pass, true)), $pass_hash)) {
 				header('Location:../login.php?erreur=wrong');
 				exit();
 			}
@@ -58,6 +58,70 @@ if(Token::verifier(600, 'connexion'))
 				header ('Location:../login.php?erreur=banned');
 				exit();
 			}
+
+			//remember me
+			
+			if(isset($_POST['rememberme'])) {
+				$req = $bdd->prepare ('SELECT * FROM auth_tokens WHERE id_user = :id_user');
+				$req->execute ([
+					'id_user' => $id,
+				]);
+				$resultat = $req->fetch ();
+
+				if($resultat) { //on renouvelle
+
+					$selector = $resultat['selector'];
+					$validator = bin2hex(random_bytes(30));
+					
+					setcookie(
+						'rememberme',
+						$selector.':'.base64_encode($validator),
+						time() + 3600 * 24 * 30 * 2, //2 mois
+						'/'
+					);
+
+					$req = $bdd->prepare ('UPDATE auth_tokens SET token=?, expires=? WHERE selector=?');
+					$req->execute ([
+						hash('sha256', $validator),
+						date('Y-m-d\TH:i:s', time() + 3600 * 24 * 30 * 2),
+						$selector
+					]);
+				} else { //on crée
+
+					$selector = bin2hex(random_bytes(6)); //random seed de 12 bytes
+					$validator = bin2hex(random_bytes(30));
+
+					setcookie(
+						'rememberme',
+						$selector.':'.base64_encode($validator),
+						time() + 3600 * 24 * 30 * 2, //2 mois
+						'/'
+					);
+
+					$req = $bdd->prepare ('INSERT INTO auth_tokens (selector, token, id_user, expires) VALUES (?, ?, ?, ?)');
+					$req->execute ([
+						$selector,
+						hash('sha256', $validator),
+						$id,
+						date('Y-m-d\TH:i:s', time() + 3600 * 24 * 30 * 2)
+					]);
+
+
+				}
+
+
+
+			}
+
+
+
+
+
+
+
+
+
+
 
 			if (!isset($_SESSION)) {
 				session_start ();

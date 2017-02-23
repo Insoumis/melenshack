@@ -25,8 +25,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `ban` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) DEFAULT NULL
+	`id` int(11) NOT NULL,
+	`id_user` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -36,19 +36,19 @@ CREATE TABLE `ban` (
 --
 
 CREATE TABLE `images` (
-  `id` int(11) NOT NULL,
-  `titre` varchar(255) NOT NULL,
-  `nb_vote_positif` int(11) NOT NULL DEFAULT '0',
-  `nb_vote_negatif` int(11) NOT NULL DEFAULT '0',
-  `id_user` int(11) NOT NULL,
-  `date_creation` datetime NOT NULL,
-  `nom_original` varchar(255) DEFAULT NULL,
-  `nom_hash` varchar(255) DEFAULT NULL,
-  `format` varchar(10) DEFAULT NULL,
-  `pointsTotaux` int(11) NOT NULL DEFAULT '0',
-  `genre` varchar(255) NOT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  `supprime` int(1) DEFAULT '0'
+	`id` int(11) NOT NULL,
+	`titre` varchar(255) NOT NULL,
+	`nb_vote_positif` int(11) NOT NULL DEFAULT '0',
+	`nb_vote_negatif` int(11) NOT NULL DEFAULT '0',
+	`id_user` int(11) NOT NULL,
+	`date_creation` datetime NOT NULL,
+	`nom_original` varchar(255) DEFAULT NULL,
+	`nom_hash` varchar(255) DEFAULT NULL,
+	`format` varchar(10) DEFAULT NULL,
+	`pointsTotaux` int(11) NOT NULL DEFAULT '0',
+	`genre` varchar(255) NOT NULL,
+	`url` varchar(255) DEFAULT NULL,
+	`supprime` int(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -58,12 +58,12 @@ CREATE TABLE `images` (
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `pseudo` varchar(255) NOT NULL,
-  `pass` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `dateinscription` datetime NOT NULL,
-  `grade` int(11) NOT NULL DEFAULT '0'
+	`id` int(11) NOT NULL,
+	`pseudo` varchar(255) NOT NULL,
+	`pass` varchar(255) NOT NULL,
+	`email` varchar(255) NOT NULL,
+	`dateinscription` datetime NOT NULL,
+	`grade` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -73,10 +73,10 @@ CREATE TABLE `users` (
 --
 
 CREATE TABLE `vote` (
-  `id` int(11) NOT NULL,
-  `id_image` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `vote` int(11) NOT NULL
+	`id` int(11) NOT NULL,
+	`id_image` int(11) NOT NULL,
+	`id_user` int(11) NOT NULL,
+	`vote` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -86,11 +86,24 @@ CREATE TABLE `vote` (
 --
 
 CREATE TABLE `report` (
-  `id` int(11) NOT NULL,
-  `id_image` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL
+	`id` int(11) NOT NULL,
+	`id_image` int(11) NOT NULL,
+	`id_user` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+
+-- --------------------------------------------------------
+
+--
+--	Structure de la table `auth_tokens`
+--
+CREATE TABLE `auth_tokens` (
+	`id` int(11) NOT NULL,
+	`selector` char(12),
+	`token` char(64),
+	`id_user` int(11) NOT NULL,
+	`expires` datetime
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Index pour les tables exportées
@@ -100,35 +113,42 @@ CREATE TABLE `report` (
 -- Index pour la table `ban`
 --
 ALTER TABLE `ban`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_user` (`id_user`);
+ADD PRIMARY KEY (`id`),
+ADD UNIQUE KEY `id_user` (`id_user`);
 
 --
 -- Index pour la table `images`
 --
 ALTER TABLE `images`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `url` (`url`);
+ADD PRIMARY KEY (`id`),
+ADD UNIQUE KEY `url` (`url`);
 
 --
 -- Index pour la table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `pseudo` (`pseudo`),
-  ADD UNIQUE KEY `email` (`email`);
+ADD PRIMARY KEY (`id`),
+ADD UNIQUE KEY `pseudo` (`pseudo`),
+ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Index pour la table `vote`
 --
 ALTER TABLE `vote`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `report`
 --
 ALTER TABLE `report`
-  ADD PRIMARY KEY (`id`);
+ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `auth_tokens`
+--
+ALTER TABLE `auth_tokens`
+ADD PRIMARY KEY (`id`);
+
 --
 -- AUTO_INCREMENT pour les tables exportées
 --
@@ -137,27 +157,33 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT pour la table `ban`
 --
 ALTER TABLE `ban`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `vote`
 --
 ALTER TABLE `vote`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `report`
 --
 ALTER TABLE `report`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `auth_tokens`
+--
+ALTER TABLE `auth_tokens`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

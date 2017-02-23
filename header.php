@@ -1,5 +1,7 @@
 <?php
 
+include 'MODELS/check_auth.php';
+
 ob_start();
 
 require 'head.php';
@@ -13,5 +15,4 @@ require 'VIEWS/navbar_view.php';
 
 $NAVBAR = ob_get_clean();
 
-?>
 
