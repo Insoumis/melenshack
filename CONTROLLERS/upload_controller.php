@@ -1,6 +1,6 @@
 <?php
 
-include 'MODELS/includes/constants.php';
+include_once 'MODELS/includes/constants.php';
 
 $maxsize = MAX_SIZE;
 

@@ -1,6 +1,7 @@
 <?php
 
 include_once ("includes/constants.php");
+include_once ("includes/GIFDecoder.class.php");
 
 /*
 ERREURS RETOURNEES:
@@ -13,7 +14,7 @@ titre
 pseudo
 
 */
-include ("includes/identifiants.php");
+include_once ("includes/identifiants.php");
 include_once ('includes/securite.class.php');
 
 function retrieve_remote_file_size($url){
@@ -57,10 +58,6 @@ if ($resultat) {
 	header ('Location:../upload.php?erreur=banned');
 	exit();
 }
-
-
-
-
 
 
 
@@ -140,7 +137,7 @@ if (!empty($_POST['url'])) {
         exit();
     }
 
-    $extensions_valides = array('jpg', 'jpeg', 'gif', 'png');
+    $extensions_valides = array('jpg', 'jpeg', 'gif', 'png', 'bmp');
     $extension_image = strtolower (substr (strrchr ($img['name'], '.'), 1));
     if (!in_array ($extension_image, $extensions_valides)) {
         header ('Location:../upload.php?erreur=format');
@@ -165,15 +162,32 @@ if (!empty($_POST['url'])) {
     ]);
 
     $direction = '/../images/' . $id . "." . $extension_image;
-    move_uploaded_file ($img['tmp_name'], __DIR__ . $direction);
-
     $imagebase = __DIR__ . $direction;
-    list($width, $height) = getimagesize ($imagebase);
+    move_uploaded_file ($img['tmp_name'], $imagebase);
+
+    if ($extension_image != "gif") {
+        list($width, $height) = getimagesize ($imagebase);
+    }
+    elseif ($extension_image == "gif") {
+        $gifDecoder = new GIFDecoder ( fread ( fopen ( $imagebase, "rb" ), filesize ( $imagebase ) ) );
+        $i = 1;
+        foreach ( $gifDecoder -> GIFGetFrames ( ) as $frame ) {
+            if ( $i < 2 ) {
+                fwrite ( fopen ( __DIR__ ."/../images/frames/frame0$i.gif" , "wb" ), $frame );
+            }
+            $i++;
+        }
+        $direction = '/../images/frames/frame01.gif';
+        $imagebase = __DIR__ . $direction;
+        list($width, $height) = getimagesize ($imagebase);
+    }
 
     if (($extension_image == "jpg") OR ($extension_image == "jpeg")) {
         $source = imagecreatefromjpeg ($imagebase);
     } elseif ($extension_image == "png") {
         $source = imagecreatefrompng ($imagebase);
+    } elseif ($extension_image == "bmp") {
+        $source = imagecreatefromwbmp ($imagebase);
     } elseif ($extension_image == "gif") {
         $source = imagecreatefromgif ($imagebase);
     }
@@ -188,10 +202,13 @@ if (!empty($_POST['url'])) {
     $thumb = imagecreatetruecolor ($newwidth, $newheight);
     imagecopyresized ($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
+
     if (($extension_image == "jpg") OR ($extension_image == "jpeg")) {
         imagejpeg ($thumb, __DIR__ . '/../vignettes/' . $id . '.jpg');
     } elseif ($extension_image == "png") {
         imagepng ($thumb, __DIR__ . '/../vignettes/' . $id . '.png');
+    } elseif ($extension_image == "bmp") {
+        imagepng ($thumb, __DIR__ . '/../vignettes/' . $id . '.bmp');
     } elseif ($extension_image == "gif") {
         imagegif ($thumb, __DIR__ . '/../vignettes/' . $id . '.gif');
     }
