@@ -3,7 +3,8 @@
 require_once 'includes/vendor/autoload.php';
 require_once 'includes/identifiants.php';
 
-session_start();
+if(!isset($_SESSION))
+	session_start();
 
 //charge les clés de l'app
 $creds = json_decode(file_get_contents("../../facebook_credentials.json"), true);
@@ -28,6 +29,8 @@ try {
 }
 
 if (isset($accessToken)) {
+
+	//requete graphAPI pour récupérer les infos
 	$request = $fb->request('GET', '/me?fields=id,name,email,gender,picture');
 	$request->setAccessToken($accessToken);
 	try {
@@ -57,6 +60,7 @@ if (isset($accessToken)) {
 		else
 			$picture = null;
 
+		//vérifie si l'user est déjà inscrit
 		$req = $bdd->prepare("SELECT id_user FROM federated_users WHERE oauth_provider='facebook' AND oauth_uid=?");
 		$req->execute([
 			$id,

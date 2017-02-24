@@ -1,3 +1,6 @@
+/*
+	SDK Facebook
+*/
 window.fbAsyncInit = function() {
 		FB.init({
 			appId      : '1849815745277262',
@@ -22,9 +25,26 @@ function checkFBLogin() {
 		if(data == "error") {
 
 		} else if(data == "redirect") {
-					window.location.href = "pseudo.php";
+			window.location.href = "pseudo.php";
 		} else if(data == "success") {
-					window.location.href = 'index.php';
+			window.location.href = 'index.php';
+		}
+	});
+}
+/*
+	Google
+*/
+function checkGoogleLogin(googleUser) {
+	var idToken = googleUser.getAuthResponse().id_token;
+	
+	$.post('MODELS/googleLogin.php', {idtoken: idToken}, function(data) {
+		alert(data);
+		if(data == "error") {
+
+		} else if(data == "redirect") {
+			window.location.href = "pseudo.php";
+		} else if(data == "success") {
+			window.location.href = 'index.php';
 		}
 	});
 }
