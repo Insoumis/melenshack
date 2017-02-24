@@ -18,18 +18,13 @@ window.fbAsyncInit = function() {
 
 
 function checkFBLogin() {
-	FB.getLoginStatus(function(response) {
-		if(response.status == "connected") {
-			var accessToken = response.authResponse.accessToken;
-			$.post('MODELS/facebookLogin.php', null, function(data) {
-				if(data == "error") {
+	$.post('MODELS/facebookLogin.php', null, function(data) {
+		if(data == "error") {
 
-				} else if(data == "redirect") {
+		} else if(data == "redirect") {
 					window.location.href = "pseudo.php";
-				} else if(data == "success") {
+		} else if(data == "success") {
 					window.location.href = 'index.php';
-				}
-			});
 		}
 	});
 }
