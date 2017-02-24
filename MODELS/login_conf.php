@@ -8,7 +8,7 @@ banned
 
 */
 
-include("includes/identifiants.php");
+include_once("includes/identifiants.php");
 include_once('includes/token.class.php');
 include_once('includes/securite.class.php');
 include_once ("includes/constants.php");
