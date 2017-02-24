@@ -22,7 +22,7 @@ if(Token::verifier(600, 'connexion'))
 		$pseudo = Securite::bdd($_POST['pseudo']);
 
 		// Vérification des identifiants
-		$req = $bdd->prepare('SELECT id, pass FROM users WHERE pseudo = :pseudo');
+		$req = $bdd->prepare('SELECT id_user, pass FROM classic_users WHERE username = :pseudo');
 		$req->execute([
 			'pseudo' => $pseudo,
 		]);
@@ -45,7 +45,7 @@ if(Token::verifier(600, 'connexion'))
 			}
 
 
-			$id = $resultat['id'];
+			$id = $resultat['id_user'];
 
 			$req = $bdd->prepare ('SELECT id FROM ban WHERE id_user = :id_user');
 			$req->execute ([
@@ -113,21 +113,12 @@ if(Token::verifier(600, 'connexion'))
 
 			}
 
-
-
-
-
-
-
-
-
-
-
 			if (!isset($_SESSION)) {
 				session_start ();
 			}
 			$_SESSION['id'] = $id;
 			$_SESSION['pseudo'] = $pseudo;
+			$_SESSION['type'] = 'classic';
 			header ('Location:../index.php');
 
 		}

@@ -1,5 +1,6 @@
 {
     "require": {
-        "google/apiclient": "^2.1"
+        "google/apiclient": "^2.1",
+		"facebook/graph-sdk" : "~5.0"
     }
 }

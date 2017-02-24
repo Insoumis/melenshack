@@ -1,11 +1,36 @@
-function onSignInGoogle(gUser) {
-	var id_token = gUser.getAuthResponse().id_token;
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', 'googleTokenSignin.php');
-	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	xhr.onload = function() {
-		window.location.replace("index.php");
+window.fbAsyncInit = function() {
+		FB.init({
+			appId      : '1849815745277262',
+			xfbml      : true,
+			version    : 'v2.8',
+			cookie     : true
+		});
+	FB.AppEvents.logPageView();
 	};
-	xhr.send('idtoken=' + id_token);
+
+	(function(d, s, id){
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/fr_FR/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+
+
+function checkFBLogin() {
+	FB.getLoginStatus(function(response) {
+		if(response.status == "connected") {
+			var accessToken = response.authResponse.accessToken;
+			$.post('MODELS/facebookLogin.php', null, function(data) {
+				if(data == "error") {
+
+				} else if(data == "redirect") {
+					window.location.href = "pseudo.php";
+				} else if(data == "success") {
+					window.location.href = 'index.php';
+				}
+			});
+		}
+	});
 }
 

@@ -9,7 +9,7 @@ if(!isset($_SESSION))
 $connexionButton = true;
 $id_user = "";
 
-if(isset($_SESSION['id']) && isset($_SESSION['pseudo'])) {
+if(isset($_SESSION['id'])) {
 	$connexionButton = false;
 	$id_user = $_SESSION['id'];
 }

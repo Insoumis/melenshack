@@ -11,14 +11,14 @@ if(empty($_SESSION['id']) && !empty($_COOKIE['rememberme'])) {
 
 	list($selector, $validator) = explode(':', $_COOKIE['rememberme']);
 
-	$req = $bdd->prepare('SELECT * FROM auth_tokens WHERE selector = :selector');
+	$req = $bdd->prepare('SELECT * FROM auth_tokens WHERE (selector = :selector AND expires > NOW())');
 	$req->execute([
 		':selector' => $selector,
 	]);
 
 	$resultat = $req->fetch();
 
-	if(hash_equals($resultat['token'], hash('sha256', base64_decode($validator)))) {
+	if($resultat && hash_equals($resultat['token'], hash('sha256', base64_decode($validator)))) {
 
 		$req = $bdd->prepare('SELECT * FROM users WHERE id=:id_user');
 		$req->execute([

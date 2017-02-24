@@ -10,6 +10,7 @@ captcha
 size
 format
 titre
+pseudo
 
 */
 include ("includes/identifiants.php");
@@ -35,6 +36,9 @@ if (!isset($_SESSION)) {
 }
 $id_user = $_SESSION['id'];
 if (!$id_user) header ('Location:../upload.php?erreur=notlogged');
+
+$pseudo = $_SESSION['pseudo'];
+if (!$pseudo) header ('Location:../upload.php?erreur=pseudo');
 
 $captcha = $_POST['g-recaptcha-response'];
 if (!$captcha) {

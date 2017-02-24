@@ -48,7 +48,7 @@ if(Token::verifier(600, 'inscription'))
 		if ($pass == $confpass) 
 		{
 			
-			$req = $bdd->prepare('SELECT id FROM users WHERE pseudo = :pseudo OR email = :email');
+			$req = $bdd->prepare('SELECT id FROM classic_users WHERE username = :pseudo OR email = :email');
 			$req->execute([
 				'pseudo' => $pseudo,
 				'email' => $email,
@@ -58,33 +58,55 @@ if(Token::verifier(600, 'inscription'))
 			if (!$resultat)
 			{
 			
+				$pseudo = htmlspecialchars($_POST['pseudo']);
 				$pass_hache = password_hash(
 					base64_encode(hash('sha384', $pass, true))
 								, PASSWORD_DEFAULT);
-			 // Insertion du message à l'aide d'une requête préparée
-			 $req = $bdd->prepare('INSERT INTO users(pseudo, pass, email, dateinscription) VALUES(:pseudo, :pass, :email, NOW())');
-					$req->execute([
-								   ':pseudo' => htmlspecialchars($_POST['pseudo']),
-								   ':pass' => htmlspecialchars($pass_hache),
-								   ':email' => htmlspecialchars($email)
-								   ]);
+			 	// Insertion du message à l'aide d'une requête préparée
+				$req = $bdd->prepare('INSERT INTO users(dateinscription) VALUES(NOW());');
+				$req->execute();
+
+				$id = $bdd->lastInsertId();
+
+				$req = $bdd->prepare('INSERT INTO classic_users(id_user, username, pass, email) VALUES(:id_user, :username, :pass, :email)');
+				$req->execute([
+					'id_user' => $id,
+					':username' => $pseudo,
+					':pass' => htmlspecialchars($pass_hache),
+					':email' => htmlspecialchars($email)
+				]);
 								   
-						echo 'SUCCESS'; // Inscription réussi !
+				echo 'SUCCESS'; // Inscription réussi !
 						
-						$req = $bdd->prepare('SELECT id FROM users WHERE pseudo = :pseudo OR email = :email');
-								$req->execute([
-									'pseudo' => $pseudo,
-									'email' => $email,
-								]);
-									
-						$resultat = $req->fetch();
-						if(!isset($_SESSION)){
-						  session_start();
-						}
-						$_SESSION['id'] = $resultat['id'];
-						$_SESSION['pseudo'] = $pseudo;
+				if(!isset($_SESSION)){
+				  session_start();
+				}
+				$_SESSION['id'] = $id;
+				
+				//vérifie si pseudo déja pris
+				$req = $bdd->prepare("SELECT * FROM users WHERE pseudo=:pseudo");
+				$req->execute([
+					':pseudo' => $pseudo
+				]);
+				$res = $req->fetch();
+
+				if($res) { //pseudo deja pris, user doit le changer
+					header("Location:../pseudo.php?erreur=fromregister");
+					exit();
+
+				}
+
+				$req = $bdd->prepare("UPDATE users SET pseudo=:pseudo WHERE id=:id");
+				$req->execute([
+					':pseudo' => $pseudo,
+					':id' => $id
+				]);
+
+
+				$_SESSION['pseudo'] = $pseudo;
 						
-						header('Location:../index.php');
+				header('Location:../index.php');
+				exit();
 			}
 			else 
 			{

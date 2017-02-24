@@ -58,12 +58,44 @@ CREATE TABLE `images` (
 --
 
 CREATE TABLE `users` (
-	`id` int(11) NOT NULL,
-	`pseudo` varchar(255) NOT NULL,
-	`pass` varchar(255) NOT NULL,
-	`email` varchar(255) NOT NULL,
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`pseudo` varchar(255) UNIQUE,
 	`dateinscription` datetime NOT NULL,
-	`grade` int(11) NOT NULL DEFAULT '0'
+	`grade` int(11) NOT NULL DEFAULT '0',
+	PRIMARY KEY(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `classic_users`
+--
+
+CREATE TABLE `classic_users` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`id_user` int(11) NOT NULL UNIQUE,
+	`username` varchar(255) NOT NULL UNIQUE,
+	`pass` varchar(255) NOT NULL,
+	`email` varchar(255) UNIQUE,
+	PRIMARY KEY(`id`),
+	FOREIGN KEY(`id_user`) REFERENCES users(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `federated_users`
+--
+
+CREATE TABLE `federated_users` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`id_user` int(11) NOT NULL UNIQUE,
+	`oauth_provider` enum('', 'facebook', 'google', 'twitter') NOT NULL,
+	`oauth_uid` varchar(255) NOT NULL,
+	`name` varchar(255),
+	`gender` varchar(15),
+	`email` varchar(255),
+	`picture` varchar(255),
+	PRIMARY KEY(`id`),
+	FOREIGN KEY(`id_user`) REFERENCES users(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -123,13 +155,6 @@ ALTER TABLE `images`
 ADD PRIMARY KEY (`id`),
 ADD UNIQUE KEY `url` (`url`);
 
---
--- Index pour la table `users`
---
-ALTER TABLE `users`
-ADD PRIMARY KEY (`id`),
-ADD UNIQUE KEY `pseudo` (`pseudo`),
-ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Index pour la table `vote`
@@ -162,11 +187,6 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT pour la table `images`
 --
 ALTER TABLE `images`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `users`
---
-ALTER TABLE `users`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `vote`

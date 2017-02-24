@@ -568,10 +568,10 @@ li.actif>a:hover {
 }
 
 
-.upload>h1 {
+h1 {
 	font-size: 40px;
 }
-.upload .sub {
+.sub {
 	font-size: 15px;
 	margin-bottom: 30px;
 }
@@ -585,7 +585,7 @@ li.actif>a:hover {
 	text-align: center;
 	width: 100%;
 }
-.upload .form-group {
+.form-group {
 	margin: 0 auto;
 	float: none;
 }
@@ -663,4 +663,16 @@ li.actif>a:hover {
 	margin-top: 20px;
 	margin-bottom: 20px;
 	display: inline-block;
+}
+
+
+
+#loginForm {
+	text-align: center;
+}
+#loginForm label {
+	font-size: 15px;
+}
+#loginForm input {
+	margin-bottom: 15px;
 }
