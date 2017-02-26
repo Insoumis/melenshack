@@ -37,6 +37,7 @@
 					<input type="submit" id="submit" class="btn btn-primary btn-lg" name="submit" value="Connexion">
 					<div class="g-signin2" data-onsuccess="checkGoogleLogin"></div>
 					<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="checkFBLogin()" scope="public_profile, email"></div>
+					<a href="" onclick="checkTwitterLogin()">Twitter</a>
 
 				</div>
 			</form>
