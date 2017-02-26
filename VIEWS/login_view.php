@@ -26,14 +26,12 @@
 				<div class="form-group col-xs-4">
 					<label for="pseudo">Nom d'utilisateur :</label>
 					<input type="text" class="form-control input-lg" name="pseudo" id="pseudo" placeholder="Nom d'utilisateur" required autofocus>
-					<br>
 					<label for="pass">Mot de passe :</label>
 					<input type="password" class="form-control input-lg" name="pass" id="pass" placeholder ="Mot de passe" required autofocus>
 					<div class="checkbox">
 						<label><input type="checkbox" name="rememberme" value="rememberme">Se souvenir de moi</label>
 					</div>
 					<input type="hidden" name="token" id="token" value="<?php echo $token?>">
-					<br>
 					<input type="submit" id="submit" class="btn btn-primary btn-lg" name="submit" value="Connexion">
 					<div class="g-signin2" data-onsuccess="checkGoogleLogin"></div>
 					<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="checkFBLogin()" scope="public_profile, email"></div>

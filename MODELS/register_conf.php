@@ -17,6 +17,7 @@ include("includes/identifiants.php");
 include_once('includes/securite.class.php');
 include_once('includes/token.class.php');
 include_once ("includes/constants.php");
+include_once('auth_cookie.php');
 
 if(Token::verifier(600, 'inscription')) 
 {
@@ -76,12 +77,18 @@ if(Token::verifier(600, 'inscription'))
 					':email' => htmlspecialchars($email)
 				]);
 								   
-				echo 'SUCCESS'; // Inscription réussi !
+				echo 'SUCCESS'; // Inscription réussie !
 						
 				if(!isset($_SESSION)){
 				  session_start();
 				}
 				$_SESSION['id'] = $id;
+				
+				//remember me
+			
+				if(isset($_POST['rememberme'])) {
+					createCookie($id);
+				}
 				
 				//vérifie si pseudo déja pris
 				$req = $bdd->prepare("SELECT * FROM users WHERE pseudo=:pseudo");
@@ -91,9 +98,8 @@ if(Token::verifier(600, 'inscription'))
 				$res = $req->fetch();
 
 				if($res) { //pseudo deja pris, user doit le changer
-					header("Location:../pseudo.php?erreur=fromregister");
+					header("Location:../pseudo.php?erreur=fromregister&pseudo=".$pseudo);
 					exit();
-
 				}
 
 				$req = $bdd->prepare("UPDATE users SET pseudo=:pseudo WHERE id=:id");

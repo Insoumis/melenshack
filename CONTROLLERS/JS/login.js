@@ -23,10 +23,10 @@ function checkFBLogin() {
 	$.post('MODELS/facebookLogin.php', null, function(data) {
 		if(data == "error") {
 
-		} else if(data == "redirect") {
-			window.location.href = "pseudo.php";
 		} else if(data == "success") {
 			window.location.href = 'index.php';
+		} else {
+			window.location.href = 'pseudo.php?erreur=fromregister'+data;
 		}
 	});
 }
@@ -39,10 +39,10 @@ function checkGoogleLogin(googleUser) {
 	$.post('MODELS/googleLogin.php', {idtoken: idToken}, function(data) {
 		if(data == "error") {
 
-		} else if(data == "redirect") {
-			window.location.href = "pseudo.php";
 		} else if(data == "success") {
 			window.location.href = 'index.php';
+		} else {
+			window.location.href = 'pseudo.php?erreur=fromregister'+data;
 		}
 	});
 }
@@ -60,5 +60,7 @@ function onTwitterClose(data) {
 		window.location.href = "../pseudo.php";
 	} else if(data == "success") {
 		window.location.href = '../index.php';
+	} else {
+		window.location.href = '../pseudo.php?erreur=fromregister'+data;
 	}
 }

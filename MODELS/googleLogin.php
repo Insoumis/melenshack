@@ -78,6 +78,29 @@ if($res) { //deja inscrit
 
 	$_SESSION['id'] = $id_user;
 	$_SESSION['type'] = 'google';
-	echo "redirect";
+
+	//vérifie si pseudo déja pris
+	$req = $bdd->prepare("SELECT * FROM users WHERE pseudo=:pseudo");
+	$req->execute([
+		':pseudo' => $name
+	]);
+	$res = $req->fetch();
+
+	if($res) { //pseudo deja pris, user doit le changer
+		echo "&pseudo=".urlencode($name);
+		exit();
+	}
+
+	$req = $bdd->prepare("UPDATE users SET pseudo=:pseudo WHERE id=:id");
+	$req->execute([
+		':pseudo' => $name,
+		':id' => $id_user
+	]);
+
+
+	$_SESSION['pseudo'] = $name;
+
+	echo "success";
 	exit();
+
 }

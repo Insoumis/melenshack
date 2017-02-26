@@ -110,7 +110,30 @@ if(isset($_GET['request'])) {
 
 			$_SESSION['id'] = $id_user;
 			$_SESSION['type'] = 'twitter';
-			echo "<input id='result' value='redirect' hidden>";
+
+			//vérifie si pseudo déja pris
+			$req = $bdd->prepare("SELECT * FROM users WHERE pseudo=:pseudo");
+			$req->execute([
+				':pseudo' => $name
+			]);
+			$res = $req->fetch();
+
+			if($res) { //pseudo deja pris, user doit le changer
+				echo "<input id='result' value='&pseudo=".urlencode($name)."' hidden>";
+			} else {
+
+				$req = $bdd->prepare("UPDATE users SET pseudo=:pseudo WHERE id=:id");
+				$req->execute([
+					':pseudo' => $name,
+					':id' => $id_user
+				]);
+
+
+				$_SESSION['pseudo'] = $name;
+
+				echo "<input id='result' value='success' hidden>";
+
+			}
 
 
 		}

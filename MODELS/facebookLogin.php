@@ -54,7 +54,7 @@ if (isset($accessToken)) {
 		else
 			$email = null;
 
-		
+
 		if(!$gn['picture']['is_silhouette'])
 			$picture = $gn['picture']['url'];
 		else
@@ -88,7 +88,7 @@ if (isset($accessToken)) {
 
 			if($pseudo)
 				$_SESSION['pseudo'] = $pseudo;
-			
+
 			$_SESSION['id'] = $id_user;
 			$_SESSION['type'] = 'facebook';
 			echo "success";
@@ -102,7 +102,7 @@ if (isset($accessToken)) {
 
 
 			$req = $bdd->prepare("INSERT INTO federated_users(id_user, oauth_provider, oauth_uid, name, gender, email, picture) VALUES(:id_user,'facebook', :oauth_uid, :name, :gender, :email, :picture)");
-			
+
 			$req->execute([
 				':id_user' => $id_user,
 				':oauth_uid' => $id,
@@ -114,10 +114,32 @@ if (isset($accessToken)) {
 
 			$_SESSION['id'] = $id_user;
 			$_SESSION['type'] = 'facebook';
-			echo "redirect";
+
+			//vérifie si pseudo déja pris
+			$req = $bdd->prepare("SELECT * FROM users WHERE pseudo=:pseudo");
+			$req->execute([
+				':pseudo' => $name
+			]);
+			$res = $req->fetch();
+
+			if($res) { //pseudo deja pris, user doit le changer
+				echo "&pseudo=".urlencode($name);
+				exit();
+			}
+
+			$req = $bdd->prepare("UPDATE users SET pseudo=:pseudo WHERE id=:id");
+			$req->execute([
+				':pseudo' => $name,
+				':id' => $id_user
+			]);
+
+
+			$_SESSION['pseudo'] = $name;
+
+			echo "success";
 			exit();
 
-	
+
 		}
 	}
 

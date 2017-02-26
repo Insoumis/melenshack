@@ -5,8 +5,13 @@
 	<?php echo $NAVBAR ?>
 	<div id="main_page">
 	<form method="POST" action="MODELS/pseudo_conf.php">
-	<h1> Changer mon pseudo</h1>
-	<input type="text" value="Pseudo" name="pseudo">
+	<?php if($fromregister): ?>
+	<h1>Inscription réussie !</h1>
+	<br>
+	<h2>Malheureusement, le pseudo (nom affiché aux autres utilisateurs) "<?php echo $pseudo ?>" est déjà pris, merci d'en choisir un autre.</h2>
+	
+	<?php endif ?>
+	<input type="text" placeholder="pseudo" name="pseudo">
 	<input type="submit" value="Changer">
 	</div>
 

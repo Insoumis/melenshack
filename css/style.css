@@ -669,12 +669,13 @@ h1 {
 
 
 
-#loginForm {
+#loginForm, #registerForm {
 	text-align: center;
 }
-#loginForm label {
+#loginForm label, #registerForm label {
 	font-size: 15px;
 }
-#loginForm input {
+#loginForm input, #registerForm input {
 	margin-bottom: 15px;
+	margin-bottom: 7%;
 }
