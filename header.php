@@ -1,6 +1,8 @@
 <?php
 
-include 'MODELS/check_auth.php';
+include 'MODELS/auth_cookie.php';
+
+checkCookie();
 
 ob_start();
 

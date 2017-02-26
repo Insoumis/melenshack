@@ -137,26 +137,42 @@ function thumbUp(id, card) {
 		showVoteError();
 		return;
 	}
+	var currentV = parseInt(card.find('.big-card-points').html());
+
+	if(currentV == null)
+		currentV = card.data('points');
+
 	if(!btn.hasClass("voted")) {
-		var currentV = parseInt(card.find('.big-card-points').html());
-		if(!currentV)
-			currentV = card.data('points');
-		if(card.find(".card-thumb-down").hasClass("voted")) {
+		btn.addClass("voted");
+		btn.css('color', '');
+
+		if(card.find(".card-thumb-down").hasClass("voted")) 
 			currentV ++;
-		}
+		
 	
 		currentV++;
-		card.find('.big-card-points').html(currentV);
-		card.data('points', currentV);
+	
 					
-		btn.addClass("voted");
-		btn.siblings(".card-thumb-down").removeClass("voted");
+		card.find(".card-thumb-down").removeClass("voted");
 		card.css('background', '#23b9d0');
 		card.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
 
 		vote(id, 1);
 
+	} else {
+		currentV--;
+		btn.removeClass('voted');
+		btn.css('color', 'black');
+		btn.tooltip('hide');
+		btn.on('mouseout', function() {
+			btn.css('color', '');
+		});
+
+		vote(id, 0);
 	}
+
+	card.find('.big-card-points').html(currentV);
+	card.data('points', currentV);
 }
 
 	
@@ -167,25 +183,37 @@ function thumbDown(id, card) {
 		showVoteError();
 		return;
 	}
+	var currentV = parseInt(card.find('.big-card-points').html());
+	if(currentV == null)
+		currentV = card.data('points');
 	
 	if(!btn.hasClass("voted")) {
-		var currentV = parseInt(card.find('.big-card-points').html());
-		if(!currentV)
-			currentV = card.data('points');
+		btn.addClass("voted");
+		btn.css('color', '');
+		
 		if(card.find(".card-thumb-up").hasClass("voted"))
 			currentV --;
 	
 		currentV--;
-		card.find('.big-card-points').html(currentV);
-		card.data('points', currentV);
-			
-		btn.addClass("voted");
-		btn.siblings(".card-thumb-up").removeClass("voted");
+					
+		card.find(".card-thumb-up").removeClass("voted");
 		card.css('background', '#e23d22');
 		card.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
 		
 		vote(id, -1);
+	} else {
+		currentV++;
+		btn.removeClass('voted');
+		btn.css('color', 'black');
+		btn.tooltip('hide');
+		btn.on('mouseout', function() {
+			btn.css('color', '');
+		});
+		vote(id, 0);
 	}
+	card.find('.big-card-points').html(currentV);
+	card.data('points', currentV);
+
 }
 	
 
@@ -205,8 +233,10 @@ function checkVote(card) {
 			$(card).find('.card-thumb-down').removeClass('voted');
 		} else if(ancien == -1) {
 			$(card).find('.card-thumb-down').addClass('voted');
-			$(card).find('.card-thumb-up').removeClass('voted');
-			
+			$(card).find('.card-thumb-up').removeClass('voted');	
+		} else {
+			$(card).find('.card-thumb-down').removeClass('voted');
+			$(card).find('.card-thumb-up').removeClass('voted');	
 		}
 	}
 }

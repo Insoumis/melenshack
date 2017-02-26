@@ -24,9 +24,9 @@ $(document).ready(function() {
 	});
 
 	/*
-		initialise la big-card
+	   initialise la big-card
 
-	*/
+	 */
 
 	$('.big-card-remove').hide();
 	//ferme la bigimg si on clique à coté
@@ -57,22 +57,22 @@ $(document).ready(function() {
 		conf = confirm('Voulez-vous vraiment signaler ce post ?');
 		if(!conf)
 			return;
-		
+
 		//send report to server
 		$.post(
-		'MODELS/report_conf.php',
-		{
-			idhash: $('.big-card').attr('id'),
-		},
-		function(e) {
-			$('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle').tooltip('show');
-		},
-		'text'
-		);
+				'MODELS/report_conf.php',
+				{
+					idhash: $('.big-card').attr('id'),
+				},
+				function(e) {
+					$('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle').tooltip('show');
+				},
+				'text'
+			  );
 
 
 	});
-	
+
 	$('.big-card-remove').click(function() {
 		var conf = false;	
 		var value = 1;
@@ -87,30 +87,30 @@ $(document).ready(function() {
 
 		//send remove to server
 		$.post(
-		'MODELS/supprime_conf.php',
-		{
-			idhash: $('.big-card').attr('id'),
-			value: value
-		},
-		function(e) {
-			$('.big-card-container').hide();
-			$('.card').each(function(i, card) {
-				if($(card).attr('id') == $('.big-card').attr('id'))
-					$(card).remove();
-					$(gridLayout).masonry('reloadItems');
-					$(gridLayout).masonry('layout');
-			});
-		},
-		'text'
-		);
-	
+				'MODELS/supprime_conf.php',
+				{
+					idhash: $('.big-card').attr('id'),
+					value: value
+				},
+				function(e) {
+					$('.big-card-container').hide();
+					$('.card').each(function(i, card) {
+						if($(card).attr('id') == $('.big-card').attr('id'))
+							$(card).remove();
+						$(gridLayout).masonry('reloadItems');
+						$(gridLayout).masonry('layout');
+					});
+				},
+				'text'
+			  );
+
 	});
-	
+
 	//partages réseaux sociaux
 	$('.big-card-facebook').click(shareFacebook);
 	$('.big-card-twitter').click(shareTwitter);
 	$('.big-card-gplus').click(shareGplus);
-	
+
 	//initalise les tooltips
 	$('[data-toggle="tooltip"]').tooltip();
 
@@ -118,15 +118,26 @@ $(document).ready(function() {
 	$('body').hover(function() {
 		$('.playing').mouseleave();
 	});
-	
+
 	//ferme les share si on clique ailleurs
 	$('.card-container').click(function() {
 		if(currentCardShare != null)
 			animateShare(currentCardShare);
 	});
-	
 
+	//bouton THUMBUP
+	$('.big-card').find(".card-thumb-up").click(function() {
+		thumbUp($('.big-card').attr('id'), $('.big-card'));
+		$($('.big-card').data('card')).data('points', $('.big-card').find('.big-card-points').html());
+	});
 	
+	//bouton THUMBUP
+	$('.big-card').find(".card-thumb-down").click(function() {
+		thumbDown($('.big-card').attr('id'), $('.big-card'));
+		$($('.big-card').data('card')).data('points', $('.big-card').find('.big-card-points').html());
+	});
+
+
 
 
 	//au chargement: affiche 30 cartes
@@ -185,17 +196,17 @@ function addCard(c) {
 	var points = c.pointsTotaux;
 	var url = c.urlThumbnail;
 	var urlSource = c.urlSource;
-	
+
 	//string du temps passé depuis le post
 	var temps = getTimeElapsed(dateCreation);
-	
+
 	//récupère le template
 	var card = $('.template').clone();
 	card.attr('id', idhash);
 	card.find('.card-img>img').attr('src', url);
 	card.find('.card-title').html(titre);
 	card.find('.card-author>a').attr('href', 'user.php?id=' + idUser)
-							   .html(pseudoUser);
+		.html(pseudoUser);
 	card.find('.card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
 
 	card.data('points', points);
@@ -212,113 +223,102 @@ function addCard(c) {
 	card.find(".card-share-plus").click(function(e) {
 		animateShare($(this).closest(".card"));
 	});
-	
+
 	//bouton THUMBUP
 	card.find(".card-thumb-up").click(function(){thumbUp(idhash, card)});
 
 	//bouton THUMBDOWN
 	card.find(".card-thumb-down").click(function() {thumbDown(idhash, card)});
-	
+
 	//bouton OPEN
 	card.find(".card-open").click(function() {
 		var card = $(this).closest(".card, .card-big");
 		$(this).tooltip('hide');
-			var big = $('.big-card');
-			big.attr('id', idhash);
-			big.data('card', card);
-			big.find('.big-card-title').html(titre);
-			big.find('.big-card-tmps').html(temps)
+		var big = $('.big-card');
+		big.attr('id', idhash);
+		big.data('card', card);
+		big.find('.big-card-title').html(titre);
+		big.find('.big-card-tmps').html(temps)
 			big.find('.big-card-author').attr('href', 'user.php?id'+idUser).html(pseudoUser);
-			if(idUser == $('#id_user').val()) {
-				big.find('.big-card-remove').show();
-				big.find('.big-card-signal').hide();
-			}
-			//bouton THUMBUP
-			big.find(".card-thumb-up").click(function() {
-				thumbUp(idhash, big);
-				card.data('points', big.find('.big-card-points').html());
-			});
+		if(idUser == $('#id_user').val()) {
+			big.find('.big-card-remove').show();
+			big.find('.big-card-signal').hide();
+		}
 
 
-			//bouton THUMBDOWN
-			big.find(".card-thumb-down").click(function() {
-				thumbDown(idhash, big);
-				card.data('points', big.find('.big-card-points').html());
-			});
-	
-			//vérifie l'ancien vote de l'user
-			checkVote(big);
+		//vérifie l'ancien vote de l'user
+		checkVote(big);
 
-			//vérifier l'ancien report
-			$.post(
+		//vérifier l'ancien report
+		$.post(
 				'MODELS/check_report.php',
 				{idhash: idhash},
 				returnReport,
 				'text'
-			);
-	
-			function returnReport(ancien) {
-				ancien = parseInt(ancien);
-				if(ancien == 1) {
-					$('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle');
-				} else {
-					$('.big-card-signal').removeClass('voted').attr('title', 'Signaler').tooltip('fixTitle');
+			  );
 
-				}
+		function returnReport(ancien) {
+			ancien = parseInt(ancien);
+			if(ancien == 1) {
+				$('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle');
+			} else {
+				$('.big-card-signal').removeClass('voted').attr('title', 'Signaler').tooltip('fixTitle');
+
 			}
-			
-			big.find('.big-card-points').html(card.data('points'));
-			big.find('.big-card-img').attr('src', urlSource).on('load',
+		}
+
+		big.find('.big-card-points').html(card.data('points'));
+		big.find('.big-card-img').attr('src', urlSource).on('load',
 				function() {
 					$('.big-card-container').show();
 				});
-			
+
 	});
 
 	//HOVER THUMBUP
 	card.find(".card-thumb-up").hover(function() {
 		$(this).closest(".card").css({
-					"-webkit-box-shadow": "0 0 15px 5px #23b9d0",
-					"-moz-box-shadow": "0 0 15px 5px #23b9d0",
-					"box-shadow": "0 0 15px 5px #23b9d0"
-					});
-		},
-		function() {
+			"-webkit-box-shadow": "0 0 15px 5px #23b9d0",
+			"-moz-box-shadow": "0 0 15px 5px #23b9d0",
+			"box-shadow": "0 0 15px 5px #23b9d0"
+		});
+	},
+	function() {
 		$(this).closest(".card").css({
-					"-webkit-box-shadow": "0 0 8px 5px #ccc",
-					"-moz-box-shadow": "0 0 8px 5px #ccc",
-					"box-shadow": "0 0 8px 5px #ccc"
-					});
+			"-webkit-box-shadow": "0 0 8px 5px #ccc",
+			"-moz-box-shadow": "0 0 8px 5px #ccc",
+			"box-shadow": "0 0 8px 5px #ccc"
+		});
 
 	});
 
 
 	//HOVER THUMBDOWN
 	card.find(".card-thumb-down").hover(function() {
-			$(this).closest(".card").css({
-						"-webkit-box-shadow": "0 0 15px 5px #e23d22",
-						"-moz-box-shadow": "0 0 15px 5px #e23d22",
-						"box-shadow": "0 0 15px 5px #e23d22"
-						});
-		},
-		function() {
-			$(this).closest(".card").css({
-						"-webkit-box-shadow": "0 0 8px 5px #ccc",
-						"-moz-box-shadow": "0 0 8px 5px #ccc",
-						"box-shadow": "0 0 8px 5px #ccc"
-						});
-	
+		$(this).closest(".card").css({
+			"-webkit-box-shadow": "0 0 15px 5px #e23d22",
+			"-moz-box-shadow": "0 0 15px 5px #e23d22",
+			"box-shadow": "0 0 15px 5px #e23d22"
+		});
+	},
+	function() {
+		$(this).closest(".card").css({
+			"-webkit-box-shadow": "0 0 8px 5px #ccc",
+			"-moz-box-shadow": "0 0 8px 5px #ccc",
+			"box-shadow": "0 0 8px 5px #ccc"
+		});
+
 	});
 
 
-	
-	
-	
+
+
+
 	$('.card-container').append(card);
-	
+
 	card.addClass('card');
 	card.removeClass('template');
-	
+
 	//HOVER IMG
 	card.mouseenter(function(e) {
 		var ext = urlSource.split('.').pop();
@@ -385,7 +385,7 @@ function animateShare(card) {
 		return;
 
 	var card = btn.closest('.card');
-	
+
 	btn.tooltip('hide');
 	btn.addClass('animating');
 
@@ -402,49 +402,49 @@ function animateShare(card) {
 			if(!anim) {
 				anim = true;
 				btn.animate({left: '10px', color: '#e23d22' }, 250, 'easeInOutQuad',
-				function() { 
-					btn.addClass('red');
-					btn.removeClass('animating'); 
-				});
+						function() { 
+							btn.addClass('red');
+							btn.removeClass('animating'); 
+						});
 				card.find('.card-share-buttons').show('fade', 200);
 			}
 		});
-		
+
 		btn.css({
-		
-		'-moz-animation-name': 'rotateglyph',
-		'-moz-animation-duration': '0.15s',
-		'-moz-animation-iteration-count': '1',
-		'-moz-animation-fill-mode': 'forwards',
-	
-		'-webkit-animation-name': 'rotateglyph',
-		'-webkit-animation-duration': '0.15s',
-		'-webkit-animation-iteration-count': '1',
-		'-webkit-animation-fill-mode': 'forwards'
-	
+
+			'-moz-animation-name': 'rotateglyph',
+			'-moz-animation-duration': '0.15s',
+			'-moz-animation-iteration-count': '1',
+			'-moz-animation-fill-mode': 'forwards',
+
+			'-webkit-animation-name': 'rotateglyph',
+			'-webkit-animation-duration': '0.15s',
+			'-webkit-animation-iteration-count': '1',
+			'-webkit-animation-fill-mode': 'forwards'
+
 		}).attr('title', 'Retour').tooltip('fixTitle');
 	} else { // on ferme
 
 		currentCardShare = null;
 		btn.removeClass('on')
-		btn.css({
-		'-moz-animation-name': 'rotateglyph2',
-		'-moz-animation-duration': '0.15s',
-		'-moz-animation-iteration-count': '1',
-		'-moz-animation-fill-mode': 'forwards',
-	
-		'-webkit-animation-name': 'rotateglyph2',
-		'-webkit-animation-duration': '0.15s',
-		'-webkit-animation-iteration-count': '1',
-		'-webkit-animation-fill-mode': 'forwards'
-	
-		}).attr('title', 'Partager').tooltip('fixTitle')
+			btn.css({
+				'-moz-animation-name': 'rotateglyph2',
+				'-moz-animation-duration': '0.15s',
+				'-moz-animation-iteration-count': '1',
+				'-moz-animation-fill-mode': 'forwards',
+
+				'-webkit-animation-name': 'rotateglyph2',
+				'-webkit-animation-duration': '0.15s',
+				'-webkit-animation-iteration-count': '1',
+				'-webkit-animation-fill-mode': 'forwards'
+
+			}).attr('title', 'Partager').tooltip('fixTitle')
 		.delay(150).animate({left: '160px', color: 'black'}, 250, 'easeInOutQuad', 
-			function() {
-				btn.removeClass('red');
-				btn.removeAttr('style');	
-				btn.removeClass('animating');
-			});
+				function() {
+					btn.removeClass('red');
+					btn.removeAttr('style');	
+					btn.removeClass('animating');
+				});
 		card.find('.card-link, .card-open, .card-votes').delay(200).show('fade', 150);
 		card.find('.card-share-buttons').hide('fade', 200);
 	}

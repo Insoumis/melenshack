@@ -8,9 +8,5 @@ if (isset($_COOKIE['rememberme'])) { //supprime le cookie rememberme
 	setcookie('rememberme', '', time() - 3600, '/');
 }
 
-if (isset($_SESSION['id'])) {	//supprime la session
-	session_destroy();
-	header('Location:../index.php');
-} else {
-	header('HTTP/1.0 500 Internal Server Error');
-}
+session_destroy();
+header('Location:../index.php');
