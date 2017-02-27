@@ -29,8 +29,25 @@
 				</div>
 				<ul class="nav navbar-nav pull-right" id="right">
 						<?php if(!$connexionButton) : ?>
-						<li id="decoli" class="btn-danger">
-						<a title="Déconnexion" id="deconnection" href="MODELS/disconnect_conf.php"><div class="hidden-xs">Déconnexion</div><span class="visible-xs glyphicon glyphicon-log-out icon"></span></a>
+						<li id="decoli">
+						<img data-toggle="popover" data-html="true" title=<?php echo "'<strong>$pseudo</strong>'"?> data-content="
+						<a href='index.php?id_user=<?php echo $_SESSION['id'] ?>'><span class='glyphicon glyphicon glyphicon-user'></span>Mes posts</a>
+						<br><br>
+						<a href='pseudo.php'><span class='glyphicon glyphicon glyphicon-pencil'></span>Changer mon pseudo</a>
+						<br><br>
+						<?php if($grade > 0): ?>
+
+						<a href='admin.php'><span class='glyphicon glyphicon glyphicon-cog'></span>Modération</a>
+						<br><br>
+
+
+						<?php endif ?>
+						<a href='MODELS/disconnect_conf.php'><span class='glyphicon glyphicon glyphicon-log-out'></span>Se déconnecter</a>
+
+
+
+						" data-placement="bottom" src="assets/phi.png"/>
+						<!--<a title="Déconnexion" id="deconnection" href="MODELS/disconnect_conf.php"><div class="hidden-xs">Déconnexion</div><span class="visible-xs glyphicon glyphicon-log-out icon"></span></a>-->
 						</li>
 						<input id="connected" value="yes" hidden/>	
 						<?php else : ?>
@@ -39,11 +56,6 @@
 						</li>
 						<input id="connected" value="no" hidden />
 						<?php endif; ?>
-						<?php if($grade > 0): ?>
-						<li>
-						<a title="Modération" id="moderation" href="admin.php"><span class="glyphicon glyphicon-cog"></span></a>
-						</li>
-						<?php endif ?>
 						</ul>
 						<input id="id_user" value=<?php echo "'$id_user'" ?> hidden />
 			</div> <!-- navbar -->

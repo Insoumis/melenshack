@@ -9,4 +9,4 @@ if (isset($_COOKIE['rememberme'])) { //supprime le cookie rememberme
 }
 
 session_destroy();
-header('Location:../index.php');
+header("Location:../index.php");

@@ -65,12 +65,19 @@ if(Token::verifier(600, 'connexion'))
 			if(isset($_POST['rememberme'])) {
 				createCookie($id);
 			}
+			
+			$req = $bdd->prepare ('SELECT pseudo FROM users WHERE id = :id_user');
+			$req->execute ([
+				'id_user' => $id,
+			]);
+			$resultat = $req->fetch ();
 
 			if (!isset($_SESSION)) {
 				session_start ();
 			}
 			$_SESSION['id'] = $id;
-			$_SESSION['pseudo'] = $pseudo;
+			if($resultat['pseudo'])
+				$_SESSION['pseudo'] = $resultat['pseudo'];
 			$_SESSION['type'] = 'classic';
 			header ('Location:../index.php');
 

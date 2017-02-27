@@ -32,6 +32,27 @@ body {
 #ajouter_img:hover, #ajouter_img:focus{
 	background-color: #ac2925;
 }
+#decoli>img {
+	height: 40px;
+	cursor: pointer;
+}
+#decoli {
+	border-radius: 50%;
+	margin-top: 3px;
+	margin-right: 10px;
+	border: 2px solid #E23D22;
+	color: black;
+}
+
+.popover-title {
+	overflow: hidden;
+}
+#decoli .popover a{
+	white-space: nowrap;
+}
+#decoli .popover .glyphicon {
+	margin-right: 10px;
+}
 #coli>a, #decoli>a {
 	color: white;
 }
@@ -95,17 +116,16 @@ nav {
 	color: black ;
 }
 .actif, .actif:hover, .actif:focus {
-	-webkit-box-shadow: inset 0 -8px 0px -3px #d90000;
-	-moz-box-shadow: inset 0 -8px 0px -3px #d90000;
-	box-shadow: inset 0 -8px 0px -3px #d90000;
+	-webkit-box-shadow: inset 0 -8px 0px -3px #E23D22;
+	-moz-box-shadow: inset 0 -8px 0px -3px #E23D22;
+	box-shadow: inset 0 -8px 0px -3px #E23D22;
 }
 
 li.actif>a:hover {
-	-webkit-box-shadow: inset 0 -8px 0px -3px #d90000;
-	-moz-box-shadow: inset 0 -8px 0px -3px #d90000;
-	box-shadow: inset 0 -8px 0px -3px #d90000;
+	-webkit-box-shadow: inset 0 -8px 0px -3px #E23D22;
+	-moz-box-shadow: inset 0 -8px 0px -3px #E23D22;
+	box-shadow: inset 0 -8px 0px -3px #E23D22;
 }
-
 .navbar a {
 	overflow: hidden;
 }
@@ -132,11 +152,12 @@ li.actif>a:hover {
 	padding-right: 10px;
 	height: 30px;
 	border-radius: 15px;
-	border: 1px solid #d90000;
+	border: 1px solid #E23D22;
 }
-#searchinput:focus {
-	border: 2px solid #d90000;
+#searchinput:hover, #searchinput:focus {
+	border: 2px solid #E23D22;
 	outline-width: 0px;
+	padding-left: 9px;
 }
 
 #connexion, #deconnexion {
@@ -201,6 +222,8 @@ li.actif>a:hover {
 	max-height: 100px;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	padding-bottom: 0;
+	padding-top: 0;
 }
 
 .big-card-close {
@@ -341,8 +364,9 @@ li.actif>a:hover {
 	text-overflow: '';
 	margin-top: 5px;
 	font-size: 25px;
-	line-height: 25px;
-	max-height: 50px;
+	line-height: 28px;
+	max-height: 56px;
+	padding-top: 0;
 }
 
 .opened .card-title {

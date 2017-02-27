@@ -113,6 +113,7 @@ $(document).ready(function() {
 
 	//initalise les tooltips
 	$('[data-toggle="tooltip"]').tooltip();
+	$('[data-toggle="popover"]').popover();
 
 	//stop le gif playing meme si souris quitte vite
 	$('body').hover(function() {
@@ -137,8 +138,11 @@ $(document).ready(function() {
 		$($('.big-card').data('card')).data('points', $('.big-card').find('.big-card-points').html());
 	});
 
+	
+	$(document).click(function() {
+		$('.popover').popover('hide');
 
-
+	});
 
 	//au chargement: affiche 30 cartes
 	getCards(30);
@@ -205,8 +209,7 @@ function addCard(c) {
 	card.attr('id', idhash);
 	card.find('.card-img>img').attr('src', url);
 	card.find('.card-title').html(titre);
-	card.find('.card-author>a').attr('href', 'user.php?id=' + idUser)
-		.html(pseudoUser);
+	card.find('.card-author>a').html(pseudoUser);
 	card.find('.card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
 
 	card.data('points', points);
@@ -229,7 +232,22 @@ function addCard(c) {
 
 	//bouton THUMBDOWN
 	card.find(".card-thumb-down").click(function() {thumbDown(idhash, card)});
+	
+	$.post(
+			'MODELS/usersinfo.php',
+			{id: idUser},
+			function(data) {
+				data = JSON.parse(data);
 
+				card.find('.card-author>a')
+					.attr('title', '<strong>'+data.pseudo+'</strong>')
+					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription)+"</p><p>Points: "+data.points+"</p><p>Posts: "+data.posts+"</p>")
+					.click(function(e){e.stopPropagation();}).popover();
+			},
+			'text'
+		);
+	
+	
 	//bouton OPEN
 	card.find(".card-open").click(function() {
 		var card = $(this).closest(".card, .card-big");
@@ -238,13 +256,27 @@ function addCard(c) {
 		big.attr('id', idhash);
 		big.data('card', card);
 		big.find('.big-card-title').html(titre);
-		big.find('.big-card-tmps').html(temps)
-			big.find('.big-card-author').attr('href', 'user.php?id'+idUser).html(pseudoUser);
+		big.find('.big-card-tmps').html(temps);
+		big.find('.big-img-author').html(pseudoUser);
 		if(idUser == $('#id_user').val()) {
 			big.find('.big-card-remove').show();
 			big.find('.big-card-signal').hide();
 		}
+		
+		$.post(
+			'MODELS/usersinfo.php',
+			{id: idUser},
+			function(data) {
+				data = JSON.parse(data);
 
+				big.find('.big-img-author')
+					.attr('title', '<strong>'+data.pseudo+'</strong>')
+					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription)+"</p><p>Points: "+data.points+"</p><p>Posts: "+data.posts+"</p>")
+					.click(function(e){e.stopPropagation();}).popover('fixTitle');
+			},
+			'text'
+		);
+		
 
 		//vérifie l'ancien vote de l'user
 		checkVote(big);

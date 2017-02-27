@@ -38,7 +38,7 @@
 				Mélenshack, ce site de génie, waow
 			</div>
 			<div class="big-card-infos">
-			Il y a <span class="big-card-tmps">3 heures</span> par <a class="big-img-author" href='#'>Entropy</a>
+			Il y a <span class="big-card-tmps">3 heures</span> par <a data-toggle='popover' data-html="true" class="big-img-author" href='#'>Entropy</a>
 			</div>
 
 			<div class="big-card-votes">
@@ -65,7 +65,7 @@
 			</div>
 	
 			<div class="card-author">
-				<a href="#"></a>
+				<a data-toggle='popover' data-html="true" href="#"></a>
 			</div>
 
 			<div class="card-footer">

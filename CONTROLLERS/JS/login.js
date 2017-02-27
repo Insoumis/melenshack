@@ -34,21 +34,23 @@ function checkFBLogin() {
    Google
  */
 function checkGoogleLogin(googleUser) {
-	var idToken = googleUser.getAuthResponse().id_token;
+	if(google) {
+		var idToken = googleUser.getAuthResponse().id_token;
 
-	$.post('MODELS/googleLogin.php', {idtoken: idToken}, function(data) {
-		if(data == "error") {
+		$.post('MODELS/googleLogin.php', {idtoken: idToken}, function(data) {
+			if(data == "error") {
 
-		} else if(data == "success") {
-			window.location.href = 'index.php';
-		} else {
-			window.location.href = 'pseudo.php?erreur=fromregister'+data;
-		}
-	});
+			} else if(data == "success") {
+				window.location.href = 'index.php';
+			} else {
+				window.location.href = 'pseudo.php?erreur=fromregister'+data;
+			}
+		});
+	}
 }
 /*
    Twitter
-*/
+ */
 function checkTwitterLogin() {
 	window.open('MODELS/twitterLogin.php?request', '_blank', "height=600,width=600");
 }
@@ -64,3 +66,16 @@ function onTwitterClose(data) {
 		window.location.href = '../pseudo.php?erreur=fromregister'+data;
 	}
 }
+
+var google = false;
+
+window.onload = function() {
+	var auth2 = gapi.auth2.getAuthInstance();
+	auth2.signOut().then(function () {
+	});
+	
+	$('.g-signin2').click(function() {
+		google = true;
+	});
+}
+
