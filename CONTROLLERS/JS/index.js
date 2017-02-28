@@ -200,6 +200,7 @@ function addCard(c) {
 	var points = c.pointsTotaux;
 	var url = c.urlThumbnail;
 	var urlSource = c.urlSource;
+	var tags = c.tags;
 
 	//string du temps passé depuis le post
 	var temps = getTimeElapsed(dateCreation);
@@ -210,7 +211,14 @@ function addCard(c) {
 	card.find('.card-img>img').attr('src', url);
 	card.find('.card-title').html(titre);
 	card.find('.card-author>a').html(pseudoUser);
+	card.find('.card-time').html(getTimeElapsed(dateCreation, true));
 	card.find('.card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
+
+	for(var i=0; i < tags.length; ++i) {
+		if(i>5)
+			break;
+		card.find('.tags').append("<span class='tag-item'>"+tags[i]+"</span>");
+	}
 
 	card.data('points', points);
 	//vérifie l'ancien vote de l'user

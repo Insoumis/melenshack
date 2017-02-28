@@ -47,6 +47,7 @@
 				<span data-toggle="tooltip" title="J'aime pas" class="glyphicon glyphicon-thumbs-down card-thumb-down" ></span>
 			</div>
 			<div class="big-card-points">352</div>
+			<br>
 			<div class="big-card-img">
 				<img class='big-card-img' src="http://www.personalcreations.com/blog/wp-content/uploads/2014/09/how-long-to-read.png" />
 			</div>
@@ -67,7 +68,12 @@
 			<div class="card-author">
 				<a data-toggle='popover' data-html="true" href="#"></a>
 			</div>
-
+			<div class="card-time-container">	
+				<span class="glyphicon glyphicon-time"></span><span class="card-time"></span>
+			</div>
+			<br>
+			<div class="tags">
+			</div>
 			<div class="card-footer">
 				<div class="card-share">
 			

@@ -322,6 +322,15 @@ li.actif>a:hover {
 
 }
 
+.tag-item {
+	border-radius: 5px;
+	background: #0098B6;
+	color: white;
+	padding: 2px 5px;
+	line-height: 25px;
+	margin-right: 5px;
+}
+
 .card {
 	display: inline-block;
 	vertical-align: top;
@@ -381,10 +390,17 @@ li.actif>a:hover {
 	text-align: left;
 	overflow: hidden;
 	text-overflow: '';
+	float: left;
 }
 
 .card-author>a:hover, .card-author>a:focus {
 	text-decoration: none;
+}
+.card-time-container {
+	float: right;
+}
+.card-time-container .glyphicon {
+	margin-right: 5px;
 }
 
 .card-footer {
@@ -520,7 +536,7 @@ li.actif>a:hover {
 }
 
 .card-share-buttons>img {
-	height: 50px;
+	height: 45px;
 	cursor: pointer
 }
 
@@ -608,9 +624,6 @@ h1 {
 .upload {
 	text-align: center;
 	width: 100%;
-}
-.upload #submit {
-	margin-top: 25px;
 }
 .form-group {
 	margin: 0 auto;

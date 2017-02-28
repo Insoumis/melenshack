@@ -68,7 +68,7 @@ function shareGplus(e) {
 
 
 //Retourne un string du temps passé depuis un timestamp
-function getTimeElapsed(date) {
+function getTimeElapsed(date, min=false) {
 	
 	var temps = "";
 	var d = date.split(" ");
@@ -92,33 +92,51 @@ function getTimeElapsed(date) {
 
 	if(now.getFullYear() != y) {
 		temps = now.getFullYear() - y;
+		if(min) {
+			return temps+"a.";
+		}
 		if(temps == 1)
 			temps += " an";
 		else
 			temps += " années";
 	} else if(now.getMonth() != m) {
 		temps = now.getMonth() - m;
+		if(min) {
+			return temps+"m.";
+		}
 		temps += " mois";
 	} else if(now.getDate() != d) {
 		temps = now.getDate() - d;
+		if(min) {
+			return temps+"j";
+		}
 		if(temps == 1)
 			temps += " jour";
 		else
 			temps += " jours";
 	} else if(now.getHours() != h) {
 		temps = now.getHours() - h;
+		if(min) {
+			return temps+"h";
+		}
 		if(temps == 1)
 			temps += " heure";
 		else
 			temps += " heures";
 	} else if(now.getMinutes() != min) {
 		temps = now.getMinutes() - min;
+		if(min) {
+			return temps+"m";
+		}
 		if(temps == 1)
 			temps += " minute";
 		else
 			temps += " minutes";
 	} else if(now.getSeconds() != s) {
 		temps = now.getSeconds() - s;
+		if(min) {
+			return temps+"s";
+		}
 		if(temps == 1)
 			temps += " seconde";
 		else
