@@ -609,6 +609,9 @@ h1 {
 	text-align: center;
 	width: 100%;
 }
+.upload #submit {
+	margin-top: 25px;
+}
 .form-group {
 	margin: 0 auto;
 	float: none;
@@ -684,6 +687,7 @@ h1 {
 	width: 100%;
 	text-align: left;
 	display: flex;
+	margin-bottom: 20px;
 }
 .g-recaptcha {
 	margin-top: 20px;

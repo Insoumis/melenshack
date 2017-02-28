@@ -18,7 +18,6 @@
 				<div class="form-group col-xs-5">
 					<label for="titre">Titre de l'image:</label>
 					<input type="text" class="form-control input-lg" name="titre" id="titre" placeholder="Titre de votre post" required autofocus>
-					<input type="url" name="url" id="url" hidden>
 
 					<p id="formats"><small>Formats acceptés: JPG, PNG, BMP, GIF. Poids max: <?php echo $maxsize/1000000 ?> Mo</small></p>
 					<label for="file" id="drop">
@@ -40,6 +39,12 @@
 					<div id="urlgroup" class="form-group form-inline">
 						<label for="url" id="urltext">ou entrez l'URL de l'image:</label>
 						<input type="url" id="url" name="url" class="form-control"/>
+					</div>
+
+					<div class="tags">
+						<label for="tagsinput">Tags (séparés par des virgules): </label>
+						<br>
+						<select multiple name="tags" id="tagsinput" type="text" data-role="tagsinput"/>
 					</div>
 					<img id="preview" />
 					<div class="g-recaptcha" data-sitekey="6LefaBUUAAAAALVKIo2DiW_hWLs2kijFTrlUHGMb" data-callback="recaptchaCallback"></div>

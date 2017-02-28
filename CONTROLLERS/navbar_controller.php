@@ -1,5 +1,5 @@
 <script>
-$(window).on('load', function() {
+$("nav").ready(function() {
 	var useropened = false;
 
 	$('#decoli>img').hover(function() {

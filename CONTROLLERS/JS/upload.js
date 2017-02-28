@@ -129,4 +129,12 @@ function checkSubmit() {
 		}
 }
 
-
+$('#tagsinput').tagsinput({
+	  maxTags: 10,
+	  maxChars: 20,
+	  trimValue: true
+});
+$('#tagsinput').on('beforeItemAdd', function(e) {
+	e.item = "#" + e.item;
+	$(this).tagsinput("refresh");
+});
