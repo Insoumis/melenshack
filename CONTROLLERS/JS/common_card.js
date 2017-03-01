@@ -241,6 +241,8 @@ function thumbDown(id, card) {
 
 
 function checkVote(card) {
+	if(!card.attr('id'))
+		return;
 	$.post(
 		'MODELS/check_vote.php',
 		{idhash: card.attr('id')},

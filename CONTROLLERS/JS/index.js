@@ -218,7 +218,7 @@ function addCard(c) {
 			break;
 		card.find('.tags').append("<span class='tag-item'>"+tags[i]+"</span>");
 	}
-
+	
 	card.find('.card-points').html(points);
 	//vérifie l'ancien vote de l'user
 	checkVote(card);
@@ -362,16 +362,21 @@ function addCard(c) {
 	card.addClass('card');
 	card.removeClass('template');
 
+	var e = urlSource.split('.').pop();
+	if(e == 'gif')
+		card.find('.gif-overlay').show();
+
 	//HOVER IMG
 	card.mouseenter(function(e) {
 		var ext = urlSource.split('.').pop();
 		if(ext == 'gif' && !$(this).hasClass("opened")) {
 			$(this).addClass("playing");
+			$(this).find('.gif-overlay').hide();
 			var bigImg = $('<img/>');
 			bigImg.attr('src', urlSource);
-			bigImg.addClass('card-img');
+			bigImg.height(card.find('.card-img>img').height());
 			bigImg.on('load', function() {
-				card.find('.card-img').replaceWith(bigImg);
+				card.find('.card-img>img').replaceWith(bigImg);
 			});
 			e.stopPropagation();
 		}
@@ -380,12 +385,12 @@ function addCard(c) {
 	card.mouseleave(function() {
 		var ext = urlSource.split('.').pop();
 		if(ext == 'gif' && !$(this).hasClass("opened")) {
+			$(this).find('.gif-overlay').show();
 			$(this).removeClass('playing');
 			var img = $('<img/>');
 			img.attr('src', url);
-			img.addClass('card-img');
 			img.on('load', function() {
-				card.find('.card-img').replaceWith(img);
+				card.find('.card-img>img').replaceWith(img);
 			});
 		}
 	});

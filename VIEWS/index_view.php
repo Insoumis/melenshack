@@ -58,6 +58,7 @@
 	
 		<div class="template">
 			<div class="card-img">
+				<div class="gif-overlay" hidden><img src="assets/gif_overlay.png"/></div>
 				<img />
 			</div>
 
