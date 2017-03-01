@@ -14,7 +14,7 @@ if(!isset($_SESSION['id'])) {
 
 $req = $bdd->prepare("SELECT * FROM users WHERE pseudo=:pseudo");
 $req->execute([
-	':pseudo' => $pseudo
+	':pseudo' => htmlspecialchars($pseudo),
 ]);
 
 $res = $req->fetch();
@@ -26,9 +26,9 @@ if($res) {
 
 $req = $bdd->prepare("UPDATE users SET pseudo=:pseudo WHERE id=:id");
 $req->execute([
-	':pseudo' => $pseudo,
+	':pseudo' => htmlspecialchars($pseudo),
 	':id' => $_SESSION['id'],
 ]);
 
-$_SESSION['pseudo'] = $pseudo;
+$_SESSION['pseudo'] = htmlspecialchars($pseudo);
 header('Location: ../index.php');

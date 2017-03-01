@@ -1,5 +1,5 @@
 <?php
-include ("includes/identifiants.php");
+include_once ("includes/identifiants.php");
 include_once("includes/constants.php");
 
 function getInfo($idhash) {
@@ -45,10 +45,11 @@ function getInfo($idhash) {
 			"dateCreation" => $resultat["date_creation"],
 			"pseudoUser" => $resultat2["pseudo"],
 			"idUser" => $resultat["id_user"],
-			"urlThumbnail" => $resultat["url"],
+			"urlThumbnail" => "vignettes/" . $id . '.' . $resultat["format"],
 			"urlSource" => $resultat["url"],
 			"pointsTotaux" => $resultat["pointsTotaux"],
-			"supprime" => $resultat["supprime"]
+			"supprime" => $resultat["supprime"],
+			"tags" => $resultat["tags"],
 		);
 
 	} else {
@@ -62,7 +63,8 @@ function getInfo($idhash) {
 			"urlThumbnail" => "vignettes/" . $id . '.' . $resultat["format"],
 			"urlSource" => "images/" . $id . '.' . $resultat["format"],
 			"pointsTotaux" => $resultat["pointsTotaux"],
-			"supprime" => $resultat["supprime"]
+			"supprime" => $resultat["supprime"],
+			"tags" => $resultat["tags"],
 		);
 	}
 	$infojson = json_encode($info);

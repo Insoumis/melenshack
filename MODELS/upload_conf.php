@@ -17,19 +17,37 @@ pseudo
 include_once ("includes/identifiants.php");
 include_once ('includes/securite.class.php');
 
-function retrieve_remote_file_size($url){
-    $ch = curl_init($url);
+function retrieve_remote_file_size ($url)
+{
+    $ch = curl_init ($url);
 
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($ch, CURLOPT_HEADER, TRUE);
-    curl_setopt($ch, CURLOPT_NOBODY, TRUE);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt ($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt ($ch, CURLOPT_HEADER, TRUE);
+    curl_setopt ($ch, CURLOPT_NOBODY, TRUE);
+    curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, true);
 
-    $data = curl_exec($ch);
-    $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+    $data = curl_exec ($ch);
+    $size = curl_getinfo ($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
 
-    curl_close($ch);
-    return ($size/10);
+    curl_close ($ch);
+    return ($size / 10);
+}
+
+function addToFiles ($key, $url)
+{
+    $tempName = tempnam ("C:/wamp64/tmp/", 'php');
+    echo $tempName;
+    $originalName = basename (parse_url ($url, PHP_URL_PATH));
+
+    $imgRawData = file_get_contents ($url);
+    file_put_contents ($tempName, $imgRawData);
+    $_FILES[$key] = array(
+        'name' => $originalName,
+        'type' => mime_content_type ($tempName),
+        'tmp_name' => $tempName,
+        'error' => 0,
+        'size' => strlen ($imgRawData),
+    );
 }
 
 if (!isset($_SESSION)) {
@@ -49,16 +67,15 @@ if (!$captcha) {
 
 $req = $bdd->prepare ('SELECT id FROM ban WHERE id_user = :id_user');
 $req->execute ([
-	'id_user' => $id_user,
+    'id_user' => $id_user,
 ]);
 $resultat = $req->fetch ();
 
 if ($resultat) {
-	//La marteau du ban a frappé :)
-	header ('Location:../upload.php?erreur=banned');
-	exit();
+    //La marteau du ban a frappé :)
+    header ('Location:../upload.php?erreur=banned');
+    exit();
 }
-
 
 
 // Verification de la validité du captcha
@@ -70,48 +87,58 @@ if ($decoded_response->success == false) {
 }
 
 $titre = $_POST['titre'];
-if (strlen($titre) > 255 || strlen($titre) == 0) {
+if (strlen ($titre) > 255 || strlen ($titre) == 0) {
     header ('Location:../upload.php?erreur=titre');
     exit();
 }
 
 if (!empty($_POST['url'])) {
-    $url = htmlspecialchars($_POST['url']);
+    $url = htmlspecialchars ($_POST['url']);
 
-    $a = retrieve_remote_file_size($url); // Vérification de la taille de l'image
-    if ($a> MAX_SIZE) {
+    $a = retrieve_remote_file_size ($url); // Vérification de la taille de l'image
+    if ($a > MAX_SIZE) {
         header ('Location:../upload.php?erreur=size');
         exit();
     }
 
-    $b = getimagesize($url); // Vérification de l'extension
-    $image_type = $b[2];
+    addToFiles ('file', $url);
+    $image_type = htmlspecialchars($_FILES['file']["type"]);
+    var_dump($_FILES['file']);
 
-    if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG , IMAGETYPE_PNG , IMAGETYPE_BMP)))
-    {
+    if (in_array ($image_type, array("image/png", "image/jpeg","image/jpg", "image/gif", "image/bmp"))) {
         //Good !
+        if ($image_type =="image/png") {
+            $extension_image = "png";
+        } elseif ($image_type =="image/gif") {
+            $extension_image = "gif";
+        } elseif ($image_type =="image/jpeg" OR $image_type =="image/jpg") {
+            $extension_image = "jpg";
+        } elseif ($image_type =="image/bmp") {
+            $extension_image = "bmp";
+        }
     } else {
         header ('Location:../upload.php?erreur=notimage');
         exit();
     }
 
-    $req = $bdd->prepare('SELECT id FROM images WHERE url = :url');
-    $req->execute([
+    $req = $bdd->prepare ('SELECT id FROM images WHERE url = :url');
+    $req->execute ([
         ':url' => $url,
     ]);
-    $resultat = $req->fetch();
+    $resultat = $req->fetch ();
 
     if ($resultat) {
         header ('Location:../upload.php?erreur=existe'); // Image existe déja.
         exit();
     }
 
-    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, url, genre, date_creation) VALUES(:titre, :id_user, :url, :genre, NOW())');
+    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, url, genre, tags, date_creation) VALUES(:titre, :id_user, :url, :genre, :tags, NOW())');
     $req->execute ([
         ':titre' => htmlspecialchars ($_POST['titre']),
         ':id_user' => $id_user,
         ':url' => $url,
         ':genre' => "url",
+        ':tags' => htmlspecialchars ($_POST['tags']),
     ]);
 
     $idbase = $bdd->lastInsertId ();
@@ -122,15 +149,17 @@ if (!empty($_POST['url'])) {
         'nom_hash' => $id,
         'id' => $idbase,
     ]);
-} elseif (!empty($_POST['url']) AND !empty($_FILES['file'] )) {
+} elseif (!empty($_POST['url']) AND !empty($_FILES['file'])) {
     header ('Location:../upload.php?erreur='); // Soit url, soit image, pas les 2 en meme temps
     exit();
 } else {
 
-    if(empty($_FILES['file'])) {
+    if (empty($_FILES['file'])) {
         header ('Location:../upload.php?erreur=image'); //pas d'image
+        exit();
     }
     $img = $_FILES['file'];
+     var_dump($img);
 
     if ($img['size'] > MAX_SIZE) {
         header ('Location:../upload.php?erreur=size');
@@ -160,58 +189,72 @@ if (!empty($_POST['url'])) {
         'nom_hash' => $id,
         'id' => $idbase,
     ]);
+}
 
-    $direction = '/../images/' . $id . "." . $extension_image;
-    $imagebase = __DIR__ . $direction;
-    move_uploaded_file ($img['tmp_name'], $imagebase);
+$direction = '/../images/' . $id . "." . $extension_image;
+$imagebase = __DIR__ . $direction;
 
-    if ($extension_image != "gif") {
-        list($width, $height) = getimagesize ($imagebase);
-    }
-    elseif ($extension_image == "gif") {
-        $gifDecoder = new GIFDecoder ( fread ( fopen ( $imagebase, "rb" ), filesize ( $imagebase ) ) );
-        $i = 1;
-        foreach ( $gifDecoder -> GIFGetFrames ( ) as $frame ) {
-            if ( $i < 2 ) {
-                fwrite ( fopen ( __DIR__ ."/../images/frames/frame0$i.gif" , "wb" ), $frame );
-            }
-            $i++;
+if (is_uploaded_file($_FILES['file']['tmp_name'])) {
+   move_uploaded_file ($_FILES['file']['tmp_name'], $imagebase);
+} else {
+    echo "Vous ne passerez pas !";
+    rename ($_FILES['file']['tmp_name'], $imagebase);
+    unlink($_FILES['file']['tmp_name']);
+}
+
+
+if ($extension_image != "gif") {
+    list($width, $height) = getimagesize ($imagebase);
+} elseif ($extension_image == "gif") {
+    $gifDecoder = new GIFDecoder (fread (fopen ($imagebase, "rb"), filesize ($imagebase)));
+    $i = 1;
+    foreach ($gifDecoder->GIFGetFrames () as $frame) {
+        if ($i < 2) {
+            fwrite (fopen (__DIR__ . "/../images/frames/frame0$i.gif", "wb"), $frame);
         }
-        $direction = '/../images/frames/frame01.gif';
-        $imagebase = __DIR__ . $direction;
-        list($width, $height) = getimagesize ($imagebase);
+        $i++;
     }
+    $direction = '/../images/frames/frame01.gif';
+    $imagebase = __DIR__ . $direction;
+    list($width, $height) = getimagesize ($imagebase);
+}
 
-    if (($extension_image == "jpg") OR ($extension_image == "jpeg")) {
-        $source = imagecreatefromjpeg ($imagebase);
-    } elseif ($extension_image == "png") {
-        $source = imagecreatefrompng ($imagebase);
-    } elseif ($extension_image == "bmp") {
-        $source = imagecreatefromwbmp ($imagebase);
-    } elseif ($extension_image == "gif") {
-        $source = imagecreatefromgif ($imagebase);
-    }
+if (($extension_image == "jpg") OR ($extension_image == "jpeg")) {
+    $source = imagecreatefromjpeg ($imagebase);
+} elseif ($extension_image == "png") {
+    $source = imagecreatefrompng ($imagebase);
+} elseif ($extension_image == "bmp") {
+    $source = imagecreatefromwbmp ($imagebase);
+} elseif ($extension_image == "gif") {
+    $source = imagecreatefromgif ($imagebase);
+}
 
-    if ($width >= $height) {
-        $ratio = $width / VIGNETTE_WIDTH;
-    } else {
-        $ratio = $height / VIGNETTE_HEIGHT;
-    }
-    $newwidth = $width / $ratio;
-    $newheight = $height / $ratio;
-    $thumb = imagecreatetruecolor ($newwidth, $newheight);
-    imagecopyresized ($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+if ($width >= $height) {
+    $ratio = $width / VIGNETTE_WIDTH;
+} else {
+    $ratio = $height / VIGNETTE_HEIGHT;
+}
+$newwidth = $width / $ratio;
+$newheight = $height / $ratio;
+$thumb = imagecreatetruecolor ($newwidth, $newheight);
+imagecopyresized ($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
 
-    if (($extension_image == "jpg") OR ($extension_image == "jpeg")) {
-        imagejpeg ($thumb, __DIR__ . '/../vignettes/' . $id . '.jpg');
-    } elseif ($extension_image == "png") {
-        imagepng ($thumb, __DIR__ . '/../vignettes/' . $id . '.png');
-    } elseif ($extension_image == "bmp") {
-        imagepng ($thumb, __DIR__ . '/../vignettes/' . $id . '.bmp');
-    } elseif ($extension_image == "gif") {
-        imagegif ($thumb, __DIR__ . '/../vignettes/' . $id . '.gif');
-    }
+if (($extension_image == "jpg") OR ($extension_image == "jpeg")) {
+    imagejpeg ($thumb, __DIR__ . '/../vignettes/' . $id . '.jpg');
+} elseif ($extension_image == "png") {
+    imagepng ($thumb, __DIR__ . '/../vignettes/' . $id . '.png');
+} elseif ($extension_image == "bmp") {
+    imagepng ($thumb, __DIR__ . '/../vignettes/' . $id . '.bmp');
+} elseif ($extension_image == "gif") {
+    imagegif ($thumb, __DIR__ . '/../vignettes/' . $id . '.gif');
+}
+if (!empty($_POST['url'])) {
+    $req = $bdd->prepare ('UPDATE images SET format = :format  WHERE id = :id ');
+    $req->execute ([
+        'format' => $extension_image,
+        'id' => $idbase,
+    ]);
 }
 header ('Location:../view.php?id=' . $id);
 ?>
