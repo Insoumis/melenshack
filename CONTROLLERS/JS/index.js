@@ -163,6 +163,8 @@ var currentIndex = 0;
 function getCards(size) {
 	var sort = $('#sort').val();
 	var search = $('#searchinput').val();
+	var id_user = $('#search_id_user').val();
+	var tag = $('#search_tag').val();
 
 	$.ajax({
 		url: 'MODELS/requestajax.php',
@@ -171,7 +173,9 @@ function getCards(size) {
 			'size': size,
 			'sort': sort,
 			'startIndex': currentIndex,
-			'search': search
+			'search': search,
+			'id_user': id_user,
+			'tag': tag
 		},
 		success: function(data) {
 			data = JSON.parse(data);
@@ -216,7 +220,7 @@ function addCard(c) {
 	for(var i=0; i < tags.length; ++i) {
 		if(i>5)
 			break;
-		card.find('.tags').append("<span class='tag-item'>"+tags[i]+"</span>");
+		card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
 	}
 	
 	card.find('.card-points').html(points);
@@ -252,7 +256,7 @@ function addCard(c) {
 
 				card.find('.card-author>a')
 					//.attr('title', '<strong>'+data.pseudo+'</strong>')
-					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription, false)+"</p><p>Points: "+data.points+"</p><p>Posts: "+data.posts+"</p>")
+					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription, false)+"</p><p>Points: "+data.points+"</p><p><a href='index.php?sort=new&id_user="+idUser+"'> Posts:</a> "+data.posts+"</p>")
 					.click(function(e){e.stopPropagation();}).popover();
 			},
 			'text'

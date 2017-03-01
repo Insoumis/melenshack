@@ -5,6 +5,9 @@
 <body>
 	<?php echo $NAVBAR ?>
 
+	<input id='search_id_user' value=<?php echo "'$search_id_user'"; ?> hidden>
+	<input id='search_tag' value=<?php echo "'$search_tags'"; ?> hidden>
+
 
 	<!-- container principal -->
 

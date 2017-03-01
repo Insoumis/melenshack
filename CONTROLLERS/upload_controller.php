@@ -25,6 +25,8 @@ if(isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 			$errmsg = "Le lien ne renvoit pas vers une image!";
 		else if ($erreur == "banned")
 			$errmsg = "Vous avez été banni";
+		else if ($erreur == "tags")
+			$errmsg = "Erreur de tags!";
 		else if ($erreur == "pseudo")
 			$errmsg = "Vous devez choisir un pseudo pour poster une image ! <a href='pseudo.php'>Choisir un pseudo</a>";
 		else

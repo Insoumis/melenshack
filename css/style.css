@@ -17,7 +17,6 @@ body {
 .container {
 	width: 100%;
 }
-
 /*
 	------
 	NAVBAR
@@ -408,6 +407,9 @@ li.actif>a:hover {
 	float: left;
 	cursor: pointer;
 	max-height: 20px;
+}
+.card-author .popover-content {
+	cursor: auto;
 }
 
 .card-author>a:hover, .card-author>a:focus {

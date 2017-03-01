@@ -99,8 +99,8 @@ if ($_POST['tags']) {
     foreach ($_POST['tags'] as $id => $tag) {
         if ($id == 0) {
             $tagsstr = htmlspecialchars ($tag);
-        }
-        $tagsstr = $tagsstr . ',' . htmlspecialchars ($tag);
+        } else
+        	$tagsstr = $tagsstr . ',' . htmlspecialchars ($tag);
         $nb_id = $id;
     }
 

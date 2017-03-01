@@ -31,7 +31,7 @@
 						<?php if(!$connexionButton) : ?>
 						<li id="decoli">
 						<img data-toggle="popover" data-html="true" title=<?php echo "'<strong>$pseudo</strong>'"?> data-content="
-						<a href='index.php?id_user=<?php echo $_SESSION['id'] ?>'><span class='glyphicon glyphicon glyphicon-user'></span>Mes posts</a>
+						<a href='index.php?sort=new&id_user=<?php echo $_SESSION['id'] ?>'><span class='glyphicon glyphicon glyphicon-user'></span>Mes posts</a>
 						<br><br>
 						<a href='pseudo.php'><span class='glyphicon glyphicon glyphicon-pencil'></span>Changer mon pseudo</a>
 						<br><br>
