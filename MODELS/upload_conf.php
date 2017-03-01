@@ -15,6 +15,7 @@ pseudo
 
 */
 include_once ("includes/identifiants.php");
+include_once ("includes/constants.php");
 include_once ('includes/securite.class.php');
 
 function retrieve_remote_file_size ($url)
@@ -35,7 +36,7 @@ function retrieve_remote_file_size ($url)
 
 function addToFiles ($key, $url)
 {
-    $tempName = tempnam ("C:/wamp64/tmp/", 'php');
+    $tempName = tempnam (PHP_DOSSIER_TMP, 'php');
     echo $tempName;
     $originalName = basename (parse_url ($url, PHP_URL_PATH));
 
@@ -91,6 +92,27 @@ if (strlen ($titre) > 255 || strlen ($titre) == 0) {
     header ('Location:../upload.php?erreur=titre');
     exit();
 }
+if ($_POST['tags']) {
+    $nb_id = 0;
+    $tagsstr = "";
+
+    foreach ($_POST['tags'] as $id => $tag) {
+        if ($id == 0) {
+            $tagsstr = htmlspecialchars ($tag);
+        }
+        $tagsstr = $tagsstr . ',' . htmlspecialchars ($tag);
+        $nb_id = $id;
+    }
+
+    $nbtags = $nb_id + 1;
+
+    if ($nbtags > 10 OR strlen ($tagsstr) > 255) {
+        header ('Location:../upload.php?erreur=tags');
+        exit();
+    }
+} else {
+    $tagsarray = "";
+}
 
 if (!empty($_POST['url'])) {
     $url = htmlspecialchars ($_POST['url']);
@@ -132,13 +154,14 @@ if (!empty($_POST['url'])) {
         exit();
     }
 
+
     $req = $bdd->prepare ('INSERT INTO images(titre, id_user, url, genre, tags, date_creation) VALUES(:titre, :id_user, :url, :genre, :tags, NOW())');
     $req->execute ([
         ':titre' => htmlspecialchars ($_POST['titre']),
         ':id_user' => $id_user,
         ':url' => $url,
         ':genre' => "url",
-        ':tags' => htmlspecialchars ($_POST['tags']),
+        ':tags' => $tagsstr,
     ]);
 
     $idbase = $bdd->lastInsertId ();
@@ -159,7 +182,6 @@ if (!empty($_POST['url'])) {
         exit();
     }
     $img = $_FILES['file'];
-     var_dump($img);
 
     if ($img['size'] > MAX_SIZE) {
         header ('Location:../upload.php?erreur=size');
@@ -172,13 +194,14 @@ if (!empty($_POST['url'])) {
         header ('Location:../upload.php?erreur=format');
         exit();
     }
-    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, nom_original, format, genre, date_creation) VALUES(:titre, :id_user, :nom_original, :format, :genre, NOW())');
+    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, nom_original, format, genre, tags, date_creation) VALUES(:titre, :id_user, :nom_original, :format, :genre, :tags, NOW())');
     $req->execute ([
         ':titre' => htmlspecialchars ($_POST['titre']),
         ':id_user' => $id_user,
         ':nom_original' => htmlspecialchars ($img['name']), // A FAIRE ! : Verifier que < 255
         ':genre' => "image",
         ':format' => $extension_image,
+        ':tags' => $tagsstr,
     ]);
 
     $idbase = $bdd->lastInsertId ();
@@ -256,5 +279,6 @@ if (!empty($_POST['url'])) {
         'id' => $idbase,
     ]);
 }
+
 header ('Location:../view.php?id=' . $id);
 ?>

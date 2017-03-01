@@ -44,7 +44,7 @@
 					<div class="tags">
 						<label for="tagsinput"><span class="glyphicon glyphicon-tags"></span>Tags (séparés par des virgules): </label>
 						<br>
-						<select multiple name="tags" id="tagsinput" type="text" data-role="tagsinput"></select>
+						<select multiple name="tags[]" id="tagsinput" type="text" data-role="tagsinput"></select>
 					</div>
 					<div class="g-recaptcha" data-sitekey="6LefaBUUAAAAALVKIo2DiW_hWLs2kijFTrlUHGMb" data-callback="recaptchaCallback"></div>
 					<br>
