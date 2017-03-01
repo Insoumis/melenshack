@@ -391,6 +391,8 @@ li.actif>a:hover {
 	overflow: hidden;
 	text-overflow: '';
 	float: left;
+	cursor: pointer;
+	max-height: 20px;
 }
 
 .card-author>a:hover, .card-author>a:focus {
@@ -400,7 +402,6 @@ li.actif>a:hover {
 	float: right;
 }
 .card-time-container .glyphicon {
-	margin-right: 5px;
 }
 
 .card-footer {
@@ -447,7 +448,13 @@ li.actif>a:hover {
 	color: #e23d22;
 	cursor: pointer;
 }
-
+.card-points {
+	float:left;
+	font-size: 14px;
+	font-weight: normal;
+	margin-top: 5px;
+	margin-right: 10px;
+}
 .card-share {
 	font-size: 25px;
 	margin-left: 10px;
@@ -617,6 +624,9 @@ h1 {
 }
 .upload label {
 	font-size: 18px;
+}
+.upload label .glyphicon {
+	font-size: 70%;
 }
 .upload .glyphicon {
 	margin-right: 10px;

@@ -129,18 +129,18 @@ $(document).ready(function() {
 	//bouton THUMBUP
 	$('.big-card').find(".card-thumb-up").click(function() {
 		thumbUp($('.big-card').attr('id'), $('.big-card'));
-		$($('.big-card').data('card')).data('points', $('.big-card').find('.big-card-points').html());
+		$($('.big-card').data('card')).find('.card-points').html($('.big-card').find('.big-card-points').html());
 	});
 	
 	//bouton THUMBUP
 	$('.big-card').find(".card-thumb-down").click(function() {
 		thumbDown($('.big-card').attr('id'), $('.big-card'));
-		$($('.big-card').data('card')).data('points', $('.big-card').find('.big-card-points').html());
+		$($('.big-card').data('card')).find('.card-points').html($('.big-card').find('.big-card-points').html());
 	});
 
 	
 	$(document).click(function() {
-		$('.popover').popover('hide');
+		$('#main_page .popover').popover('hide');
 
 	});
 
@@ -201,7 +201,7 @@ function addCard(c) {
 	var url = c.urlThumbnail;
 	var urlSource = c.urlSource;
 	var tags = c.tags;
-
+	tags = ["jlm2017"];
 	//string du temps passé depuis le post
 	var temps = getTimeElapsed(dateCreation);
 
@@ -220,7 +220,7 @@ function addCard(c) {
 		card.find('.tags').append("<span class='tag-item'>"+tags[i]+"</span>");
 	}
 
-	card.data('points', points);
+	card.find('.card-points').html(points);
 	//vérifie l'ancien vote de l'user
 	checkVote(card);
 
@@ -236,10 +236,14 @@ function addCard(c) {
 	});
 
 	//bouton THUMBUP
-	card.find(".card-thumb-up").click(function(){thumbUp(idhash, card)});
+	card.find(".card-thumb-up").click(function(){
+		thumbUp(idhash, card);
+	});
 
 	//bouton THUMBDOWN
-	card.find(".card-thumb-down").click(function() {thumbDown(idhash, card)});
+	card.find(".card-thumb-down").click(function() {
+		thumbDown(idhash, card);
+	});
 	
 	$.post(
 			'MODELS/usersinfo.php',
@@ -248,8 +252,8 @@ function addCard(c) {
 				data = JSON.parse(data);
 
 				card.find('.card-author>a')
-					.attr('title', '<strong>'+data.pseudo+'</strong>')
-					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription)+"</p><p>Points: "+data.points+"</p><p>Posts: "+data.posts+"</p>")
+					//.attr('title', '<strong>'+data.pseudo+'</strong>')
+					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription, false)+"</p><p>Points: "+data.points+"</p><p>Posts: "+data.posts+"</p>")
 					.click(function(e){e.stopPropagation();}).popover();
 			},
 			'text'
@@ -279,7 +283,7 @@ function addCard(c) {
 
 				big.find('.big-img-author')
 					.attr('title', '<strong>'+data.pseudo+'</strong>')
-					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription)+"</p><p>Points: "+data.points+"</p><p>Posts: "+data.posts+"</p>")
+					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription, false)+"</p><p>Points: "+data.points+"</p><p>Posts: "+data.posts+"</p>")
 					.click(function(e){e.stopPropagation();}).popover('fixTitle');
 			},
 			'text'
@@ -307,7 +311,7 @@ function addCard(c) {
 			}
 		}
 
-		big.find('.big-card-points').html(card.data('points'));
+		big.find('.big-card-points').html(card.find('.card-points').html());
 		big.find('.big-card-img').attr('src', urlSource).on('load',
 				function() {
 					$('.big-card-container').show();

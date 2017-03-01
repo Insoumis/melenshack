@@ -31,7 +31,10 @@ $("nav").ready(function() {
 		$(e.target).data("bs.popover").inState.click = false;
 	});
 
-	$('[data-toggle="popover"]').popover(); 
+	$('#searchinput').click(function(e) {e.stopPropagation();});
+	$('#searchinput .popover input').click(function(e) {e.stopPropagation();});
+
+	$('[data-toggle="popover"]').popover();
 });
 </script>
 

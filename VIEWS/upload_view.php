@@ -42,7 +42,7 @@
 					</div>
 
 					<div class="tags">
-						<label for="tagsinput">Tags (séparés par des virgules): </label>
+						<label for="tagsinput"><span class="glyphicon glyphicon-tags"></span>Tags (séparés par des virgules): </label>
 						<br>
 						<select multiple name="tags" id="tagsinput" type="text" data-role="tagsinput"></select>
 					</div>

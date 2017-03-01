@@ -35,10 +35,9 @@
 			</div>
 
 			<div class="big-card-title">
-				Mélenshack, ce site de génie, waow
 			</div>
 			<div class="big-card-infos">
-			Il y a <span class="big-card-tmps">3 heures</span> par <a data-toggle='popover' data-html="true" class="big-img-author" href='#'>Entropy</a>
+			Il y a <span class="big-card-tmps"></span> par <a data-toggle='popover' data-html="true" class="big-img-author" href='#'></a>
 			</div>
 
 			<div class="big-card-votes">
@@ -49,7 +48,7 @@
 			<div class="big-card-points">352</div>
 			<br>
 			<div class="big-card-img">
-				<img class='big-card-img' src="http://www.personalcreations.com/blog/wp-content/uploads/2014/09/how-long-to-read.png" />
+				<img class='big-card-img' src="" />
 			</div>
 		</div>
 	</div>
@@ -66,10 +65,11 @@
 			</div>
 	
 			<div class="card-author">
-				<a data-toggle='popover' data-html="true" href="#"></a>
+				<a data-toggle='popover' data-html="true"></a>
 			</div>
 			<div class="card-time-container">	
-				<span class="glyphicon glyphicon-time"></span><span class="card-time"></span>
+				<span class="card-time"></span>
+				<span class="glyphicon glyphicon-time"></span>
 			</div>
 			<br>
 			<div class="tags">
@@ -82,6 +82,7 @@
 					<span data-toggle="tooltip" title="Partager" class="glyphicon glyphicon-share-alt card-share-plus" ></span>
 				</div>
 				<div class="card-votes">
+					<div class="card-points"></div>
 					<span data-toggle="tooltip" title="J'aime" class="glyphicon glyphicon-thumbs-up card-thumb-up" ></span>
 			   
 					<span data-toggle="tooltip" title="J'aime pas" class="glyphicon glyphicon-thumbs-down card-thumb-down" ></span>

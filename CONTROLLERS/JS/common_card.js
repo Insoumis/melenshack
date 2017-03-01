@@ -68,73 +68,74 @@ function shareGplus(e) {
 
 
 //Retourne un string du temps passé depuis un timestamp
-function getTimeElapsed(date, min=false) {
+function getTimeElapsed(date, minimise=false) {
+
+	date = new Date(date);
+	var diff = now - date;
 	
-	var temps = "";
-	var d = date.split(" ");
+	diff = Math.floor(diff/1000);
+	var s = diff % 60;
 	
-	//temps hh-mm-ss
-	var t = d[1];
+	diff = Math.floor((diff-s)/60);
+	var min = diff % 60;
+	
+	diff = Math.floor((diff-min)/60);
+	var h = diff % 60;
+	
+	diff = Math.floor((diff-h)/24);
+	var d = diff % 24;
+	
+	diff = Math.floor((diff-d)/30);
+	var m = diff % 30;
+	
+	diff = Math.floor((diff-m)/12);
+	var y = diff % 12;
 
-	//date yyyy-mm-dd
-	d = d[0];
-
-	var dd = d.split("-");
-	var tt = t.split(":");
-
-	var y = dd[0];
-	var m = dd[1] - 1;
-	d = dd[2];
-
-	var h = tt[0];
-	var min = tt[1];
-	var s = tt[2];
-
-	if(now.getFullYear() != y) {
-		temps = now.getFullYear() - y;
-		if(min) {
+	if(y) {
+		temps = y;
+		if(minimise) {
 			return temps+"a.";
 		}
 		if(temps == 1)
 			temps += " an";
 		else
 			temps += " années";
-	} else if(now.getMonth() != m) {
-		temps = now.getMonth() - m;
-		if(min) {
+	} else if(m) {
+		temps = m;
+		if(minimise) {
 			return temps+"m.";
 		}
 		temps += " mois";
-	} else if(now.getDate() != d) {
-		temps = now.getDate() - d;
-		if(min) {
+	} else if(d) {
+		temps = d;
+		if(minimise) {
 			return temps+"j";
 		}
 		if(temps == 1)
 			temps += " jour";
 		else
 			temps += " jours";
-	} else if(now.getHours() != h) {
-		temps = now.getHours() - h;
-		if(min) {
+	} else if(h) {
+		temps = h;
+		if(minimise) {
 			return temps+"h";
 		}
 		if(temps == 1)
 			temps += " heure";
 		else
 			temps += " heures";
-	} else if(now.getMinutes() != min) {
-		temps = now.getMinutes() - min;
-		if(min) {
+	} else if(min) {
+		temps = min;
+		if(minimise) {
 			return temps+"m";
 		}
 		if(temps == 1)
 			temps += " minute";
 		else
 			temps += " minutes";
-	} else if(now.getSeconds() != s) {
-		temps = now.getSeconds() - s;
-		if(min) {
+	} else if(s) {
+		temps = s;
+		if(minimise) {
 			return temps+"s";
 		}
 		if(temps == 1)
@@ -142,6 +143,9 @@ function getTimeElapsed(date, min=false) {
 		else
 			temps += " secondes";
 	} else {
+		if(minimise) {
+			return "0";
+		}
 		temps = "à l'instant";
 	}
 
@@ -155,10 +159,10 @@ function thumbUp(id, card) {
 		showVoteError();
 		return;
 	}
-	var currentV = parseInt(card.find('.big-card-points').html());
+	var currentV = card.find('.big-card-points').html();
 
-	if(currentV == null)
-		currentV = card.data('points');
+	if(!currentV)
+		currentV = card.find('.card-points').html();
 
 	if(!btn.hasClass("voted")) {
 		btn.addClass("voted");
@@ -190,7 +194,7 @@ function thumbUp(id, card) {
 	}
 
 	card.find('.big-card-points').html(currentV);
-	card.data('points', currentV);
+	card.find('.card-points').html(currentV);
 }
 
 	
@@ -201,9 +205,9 @@ function thumbDown(id, card) {
 		showVoteError();
 		return;
 	}
-	var currentV = parseInt(card.find('.big-card-points').html());
-	if(currentV == null)
-		currentV = card.data('points');
+	var currentV = card.find('.big-card-points').html();
+	if(!currentV)
+		currentV = card.find('.card-points').html();
 	
 	if(!btn.hasClass("voted")) {
 		btn.addClass("voted");
@@ -230,7 +234,7 @@ function thumbDown(id, card) {
 		vote(id, 0);
 	}
 	card.find('.big-card-points').html(currentV);
-	card.data('points', currentV);
+	card.find('.card-points').html(currentV);
 
 }
 	
@@ -260,93 +264,14 @@ function checkVote(card) {
 }
 
 
+//envoie vote au serveur
 function vote(id, vote) {
-	var http = new XMLHttpRequest();
-	var url = "MODELS/vote_conf.php";
-	var params = "idhash="+id+"&vote="+vote;
-	http.open("post", url, true);
-	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	http.send(params);
-}
-
-
-//Fonctions de vote
-function upVote(e) {
-	e.stopPropagation();
-	if($('#connected').val() == 'no') {
-		showVoteError();
-		return;
-	}
-	
-	
-	if(!$(this).hasClass('voted')) {
-		var points = $(this).closest('.card, .big-card').find('.points, .big-card-points').html();
-		points = parseInt(points);
-		points ++;
-		if($(this).parent().find(".downvote").hasClass("voted"))
-			points ++;
-		console.log(points);
-		$(this).closest('.card, .big-card').find('.points, .big-card-points').html(points);
-	
-	
-	
-		$(this).addClass("voted");
-		$(this).parent().find(".downvote").removeClass("voted");
-		//send vote to server
-	
-		var id = $(this).closest(".card, .big-img-container").attr("id");
-		var http = new XMLHttpRequest();
-		var url = "MODELS/vote_conf.php";
-		var params = "id_image="+id+"&vote=1";
-		http.open("post", url, true);
-		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		/*
-		http.onreadystatechange = function() {
-			if(http.readystate == 4 && http.status == 200) {
-				alert(http.responsetext);
-			}
-		} */
-		http.send(params);
-
-	}
-}
-
-function downVote(e) {
-	e.stopPropagation();
-	if($('#connected').val() == 'no') {
-		showVoteError();
-		return;
-	}
-
-	if(!$(this).hasClass('voted')) {
-		var points = $(this).closest('.card, .big-img-container').find('.points').html();
-		points = parseInt(points);
-		points --;
-		if($(this).parent().find(".upvote").hasClass("voted"))
-			points --;
-		console.log(points);
-		$(this).closest('.card, .big-img-container').find('.points').html(points);
-	
-
-		$(this).addClass("voted");
-		$(this).parent().find(".upvote").removeClass("voted");
-		//send vote to server
-	
-		var id = $(this).closest(".card, .big-img-container").attr("id");
-		
-		var http = new XMLHttpRequest();
-		var url = "MODELS/vote_conf.php";
-		var params = "id_image="+id+"&vote=-1";
-		http.open("POST", url, true);
-		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		/*
-		http.onreadystatechange = function() {
-			if(http.readyState == 4 && http.status == 200) {
-				alert(http.responseText);
-			}
-		} */
-		http.send(params);
-	}
+	$.post(
+		'MODELS/vote_conf.php',
+		{idhash: id,
+		 vote: vote},
+		'text'
+	);
 }
 
 
@@ -357,8 +282,9 @@ function showVoteError() {
 		  Vous devez être connecté pour pouvoir voter. <a href='login.php'>Se connecter</a>.
 		  </div>`;
 
-	var erreur = $(e);
-	$('#main_page').prepend(erreur);
+	$('#main_page').prepend($(e));
+
+	//fade out au bout de 2s
 	erreur.delay(2000).animate({'opacity': '0'}, 1000, function() {
 		erreur.remove();		
 	});
