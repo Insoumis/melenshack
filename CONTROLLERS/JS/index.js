@@ -200,8 +200,7 @@ function addCard(c) {
 	var points = c.pointsTotaux;
 	var url = c.urlThumbnail;
 	var urlSource = c.urlSource;
-	var tags = c.tags;
-	tags = ["jlm2017"];
+	var tags = c.tags.split(',');
 	//string du temps passé depuis le post
 	var temps = getTimeElapsed(dateCreation);
 
