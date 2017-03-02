@@ -6,7 +6,9 @@
 		public static function generer($nom = '')
 		{
 			// On demarre une session
-			session_start();
+			if (!isset($_SESSION)) {
+				session_start ();
+			}
 			
 			$token = sha1(uniqid(mt_rand(), true)); // genere un token unique
 			$_SESSION[$nom.'_token'] = $token;
@@ -22,7 +24,10 @@
 			Le nom optionnel si défini lors de la création du token */
 		public static function verifier($temps, $nom = '')
 		{
-			session_start();
+			if (!isset($_SESSION)) {
+				session_start ();
+			}
+
 			if(isset($_SESSION[$nom.'_token']) && isset($_SESSION[$nom.'_token_time']) && isset($_POST['token']))
 				if($_SESSION[$nom.'_token'] == $_POST['token']) 
 					if($_SESSION[$nom.'_token_time'] >= (time() - $temps))

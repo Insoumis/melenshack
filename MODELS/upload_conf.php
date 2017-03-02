@@ -278,6 +278,7 @@ if (!empty($_POST['url'])) {
         'format' => $extension_image,
         'id' => $idbase,
     ]);
+    unlink(__DIR__ .'/../images/'. $id .'.'.$extension_image);
 }
 
 header ('Location:../view.php?id=' . $id);
