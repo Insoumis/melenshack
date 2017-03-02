@@ -8,5 +8,5 @@ require 'VIEWS/register_view.php';
 
 ?>
 
-<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src='https://www.google.com/recaptcha/api.js?hl=fr'></script>
 <script src="CONTROLLERS/JS/register.js"></script>

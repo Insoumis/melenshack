@@ -63,8 +63,8 @@ NAVBAR
 	color: white;
 }
 .erreur {
-	position: absolute;
-	top: 20px;
+	position: fixed;
+	top: 60px;
 	z-index: 500000000;
 	left: 20%;
 	width: 60%;

@@ -58,6 +58,7 @@
 						<?php endif; ?>
 						</ul>
 						<input id="id_user" value=<?php echo "'$id_user'" ?> hidden />
+						<input id="grade" value=<?php echo "'$grade'" ?> hidden />
 			</div> <!-- navbar -->
 		</div> <!-- container -->
 	</nav>
