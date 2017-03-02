@@ -1,45 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 	<?php echo $HEAD ?>
-	<meta name="google-signin-client_id" content="370224579216-3m4vo3a5isrnthstrg5jga9so291r4an.apps.googleusercontent.com">
 	<body>
 
 
 
 		<?php echo $NAVBAR ?>
 		<div class="container" id="main_page">
-
-			<?php if(!empty($errmsg)): ?>
+		<?php if(!empty($errmsg)): ?>
 			<div class='alert alert-danger erreur'>
 				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
 				<?php echo $errmsg ?>
 			</div>
-			<?php endif ?>
+		<?php endif ?>
 
-			<?php if($showPage): ?>
-			<form id="loginForm" action="MODELS/login_conf.php"  method="post">
-				<h1>Connexion</h1>
-				<h5 class="sub">Pas de compte ? <a href="register.php">Inscrivez-vous !</a></h5>
-				<!--<h5>Ou utilisez les réseaux sociaux :</h5>
+		<?php if($showPage): ?>
 
-				-->	
-				<div class="form-group col-xs-4">
-					<label for="pseudo">Nom d'utilisateur :</label>
-					<input type="text" class="form-control input-lg" name="pseudo" id="pseudo" placeholder="Nom d'utilisateur" required autofocus>
-					<label for="pass">Mot de passe :</label>
-					<input type="password" class="form-control input-lg" name="pass" id="pass" placeholder ="Mot de passe" required autofocus>
-					<div class="checkbox">
-						<label><input type="checkbox" name="rememberme" value="rememberme">Se souvenir de moi</label>
-					</div>
-					<input type="hidden" name="token" id="token" value="<?php echo $token?>">
-					<input type="submit" id="submit" class="btn btn-primary btn-lg" name="submit" value="Connexion">
-					<div class="g-signin2" data-onsuccess="checkGoogleLogin"></div>
-					<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="checkFBLogin()" scope="public_profile, email"></div>
-					<a href="" onclick="checkTwitterLogin()">Twitter</a>
+		<div id="login_container">
 
-				</div>
-			</form>
-			<?php endif ?>
+		<div class="login-social" id="facebook_login">
+		<img class='loginLogo' src="assets/Facebook_logo.png" />
+		<div class="main">Continuer avec Facebook</div>
+		<div class="sub">Rien ne sera posté sans votre permission</div>
+		</div>
+
+		<div class="login-social" id="twitter_login">
+		<img class='loginLogo' src="assets/Twitter_logo.png" />
+		<div class="main">Continuer avec Twitter</div>
+		<div class="sub">Rien ne sera posté sans votre permission</div>
+		</div>
+
+		<div class="login-social" id="google_login">
+		<img class='loginLogo' src="assets/Google_logo.png" />
+		<div class="main">Continuer avec Google</div>
+		</div>
+
+		<div class="login-social" id="mail_login">
+		<img class='loginLogo' src="assets/Email_logo.png" />
+		<div class="main">Continuer avec un email</div>
+		</div>
+
+		</div>
+		<?php endif ?>
+
 		</div>
 	</body>
 </html>

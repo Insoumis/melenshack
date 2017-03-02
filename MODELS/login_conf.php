@@ -33,7 +33,7 @@ if(Token::verifier(600, 'connexion'))
 		if (!$resultat)
 		{
 			//Mauvais identifiant ou mot de passe
-			header('Location:../login.php?erreur=wrong');
+			header('Location:../login_classic.php?erreur=wrong');
 			exit();
 		}
 		else
@@ -41,7 +41,7 @@ if(Token::verifier(600, 'connexion'))
 			$pass_hash = $resultat['pass'];
 
 			if(!password_verify(base64_encode(hash('sha384', $pass, true)), $pass_hash)) {
-				header('Location:../login.php?erreur=wrong');
+				header('Location:../login_classic.php?erreur=wrong');
 				exit();
 			}
 
@@ -56,7 +56,7 @@ if(Token::verifier(600, 'connexion'))
 
 			if ($resultat) {
 				//La marteau du ban a frappé :)
-				header ('Location:../login.php?erreur=banned');
+				header ('Location:../login_classic.php?erreur=banned');
 				exit();
 			}
 
@@ -87,7 +87,7 @@ if(Token::verifier(600, 'connexion'))
 
 else {
      //Mauvais Token
-	header('Location:../login.php?erreur=token');
+	header('Location:../login_classic.php?erreur=token');
 }
 
 ?>

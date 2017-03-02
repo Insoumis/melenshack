@@ -20,21 +20,28 @@ window.fbAsyncInit = function() {
 }(document, 'script', 'facebook-jssdk'));
 
 function checkFBLogin() {
-	$.post('MODELS/facebookLogin.php', null, function(data) {
-		if(data == "error") {
+	FB.login(function(response) {
+		if(response.status != "connected")
+			return;
+		$.post('MODELS/facebookLogin.php', null, function(data) {
+			if(data == "error") {
 
-		} else if(data == "success") {
-			window.location.href = 'index.php';
-		} else {
-			window.location.href = 'pseudo.php?erreur=fromregister'+data;
-		}
+			} else if(data == "success") {
+				window.location.href = 'index.php';
+			} else {
+				window.location.href = 'pseudo.php?erreur=fromregister'+data;
+			}
+		});
 	});
 }
+
+
+
 /*
    Google
  */
 function checkGoogleLogin(googleUser) {
-	if(google) {
+	if(googleUser) {
 		var idToken = googleUser.getAuthResponse().id_token;
 
 		$.post('MODELS/googleLogin.php', {idtoken: idToken}, function(data) {
@@ -73,9 +80,38 @@ window.onload = function() {
 	var auth2 = gapi.auth2.getAuthInstance();
 	auth2.signOut().then(function () {
 	});
-	
+
 	$('.g-signin2').click(function() {
 		google = true;
 	});
 }
 
+window.onload = function() {
+
+	$("#facebook_login").click(checkFBLogin);
+	$("#twitter_login").click(checkTwitterLogin);
+	$("#mail_login").click(function() {
+		window.location.href = "login_classic.php";
+	});
+
+	gapi.load('auth2', function(){
+		// Retrieve the singleton for the GoogleAuth library and set up the client.
+		auth2 = gapi.auth2.init({
+			client_id: '370224579216-3m4vo3a5isrnthstrg5jga9so291r4an.apps.googleusercontent.com',
+			cookiepolicy: 'single_host_origin',
+			//scope: 'additional_scope'
+		});
+		attachSignin(document.getElementById('google_login'));
+	});
+
+
+	function attachSignin(element) {
+		auth2.attachClickHandler(element, {},
+				function(googleUser) {
+					checkGoogleLogin(googleUser);
+				}, function(error) {
+					console.log(JSON.stringify(error, undefined, 2));
+				});
+	};
+
+};
