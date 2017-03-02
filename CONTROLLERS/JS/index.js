@@ -291,9 +291,12 @@ function addCard(c) {
 		big.find('.big-card-title').html(titre);
 		big.find('.big-card-tmps').html(temps);
 		big.find('.big-img-author').html(pseudoUser);
-		if(idUser == $('#id_user').val()) {
+		if(idUser == $('#id_user').val() || $("#grade").val() > 0) {
 			big.find('.big-card-remove').show();
 			big.find('.big-card-signal').hide();
+		} else {
+			big.find('.big-card-remove').hide();
+			big.find('.big-card-signal').show();
 		}
 
 		$.post(
