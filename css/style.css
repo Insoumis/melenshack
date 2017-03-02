@@ -798,13 +798,13 @@ h1 {
 	margin-top: 60px;
 }
 
-#loginForm, #registerForm {
+#loginForm, #registerForm, #pseudoForm {
 	text-align: center;
 }
-#loginForm label, #registerForm label {
+#loginForm label, #registerForm label, #pseudoForm label {
 	font-size: 15px;
 }
-#loginForm input, #registerForm input {
+#loginForm input, #registerForm input, #pseudoForm input {
 	margin-bottom: 15px;
 	margin-bottom: 7%;
 }

@@ -15,7 +15,7 @@
 	
 			<form id="registerForm" action="MODELS/register_conf.php"  method="post">
 				<h1>Inscription</h1>
-				<div class="sub">Vous avez déjà un compte ? <a href="login.php">Connectez-vous !</a></div>
+				<div class="sub">Vous avez déjà un compte ? <a href="login_classic.php">Connectez-vous !</a></div>
 				<div class="form-group col-xs-4">
 					<label for="pseudo">Nom d'utilisateur :</label>
 					<input type="text" class="form-control" name="pseudo" id="pseudo" placeholder="Nom d'utilisateur" required autofocus>

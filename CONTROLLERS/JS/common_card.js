@@ -80,16 +80,16 @@ function getTimeElapsed(date, minimise=false) {
 	var min = diff % 60;
 	
 	diff = Math.floor((diff-min)/60);
-	var h = diff % 60;
+	var h = diff % 24;
 	
 	diff = Math.floor((diff-h)/24);
-	var d = diff % 24;
+	var d = diff % 30;
 	
 	diff = Math.floor((diff-d)/30);
-	var m = diff % 30;
+	var m = diff % 12;
 	
 	diff = Math.floor((diff-m)/12);
-	var y = diff % 12;
+	var y = diff;
 
 	if(y) {
 		temps = y;

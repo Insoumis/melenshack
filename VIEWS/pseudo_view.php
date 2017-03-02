@@ -4,21 +4,40 @@
 	<body>
 	<?php echo $NAVBAR ?>
 	<div id="main_page">
-	<form method="POST" action="MODELS/pseudo_conf.php">
+	<?php if(!empty($errmsg)): ?>
+			<div class='alert alert-danger erreur'>
+				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+				<?php echo $errmsg ?>
+			</div>
+			<?php endif ?>
+
+
+	<?php if($showPage): ?>
+	<form method="POST" action="MODELS/pseudo_conf.php" id="pseudoForm">
 	<?php if($fromregister): ?>
-	<h1>Inscription réussie !</h1>
-	<br>
-	<h2>Malheureusement, le pseudo (nom affiché aux autres utilisateurs) "<?php echo $pseudo ?>" est déjà pris, merci d'en choisir un autre.</h2>
-	
+		<div class='alert alert-success erreur'>
+				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+				Inscription réussie ! Malheureusement, le pseudo <strong><?php echo $pseudo ?></strong> est déjà pris !
+			</div>
+
 	<?php endif ?>
-	<input type="text" placeholder="pseudo" name="pseudo">
-	<input type="submit" value="Changer">
+
+	<h1>Changer mon pseudo</h1>
+	<div class="sub">Votre pseudo est votre nom visible par les autres utilisateurs</div>
+	<br><br>
+	<div class="form-group col-xs-4">
+		<label for="pseudo">Nouveau pseudo</label>
+		<br>
+		<input class="form-control input-lg" id="pseudo" type="text" placeholder="Nouveau pseudo" name="pseudo">
+		<br>
+		<input type="submit" value="Changer" class="btn btn-primary btn-lg">
+	</div>
 	</div>
 
 
 
 	</form>
-
+	<?php endif ?>
 
 
 

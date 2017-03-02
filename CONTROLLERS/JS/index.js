@@ -2,6 +2,11 @@
 var currentCardShare;
 var gridLayout;
 
+//nb de cartes affichées
+var currentIndex = 0;
+
+var fin = false;
+
 $(document).ready(function() {
 	gridLayout = $('.card-container');
 	//layout
@@ -12,7 +17,7 @@ $(document).ready(function() {
 		stagger: 30
 	});
 
-	$('#searchinput').on('change paste keyup', function() {
+	$('#searchinput').on('keyup', function() {
 		$('.card').each(function(i, card) {
 			if(!($(card).find('.card-title').html()).includes($('#searchinput').val()))
 				card.remove();
@@ -131,14 +136,14 @@ $(document).ready(function() {
 		thumbUp($('.big-card').attr('id'), $('.big-card'));
 		$($('.big-card').data('card')).find('.card-points').html($('.big-card').find('.big-card-points').html());
 	});
-	
+
 	//bouton THUMBUP
 	$('.big-card').find(".card-thumb-down").click(function() {
 		thumbDown($('.big-card').attr('id'), $('.big-card'));
 		$($('.big-card').data('card')).find('.card-points').html($('.big-card').find('.big-card-points').html());
 	});
 
-	
+
 	$(document).click(function() {
 		$('#main_page .popover').popover('hide');
 
@@ -152,12 +157,11 @@ $(document).ready(function() {
 
 //quand l'user atteind le bas de la page, rajoute 20 cartes
 $(window).scroll(function() {
-	getCards(20);
+	if(!fin && $(window).scrollTop() + $(window).height() > $(document).height() - 20) {
+		getCards(20);
+	}
 });
 
-
-//nb de cartes affichées
-var currentIndex = 0;
 
 //récupère les $size prochaines cartes depuis le serveur et les affiche
 function getCards(size) {
@@ -186,7 +190,21 @@ function getCards(size) {
 					i++;
 				}
 			}
+			if(i == 0) {
+				fin = true;
+			}
 			currentIndex += i;
+			
+			var t = 0;
+			$('.card').each(function(i, card) {
+				t++;
+			});
+			if(t == 0 && $("#nothing").length == 0) {
+				$("#main_page").append($("<center><h3 id='nothing'>Rien n'a été trouvé.</h3></center>"));
+			} else if(t > 0) {
+				$('#nothing').remove();
+			}
+
 		}
 	});
 }
@@ -222,7 +240,7 @@ function addCard(c) {
 			break;
 		card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
 	}
-	
+
 	card.find('.card-points').html(points);
 	//vérifie l'ancien vote de l'user
 	checkVote(card);
@@ -247,7 +265,7 @@ function addCard(c) {
 	card.find(".card-thumb-down").click(function() {
 		thumbDown(idhash, card);
 	});
-	
+
 	$.post(
 			'MODELS/usersinfo.php',
 			{id: idUser},
@@ -260,9 +278,9 @@ function addCard(c) {
 					.click(function(e){e.stopPropagation();}).popover();
 			},
 			'text'
-		);
-	
-	
+		  );
+
+
 	//bouton OPEN
 	card.find(".card-open").click(function() {
 		var card = $(this).closest(".card, .card-big");
@@ -277,21 +295,21 @@ function addCard(c) {
 			big.find('.big-card-remove').show();
 			big.find('.big-card-signal').hide();
 		}
-		
-		$.post(
-			'MODELS/usersinfo.php',
-			{id: idUser},
-			function(data) {
-				data = JSON.parse(data);
 
-				big.find('.big-img-author')
-					.attr('title', '<strong>'+data.pseudo+'</strong>')
-					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription, false)+"</p><p>Points: "+data.points+"</p><p>Posts: "+data.posts+"</p>")
-					.click(function(e){e.stopPropagation();}).popover('fixTitle');
-			},
-			'text'
-		);
-		
+		$.post(
+				'MODELS/usersinfo.php',
+				{id: idUser},
+				function(data) {
+					data = JSON.parse(data);
+
+					big.find('.big-img-author')
+						.attr('title', '<strong>'+data.pseudo+'</strong>')
+						.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription, false)+"</p><p>Points: "+data.points+"</p><p>Posts: "+data.posts+"</p>")
+						.click(function(e){e.stopPropagation();}).popover('fixTitle');
+				},
+				'text'
+			  );
+
 
 		//vérifie l'ancien vote de l'user
 		checkVote(big);
