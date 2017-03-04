@@ -2,6 +2,7 @@
 
 include_once("includes/identifiants.php");
 include_once ("includes/constants.php");
+include_once ("includes/random/random.php");
 
 if (!isset($_SESSION)) {
 	session_start ();
