@@ -32,7 +32,16 @@ $json = array();
 
 if ($sort == "hot") {
 
-    $req = $bdd->prepare ("SELECT nom_hash FROM images INNER JOIN users ON id_user = users.id WHERE (supprime=0 AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) AND (:pseudo = '' OR pseudo = :pseudo) AND tags RLIKE :tagsr) ORDER BY pointsTotaux DESC LIMIT :startIndex , :size" );
+	$req = $bdd->prepare ("
+	SELECT nom_hash FROM images 
+		INNER JOIN users ON id_user = users.id 
+	WHERE (supprime=0 
+			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search)
+			AND (:pseudo = '' OR pseudo = :pseudo) 
+			AND tags RLIKE :tagsr)
+			AND users.id NOT IN 
+				(SELECT id_user FROM ban WHERE 1)
+	ORDER BY pointsTotaux DESC LIMIT :startIndex , :size" );
 	$req->bindParam(':startIndex', $startIndex, PDO::PARAM_INT);
 	$req->bindParam(':size', $size, PDO::PARAM_INT);
 	$req->bindParam(':search', $search, PDO::PARAM_STR);
@@ -46,7 +55,16 @@ if ($sort == "hot") {
 	echo json_encode($json);
 
 } elseif ($sort == "new") {
-    $req = $bdd->prepare ("SELECT nom_hash FROM images INNER JOIN users ON id_user = users.id WHERE (supprime=0 AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) AND (:pseudo = '' OR pseudo = :pseudo) AND tags RLIKE :tagsr) ORDER BY date_creation DESC LIMIT :startIndex , :size" );
+	$req = $bdd->prepare ("
+	SELECT nom_hash FROM images 
+		INNER JOIN users ON id_user = users.id 
+	WHERE (supprime=0 
+			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
+			AND (:pseudo = '' OR pseudo = :pseudo) 
+			AND tags RLIKE :tagsr) 
+			AND users.id NOT IN
+				(SELECT id_user FROM ban WHERE 1)
+	ORDER BY date_creation DESC LIMIT :startIndex , :size" );
 	
 	$req->bindParam(':startIndex', $startIndex, PDO::PARAM_INT);
 	$req->bindParam(':size', $size, PDO::PARAM_INT);
@@ -65,7 +83,16 @@ if ($sort == "hot") {
 
 } elseif ($sort == "random") {
 
-    $req = $bdd->prepare ("SELECT nom_hash FROM images INNER JOIN users ON id_user = users.id WHERE (supprime=0 AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) AND (:pseudo = '' OR pseudo = :pseudo) AND tags RLIKE :tagsr) ORDER BY RAND() DESC LIMIT :size" );
+	$req = $bdd->prepare ("
+	SELECT nom_hash FROM images 
+		INNER JOIN users ON id_user = users.id 
+	WHERE (supprime=0 
+			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
+			AND (:pseudo = '' OR pseudo = :pseudo) 
+			AND tags RLIKE :tagsr) 
+			AND users.id NOT IN
+				(SELECT id_user FROM ban WHERE 1)
+	ORDER BY RAND() DESC LIMIT :size" );
 	
 	$req->bindParam(':size', $size, PDO::PARAM_INT);
 	$req->bindParam(':search', $search, PDO::PARAM_STR);
@@ -80,7 +107,17 @@ if ($sort == "hot") {
 	}
 	echo json_encode($json);
 } elseif ($sort == "report" && $grade > 0) {
-    $req = $bdd->prepare ("SELECT images.nom_hash, count(*) FROM images INNER JOIN report ON images.id = report.id_image INNER JOIN users ON images.id_user = users.id WHERE (supprime=0 AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) AND (:pseudo = '' OR pseudo = :pseudo) AND tags RLIKE :tagsr) GROUP BY images.id ORDER BY count(*) DESC LIMIT :startIndex , :size");
+	$req = $bdd->prepare ("
+	SELECT images.nom_hash, count(*) FROM images 
+		INNER JOIN report ON images.id = report.id_image 
+		INNER JOIN users ON images.id_user = users.id 
+	WHERE (supprime=0 
+			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
+			AND (:pseudo = '' OR pseudo = :pseudo) 
+			AND tags RLIKE :tagsr) 
+			AND users.id NOT IN
+				(SELECT id_user FROM ban WHERE 1)
+	GROUP BY images.id ORDER BY count(*) DESC LIMIT :startIndex , :size");
 	
 	
 	
@@ -97,7 +134,16 @@ if ($sort == "hot") {
 	}
 	echo json_encode($json);
 } elseif($sort == "deleted" && $grade > 0) {
-	$req = $bdd->prepare ("SELECT nom_hash FROM images INNER JOIN users ON id_user = users.id WHERE (supprime=1 AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) AND (:pseudo = '' OR pseudo = :pseudo) AND tags RLIKE :tagsr) ORDER BY date_creation DESC LIMIT :startIndex , :size" );
+	$req = $bdd->prepare ("
+	SELECT nom_hash FROM images 
+		INNER JOIN users ON id_user = users.id 
+	WHERE (supprime=1 
+			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
+			AND (:pseudo = '' OR pseudo = :pseudo) 
+			AND tags RLIKE :tagsr)
+			AND users.id NOT IN
+				(SELECT id_user FROM ban WHERE 1)
+	ORDER BY date_creation DESC LIMIT :startIndex , :size" );
 	
 	$req->bindParam(':startIndex', $startIndex, PDO::PARAM_INT);
 	$req->bindParam(':size', $size, PDO::PARAM_INT);

@@ -25,5 +25,5 @@ $req->execute ([
 ]);
 $grade = $req->fetch ()['grade'];
 
-if(empty($grade))
-		$grade = 0;
+if(!$grade)
+	$grade = 0;
