@@ -5,7 +5,7 @@
 <body>
 	<?php echo $NAVBAR ?>
 
-	<input id='search_id_user' value=<?php echo "'$search_id_user'"; ?> hidden>
+	<input id='search_pseudo' value=<?php echo "'$search_pseudo'"; ?> hidden>
 	<input id='search_tag' value=<?php echo "'$search_tags'"; ?> hidden>
 
 
@@ -17,38 +17,44 @@
 	<div class="big-card-overlay">
 		<div class="big-card">
 				
-			<div class="big-card-share">
 				<?php if(!$showSupprime): ?>
-				<span data-placement='bottom' data-toggle="tooltip" title="Signaler" class="big-card-signal glyphicon glyphicon-warning-sign"></span>
-				<span data-placement='bottom' data-toggle="tooltip" title="Supprimer" class="big-card-remove glyphicon glyphicon-trash"></span>
+					<span data-placement='bottom' data-toggle="tooltip" title="Signaler" class="big-card-signal glyphicon glyphicon-warning-sign"></span>
+					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer" class="big-card-remove glyphicon glyphicon-trash"></span>
 				<?php else: ?>
 
-					<?php if($sort == "deleted"): ?>
+				<?php if($sort == "deleted"): ?>
 					<span data-placement='bottom' data-toggle="tooltip" title="Restaurer" class="big-card-remove glyphicon glyphicon-trash voted"></span>
 					<?php else: ?>
 					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer" class="big-card-remove glyphicon glyphicon-trash"></span>
 					<?php endif ?>
 				
 				<?php endif ?>
-				<img data-placement='bottom' data-toggle="tooltip" title="Facebook" class="big-card-facebook" src="assets/Facebook.png"/>
-				<img data-placement='bottom' data-toggle="tooltip" title="Twitter" class="big-card-twitter" src="assets/Twitter.png"/>
-				<img data-placement='bottom' data-toggle="tooltip" title="Google Plus" class="big-card-gplus" src="assets/Google_plus.png"/>
-
+				
+				<span class="big-card-infos">
+					<span class="glyphicon glyphicon-time"></span> <span class="big-card-tmps"></span> par <strong><a data-toggle='popover' data-html="true" class="big-img-author" href='#'></a></strong>
+				</span>
+				<!--
+								-->
 				<span data-placement='bottom' data-toggle="tooltip" title="Fermer" class="big-card-close glyphicon glyphicon-remove"></span>
-			</div>
 
 			<div class="big-card-title">
 			</div>
-			<div class="big-card-infos">
-			Il y a <span class="big-card-tmps"></span> par <a data-toggle='popover' data-html="true" class="big-img-author" href='#'></a>
+
+			<center>
+			<div class="big-card-share">
+				<img data-placement='bottom' data-toggle="tooltip" title="Facebook" class="big-card-facebook" src="assets/Facebook.png"/>
+				<img data-placement='bottom' data-toggle="tooltip" title="Twitter" class="big-card-twitter" src="assets/Twitter.png"/>
+				<img data-placement='bottom' data-toggle="tooltip" title="Google Plus" class="big-card-gplus" src="assets/Google_plus.png"/>
 			</div>
 
+			<div class="big-card-points">352</div>
 			<div class="big-card-votes">
 				<span data-toggle="tooltip" title="J'aime" class="glyphicon glyphicon-thumbs-up card-thumb-up" ></span>
 		   
 				<span data-toggle="tooltip" title="J'aime pas" class="glyphicon glyphicon-thumbs-down card-thumb-down" ></span>
 			</div>
-			<div class="big-card-points">352</div>
+			</center>
+
 			<br>
 			<div class="big-card-img">
 				<img class='big-card-img' src="" />

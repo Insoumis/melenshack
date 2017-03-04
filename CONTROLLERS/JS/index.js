@@ -167,7 +167,7 @@ $(window).scroll(function() {
 function getCards(size) {
 	var sort = $('#sort').val();
 	var search = $('#searchinput').val();
-	var id_user = $('#search_id_user').val();
+	var pseudo = $('#search_pseudo').val();
 	var tag = $('#search_tag').val();
 
 	$.ajax({
@@ -178,7 +178,7 @@ function getCards(size) {
 			'sort': sort,
 			'startIndex': currentIndex,
 			'search': search,
-			'id_user': id_user,
+			'pseudo': pseudo,
 			'tag': tag
 		},
 		success: function(data) {
@@ -274,7 +274,7 @@ function addCard(c) {
 
 				card.find('.card-author>a')
 					//.attr('title', '<strong>'+data.pseudo+'</strong>')
-					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription, false)+"</p><p>Points: "+data.points+"</p><p><a href='index.php?sort=new&id_user="+idUser+"'> Posts:</a> "+data.posts+"</p>")
+					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription, false)+"</p><p>Points: "+data.points+"</p><p><a href='index.php?sort=new&pseudo="+pseudoUser+"'> Posts:</a> "+data.posts+"</p>")
 					.click(function(e){e.stopPropagation();}).popover();
 			},
 			'text'

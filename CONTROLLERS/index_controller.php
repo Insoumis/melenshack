@@ -5,9 +5,9 @@ if(isset($grade) && $grade > 0)
 	$showSupprime = true;
 
 //url params
-$search_id_user = "";
-if(isset($_REQUEST['id_user'])) {
-	$search_id_user = $_REQUEST['id_user'];
+$search_pseudo = "";
+if(isset($_REQUEST['pseudo'])) {
+	$search_pseudo = $_REQUEST['pseudo'];
 }
 
 $search_tags = "";

@@ -16,6 +16,8 @@ $pseudoUser = $infos['pseudoUser'];
 $urlSource = $infos['urlSource'];
 $points = $infos['pointsTotaux'];
 
+$width = getimagesize($urlSource)[0];
+$height = getimagesize($urlSource)[1];
 
 //date actuelle
 $now = getdate();

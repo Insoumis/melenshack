@@ -212,12 +212,12 @@ CARTES
 	padding: 10px;
 	margin-bottom: 50px;
 	background: #fff;
-	max-width: 100%;
+	max-width: 90%;
 }
 
 .big-card-title {
 	font-weight: bold;
-	font-size: 50px;
+	font-size: 40px;
 	line-height: 50px;
 	max-height: 100px;
 	overflow: hidden;
@@ -282,10 +282,13 @@ CARTES
 	margin-bottom: 10px;
 	line-height: 40px;
 	user-select: none;
+	margin-top: -15px;
+	display: inline;
 }
 .big-card-share>span {
 	cursor: pointer;
 	user-select: none;
+	margin-top: 15px;
 }
 
 .big-card-img {
@@ -298,16 +301,21 @@ CARTES
 	user-select: none;
 }
 .big-card-votes {
-	float: right;
 	font-size: 30px;
 	user-select: none;
+	display: inline;
+}
+.big-card-votes>span {
+	margin: 0;
 }
 
 .big-card-points {
-	float:right;
+	display: inline;
 	margin-right: 20px;
 	font-size: 25px;
+	margin: 0;
 }
+
 
 
 .template {
