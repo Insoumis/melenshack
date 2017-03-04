@@ -1,50 +1,44 @@
 //A FAIRE : FUSIONNER CE SCRIPT AVEC COMMON CARDS
 
 //id de l'image
-var id = $('.big-img-container').attr('id');
+var idhash = $('.big-img-container').attr('id');
 
-//vérifie l'ancien vote
-$.post(
-	'MODELS/check_vote.php',
-	{
-		id_image: id
-	},
-	returnVote,
-	'text'
-);
-
-function returnVote(ancien) {
-	ancien = parseInt(ancien);
-	if(ancien == 1)
-		$(".upvote").addClass("voted");
-	else if(ancien == -1)
-		$(".downvote").addClass("voted");	
-}
 
 $(window).on('load', function() {
+	//vérifie l'ancien vote
+	checkVote($('.big-img-container'));
 
-	//assigne les fonctions de vote aux boutons
-	$(".upvote").click(upVote);
-	$(".downvote").click(downVote);
+	$('.big-img-facebook').click(shareFacebook);
+	$('.big-img-twitter').click(shareTwitter);
+	$('.big-img-gplus').click(shareGplus);
 
-	//assigne les fonctions de partage aux boutons
-	$("#share_fb").click(shareFacebook);
-	$("#share_twitter").click(shareTwitter);
+	$('.big-img-container').find(".card-thumb-up").click(function() {
+		thumbUp(idhash, $('.big-img-container'));
+	});
+	
+	$('.big-img-container').find(".card-thumb-down").click(function() {
+		thumbDown(idhash, $('.big-img-container'));
+	});
+	$('.elapsed').html(getTimeElapsed($('#dateCreation').val()));
+	
+	$.post(
+			'MODELS/usersinfo.php',
+			{id: $('#idUser').val()},
+			function(data) {
+				data = JSON.parse(data);
 
+				$('.temps>a')
+					//.attr('title', '<strong>'+data.pseudo+'</strong>')
+					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription, false)+"</p><p>Points: "+data.points+"</p><p><a href='index.php?sort=new&pseudo="+data.pseudo+"'> Posts:</a> "+data.posts+"</p>")
+					.click(function(e){e.stopPropagation();}).popover();
+			},
+			'text'
+		  );
 
 	//initialise les tooltips des boutons de partage
-	$(".big-share").tooltip();
-
-	//initialise le clipboard pour pouvoir copier
-	//et change le titre en fonction du clic / mouseOut
-	var cb = new Clipboard($("#share_clipboard").get(0));
-	cb.on('success', function() {
-		$("#share_clipboard").attr("title", "Lien copié !").tooltip('fixTitle').tooltip('show');
-	});
-
-	$('#share_clipboard').on('mouseout', function() {
-		$(this).attr("title", "Copier le lien").tooltip('fixTitle');
-	});
+	$("[data-toggle='tooltip']").tooltip();
+	$("[data-toggle='popover']").popover();
+	
 
 });
 

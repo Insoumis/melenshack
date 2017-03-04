@@ -26,7 +26,7 @@ window.fbAsyncInit = function() {
 	var js, fjs = d.getElementsByTagName(s)[0];
 	if (d.getElementById(id)) {return;}
 	js = d.createElement(s); js.id = id;
-	js.src = "//connect.facebook.net/en_US/sdk.js";
+	js.src = "//connect.facebook.net/fr_FR/sdk.js";
 	fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
@@ -35,13 +35,12 @@ window.fbAsyncInit = function() {
 function shareFacebook(e) {
 	//ne propage pas l'event à la carte
 	e.stopPropagation();
-	var card = $(e.target).closest(".card, .big-card");
+	var card = $(e.target).closest(".card, .big-card, .big-img-container");
 	var url = urlBase+"view.php?id=" + card.attr("id");
 
 	FB.ui(
  	{
 		method: 'share',
-		mobile_iframe: true,
 		hashtag: '#jlm2017',
 		href: url
 	}, function(response){});
@@ -49,7 +48,7 @@ function shareFacebook(e) {
 
 function shareTwitter(e) {
 	e.stopPropagation();
-	var card = $(e.target).closest(".card, .big-card");
+	var card = $(e.target).closest(".card, .big-card, .big-img-container");
 	var url = urlBase+"view.php?id=" + card.attr("id");
 	window.open("https://twitter.com/share?url="+escape(url)+"&hashtags=jlm2017", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 
@@ -57,7 +56,7 @@ function shareTwitter(e) {
 
 function shareGplus(e) {
 	e.stopPropagation();
-	var card = $(e.target).closest(".card, .big-card");
+	var card = $(e.target).closest(".card, .big-card, .big-img-container");
 	var url = urlBase+"view.php?id=" + card.attr("id");
 	window.open("https://plus.google.com/share?url="+escape(url), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 
@@ -159,10 +158,12 @@ function thumbUp(id, card) {
 		showVoteError();
 		return;
 	}
-	var currentV = card.find('.big-card-points').html();
+	var currentV = card.find('.big-card-points, .points').html();
 
-	if(!currentV)
+	if(!currentV) {
 		currentV = card.find('.card-points').html();
+	
+	}
 
 	if(!btn.hasClass("voted")) {
 		btn.addClass("voted");
@@ -176,9 +177,13 @@ function thumbUp(id, card) {
 	
 					
 		card.find(".card-thumb-down").removeClass("voted");
-		card.css('background', '#23b9d0');
-		card.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
-
+		if(!card.hasClass('big-img-container')) {
+			card.css('background', '#23b9d0');
+			card.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
+		} else {
+			card.parent().css('background', '#23b9d0');
+			card.parent().stop(true, false).animate({backgroundColor: 'rgba(255, 255, 255, 0)'}, 700);
+		}
 		vote(id, 1);
 
 	} else {
@@ -193,8 +198,7 @@ function thumbUp(id, card) {
 		vote(id, 0);
 	}
 
-	card.find('.big-card-points').html(currentV);
-	card.find('.card-points').html(currentV);
+	card.find('.big-card-points, .card-points, .points').html(currentV);
 }
 
 	
@@ -205,7 +209,7 @@ function thumbDown(id, card) {
 		showVoteError();
 		return;
 	}
-	var currentV = card.find('.big-card-points').html();
+	var currentV = card.find('.big-card-points, .points').html();
 	if(!currentV)
 		currentV = card.find('.card-points').html();
 	
@@ -219,9 +223,15 @@ function thumbDown(id, card) {
 		currentV--;
 					
 		card.find(".card-thumb-up").removeClass("voted");
-		card.css('background', '#e23d22');
-		card.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
 		
+		if(!card.hasClass('big-img-container')) {
+			card.css('background', '#e23d22');
+			card.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
+		} else {
+			card.parent().css('background', '#e23d22');
+			card.parent().stop(true, false).animate({backgroundColor: 'rgba(255, 255, 255, 0)'}, 700);
+		}
+
 		vote(id, -1);
 	} else {
 		currentV++;
@@ -233,8 +243,7 @@ function thumbDown(id, card) {
 		});
 		vote(id, 0);
 	}
-	card.find('.big-card-points').html(currentV);
-	card.find('.card-points').html(currentV);
+	card.find('.big-card-points, .card-points, .points').html(currentV);
 
 }
 	
@@ -284,7 +293,8 @@ function showVoteError() {
 		  Vous devez être connecté pour pouvoir voter. <a href='login.php'>Se connecter</a>.
 		  </div>`;
 
-	$('#main_page').prepend($(e));
+	var erreur = $(e);
+	$('#main_page').prepend(erreur);
 
 	//fade out au bout de 2s
 	erreur.delay(2000).animate({'opacity': '0'}, 1000, function() {

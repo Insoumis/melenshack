@@ -1,5 +1,10 @@
 <script>
 $("nav").ready(function() {
+
+	//fix bug popover mobile
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		$('#decoli>img').attr('data-placement', 'left');
+	}
 	var useropened = false;
 
 	$('#decoli>img').hover(function() {
@@ -22,7 +27,12 @@ $("nav").ready(function() {
 		useropened = !useropened;
 		e.stopPropagation();
 		if(!useropened) {
-
+			$(this).attr('src', 'assets/phi.png');	
+			$(this).parent().stop(true,false).animate({'background-color':'', 'borderColor':'#e23d22'}, 200);
+		} else {
+			
+			$(this).attr('src', 'assets/phi_blanc.png');
+			$(this).parent().stop(true,false).animate({'background-color':'#d9534f', 'borderColor':'#23b9d0'}, 200);
 		}
 
 	});

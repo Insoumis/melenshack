@@ -332,11 +332,20 @@ CARTES
 
 .tag-item {
 	border-radius: 5px;
-	background: #0098B6;
+	background: #5bc0de;
 	color: white;
 	padding: 2px 5px;
 	line-height: 25px;
 	margin-right: 5px;
+}
+.big-img-container .tag-item {
+	border-radius: 5px;
+	color: white;
+	padding: 2px 8px;
+	line-height: 25px;
+	margin-right: 5px;
+	font-size: 18px;
+	font-weight: bold;
 }
 
 .card {
@@ -597,7 +606,6 @@ SOURCES IMG
 	margin-left: 50px;
 	margin-right: 50px;
 	margin-bottom: 50px;
-	text-align: center;
 }
 .big-img {
 
@@ -606,32 +614,59 @@ SOURCES IMG
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 10px;
-	margin-top: 7px;
+	margin-top: 15px;
+	text-align: center;
 }
 .big-img-titre {
 	text-align: center;
 	font-weight: bold;
-	font-size: 35px;
+	font-size: 40px;
 }
 .big-img-info {
+	max-width: 400px;
 	word-wrap: break-word;
 	font-size: 28px;
 	margin: auto;
+	margin-top: 20px;
 }
-.big-img-container .phi-points {
-	height: 40px;
-	margin-left: -10px;
+.big-img-info .points {
+	display: inline;
+	float:right;
 	margin-right: 20px;
+	font-size: 35px;
+
 }
-.temps {
+.big-img-info .votes {
+	display: inline;
+	user-select: none;
+	font-size: 40px;
+	float:right;
+}
+
+.big-img-container .temps {
+	font-size: 16px;
+	margin-top: 0;
 	margin-bottom: 5px;
-	margin-top: 5px;
-	width: 100%;
-	text-align: center;
-	font-size: 14px;
+}
+.big-img-container .temps>a {
+	font-weight: bold;
+	cursor:pointer;
+}
+.big-img-container a {
+	text-decoration: none;
+}
+.big-share-group {
+	display: inline;
+	float:left;
+	user-select: none;
+}
+.big-share-group>img {
+	height: 50px;
+	cursor: pointer;
 }
 .big-img-header {
 	text-align: center;
+	margin-bottom: 60px;
 }
 
 .big-share {
@@ -816,3 +851,4 @@ h1 {
 	margin-bottom: 15px;
 	margin-bottom: 7%;
 }
+

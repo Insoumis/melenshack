@@ -12,29 +12,41 @@
 <meta property="og:app_id"              content="1849815745277262" />
 <body>
 	<?php echo $NAVBAR ?>
-
+	
+	<input id="dateCreation" value=<?php echo "'$dateCreation'" ?> hidden>
+	<input id="idUser" value=<?php echo "'$idUser'" ?> hidden>
 	<div id="main_page" class="container">
-		<div class="big-img-container" id=<?php echo "'$id'" ?>>
-			<h1 class="big-img-titre"><?php echo $titre ?></h1>
-
+		<div class="big-img-container" id=<?php echo "'$idhash'" ?>>
 			<!-- header : infos et boutons partage -->
 			<div class="big-img-header">
+			<div class="big-img-titre"><?php echo $titre ?></div>
+			<div class='temps'>
+				<span class="glyphicon glyphicon-time"></span> <span class="elapsed"></span><?php echo " par <a data-toggle='popover' data-html='true'>$pseudoUser</a>" ?>
+			</div>
+
+			<?php 
+			foreach($tags as $tag) {
+				echo "<a href='index.php?sort=$sort&tag=$tag'><span class='tag-item'>$tag</span></a>";
+			}
+
+			?>
 				<div class="big-img-info">
-					<span class="points"><?php echo $points ?></span> <img class='phi-points' src='assets/phi.png'/>
-					<button type='button' class='btn btn-primary upvote'><span class='glyphicon glyphicon-arrow-up'></span></button>
-					<button type='button' class='btn btn-danger downvote'><span class='glyphicon glyphicon-arrow-down'></span></button>
-					<br><div class='temps'>
-						Il y a <?php echo "$temps par <a href='user.php?id=$idUser'>$pseudoUser</a>" ?>
-						</div>
+					<div class="votes">
+						<span data-toggle="tooltip" title="J'aime" class="glyphicon glyphicon-thumbs-up card-thumb-up" ></span>
+
+						<span data-toggle="tooltip" title="J'aime pas" class="glyphicon glyphicon-thumbs-down card-thumb-down" ></span>
+					</div>
+					<div class="points"><?php echo $points ?>  </div>
 
 					<div class="big-share-group">
-						<img data-toggle='tooltip' title='Partager' src="assets/Facebook.png" class="big-share" id="share_fb"/>
-						<img data-toggle='tooltip' title='Partager' src="assets/Twitter.png" class="big-share" id="share_twitter"/>
-						<img data-clipboard-text=<?php echo "'http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]'" ?> data-toggle='tooltip' title='Copier le lien' src="assets/Clipboard.png" class="big-share" id="share_clipboard"/>
+
+				<img data-placement='top' data-toggle="tooltip" title="Facebook" class="big-img-facebook" src="assets/Facebook.png"/>
+				<img data-placement='top' data-toggle="tooltip" title="Twitter" class="big-img-twitter" src="assets/Twitter.png"/>
+				<img data-placement='top' data-toggle="tooltip" title="Google Plus" class="big-img-gplus" src="assets/Google_plus.png"/>
 					</div>		
 				</div>
 			</div>
-
+			<br>
 			<center><img class="big-img" src=<?php echo "'$urlSource'" ?> /></center>
 		</div>
 	</div>
