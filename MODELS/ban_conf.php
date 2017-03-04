@@ -16,11 +16,16 @@ if (!$id_user) {
     exit();
 }
 
+if(!empty($_POST['id_user']))
+	$idban = $_POST['id_user'];
+else
+	$idban = '';
 
 
-$req = $bdd->prepare ('SELECT * FROM users WHERE pseudo = :pseudo ');
+$req = $bdd->prepare ("SELECT * FROM users WHERE (:idban = '' AND pseudo = :pseudo) OR id=:idban");
 $req->execute ([
     ':pseudo' => $_POST['pseudo'],
+    ':idban' => $idban,
 ]);
 $resultat = $req->fetch ();
 

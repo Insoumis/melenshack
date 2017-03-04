@@ -92,7 +92,7 @@ if (strlen ($titre) > 255 || strlen ($titre) == 0) {
     header ('Location:../upload.php?erreur=titre');
     exit();
 }
-if ($_POST['tags']) {
+if (!empty($_POST['tags'])) {
     $nb_id = 0;
     $tagsstr = "";
 
@@ -111,7 +111,7 @@ if ($_POST['tags']) {
         exit();
     }
 } else {
-    $tagsarray = "";
+    $tagsstr = "";
 }
 
 if (!empty($_POST['url'])) {

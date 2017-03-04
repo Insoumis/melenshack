@@ -242,11 +242,20 @@ CARTES
 	float: left;
 	font-size: 20px;
 	user-select: none;
+	cursor: pointer;
 }
 .big-card-remove {
 	float: left;
 	font-size: 20px;
 	user-select: none;
+	cursor: pointer;
+}
+.big-card-ban {
+	float:left;
+	font-size: 20px;
+	user-select: none;
+	cursor: pointer;
+	margin-left: 10px;
 }
 .big-card-remove.voted {
 	color: red;
@@ -255,6 +264,9 @@ CARTES
 	color: orange;
 }
 .big-card-remove:hover {
+	color: red;
+}
+.big-card-ban:hover {
 	color: red;
 }
 .big-card-signal.voted {
@@ -294,6 +306,7 @@ CARTES
 .big-card-img {
 	max-width: 100%;
 	user-select: none;
+	margin-bottom: 5px;
 }
 .big-card-img>img {
 	height: auto;
@@ -335,10 +348,17 @@ CARTES
 	background: #5bc0de;
 	color: white;
 	padding: 2px 5px;
-	line-height: 25px;
 	margin-right: 5px;
+	overflow: hidden;
+	display: inline-block;
 }
-.big-img-container .tag-item {
+
+.tags {
+	overflow: hidden;
+	word-wrap: normal;
+	width: 100%;
+}
+.big-img-container .tag-item, .big-card .tag-item {
 	border-radius: 5px;
 	color: white;
 	padding: 2px 8px;
@@ -397,6 +417,7 @@ CARTES
 	width: 100%;
 	user-select: none;
 	position: relative;
+	cursor: pointer;
 }
 .card-title {
 	text-align: left;
