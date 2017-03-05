@@ -23,13 +23,17 @@
 			<div class='temps'>
 				<span class="glyphicon glyphicon-time"></span> <span class="elapsed"></span><?php echo " par <a data-toggle='popover' data-html='true'>$pseudoUser</a>" ?>
 			</div>
-
+			<div class="tags">
 			<?php 
 			foreach($tags as $tag) {
-				echo "<a href='index.php?sort=$sort&tag=$tag'><span class='tag-item'>$tag</span></a>";
+				if($tag)
+					echo "<a href='index.php?sort=$sort&tag=$tag'><span class='tag-item'>$tag</span></a>";
+			
 			}
+			echo "<input type='text' id='tagsstr' value='$tagsstr' hidden>";
 
 			?>
+			</div>
 				<div class="big-img-info">
 					<div class="votes">
 						<span data-toggle="tooltip" title="J'aime" class="glyphicon glyphicon-thumbs-up card-thumb-up" ></span>

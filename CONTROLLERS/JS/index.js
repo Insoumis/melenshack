@@ -78,6 +78,33 @@ $(document).ready(function() {
 
 	});
 
+	$('.big-card-sup-def').click(function() {
+		var conf = false;	
+		conf = confirm("Voulez-vous vraiment supprimer ce post de la base de données ?");
+
+		if(!conf)
+			return;
+
+		//send remove to server
+		$.post(
+				'MODELS/supprime_def_conf.php',
+				{
+					idhash: $('.big-card').attr('id'),
+				},
+				function(e) {
+					$('.big-card-container').hide();
+					$('.card').each(function(i, card) {
+						if($(card).attr('id') == $('.big-card').attr('id'))
+							$(card).remove();
+						$(gridLayout).masonry('reloadItems');
+						$(gridLayout).masonry('layout');
+					});
+				},
+				'text'
+			  );
+
+	});
+
 	$('.big-card-remove').click(function() {
 		var conf = false;	
 		var value = 1;
@@ -110,7 +137,7 @@ $(document).ready(function() {
 			  );
 
 	});
-	
+
 	$('.big-card-ban').click(function() {
 		var conf = false;	
 		var value = 1;
@@ -236,7 +263,7 @@ function getCards(size) {
 				fin = true;
 			}
 			currentIndex += i;
-			
+
 			var t = 0;
 			$('.card').each(function(i, card) {
 				t++;
@@ -347,15 +374,66 @@ function addCard(c) {
 
 		if($('#grade').val() > 0) {
 			big.find('.big-card-ban').show();
+			big.find('.big-card-sup-def').show();
+
 		} else {
 			big.find('.big-card-ban').hide();
-
+			big.find('.big-card-sup-def').hide();
 		}
-	
+
 		big.find('.tags').html("");
 		for(var i=0; i < tags.length; ++i) {
-			big.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
+			if(tags[i])
+				big.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
 		}
+		big.find('.tags').append("<span class='glyphicon glyphicon-pencil' title='Modifier les tags' data-toggle='tooltip' id='change_tags'></span>");
+		$("[data-toggle='tooltip']").tooltip();
+
+		if(idUser == $('#id_user').val()) {
+			$("#change_tags").show();
+		} else {
+			$("#change_tags").hide();
+		}
+
+		var change = function() {
+			big.find('.tags').html("");
+			big.find('.tags').append("<input id='tagsinput' type='text' data-role='tagsinput' placeholder='+ tags' value='"+c.tags+"'/><span class='glyphicon glyphicon-ok' id='change_tags_ok' title='Appliquer les tags' data-toggle='tooltip'></span>");
+			$('#tagsinput').tagsinput({
+				maxTags: 10,
+				maxChars: 20,
+				trimValue: true
+			});
+			$("[data-toggle='tooltip']").tooltip();
+
+			big.find('#change_tags_ok').click(function() {
+
+				$.post("MODELS/change_tags.php", {tags: $('#tagsinput').val(), id: idhash});
+				c.tags = $('#tagsinput').val();
+				tags = c.tags.split(",");
+				big.find('.tags').html("");
+				for(var i=0; i < tags.length; ++i) {
+					if(tags[i])
+						big.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
+				}
+				big.find(".tags").append("<span class='glyphicon glyphicon-pencil' title='Modifier les tags' data-toggle='tooltip' id='change_tags'></span>");
+				$("[data-toggle='tooltip']").tooltip();
+				big.find('#change_tags').click(change);
+
+				card.find(".tags").html("");
+				for(var i=0; i < tags.length; ++i) {
+					if(i>5)
+						break;
+					if(tags[i])
+						card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
+				}
+
+
+			});
+		}
+
+		big.find('#change_tags').click(change);
+
+
 
 		$.post(
 				'MODELS/usersinfo.php',

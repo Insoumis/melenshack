@@ -50,7 +50,7 @@ NAVBAR
 #decoli .popover a{
 	white-space: nowrap;
 }
-#decoli .popover .glyphicon {
+#decoli .popover .glyphicon:not(.settings) {
 	margin-right: 10px;
 }
 #coli>a, #decoli>a {
@@ -171,6 +171,11 @@ li.actif>a:hover {
 #right>li {
 	float: right;
 }
+.settings {
+	float: right;
+	margin-right: -15px;
+	cursor: pointer;
+}
 
 #coli {
 }
@@ -244,6 +249,13 @@ CARTES
 	user-select: none;
 	cursor: pointer;
 }
+.big-card-sup-def {
+	float: left;
+	font-size: 20px;
+	user-select: none;
+	cursor: pointer;
+	margin-left: 10px;
+}
 .big-card-remove {
 	float: left;
 	font-size: 20px;
@@ -266,11 +278,17 @@ CARTES
 .big-card-remove:hover {
 	color: red;
 }
+.big-card-sup-def:hover {
+	color: red;
+}
 .big-card-ban:hover {
 	color: red;
 }
 .big-card-signal.voted {
 	color: orange;
+}
+.big-card .bootstrap-tagsinput {
+	width: auto;
 }
 
 .big-card-infos>a:hover, .big-card-infos>a:focus {
@@ -358,6 +376,24 @@ CARTES
 	word-wrap: normal;
 	width: 100%;
 }
+
+#change_tags {
+	cursor: pointer;
+	font-size: 20px;
+	top: 0px;
+}
+#change_tags:hover {
+	color: grey;
+}
+#change_tags_ok {
+	cursor: pointer;
+	font-size: 20px;
+	margin-left:10px;
+	margin-top: 10px;
+}
+#change_tags_ok:hover {
+	color: green;
+}
 .big-img-container .tag-item, .big-card .tag-item {
 	border-radius: 5px;
 	color: white;
@@ -366,6 +402,10 @@ CARTES
 	margin-right: 5px;
 	font-size: 18px;
 	font-weight: bold;
+}
+.big-img-container .bootstrap-tagsinput {
+	max-width: 70%;
+	width: auto;
 }
 
 .card {

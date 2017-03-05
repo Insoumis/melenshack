@@ -134,7 +134,3 @@ $('#tagsinput').tagsinput({
 	  maxChars: 20,
 	  trimValue: true
 });
-$('#tagsinput').on('beforeItemAdd', function(e) {
-	e.item = "#" + e.item;
-	$(this).tagsinput("refresh");
-});

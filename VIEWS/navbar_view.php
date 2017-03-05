@@ -30,7 +30,7 @@
 				<ul class="nav navbar-nav pull-right" id="right">
 						<?php if(!$connexionButton) : ?>
 						<li id="decoli">
-						<img data-toggle="popover" data-html="true" title=<?php echo "'<strong>$pseudo</strong>'"?> data-content="
+						<img data-toggle="popover" data-html="true" title="<strong><?php echo $pseudo ?></strong><a title='Paramètres' href='settings.php' class='settings'><span class='glyphicon glyphicon-wrench'></span></a>" data-content="
 						<a href='index.php?sort=new&pseudo=<?php echo $_SESSION['pseudo'] ?>'><span class='glyphicon glyphicon glyphicon-user'></span>Mes posts</a>
 						<br><br>
 						<a href='pseudo.php'><span class='glyphicon glyphicon glyphicon-pencil'></span>Changer mon pseudo</a>
