@@ -23,7 +23,7 @@ if(Token::verifier(600, 'connexion'))
 		$pseudo = Securite::bdd($_POST['pseudo']);
 
 		// Vérification des identifiants
-		$req = $bdd->prepare('SELECT id_user, pass FROM classic_users WHERE username = :pseudo');
+		$req = $bdd->prepare('SELECT id_user, pass FROM classic_users WHERE username = :pseudo OR email = :pseudo');
 		$req->execute([
 			'pseudo' => $pseudo,
 		]);

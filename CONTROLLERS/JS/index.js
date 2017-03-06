@@ -1,184 +1,187 @@
 
+//carte dont le menu share est ouvert
 var currentCardShare;
+
+//layout masonry
 var gridLayout;
 
 //nb de cartes affichées
 var currentIndex = 0;
 
+//plus de cartes à charger depuis la bdd
 var fin = false;
 
-$(document).ready(function() {
+function initMasonry() {
 	gridLayout = $('.card-container');
-	//layout
 	gridLayout.masonry({
 		itemSelector: '.card',
 		columnWidth: 370,
 		fitWidth: true,
 		stagger: 30
 	});
+}
+function updateMasonry() {
+	$(gridLayout).masonry('reloadItems');
+	$(gridLayout).masonry('layout');
+}
 
-	$('#searchinput').on('keyup', function() {
-		$('.card').each(function(i, card) {
-			if(!($(card).find('.card-title').html()).includes($('#searchinput').val()))
-				card.remove();
-		});
-		currentIndex = 0;
-		getCards(30);
-		$(gridLayout).masonry('reloadItems');
-		$(gridLayout).masonry('layout');
-	});
+function updateSearch() {
+	$('.card').remove();
+	currentIndex = 0;
+	getCards(30);
 
-	/*
-	   initialise la big-card
+	updateMasonry();
+}
 
-	 */
+function closeBigCard() {
+	$('.big-card-container').hide();
+	checkVote($('.big-card').data('card'));
+}
+
+function report(card) {
+	if($('#connected').val() == 'no') {
+		showVoteError();
+		return;
+	}
+	if(card.find(".big-card-signal").hasClass('voted'))
+		return;
+
+	var conf = false;
+	conf = confirm('Voulez-vous vraiment signaler ce post ?');
+	if(!conf)
+		return;
+
+	$.post(
+			'MODELS/report_conf.php',
+			{
+				idhash: card.attr('id'),
+			},
+			function(e) {
+				card.find('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle').tooltip('show');
+			},
+			'text'
+		  );
+}
+
+function supprime_def(card) {
+	var conf = false;	
+	conf = confirm("Voulez-vous vraiment supprimer ce post de la base de données ?");
+
+	if(!conf)
+		return;
+
+	//send remove to server
+	$.post(
+			'MODELS/supprime_def_conf.php',
+			{
+				idhash: card.attr('id')
+			},
+			function(e) {
+				closeBigCard();
+				$("#"+$(card).attr("id")+".card").remove();
+				updateMasonry();
+			},
+			'text'
+		  );
+}
+function supprime_restore(card) {
+	var conf = false;
+	var value = 1;
+	if($(card).find('.big-card-remove').hasClass("voted")) {
+		conf = confirm("Voulez-vous vraiment restaurer ce post ?");
+		value = 0;
+	} else {
+		conf = confirm("Voulez-vous vraiment supprimer ce post ?");
+	}
+
+	if(!conf)
+		return;
+	//send remove to server
+	$.post(
+			'MODELS/supprime_conf.php',
+			{
+				idhash: $(card).attr('id'),
+				value: value
+			},
+			function(e) {
+				closeBigCard();
+				$("#"+$(card).attr("id")+".card").remove();
+				updateMasonry();
+			},
+			'text'
+		  );
+}
+
+function ban_sup(card, iduser) {
+	var conf = false;	
+	conf = confirm("Voulez-vous vraiment supprimer ce post et bannir l'utilisateur ?");
+
+	if(!conf)
+		return;
+
+	//ban
+	$.post(
+			'MODELS/ban_conf.php',
+			{
+				id_user: iduser
+			},
+			function(e) {
+			},
+			'text'
+		  );
+
+	//send remove to server
+	$.post(
+			'MODELS/supprime_conf.php',
+			{
+				idhash: $(card).attr('id'),
+				value: 1
+			},
+			function(e) {
+				closeBigCard();
+				$("#"+$(card).attr("id")+".card").remove();
+				updateMasonry();
+			},
+			'text'
+		  );
+}
+
+$(document).ready(function() {
+
+	initMasonry();
+
+	$('#searchinput').on('keyup', updateSearch);
 
 	$('.big-card-remove').hide();
+
 	//ferme la bigimg si on clique à coté
-	$('.big-card-container').click(function() {	
-		$('.big-card-container').hide();
-		checkVote($('.big-card').data('card'));
-	});
+	$('.big-card-container').click(closeBigCard);
 	$('.big-card').click(function(e) {
 		e.stopPropagation();
 	});
 
 	//ferme la bigimg si on clique sur la croix
-	$('.big-card-close').click(function() {
-		$('.big-card-container').hide();
-		checkVote($('.big-card').data('card'));
-	});
+	$('.big-card-close').click(closeBigCard);
 
 	//signalement
 	$('.big-card-signal').click(function() {
-		if($('#connected').val() == 'no') {
-			showVoteError();
-			return;
-		}
-		if($(this).hasClass('voted'))
-			return;
-
-		var conf = false;
-		conf = confirm('Voulez-vous vraiment signaler ce post ?');
-		if(!conf)
-			return;
-
-		//send report to server
-		$.post(
-				'MODELS/report_conf.php',
-				{
-					idhash: $('.big-card').attr('id'),
-				},
-				function(e) {
-					$('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle').tooltip('show');
-				},
-				'text'
-			  );
-
-
+		report($('.big-card'));
 	});
 
+	//suppression definitive
 	$('.big-card-sup-def').click(function() {
-		var conf = false;	
-		conf = confirm("Voulez-vous vraiment supprimer ce post de la base de données ?");
-
-		if(!conf)
-			return;
-
-		//send remove to server
-		$.post(
-				'MODELS/supprime_def_conf.php',
-				{
-					idhash: $('.big-card').attr('id'),
-				},
-				function(e) {
-					$('.big-card-container').hide();
-					$('.card').each(function(i, card) {
-						if($(card).attr('id') == $('.big-card').attr('id'))
-							$(card).remove();
-						$(gridLayout).masonry('reloadItems');
-						$(gridLayout).masonry('layout');
-					});
-				},
-				'text'
-			  );
-
+		supprime_def($('.big-card'));
 	});
 
+	//suppression
 	$('.big-card-remove').click(function() {
-		var conf = false;	
-		var value = 1;
-		if($(this).hasClass("voted")) {
-			conf = confirm("Voulez-vous vraiment restaurer ce post ?");
-			value = 0;
-		} else {
-			conf = confirm("Voulez-vous vraiment supprimer ce post ?");
-		}
-		if(!conf)
-			return;
-
-		//send remove to server
-		$.post(
-				'MODELS/supprime_conf.php',
-				{
-					idhash: $('.big-card').attr('id'),
-					value: value
-				},
-				function(e) {
-					$('.big-card-container').hide();
-					$('.card').each(function(i, card) {
-						if($(card).attr('id') == $('.big-card').attr('id'))
-							$(card).remove();
-						$(gridLayout).masonry('reloadItems');
-						$(gridLayout).masonry('layout');
-					});
-				},
-				'text'
-			  );
-
+		supprime_restore($('.big-card'));
 	});
 
+	//ban + suppression
 	$('.big-card-ban').click(function() {
-		var conf = false;	
-		var value = 1;
-		conf = confirm("Voulez-vous vraiment supprimer ce post et bannir l'utilisateur ?");
-
-		if(!conf)
-			return;
-
-		//ban
-		$.post(
-				'MODELS/ban_conf.php',
-				{
-					id_user: $('.big-card').data('id_user'),
-					value: value
-				},
-				function(e) {
-				},
-				'text'
-			  );
-
-		//send remove to server
-		$.post(
-				'MODELS/supprime_conf.php',
-				{
-					idhash: $('.big-card').attr('id'),
-					value: value
-				},
-				function(e) {
-					$('.big-card-container').hide();
-					$('.card').each(function(i, card) {
-						if($(card).attr('id') == $('.big-card').attr('id'))
-							$(card).remove();
-						$(gridLayout).masonry('reloadItems');
-						$(gridLayout).masonry('layout');
-					});
-				},
-				'text'
-			  );
-
+		ban_sup($('.big-card'), $('.big-card').data('id_user'));
 	});
-
 
 	//partages réseaux sociaux
 	$('.big-card-facebook').click(shareFacebook);
@@ -306,7 +309,7 @@ function addCard(c) {
 	card.find('.card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
 
 	for(var i=0; i < tags.length; ++i) {
-		if(i>5)
+		if(i>3)
 			break;
 		if(tags[i])
 			card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
@@ -421,7 +424,7 @@ function addCard(c) {
 
 				card.find(".tags").html("");
 				for(var i=0; i < tags.length; ++i) {
-					if(i>5)
+					if(i>3)
 						break;
 					if(tags[i])
 						card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
@@ -457,9 +460,9 @@ function addCard(c) {
 		$.post(
 				'MODELS/check_report.php',
 				{idhash: idhash},
-				returnReport,
-				'text'
-			  );
+					returnReport,
+					'text'
+				  );
 
 		function returnReport(ancien) {
 			ancien = parseInt(ancien);
@@ -556,8 +559,7 @@ function addCard(c) {
 		}
 	});
 	$(card).imagesLoaded().progress(function() {
-		$(gridLayout).masonry('reloadItems');
-		$(gridLayout).masonry('layout');
+		updateMasonry();
 	});
 
 
