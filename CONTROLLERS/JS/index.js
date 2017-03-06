@@ -295,6 +295,12 @@ function addCard(c) {
 	var url = c.urlThumbnail;
 	var urlSource = c.urlSource;
 	var tags = c.tags.split(',');
+	var pseudo = c.pseudo;
+	var ancien_vote = c.ancien_vote;
+	var inscription = c.inscription;
+	var grade = c.grade;
+	var pointsUser = c.pointsUser;
+	var posts = c.posts;
 	//string du temps passé depuis le post
 	var temps = getTimeElapsed(dateCreation);
 
@@ -317,7 +323,7 @@ function addCard(c) {
 
 	card.find('.card-points').html(points);
 	//vérifie l'ancien vote de l'user
-	checkVote(card);
+	checkVotelol(card,ancien_vote);
 
 	//assigne les fonctions de vote aux boutons
 	card.find(".card-facebook").click(shareFacebook);
@@ -340,19 +346,11 @@ function addCard(c) {
 		thumbDown(idhash, card);
 	});
 
-	$.post(
-			'MODELS/usersinfo.php',
-			{id: idUser},
-			function(data) {
-				data = JSON.parse(data);
 
-				card.find('.card-author>a')
-					//.attr('title', '<strong>'+data.pseudo+'</strong>')
-					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription, false)+"</p><p>Points: "+data.points+"</p><p><a href='index.php?sort=new&pseudo="+pseudoUser+"'> Posts:</a> "+data.posts+"</p>")
-					.click(function(e){e.stopPropagation();}).popover();
-			},
-			'text'
-		  );
+	card.find('.card-author>a')
+		//.attr('title', '<strong>'+data.pseudo+'</strong>')
+		.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(inscription, false)+"</p><p>Points: "+points+"</p><p><a href='index.php?sort=new&pseudo="+pseudoUser+"'> Posts:</a> "+posts+"</p>")
+
 
 
 	//bouton OPEN
@@ -438,23 +436,16 @@ function addCard(c) {
 
 
 
-		$.post(
-				'MODELS/usersinfo.php',
-				{id: idUser},
-				function(data) {
-					data = JSON.parse(data);
 
-					big.find('.big-img-author')
-						.attr('title', '<strong>'+data.pseudo+'</strong>')
-						.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription, false)+"</p><p>Points: "+data.points+"</p><p>Posts: "+data.posts+"</p>")
-						.click(function(e){e.stopPropagation();}).popover('fixTitle');
-				},
-				'text'
-			  );
+		big.find('.big-img-author')
+			.attr('title', '<strong>'+c.pseudo+'</strong>')
+			.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(c.inscription, false)+"</p><p>Points: "+c.points+"</p><p>Posts: "+c.posts+"</p>")
+			.click(function(e){e.stopPropagation();}).popover('fixTitle');
+
 
 
 		//vérifie l'ancien vote de l'user
-		checkVote(big);
+		checkVotelol(card,ancien_vote);
 
 		//vérifier l'ancien report
 		$.post(

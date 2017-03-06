@@ -252,6 +252,7 @@ function thumbDown(id, card) {
 function checkVote(card) {
 	if(!card.attr('id'))
 		return;
+	
 	$.post(
 		'MODELS/check_vote.php',
 		{idhash: card.attr('id')},
@@ -272,6 +273,21 @@ function checkVote(card) {
 			$(card).find('.card-thumb-up').removeClass('voted');	
 		}
 	}
+}
+
+function checkVotelol(card,ancien) {
+	
+		ancien = parseInt(ancien);
+		if(ancien == 1) {
+			$(card).find('.card-thumb-up').addClass('voted');
+			$(card).find('.card-thumb-down').removeClass('voted');
+		} else if(ancien == -1) {
+			$(card).find('.card-thumb-down').addClass('voted');
+			$(card).find('.card-thumb-up').removeClass('voted');
+		} else {
+			$(card).find('.card-thumb-down').removeClass('voted');
+			$(card).find('.card-thumb-up').removeClass('voted');
+		}
 }
 
 

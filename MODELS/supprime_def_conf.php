@@ -46,7 +46,7 @@ if ($resultat < 1) {
 	header('HTTP/1.0 403 Forbidden');
     exit();
 }
-
+// Supprimer image + vignette si pas URL
 $req = $bdd->prepare ('DELETE FROM images WHERE nom_hash = :idhash');
 $req->execute ([
 	':idhash' => $_POST['idhash'],
