@@ -24,9 +24,9 @@ if (!$id_user) {
     exit();
 };
 
-$req = $bdd->prepare ('SELECT id_user FROM images WHERE nom_hash = :idhash ');
+$req = $bdd->prepare ('SELECT * FROM images WHERE nom_hash = :idhash ');
 $req->execute ([
-    ':idhash' => $_POST['idhash'],
+    ':idhash' => htmlspecialchars($_POST['idhash']),
 ]);
 $resultat = $req->fetch ();
 
@@ -35,18 +35,26 @@ if (!$resultat) {
     exit();
 }
 
-$req = $bdd->prepare ('SELECT grade FROM users WHERE id = :id_user ');
-$req->execute ([
+$req2 = $bdd->prepare ('SELECT grade FROM users WHERE id = :id_user ');
+$req2->execute ([
     ':id_user' => $id_user,
 ]);
-$resultat = $req->fetch ()['grade'];
+$resultat2 = $req2->fetch ()['grade'];
 
-if ($resultat < 1) {
+if ($resultat2 < 1) {
     //pas assez gradé 
 	header('HTTP/1.0 403 Forbidden');
     exit();
 }
 // Supprimer image + vignette si pas URL
+$id = $resultat["nom_hash"];
+$extension_image = $resultat["format"];
+
+unlink(__DIR__ .'/../vignettes/'. $id .'.'.$extension_image);
+if (empty($resultat["url"])) {
+    unlink(__DIR__ .'/../images/'. $id .'.'.$extension_image);
+}
+
 $req = $bdd->prepare ('DELETE FROM images WHERE nom_hash = :idhash');
 $req->execute ([
 	':idhash' => $_POST['idhash'],

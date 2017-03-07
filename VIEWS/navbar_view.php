@@ -23,7 +23,7 @@
 				</ul>
 				<div style="flex: 1">
 				<?php if($showSearch): ?>
-						<input id="searchinput" placeholder="Rechercher..." type="text" name="search" autocomplete="off"></input>
+						<input id="searchinput" placeholder="Rechercher..." type="text" name="search" autocomplete="off" value=<?php if (!empty($_GET["search"])) echo htmlspecialchars($_GET["search"]); ?>></input>
 
 				<?php endif ?>
 				</div>
