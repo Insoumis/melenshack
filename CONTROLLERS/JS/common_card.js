@@ -339,7 +339,7 @@ function report(card) {
 
 function supprime_def(card) {
 	var conf = false;
-	var token = document.getElementById("token").innerHTML;
+	var token = $("#token").html();
 	conf = confirm("Voulez-vous vraiment supprimer ce post de la base de données ?");
 
 	if(!conf)
@@ -363,7 +363,7 @@ function supprime_def(card) {
 function supprime_restore(card) {
 	var conf = false;
 	var value = 1;
-	var token = document.getElementById("token").innerHTML;
+	var token = $("#token").html();
 	if($(card).find('.big-card-remove').hasClass("voted")) {
 		conf = confirm("Voulez-vous vraiment restaurer ce post ?");
 		value = 0;
@@ -392,7 +392,7 @@ function supprime_restore(card) {
 
 function ban_sup(card, iduser) {
 	var conf = false;
-	var token = document.getElementById("token").innerHTML;
+	var token = $('#token').html();
 	conf = confirm("Voulez-vous vraiment supprimer ce post et bannir l'utilisateur ?");
 
 	if(!conf)

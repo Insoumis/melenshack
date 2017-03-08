@@ -53,6 +53,7 @@ $(document).ready(function() {
 	$('.big-card-container').click(closeBigCard);
 	$('.big-card').click(function(e) {
 		e.stopPropagation();
+		$('#main_page .popover').popover('hide');
 	});
 
 	//ferme la bigimg si on clique sur la croix
@@ -86,7 +87,18 @@ $(document).ready(function() {
 	//initalise les tooltips
 	$('[data-toggle="tooltip"]').tooltip();
 	$('[data-toggle="popover"]').popover();
-
+	
+	//initialise le clipboard
+	var c = new Clipboard($(".big-card-link").get(0));
+	c.on('success', function() {
+		//change le titre du tooltip quand on a copié
+		$('.big-card-link').attr('title', 'Lien copié !').tooltip('fixTitle').tooltip('show');
+	});
+	
+	//remet le titre original au hoverOut
+	$('.big-card-link').on('mouseout', function() {
+		$(this).attr('title', 'Copier le lien').tooltip('fixTitle');
+	});
 	//stop le gif playing meme si souris quitte vite
 	$('body').hover(function() {
 		$('.playing').mouseleave();
@@ -269,6 +281,7 @@ function addCard(c) {
 		big.find('.big-card-title').html(titre);
 		big.find('.big-card-tmps').html(temps);
 		big.find('.big-img-author').html(pseudoUser);
+		big.find('.big-card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
 
 		if(idUser == $('#id_user').val() || $("#grade").val() > 0) {
 			big.find('.big-card-remove').show();
@@ -343,8 +356,7 @@ function addCard(c) {
 
 
 		big.find('.big-img-author')
-			.attr('title', '<strong>'+pseudoUser+'</strong>')
-			.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(inscription, false)+"</p><p>Points: "+points+"</p><p>Posts: "+posts+"</p>")
+			.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(inscription, false)+"</p><p>Points: "+points+"</p><p><a href='index.php?sort=new&pseudo="+pseudoUser+"'> Posts:</a> "+posts+"</p>").click(function(e){e.stopPropagation();}).popover('fixTitle')
 			.click(function(e){e.stopPropagation();}).popover('fixTitle');
 
 

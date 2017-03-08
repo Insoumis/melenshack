@@ -224,11 +224,13 @@ CARTES
 	font-weight: bold;
 	font-size: 40px;
 	line-height: 50px;
-	max-height: 100px;
+	max-height: 300px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	padding-bottom: 0;
 	padding-top: 0;
+	margin-bottom: 10px;
+	word-wrap: break-word;
 }
 
 .big-card-close {
@@ -237,6 +239,7 @@ CARTES
 	font-size: 20px;
 	cursor: pointer;
 	user-select: none;
+	margin-top: -22px;
 }
 
 .big-card-close:hover {
@@ -298,27 +301,34 @@ CARTES
 	font-size: 16px;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding-right: 50px;
+	padding-left: 50px;
+}
+.big-card-infos a:hover {
+	text-decoration : none;
 }
 .big-card-share>img {
 	height: 40px;
 	margin-top: -15px;
 	cursor: pointer;
-	margin-left: 10px;
+	margin-right: 10px;
 	user-select: none;
 }
 .big-card-share {
-	float: center;
+	float: left;
 	font-size: 30px;
-	margin-bottom: 10px;
 	line-height: 40px;
 	user-select: none;
-	margin-top: -15px;
 	display: inline;
+	text-align: left;
 }
 .big-card-share>span {
 	cursor: pointer;
 	user-select: none;
-	margin-top: 15px;
+}
+.big-card-share>span:hover {
+	color: grey;
 }
 
 .big-card-img {
@@ -338,15 +348,20 @@ CARTES
 }
 .big-card-votes>span {
 	margin: 0;
+	margin: 5px;
+	float: right;
 }
 
 .big-card-points {
 	display: inline;
-	margin-right: 20px;
+	margin-right: 10px;
+	margin-top: 4px;
 	font-size: 25px;
-	margin: 0;
+	float: right;
 }
-
+.big-card-align {
+	display: inline-block;
+}
 
 
 .template {
@@ -546,7 +561,7 @@ CARTES
 }
 .card-points {
 	float:left;
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: normal;
 	margin-top: 5px;
 	margin-right: 10px;

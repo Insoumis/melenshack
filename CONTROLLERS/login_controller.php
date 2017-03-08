@@ -1,8 +1,8 @@
 <?php
 
 require_once ('MODELS/includes/token.class.php');
-
-session_start();
+if(!isset($_SESSION))
+	session_start();
 
 $token = Token::generer('connexion');
 

@@ -32,34 +32,36 @@
 				
 				<?php endif ?>
 				
-				<span class="big-card-infos">
-					<span class="glyphicon glyphicon-time"></span> <span class="big-card-tmps"></span> par <strong><a data-toggle='popover' data-html="true" class="big-img-author" href='#'></a></strong>
-				</span>
-				<!--
-								-->
+				<div class="big-card-infos">
+					<span class="glyphicon glyphicon-time"></span> <span class="big-card-tmps"></span> par <strong><a data-placement='bottom' data-toggle='popover' data-html="true" class="big-img-author" href='#'></a></strong>
+				</div>
 				<span data-placement='bottom' data-toggle="tooltip" title="Fermer" class="big-card-close glyphicon glyphicon-remove"></span>
 
+			
 			<div class="big-card-title">
 			</div>
+			
+			<div class="big-card-align">
 
-			<center>
 			<div class="big-card-share">
-				<img data-placement='bottom' data-toggle="tooltip" title="Facebook" class="big-card-facebook" src="assets/Facebook.png"/>
-				<img data-placement='bottom' data-toggle="tooltip" title="Twitter" class="big-card-twitter" src="assets/Twitter.png"/>
-				<img data-placement='bottom' data-toggle="tooltip" title="Google Plus" class="big-card-gplus" src="assets/Google_plus.png"/>
+				<img data-toggle="tooltip" title="Facebook" class="big-card-facebook" src="assets/Facebook.png"/>
+				<img data-toggle="tooltip" title="Twitter" class="big-card-twitter" src="assets/Twitter.png"/>
+				<img data-toggle="tooltip" title="Google Plus" class="big-card-gplus" src="assets/Google_plus.png"/>
+				<span data-toggle="tooltip" title="Copier le lien" class="glyphicon glyphicon-link big-card-link" ></span>
 			</div>
 
-			<div class="big-card-points">352</div>
+			
 			<div class="big-card-votes">
-				<span data-toggle="tooltip" title="J'aime" class="glyphicon glyphicon-thumbs-up card-thumb-up" ></span>
 		   
 				<span data-toggle="tooltip" title="J'aime pas" class="glyphicon glyphicon-thumbs-down card-thumb-down" ></span>
+				<span data-toggle="tooltip" title="J'aime" class="glyphicon glyphicon-thumbs-up card-thumb-up" ></span>
 			</div>
-			</center>
+			<div class="big-card-points">352</div>
 
 			<br>
 			<div class="big-card-img">
 				<img class='big-card-img' src="" />
+			</div>
 			</div>
 			<div class="tags"></div>
 		</div>
