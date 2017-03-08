@@ -17,7 +17,7 @@ if (!isset($_SESSION)) {
     session_start ();
 }
 if (!$_SESSION) {
-	header('HTTP/1.0 403 Forbidden');
+	session_start();
     exit();
 };
 $id_user = $_SESSION['id'];
@@ -64,11 +64,6 @@ $resultat = $req->fetch ()['grade'];
 
 if ($resultat < 1 && $id_user != $id_poster) {
     //pas assez gradé ou pas poster original
-	header('HTTP/1.0 403 Forbidden');
-    exit();
-}
-
-if($id_user == $id_poster && $val == 0) { //le poster ne peut pas restore
 	header('HTTP/1.0 403 Forbidden');
     exit();
 }

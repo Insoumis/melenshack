@@ -4,11 +4,7 @@ include_once("includes/constants.php");
 
 function getInfo($idhash) {
 
-	try {
-		$bdd = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-	} catch (PDOException $erreur) {
-		echo 'Ce service est momentanément indisponible. Veuillez nous excuser pour la gêne occasionnée.';
-	}
+    global $bdd;
 
 	if (empty($idhash)) {
 		return -1;
@@ -18,10 +14,6 @@ function getInfo($idhash) {
 	if (!isset($_SESSION)) {
 		session_start ();
 	}
-	if (!$_SESSION) {
-		exit();
-	};
-	$id_user = $_SESSION['id'];
 
 	$req = $bdd->prepare ('SELECT images.*,users.pseudo,users.grade,users.dateinscription FROM images,users WHERE images.nom_hash = :nom_hash AND users.id = images.id_user');
 
@@ -29,27 +21,46 @@ function getInfo($idhash) {
 		':nom_hash' => $id,
 	]);
 	$resultat = $req->fetch ();
-
-	if (!$id_user) {
+	
+	if (!$resultat) {
+		return -1;
+	}
+	
+	if (!isset($_SESSION['id'])) {
 		$resultat2 = null;
+		$resultat3 = null;
 	} else {
 
 		$req2 = $bdd->prepare ('SELECT * FROM vote WHERE id_image = :id_image AND id_user = :id_user');
 		$req2->execute ([
 			':id_image' => $resultat['id'],
-			':id_user' => $id_user,
+			':id_user' => $_SESSION['id'],
 		]);
 		$resultat2 = $req2->fetch ();
+        
+        $req = $bdd->prepare ('SELECT * FROM report WHERE id_image = :id_image AND id_user = :id_user');
+        $req->execute ([
+            ':id_image' => $resultat['id'],
+            ':id_user' => $_SESSION['id'],
+        ]);
+
+		$resultat3 = $req->fetch ();
+
 	}
 
-	if (!$resultat) {
-		return -1;
-	}
-	if (!$resultat2 OR $resultat2 == null) {
+	
+	if (!$resultat2 or $resultat2 == null) {
 		$ancien_vote_bdd = 0;
 	} else {
 		$ancien_vote_bdd = $resultat2["vote"];
 	}
+	
+	if (!$resultat3 or $resultat3 == null) {
+		$report = 0;
+	} else {
+		$report = 1;
+	}
+
 
 	$id_pseudo = $resultat['id_user'];
 
@@ -80,8 +91,8 @@ function getInfo($idhash) {
 			"pointsTotaux" => $resultat["pointsTotaux"],
 			"supprime" => $resultat["supprime"],
 			"tags" => $resultat["tags"],
-			"pseudo" => $resultat["pseudo"],
 			"ancien_vote" => $ancien_vote_bdd,
+			"ancien_report" => $report,
 			"dateinscription" => $resultat["dateinscription"],
 			"grade" => $resultat["grade"],
 			'points' => $points,
@@ -101,8 +112,8 @@ function getInfo($idhash) {
 			"pointsTotaux" => $resultat["pointsTotaux"],
 			"supprime" => $resultat["supprime"],
 			"tags" => $resultat["tags"],
-			"pseudo" => $resultat["pseudo"],
 			"ancien_vote" => $ancien_vote_bdd,
+			"ancien_report" => $report,
 			"inscription" => $resultat["dateinscription"],
 			"grade" => $resultat["grade"],
 			'points' => $points,

@@ -59,3 +59,6 @@ $req = $bdd->prepare ('DELETE FROM images WHERE nom_hash = :idhash');
 $req->execute ([
 	':idhash' => $_POST['idhash'],
 ]);
+
+unlink(__DIR__."/../images/".$_POST['idhash'].".".$format);
+unlink(__DIR__."/../vignettes/".$_POST['idhash'].".".$format);

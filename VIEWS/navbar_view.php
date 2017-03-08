@@ -63,13 +63,3 @@
 			</div> <!-- navbar -->
 		</div> <!-- container -->
 	</nav>
-
-	
-<script defer>
-	$('#searchinput').on('keypress', function(e) {
-		if(e.which ===13) {//Enter
-			window.location.href = 'search.php?s=' + $(this).val();
-		}
-	});
-
-</script>

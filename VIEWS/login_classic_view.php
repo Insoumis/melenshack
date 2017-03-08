@@ -25,7 +25,7 @@
 				-->	
 				<div class="form-group col-xs-4">
 					<label for="pseudo">Nom d'utilisateur :</label>
-					<input type="text" class="form-control input-lg" name="pseudo" id="pseudo" placeholder="Nom d'utilisateur" required autofocus>
+					<input type="text" class="form-control input-lg" name="pseudo" id="pseudo" placeholder="Nom d'utilisateur ou email" required autofocus>
 					<label for="pass">Mot de passe :</label>
 					<input type="password" class="form-control input-lg" name="pass" id="pass" placeholder ="Mot de passe" required autofocus>
 					<div class="checkbox">

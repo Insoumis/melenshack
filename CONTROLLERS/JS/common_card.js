@@ -185,6 +185,7 @@ function thumbUp(id, card) {
 			card.parent().stop(true, false).animate({backgroundColor: 'rgba(255, 255, 255, 0)'}, 700);
 		}
 		vote(id, 1);
+        card.data('vote', 1);
 
 	} else {
 		currentV--;
@@ -196,6 +197,7 @@ function thumbUp(id, card) {
 		});
 
 		vote(id, 0);
+        card.data('vote', 0);
 	}
 
 	card.find('.big-card-points, .card-points, .points').html(currentV);
@@ -203,7 +205,8 @@ function thumbUp(id, card) {
 
 	
 function thumbDown(id, card) {
-	var btn = card.find('.card-thumb-down');
+	
+    var btn = card.find('.card-thumb-down');
 
 	if($('#connected').val() == "no") {
 		showVoteError();
@@ -233,6 +236,7 @@ function thumbDown(id, card) {
 		}
 
 		vote(id, -1);
+        card.data('vote', -1);
 	} else {
 		currentV++;
 		btn.removeClass('voted');
@@ -242,6 +246,7 @@ function thumbDown(id, card) {
 			btn.css('color', '');
 		});
 		vote(id, 0);
+        card.data('vote', 0);
 	}
 	card.find('.big-card-points, .card-points, .points').html(currentV);
 
@@ -249,45 +254,32 @@ function thumbDown(id, card) {
 	
 
 
-function checkVote(card) {
-	if(!card.attr('id'))
-		return;
+function updateVote(card,ancien) {
 	
-	$.post(
-		'MODELS/check_vote.php',
-		{idhash: card.attr('id')},
-		returnVote,
-		'text'
-	);
-	
-	function returnVote(ancien) {
 		ancien = parseInt(ancien);
+        $(card).data('vote', ancien);
 		if(ancien == 1) {
 			$(card).find('.card-thumb-up').addClass('voted');
 			$(card).find('.card-thumb-down').removeClass('voted');
 		} else if(ancien == -1) {
 			$(card).find('.card-thumb-down').addClass('voted');
-			$(card).find('.card-thumb-up').removeClass('voted');	
+			$(card).find('.card-thumb-up').removeClass('voted');
 		} else {
 			$(card).find('.card-thumb-down').removeClass('voted');
-			$(card).find('.card-thumb-up').removeClass('voted');	
+			$(card).find('.card-thumb-up').removeClass('voted');
 		}
-	}
 }
 
-function checkVotelol(card,ancien) {
+function updateReport(card, ancien) {
+
+	ancien = parseInt(ancien);
+    $(card).data('report', ancien);
 	
-		ancien = parseInt(ancien);
-		if(ancien == 1) {
-			$(card).find('.card-thumb-up').addClass('voted');
-			$(card).find('.card-thumb-down').removeClass('voted');
-		} else if(ancien == -1) {
-			$(card).find('.card-thumb-down').addClass('voted');
-			$(card).find('.card-thumb-up').removeClass('voted');
-		} else {
-			$(card).find('.card-thumb-down').removeClass('voted');
-			$(card).find('.card-thumb-up').removeClass('voted');
-		}
+	if(ancien == 1) {
+			$(card).find('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle');
+	} else {
+			$(card).find('.big-card-signal').removeClass('voted').attr('title', 'Signaler').tooltip('fixTitle');
+	}
 }
 
 
@@ -317,3 +309,115 @@ function showVoteError() {
 		erreur.remove();		
 	});
 }
+
+function report(card) {
+	if($('#connected').val() == 'no') {
+		showVoteError();
+		return;
+	}
+	if(card.find(".big-card-signal").hasClass('voted'))
+		return;
+
+	var conf = false;
+	conf = confirm('Voulez-vous vraiment signaler ce post ?');
+	if(!conf)
+		return;
+
+	$.post(
+			'MODELS/report_conf.php',
+			{
+				idhash: card.attr('id'),
+			},
+			function(e) {
+				updateReport(card, 1);
+			},
+			'text'
+		  );
+	card.data('report', 1);
+	$('.big-card').data('card').data('report', 1);
+}
+
+function supprime_def(card) {
+	var conf = false;	
+	conf = confirm("Voulez-vous vraiment supprimer ce post de la base de données ?");
+
+	if(!conf)
+		return;
+
+	//send remove to server
+	$.post(
+			'MODELS/supprime_def_conf.php',
+			{
+				idhash: card.attr('id')
+			},
+			function(e) {
+				closeBigCard();
+				$("#"+$(card).attr("id")+".card").remove();
+				updateMasonry();
+			},
+			'text'
+		  );
+}
+function supprime_restore(card) {
+	var conf = false;
+	var value = 1;
+	if($(card).find('.big-card-remove').hasClass("voted")) {
+		conf = confirm("Voulez-vous vraiment restaurer ce post ?");
+		value = 0;
+	} else {
+		conf = confirm("Voulez-vous vraiment supprimer ce post ?");
+	}
+
+	if(!conf)
+		return;
+	//send remove to server
+	$.post(
+			'MODELS/supprime_conf.php',
+			{
+				idhash: $(card).attr('id'),
+				value: value
+			},
+			function(e) {
+				closeBigCard();
+				$("#"+$(card).attr("id")+".card").remove();
+				updateMasonry();
+			},
+			'text'
+		  );
+}
+
+function ban_sup(card, iduser) {
+	var conf = false;	
+	conf = confirm("Voulez-vous vraiment supprimer ce post et bannir l'utilisateur ?");
+
+	if(!conf)
+		return;
+
+	//ban
+	$.post(
+			'MODELS/ban_conf.php',
+			{
+				id_user: iduser
+			},
+			function(e) {
+			},
+			'text'
+		  );
+
+	//send remove to server
+	$.post(
+			'MODELS/supprime_conf.php',
+			{
+				idhash: $(card).attr('id'),
+				value: 1
+			},
+			function(e) {
+				closeBigCard();
+				$("#"+$(card).attr("id")+".card").remove();
+				updateMasonry();
+			},
+			'text'
+		  );
+}
+
+

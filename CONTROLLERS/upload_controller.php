@@ -28,6 +28,8 @@ if(isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 			$errmsg = "Vous avez été banni";
 		else if ($erreur == "tags")
 			$errmsg = "Erreur de tags!";
+		else if ($erreur == "url")
+			$errmsg = "URL trop longue !";
 		else if ($erreur == "pseudo")
 			$errmsg = "Vous devez choisir un pseudo pour poster une image ! <a href='pseudo.php'>Choisir un pseudo</a>";
 		else
