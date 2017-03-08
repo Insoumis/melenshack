@@ -24,7 +24,7 @@ if (!$id_user) {
     exit();
 };
 
-$req = $bdd->prepare ('SELECT id_user FROM images WHERE nom_hash = :idhash ');
+$req = $bdd->prepare ('SELECT id_user, format FROM images WHERE nom_hash = :idhash ');
 $req->execute ([
     ':idhash' => $_POST['idhash'],
 ]);
@@ -34,6 +34,8 @@ if (!$resultat) {
 	header('HTTP/1.0 400 Bad Request');
     exit();
 }
+
+$format = $resultat['format'];
 
 $req = $bdd->prepare ('SELECT grade FROM users WHERE id = :id_user ');
 $req->execute ([
@@ -51,3 +53,6 @@ $req = $bdd->prepare ('DELETE FROM images WHERE nom_hash = :idhash');
 $req->execute ([
 	':idhash' => $_POST['idhash'],
 ]);
+
+unlink(__DIR__."/../images/".$_POST['idhash'].".".$format);
+unlink(__DIR__."/../vignettes/".$_POST['idhash'].".".$format);

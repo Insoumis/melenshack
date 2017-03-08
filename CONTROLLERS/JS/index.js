@@ -11,6 +11,9 @@ var currentIndex = 0;
 //plus de cartes à charger depuis la bdd
 var fin = false;
 
+//une requete est en cours
+var fetching = false;
+
 function initMasonry() {
 	gridLayout = $('.card-container');
 	gridLayout.masonry({
@@ -35,115 +38,7 @@ function updateSearch() {
 
 function closeBigCard() {
 	$('.big-card-container').hide();
-	checkVote($('.big-card').data('card'));
-}
-
-function report(card) {
-	if($('#connected').val() == 'no') {
-		showVoteError();
-		return;
-	}
-	if(card.find(".big-card-signal").hasClass('voted'))
-		return;
-
-	var conf = false;
-	conf = confirm('Voulez-vous vraiment signaler ce post ?');
-	if(!conf)
-		return;
-
-	$.post(
-			'MODELS/report_conf.php',
-			{
-				idhash: card.attr('id'),
-			},
-			function(e) {
-				card.find('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle').tooltip('show');
-			},
-			'text'
-		  );
-}
-
-function supprime_def(card) {
-	var conf = false;	
-	conf = confirm("Voulez-vous vraiment supprimer ce post de la base de données ?");
-
-	if(!conf)
-		return;
-
-	//send remove to server
-	$.post(
-			'MODELS/supprime_def_conf.php',
-			{
-				idhash: card.attr('id')
-			},
-			function(e) {
-				closeBigCard();
-				$("#"+$(card).attr("id")+".card").remove();
-				updateMasonry();
-			},
-			'text'
-		  );
-}
-function supprime_restore(card) {
-	var conf = false;
-	var value = 1;
-	if($(card).find('.big-card-remove').hasClass("voted")) {
-		conf = confirm("Voulez-vous vraiment restaurer ce post ?");
-		value = 0;
-	} else {
-		conf = confirm("Voulez-vous vraiment supprimer ce post ?");
-	}
-
-	if(!conf)
-		return;
-	//send remove to server
-	$.post(
-			'MODELS/supprime_conf.php',
-			{
-				idhash: $(card).attr('id'),
-				value: value
-			},
-			function(e) {
-				closeBigCard();
-				$("#"+$(card).attr("id")+".card").remove();
-				updateMasonry();
-			},
-			'text'
-		  );
-}
-
-function ban_sup(card, iduser) {
-	var conf = false;	
-	conf = confirm("Voulez-vous vraiment supprimer ce post et bannir l'utilisateur ?");
-
-	if(!conf)
-		return;
-
-	//ban
-	$.post(
-			'MODELS/ban_conf.php',
-			{
-				id_user: iduser
-			},
-			function(e) {
-			},
-			'text'
-		  );
-
-	//send remove to server
-	$.post(
-			'MODELS/supprime_conf.php',
-			{
-				idhash: $(card).attr('id'),
-				value: 1
-			},
-			function(e) {
-				closeBigCard();
-				$("#"+$(card).attr("id")+".card").remove();
-				updateMasonry();
-			},
-			'text'
-		  );
+	updateVote($('.big-card').data('card'), $('.big-card').data('vote'));
 }
 
 $(document).ready(function() {
@@ -227,6 +122,7 @@ $(document).ready(function() {
 });
 
 
+
 //quand l'user atteind le bas de la page, rajoute 20 cartes
 $(window).scroll(function() {
 	if(!fin && $(window).scrollTop() + $(window).height() > $(document).height() - 20) {
@@ -237,6 +133,8 @@ $(window).scroll(function() {
 
 //récupère les $size prochaines cartes depuis le serveur et les affiche
 function getCards(size) {
+    fetching = true;
+
 	var sort = $('#sort').val();
 	var search = $('#searchinput').val();
 	var pseudo = $('#search_pseudo').val();
@@ -262,7 +160,8 @@ function getCards(size) {
 					i++;
 				}
 			}
-			if(i == 0) {
+	    
+            if(i < size) {
 				fin = true;
 			}
 			currentIndex += i;
@@ -273,9 +172,13 @@ function getCards(size) {
 			});
 			if(t == 0 && $("#nothing").length == 0) {
 				$("#main_page").append($("<center><h3 id='nothing'>Rien n'a été trouvé.</h3></center>"));
-			} else if(t > 0) {
+			} else if(t > 0 && fin) {
 				$('#nothing').remove();
-			}
+				$("#main_page").append($("<center><h3 id='nothing'>Fin du flux.</h3></center>"));
+			} else {
+				$('#nothing').remove();
+            }
+            fetching = false;
 
 		}
 	});
@@ -295,12 +198,13 @@ function addCard(c) {
 	var url = c.urlThumbnail;
 	var urlSource = c.urlSource;
 	var tags = c.tags.split(',');
-	var pseudo = c.pseudo;
 	var ancien_vote = c.ancien_vote;
+	var ancien_report = c.ancien_report;
 	var inscription = c.inscription;
 	var grade = c.grade;
 	var pointsUser = c.pointsUser;
 	var posts = c.posts;
+	var supprime = c.supprime;
 	//string du temps passé depuis le post
 	var temps = getTimeElapsed(dateCreation);
 
@@ -314,6 +218,7 @@ function addCard(c) {
 	card.find('.card-time').html(getTimeElapsed(dateCreation, true));
 	card.find('.card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
 
+    //affiche les tags
 	for(var i=0; i < tags.length; ++i) {
 		if(i>3)
 			break;
@@ -321,9 +226,12 @@ function addCard(c) {
 			card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
 	}
 
+    
 	card.find('.card-points').html(points);
-	//vérifie l'ancien vote de l'user
-	checkVotelol(card,ancien_vote);
+	
+    //upadate l'ancien vote de l'user
+	updateVote(card,ancien_vote);
+	updateReport(card,ancien_report);
 
 	//assigne les fonctions de vote aux boutons
 	card.find(".card-facebook").click(shareFacebook);
@@ -348,10 +256,7 @@ function addCard(c) {
 
 
 	card.find('.card-author>a')
-		//.attr('title', '<strong>'+data.pseudo+'</strong>')
-		.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(inscription, false)+"</p><p>Points: "+points+"</p><p><a href='index.php?sort=new&pseudo="+pseudoUser+"'> Posts:</a> "+posts+"</p>")
-
-
+		.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(inscription, false)+"</p><p>Points: "+points+"</p><p><a href='index.php?sort=new&pseudo="+pseudoUser+"'> Posts:</a> "+posts+"</p>").click(function(e){e.stopPropagation();}).popover('fixTitle');
 
 	//bouton OPEN
 	card.find(".card-open, .card-img").click(function() {
@@ -438,32 +343,18 @@ function addCard(c) {
 
 
 		big.find('.big-img-author')
-			.attr('title', '<strong>'+c.pseudo+'</strong>')
-			.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(c.inscription, false)+"</p><p>Points: "+c.points+"</p><p>Posts: "+c.posts+"</p>")
+			.attr('title', '<strong>'+pseudoUser+'</strong>')
+			.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(inscription, false)+"</p><p>Points: "+points+"</p><p>Posts: "+posts+"</p>")
 			.click(function(e){e.stopPropagation();}).popover('fixTitle');
 
 
 
-		//vérifie l'ancien vote de l'user
-		checkVotelol(card,ancien_vote);
+		//update l'ancien vote de l'user
+		updateVote(big, card.data('vote'));
 
-		//vérifier l'ancien report
-		$.post(
-				'MODELS/check_report.php',
-				{idhash: idhash},
-					returnReport,
-					'text'
-				  );
+		//update l'ancien report
+		updateReport(big, card.data('report'));
 
-		function returnReport(ancien) {
-			ancien = parseInt(ancien);
-			if(ancien == 1) {
-				$('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle');
-			} else {
-				$('.big-card-signal').removeClass('voted').attr('title', 'Signaler').tooltip('fixTitle');
-
-			}
-		}
 
 		big.find('.big-card-points').html(card.find('.card-points').html());
 		big.find('.big-card-img').attr('src', urlSource).on('load',

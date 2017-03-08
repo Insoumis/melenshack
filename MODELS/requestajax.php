@@ -3,7 +3,7 @@ include("includes/identifiants.php");
 include_once("includes/constants.php");
 include("cardsinfo.php");
 include("check_grade.php");
-ini_set('display_errors', 1);
+
 if (empty($_POST['sort']) || !is_numeric($_POST['startIndex']) || !is_numeric($_POST['size'])) {
     exit();
 }

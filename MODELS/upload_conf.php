@@ -37,7 +37,6 @@ function retrieve_remote_file_size ($url)
 function addToFiles ($key, $url)
 {
     $tempName = tempnam (PHP_DOSSIER_TMP, 'php');
-    echo $tempName;
     $originalName = basename (parse_url ($url, PHP_URL_PATH));
 
     $imgRawData = file_get_contents ($url);
@@ -120,6 +119,11 @@ if (!empty($_POST['url'])) {
     $a = retrieve_remote_file_size ($url); // Vérification de la taille de l'image
     if ($a > MAX_SIZE) {
         header ('Location:../upload.php?erreur=size');
+        exit();
+    }
+
+    if(strlen($url) >= 250) {
+        header("Location:../upload.php?erreur=url");
         exit();
     }
 
