@@ -95,7 +95,7 @@ function getInfo($idhash) {
 			"ancien_report" => $report,
 			"dateinscription" => $resultat["dateinscription"],
 			"grade" => $resultat["grade"],
-			'points' => $points,
+			'pointsUser' => $points,
 			'posts' => $count,
 		);
 
@@ -116,7 +116,7 @@ function getInfo($idhash) {
 			"ancien_report" => $report,
 			"inscription" => $resultat["dateinscription"],
 			"grade" => $resultat["grade"],
-			'points' => $points,
+			'pointsUser' => $points,
 			'posts' => $count,
 		);
 	}
