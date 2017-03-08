@@ -338,7 +338,8 @@ function report(card) {
 }
 
 function supprime_def(card) {
-	var conf = false;	
+	var conf = false;
+	var token = document.getElementById("token").innerHTML;
 	conf = confirm("Voulez-vous vraiment supprimer ce post de la base de données ?");
 
 	if(!conf)
@@ -348,7 +349,8 @@ function supprime_def(card) {
 	$.post(
 			'MODELS/supprime_def_conf.php',
 			{
-				idhash: card.attr('id')
+				idhash: card.attr('id'),
+				token : token
 			},
 			function(e) {
 				closeBigCard();
@@ -361,6 +363,7 @@ function supprime_def(card) {
 function supprime_restore(card) {
 	var conf = false;
 	var value = 1;
+	var token = document.getElementById("token").innerHTML;
 	if($(card).find('.big-card-remove').hasClass("voted")) {
 		conf = confirm("Voulez-vous vraiment restaurer ce post ?");
 		value = 0;
@@ -375,7 +378,8 @@ function supprime_restore(card) {
 			'MODELS/supprime_conf.php',
 			{
 				idhash: $(card).attr('id'),
-				value: value
+				value: value,
+				token : token
 			},
 			function(e) {
 				closeBigCard();
@@ -387,7 +391,8 @@ function supprime_restore(card) {
 }
 
 function ban_sup(card, iduser) {
-	var conf = false;	
+	var conf = false;
+	var token = document.getElementById("token").innerHTML;
 	conf = confirm("Voulez-vous vraiment supprimer ce post et bannir l'utilisateur ?");
 
 	if(!conf)
@@ -397,7 +402,8 @@ function ban_sup(card, iduser) {
 	$.post(
 			'MODELS/ban_conf.php',
 			{
-				id_user: iduser
+				id_user: iduser,
+				token : token
 			},
 			function(e) {
 			},
@@ -409,7 +415,8 @@ function ban_sup(card, iduser) {
 			'MODELS/supprime_conf.php',
 			{
 				idhash: $(card).attr('id'),
-				value: 1
+				value: 1,
+				token : token
 			},
 			function(e) {
 				closeBigCard();
