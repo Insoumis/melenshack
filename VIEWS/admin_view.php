@@ -4,6 +4,12 @@
 <body>
 	<?php echo $NAVBAR ?>
 	<div id="main_page">
+		<?php if(!empty($errmsg)): ?>
+			<div class='alert alert-danger erreur'>
+				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+				<?php echo $errmsg ?>
+			</div>
+		<?php endif ?>
 
 		<h1>Page d'administration</h1>
 		<ul>
@@ -18,6 +24,7 @@
 				Bannir un user :
 				
 				<input type="text" placeholder="pseudo" name="pseudo" />
+				<input type="hidden" name="token" id="token" value="<?php echo $token_A?>">
 				<input type="submit" value="Bannir">
 				</form>
 			</li>
@@ -27,6 +34,7 @@
 				
 				<input type="text" placeholder="pseudo" name="pseudo" />
 				<input type="text" placeholder="grade" name="value" />
+				<input type="hidden" name="token" id="token" value="<?php echo $token_A?>">
 				<input type="submit" value="Promote">
 				</form>
 			</li>

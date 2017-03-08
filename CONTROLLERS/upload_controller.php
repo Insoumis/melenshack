@@ -3,6 +3,7 @@
 include_once 'MODELS/includes/constants.php';
 
 $maxsize = MAX_SIZE;
+$token_upload = Token::generer('upload');
 
 $errmsg = "";
 $showPage = true;

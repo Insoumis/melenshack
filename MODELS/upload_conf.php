@@ -1,7 +1,10 @@
 <?php
 
 include_once ("includes/constants.php");
+require_once ('includes/token.class.php');
 include_once ("includes/GIFDecoder.class.php");
+include_once ("includes/identifiants.php");
+include_once ('includes/securite.class.php');
 
 /*
 ERREURS RETOURNEES:
@@ -14,9 +17,6 @@ titre
 pseudo
 
 */
-include_once ("includes/identifiants.php");
-include_once ("includes/constants.php");
-include_once ('includes/securite.class.php');
 
 function retrieve_remote_file_size ($url)
 {
@@ -59,6 +59,11 @@ if (!$id_user) header ('Location:../upload.php?erreur=notlogged');
 
 $pseudo = $_SESSION['pseudo'];
 if (!$pseudo) header ('Location:../upload.php?erreur=pseudo');
+
+if((Token::verifier(3600, 'upload')) == false) {
+    header ('Location:../upload.php?erreur=token');
+    exit();
+}
 
 $captcha = $_POST['g-recaptcha-response'];
 if (!$captcha) {

@@ -1,6 +1,9 @@
 <?php
 
-include 'MODELS/check_grade.php';
+include '/MODELS/check_grade.php';
+require_once ('MODELS/includes/token.class.php');
+
+$errmsg = "";
 
 if (!isset($_SESSION)) {
     session_start ();

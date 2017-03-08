@@ -59,6 +59,7 @@
 						</ul>
 						<input id="id_user" value=<?php echo "'$id_user'" ?> hidden />
 						<input id="grade" value=<?php echo "'$grade'" ?> hidden />
+				<div class="token" id="token" hidden><?php echo $token_A; ?></div>
 			</div> <!-- navbar -->
 		</div> <!-- container -->
 	</nav>

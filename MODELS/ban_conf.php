@@ -2,6 +2,7 @@
 include ("includes/identifiants.php");
 include_once ('includes/token.class.php');
 include_once ("includes/constants.php");
+include_once ('includes/securite.class.php');
 
 if (!isset($_SESSION)) {
     session_start ();
@@ -16,15 +17,21 @@ if (!$id_user) {
     exit();
 }
 
+if((Token::verifier(600, 'A')) == false) {
+    header('HTTP/1.0 403 Forbidden');
+    echo 'Erreur Token';
+    exit();
+}
+
 if(!empty($_POST['id_user']))
-	$idban = $_POST['id_user'];
+	$idban = Securite::bdd($_POST['id_user']);
 else
 	$idban = '';
 
 
 $req = $bdd->prepare ("SELECT * FROM users WHERE (:idban = '' AND pseudo = :pseudo) OR id=:idban");
 $req->execute ([
-    ':pseudo' => $_POST['pseudo'],
+    ':pseudo' => Securite::bdd($_POST['pseudo']),
     ':idban' => $idban,
 ]);
 $resultat = $req->fetch ();
@@ -43,6 +50,8 @@ $req->execute ([
 $resultat = $req->fetch ();
 
 if (!$resultat) {
+    header('HTTP/1.0 403 Forbidden');
+    echo 'Erreur pseudo';
     exit();
 }
 $grade = $resultat['grade'];

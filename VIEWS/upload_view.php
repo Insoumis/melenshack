@@ -48,6 +48,7 @@
 					</div>
 					<div class="g-recaptcha" data-sitekey="6LefaBUUAAAAALVKIo2DiW_hWLs2kijFTrlUHGMb" data-callback="recaptchaCallback"></div>
 					<br>
+					<input type="hidden" name="token" id="token" value="<?php echo $token_upload?>">
 					<input type="submit" id="submit" class="btn btn-primary btn-lg" name="submit" value="Poster l'image" accept="image/*" required disabled>
 				</div>
 				<input type="hidden" id="max" name="taille_max" value=<?php echo "'$maxsize'" ?> />

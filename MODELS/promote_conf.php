@@ -11,6 +11,7 @@
 include ("includes/identifiants.php");
 include_once ('includes/token.class.php');
 include_once ("includes/constants.php");
+include_once ('includes/securite.class.php');
 
 if (!isset($_SESSION)) {
     session_start ();
@@ -26,20 +27,25 @@ if (!$id_user) {
 };
 
 if(!isset($_POST['value'])) {
-	header('HTTP/1.0 400 Bad Request');
+	header('HTTP/1.0 403 Forbidden');
 	exit();
 }
 
-$val = $_POST['value'];
+if((Token::verifier(600, 'A')) == false) {
+	header('HTTP/1.0 403 Forbidden');
+	exit();
+}
+
+$val = Securite::bdd($_POST['value']);
 
 $req = $bdd->prepare ('SELECT id FROM users WHERE pseudo = :pseudo ');
 $req->execute ([
-    ':pseudo' => $_POST['pseudo'],
+    ':pseudo' => Securite::bdd($_POST['pseudo']),
 ]);
 $resultat = $req->fetch ();
 
 if (!$resultat) {
-	header('HTTP/1.0 400 Bad Request');
+	header('HTTP/1.0 403 Forbidden');
     exit();
 }
 

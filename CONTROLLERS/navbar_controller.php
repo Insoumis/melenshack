@@ -52,6 +52,8 @@ $("nav").ready(function() {
 <?php
 $grade = 0;
 require 'MODELS/check_grade.php';
+require_once ('MODELS/includes/token.class.php');
+$token_A = Token::generer('A');
 
 
 if(!isset($_SESSION))

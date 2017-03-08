@@ -16,6 +16,12 @@ if (!$id_user) {
     exit();
 };
 
+if((Token::verifier(600, 'A')) == false) {
+	header('HTTP/1.0 403 Forbidden');
+	echo 'Erreur Token';
+	exit();
+}
+
 $req = $bdd->prepare ('DELETE FROM federated_users WHERE id_user = :id');
 $req->execute ([
 	':id' => $id_user,

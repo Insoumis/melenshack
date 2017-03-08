@@ -31,6 +31,11 @@ if(!isset($_POST['value'])) {
 	exit();
 }
 
+if((Token::verifier(600, 'A')) == false) {
+	header('HTTP/1.0 403 Forbidden');
+	echo 'Erreur Token';
+	exit();
+}
 $val = $_POST['value'];
 
 if($val != 0 && $val != 1) {
