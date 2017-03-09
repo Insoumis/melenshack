@@ -20,6 +20,7 @@ $points = $infos['pointsTotaux'];
 $tagsstr = $infos['tags'];
 $tags = explode(",", $infos['tags']);
 $dateCreation = $infos['dateCreation'];
+//$format = $infos['dateCreation'];
 
 $width = getimagesize($urlSource)[0];
 $height = getimagesize($urlSource)[1];

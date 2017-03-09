@@ -5,6 +5,7 @@ require_once ('includes/token.class.php');
 include_once ("includes/GIFDecoder.class.php");
 include_once ("includes/identifiants.php");
 include_once ('includes/securite.class.php');
+include_once '/MODELS/check_grade.php';
 
 /*
 ERREURS RETOURNEES:
@@ -49,10 +50,10 @@ function addToFiles ($key, $url)
         'size' => strlen ($imgRawData),
     );
 }
-
 if (!isset($_SESSION)) {
     session_start ();
 }
+
 $id_user = $_SESSION['id'];
 if (!$id_user) header ('Location:../upload.php?erreur=notlogged');
 
@@ -61,6 +62,12 @@ if (!$pseudo) header ('Location:../upload.php?erreur=pseudo');
 
 if((Token::verifier(3600, 'upload')) == false) {
     header ('Location:../upload.php?erreur=token');
+    exit();
+}
+$referer = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+$domaine= parse_url(SITE_DOMAINE, PHP_URL_HOST);
+if ($referer != $domaine) {
+    header ('Location:../upload.php?erreur=referer');
     exit();
 }
 

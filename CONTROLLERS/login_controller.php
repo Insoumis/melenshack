@@ -1,18 +1,16 @@
 <?php
 
 require_once ('MODELS/includes/token.class.php');
-if(!isset($_SESSION))
-	session_start();
+include_once("MODELS/includes/identifiants.php");
+include_once("MODELS/includes/constants.php");
 
 $token = Token::generer('connexion');
-
 $errmsg = "";
 $showPage = true;
 if (isset($_SESSION['id']) && isset($_SESSION['pseudo'])) {
-	
-		$errmsg = "<strong>Vous êtes déjà connecté !</strong> Voulez vous <a href='MODELS/disconnect_conf.php'>vous déconnecter</a> ?";
-		$showPage = false;
-} else if (isset($_GET['erreur']) && !empty($_GET['erreur'])) {
+	$errmsg = "<strong>Vous êtes déjà connecté !</strong> Voulez vous <a href='MODELS/disconnect_conf.php'>vous déconnecter</a> ?";
+	$showPage = false;
+}  else if (isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 	$erreur = $_GET['erreur'];
 	if ($erreur == "wrong")
 		$errmsg = "Nom d'utilisateur ou mot de passe invalide !";

@@ -38,14 +38,21 @@
 				<input type="submit" value="Promote">
 				</form>
 			</li>
-
-
-
-
 		</ul>
-
-
-
+			<?php if(!empty($listuser)): ?>
+			<ul>
+				<h3>Liste d'utilisateurs gradé</h3>
+				<ol>
+				<table border="1" cellspacing="10">
+					<tr>
+						<th> Pseudo </th>
+						<th> Grade  </th>
+					</tr>
+					<?php echo $listuser; ?>
+				</table>
+				</ol>
+			</ul>
+			<?php endif ?>
 
 
 

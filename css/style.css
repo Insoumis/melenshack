@@ -929,4 +929,17 @@ h1 {
 	margin-bottom: 15px;
 	margin-bottom: 7%;
 }
+/*
+------
+ADMIN TABLe
+------
+ */
+table
+{
+	border-collapse: collapse;
+}
+td, th
+{
+	border: 1px solid black;
+}
 
