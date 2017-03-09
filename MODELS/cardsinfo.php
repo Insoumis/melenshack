@@ -93,7 +93,7 @@ function getInfo($idhash) {
 			"tags" => $resultat["tags"],
 			"ancien_vote" => $ancien_vote_bdd,
 			"ancien_report" => $report,
-			"dateinscription" => $resultat["dateinscription"],
+			"inscription" => $resultat["dateinscription"],
 			"grade" => $resultat["grade"],
 			'pointsUser' => $points,
 			'posts' => $count,
