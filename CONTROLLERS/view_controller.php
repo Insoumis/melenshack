@@ -34,7 +34,7 @@ else {
 	$supprime = $infos['supprime'];
 
 	$inscription = $infos['inscription'];
-	$pointsUser = $infos['points'];
+	$pointsUser = $infos['pointsUser'];
 	$posts = $infos['posts'];
 	$idUser = $infos['idUser'];
 

@@ -41,6 +41,8 @@ $req->execute ([
 $resultat = $req->fetch ();
 
 if (!$resultat) {
+
+    echo "User introuvable";
     exit();
 }
 $idban = $resultat['id'];

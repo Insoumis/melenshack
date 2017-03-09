@@ -86,7 +86,6 @@ window.onload = function() {
 	});
 }
 
-window.onload = function() {
 
 	$("#facebook_login").click(checkFBLogin);
 	$("#twitter_login").click(checkTwitterLogin);
@@ -114,4 +113,3 @@ window.onload = function() {
 				});
 	};
 
-};

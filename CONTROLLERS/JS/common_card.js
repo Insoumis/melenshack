@@ -353,7 +353,6 @@ function supprime_def(card) {
 				token : token
 			},
 			function(e) {
-				$("#"+$(card).attr("id")+".card").remove();
 			},
 			'text'
 		  );
@@ -380,7 +379,6 @@ function supprime_restore(card) {
 				token : token
 			},
 			function(e) {
-				$("#"+$(card).attr("id")+".card").remove();
 			},
 			'text'
 		  );

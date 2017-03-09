@@ -67,6 +67,7 @@ $(document).ready(function() {
 	//suppression definitive
 	$('.big-card-sup-def').click(function() {
 		if(supprime_def($('.big-card')) != -1) {
+			$("#"+$(".big-card").attr("id")+".card").remove();
 			closeBigCard();
 			updateMasonry();
 		}
@@ -75,6 +76,7 @@ $(document).ready(function() {
 	//suppression
 	$('.big-card-remove').click(function() {
 		if(supprime_restore($('.big-card')) != -1) {
+			$("#"+$(".big-card").attr("id")+".card").remove();
 			closeBigCard();
 			updateMasonry();
 		}
@@ -83,6 +85,7 @@ $(document).ready(function() {
 	//ban + suppression
 	$('.big-card-ban').click(function() {
 		if(ban_sup($('.big-card'), $('.big-card').data('id_user')) != -1) {
+			$("#"+$(".big-card").attr("id")+".card").remove();
 			closeBigCard();
 			updateMasonry();
 		}
