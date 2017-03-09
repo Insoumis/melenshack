@@ -28,10 +28,14 @@ if(!empty($_POST['id_user']))
 else
 	$idban = '';
 
+if(!empty($_POST['pseudo']))
+	$pseudo = Securite::bdd($_POST['pseudo']);
+else
+	$pseudo = '';
 
 $req = $bdd->prepare ("SELECT * FROM users WHERE (:idban = '' AND pseudo = :pseudo) OR id=:idban");
 $req->execute ([
-    ':pseudo' => Securite::bdd($_POST['pseudo']),
+    ':pseudo' => $pseudo,
     ':idban' => $idban,
 ]);
 $resultat = $req->fetch ();

@@ -15,7 +15,7 @@ function getInfo($idhash) {
 		session_start ();
 	}
 
-	$req = $bdd->prepare ('SELECT images.*,users.pseudo,users.grade,users.dateinscription FROM images,users WHERE images.nom_hash = :nom_hash AND users.id = images.id_user');
+	$req = $bdd->prepare ('SELECT images.*,users.pseudo,users.grade,users.dateinscription FROM images INNER JOIN users ON users.id=images.id_user WHERE images.nom_hash = :nom_hash');
 
 	$req->execute ([
 		':nom_hash' => $id,
@@ -64,7 +64,7 @@ function getInfo($idhash) {
 
 	$id_pseudo = $resultat['id_user'];
 
-	$req3 = $bdd->prepare("SELECT pointsTotaux FROM images WHERE id_user=:id_user");
+	$req3 = $bdd->prepare("SELECT pointsTotaux FROM images WHERE id_user=:id_user AND supprime='0'");
 	$req3->execute([
 		':id_user' => $id_pseudo,
 	]);

@@ -30,10 +30,10 @@ function updateMasonry() {
 
 function updateSearch() {
 	$('.card').remove();
+	fin = false;
 	currentIndex = 0;
-	getCards(30);
+	getCards(10);
 
-	updateMasonry();
 }
 
 function closeBigCard() {
@@ -66,17 +66,26 @@ $(document).ready(function() {
 
 	//suppression definitive
 	$('.big-card-sup-def').click(function() {
-		supprime_def($('.big-card'));
+		if(supprime_def($('.big-card')) != -1) {
+			closeBigCard();
+			updateMasonry();
+		}
 	});
 
 	//suppression
 	$('.big-card-remove').click(function() {
-		supprime_restore($('.big-card'));
+		if(supprime_restore($('.big-card')) != -1) {
+			closeBigCard();
+			updateMasonry();
+		}
 	});
 
 	//ban + suppression
 	$('.big-card-ban').click(function() {
-		ban_sup($('.big-card'), $('.big-card').data('id_user'));
+		if(ban_sup($('.big-card'), $('.big-card').data('id_user')) != -1) {
+			closeBigCard();
+			updateMasonry();
+		}
 	});
 
 	//partages réseaux sociaux
@@ -129,7 +138,7 @@ $(document).ready(function() {
 	});
 
 	//au chargement: affiche 30 cartes
-	getCards(30);
+	getCards(10);
 
 });
 
@@ -138,7 +147,7 @@ $(document).ready(function() {
 //quand l'user atteind le bas de la page, rajoute 20 cartes
 $(window).scroll(function() {
 	if(!fin && $(window).scrollTop() + $(window).height() > $(document).height() - 20) {
-		getCards(20);
+		getCards(10);
 	}
 });
 
@@ -182,15 +191,18 @@ function getCards(size) {
 			$('.card').each(function(i, card) {
 				t++;
 			});
-			if(t == 0 && $("#nothing").length == 0) {
+			if(t == 0) {
+				$('#nothing').remove();
 				$("#main_page").append($("<center><h3 id='nothing'>Rien n'a été trouvé.</h3></center>"));
 			} else if(t > 0 && fin) {
 				$('#nothing').remove();
 				$("#main_page").append($("<center><h3 id='nothing'>Fin du flux.</h3></center>"));
-			} else {
+			} else if(t > 0 && !fin) {
 				$('#nothing').remove();
             }
             fetching = false;
+	
+			updateMasonry();
 
 		}
 	});
@@ -230,6 +242,8 @@ function addCard(c) {
 	card.find('.card-time').html(getTimeElapsed(dateCreation, true));
 	card.find('.card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
 
+
+	card.data('tags', c.tags);
     //affiche les tags
 	for(var i=0; i < tags.length; ++i) {
 		if(i>3)
@@ -283,6 +297,7 @@ function addCard(c) {
 		big.find('.big-img-author').html(pseudoUser);
 		big.find('.big-card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
 
+
 		if(idUser == $('#id_user').val() || $("#grade").val() > 0) {
 			big.find('.big-card-remove').show();
 			big.find('.big-card-signal').hide();
@@ -301,6 +316,7 @@ function addCard(c) {
 		}
 
 		big.find('.tags').html("");
+		tags = card.data('tags').split(',');
 		for(var i=0; i < tags.length; ++i) {
 			if(tags[i])
 				big.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
@@ -312,45 +328,14 @@ function addCard(c) {
 			$("#change_tags").show();
 		} else {
 			$("#change_tags").hide();
-		}
+		}	
 
-		var change = function() {
-			big.find('.tags').html("");
-			big.find('.tags').append("<input id='tagsinput' type='text' data-role='tagsinput' placeholder='+ tags' value='"+c.tags+"'/><span class='glyphicon glyphicon-ok' id='change_tags_ok' title='Appliquer les tags' data-toggle='tooltip'></span>");
-			$('#tagsinput').tagsinput({
-				maxTags: 10,
-				maxChars: 20,
-				trimValue: true
-			});
-			$("[data-toggle='tooltip']").tooltip();
+		big.data('tags', c.tags);
+		big.find('#change_tags').click(function() {
+			big.data('tags', card.data('tags'));
 
-			big.find('#change_tags_ok').click(function() {
-
-				$.post("MODELS/change_tags.php", {tags: $('#tagsinput').val(), id: idhash});
-				c.tags = $('#tagsinput').val();
-				tags = c.tags.split(",");
-				big.find('.tags').html("");
-				for(var i=0; i < tags.length; ++i) {
-					if(tags[i])
-						big.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
-				}
-				big.find(".tags").append("<span class='glyphicon glyphicon-pencil' title='Modifier les tags' data-toggle='tooltip' id='change_tags'></span>");
-				$("[data-toggle='tooltip']").tooltip();
-				big.find('#change_tags').click(change);
-
-				card.find(".tags").html("");
-				for(var i=0; i < tags.length; ++i) {
-					if(i>3)
-						break;
-					if(tags[i])
-						card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
-				}
-
-
-			});
-		}
-
-		big.find('#change_tags').click(change);
+			changeTags(big);
+		});
 
 
 
