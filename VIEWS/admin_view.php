@@ -33,7 +33,7 @@
 			<?php if(!empty($listuser)): ?>
 				<h3>Liste des utilisateurs gradés</h3>
 				<center>
-				<table id="tableuser" border="1" cellspacing="10">
+				<table class="table-bordered table-hover" id="tableuser">
 					<tr>
 						<th> Pseudo </th>
 						<th> Grade  </th>

@@ -1,8 +1,6 @@
 <?php
 
 require_once ('MODELS/includes/token.class.php');
-include_once("MODELS/includes/identifiants.php");
-include_once("MODELS/includes/constants.php");
 
 $token = Token::generer('connexion');
 $errmsg = "";

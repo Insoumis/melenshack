@@ -365,8 +365,12 @@ CARTES
 	display: inline-block;
 	max-width: 100%;
 }
-
-
+.big-card-title a:hover {
+	text-decoration: none;
+}
+.big-card-title a {
+	color: black;
+}
 .template {
 	display: none;
 }
@@ -954,16 +958,14 @@ h1 {
 .formAdmin {
 	text-align: center;
 }
-/*
-------
-ADMIN TABLe
-------
- */
-table
-{
-	border-collapse: collapse;
+
+
+
+
+#tableuser {
+	background: white;
 }
-#tableuser td, #tableuser th
-{
-	border: 1px solid black;
-}
+
+#tableuser td, #tableuser th {
+	padding-left: 20px;
+	padding-right: 20px;}
