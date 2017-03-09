@@ -192,17 +192,24 @@ if (!empty($_POST['url'])) {
     }
     $img = $_FILES['file'];
 
-    if ($img['size'] > MAX_SIZE) {
-        header ('Location:../upload.php?erreur=size');
-        exit();
-    }
-
     $extensions_valides = array('jpg', 'jpeg', 'gif', 'png', 'bmp');
     $extension_image = strtolower (substr (strrchr ($img['name'], '.'), 1));
     if (!in_array ($extension_image, $extensions_valides)) {
         header ('Location:../upload.php?erreur=format');
         exit();
     }
+    if ($extension_image = "gif") {
+        if ($img['size'] > (MAX_SIZE+5000000)) { // 5 Mo en + pour les gifs
+            header ('Location:../upload.php?erreur=size');
+            exit();
+        }
+    } else {
+        if ($img['size'] > MAX_SIZE) {
+            header ('Location:../upload.php?erreur=size');
+            exit();
+        }
+    }
+
     $req = $bdd->prepare ('INSERT INTO images(titre, id_user, nom_original, format, genre, tags, date_creation) VALUES(:titre, :id_user, :nom_original, :format, :genre, :tags, NOW())');
     $req->execute ([
         ':titre' => htmlspecialchars ($_POST['titre']),

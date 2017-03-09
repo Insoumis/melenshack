@@ -282,7 +282,7 @@ function addCard(c) {
 
 
 	card.find('.card-author>a')
-		.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(inscription, false)+"</p><p>Points: "+points+"</p><p><a href='index.php?sort=new&pseudo="+pseudoUser+"'> Posts:</a> "+posts+"</p>").click(function(e){e.stopPropagation();}).popover('fixTitle');
+		.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(inscription, false)+"</p><p>Points: "+pointsUser+"</p><p><a href='index.php?sort=new&pseudo="+pseudoUser+"'> Posts:</a> "+posts+"</p>").click(function(e){e.stopPropagation();}).popover('fixTitle');
 
 	//bouton OPEN
 	card.find(".card-open, .card-img").click(function() {
@@ -341,7 +341,7 @@ function addCard(c) {
 
 
 		big.find('.big-img-author')
-			.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(inscription, false)+"</p><p>Points: "+points+"</p><p><a href='index.php?sort=new&pseudo="+pseudoUser+"'> Posts:</a> "+posts+"</p>").click(function(e){e.stopPropagation();}).popover('fixTitle')
+			.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(inscription, false)+"</p><p>Points: "+pointsUser+"</p><p><a href='index.php?sort=new&pseudo="+pseudoUser+"'> Posts:</a> "+posts+"</p>").click(function(e){e.stopPropagation();}).popover('fixTitle')
 			.click(function(e){e.stopPropagation();}).popover('fixTitle');
 
 
