@@ -14,4 +14,6 @@ define ('MAX_SIZE' , 75000000); //en octet, pour upload (environ 7.5 Mo)
 ini_set('memory_limit', '512M'); // Augmente la limite de mémoire PHP (corrige possibilité d'erreur lors d'upload d'image)
 
 define ('PHP_DOSSIER_TMP', "C:/wamp64/tmp/");
+define ('SITE_DOMAINE', "http://localhost/Fimaj/melenshack/");
+
 ?>

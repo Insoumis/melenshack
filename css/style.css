@@ -954,3 +954,16 @@ h1 {
 .formAdmin {
 	text-align: center;
 }
+/*
+------
+ADMIN TABLe
+------
+ */
+table
+{
+	border-collapse: collapse;
+}
+#tableuser td, #tableuser th
+{
+	border: 1px solid black;
+}

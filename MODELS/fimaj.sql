@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 01 Mars 2017 à 16:31
+-- Généré le :  Jeu 09 Mars 2017 à 20:52
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -121,7 +121,8 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `pseudo` varchar(255) DEFAULT NULL,
   `dateinscription` datetime NOT NULL,
-  `grade` int(11) NOT NULL DEFAULT '0'
+  `grade` int(11) NOT NULL DEFAULT '0',
+  `gradeupdatedby` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -188,7 +189,8 @@ ALTER TABLE `report`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `pseudo` (`pseudo`);
+  ADD UNIQUE KEY `pseudo` (`pseudo`),
+  ADD KEY `gradeupdatedby_user` (`gradeupdatedby`);
 
 --
 -- Index pour la table `vote`
@@ -255,6 +257,12 @@ ALTER TABLE `classic_users`
 --
 ALTER TABLE `federated_users`
   ADD CONSTRAINT `federated_users_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
+
+--
+-- Contraintes pour la table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `gradeupdatedby_user` FOREIGN KEY (`gradeupdatedby`) REFERENCES `users` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

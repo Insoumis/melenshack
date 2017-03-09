@@ -1,5 +1,3 @@
-<script src="https://apis.google.com/js/platform.js"></script>
-<script src="CONTROLLERS/JS/login.js"></script>
 <?php
 	require 'header.php';
 
@@ -10,3 +8,5 @@
 
 ?>
 
+<script src="https://apis.google.com/js/platform.js"></script>
+<script src="CONTROLLERS/JS/login.js"></script>

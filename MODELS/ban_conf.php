@@ -16,6 +16,12 @@ if (!$id_user) {
     header("HTTP/1.0 403 Forbidden");
     exit();
 }
+$referer = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+$domaine= parse_url(SITE_DOMAINE, PHP_URL_HOST);
+if ($referer != $domaine) {
+    header("HTTP/1.0 403 Forbidden");
+    exit();
+}
 
 if((Token::verifier(600, 'A')) == false) {
     header('HTTP/1.0 403 Forbidden');

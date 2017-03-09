@@ -295,7 +295,7 @@ function addCard(c) {
 		big.attr('id', idhash);
 		big.data('card', card);
 		big.data('id_user', idUser);
-		big.find('.big-card-title').html(titre);
+		big.find('.big-card-title').append('<a href='+ urlBase + 'view.php?id=' + idhash +">"+ titre+'</a>');
 		big.find('.big-card-tmps').html(temps);
 		big.find('.big-img-author').html(pseudoUser);
 		big.find('.big-card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
