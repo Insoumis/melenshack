@@ -3,84 +3,96 @@
 //id de l'image
 var idhash = $('.big-img-container').attr('id');
 
+$("[data-toggle='tooltip']").tooltip();
+if($('#idUser').val() == $('#id_user').val() || $("#grade").val() > 0) {
+	$('.big-card-remove').show();
+	$('.big-card-signal').hide();
+} else {
+	$('.big-card-remove').hide();
+	$('.big-card-signal').show();
+}
 
-$(window).on('load', function() {
-	//vérifie l'ancien vote
-	checkVote($('.big-img-container'));
+if($('#grade').val() > 0) {
+	$('.big-card-ban').show();
+	$('.big-card-sup-def').show();
 
-	$('.big-img-facebook').click(shareFacebook);
-	$('.big-img-twitter').click(shareTwitter);
-	$('.big-img-gplus').click(shareGplus);
+} else {
+	$('.big-card-ban').hide();
+	$('.big-card-sup-def').hide();
+}
 
-	$('.big-img-container').find(".card-thumb-up").click(function() {
-		thumbUp(idhash, $('.big-img-container'));
-	});
-
-	$('.big-img-container').find(".card-thumb-down").click(function() {
-		thumbDown(idhash, $('.big-img-container'));
-	});
-	$('.elapsed').html(getTimeElapsed($('#dateCreation').val()));
-
-	$.post(
-			'MODELS/usersinfo.php',
-			{id: $('#idUser').val()},
-			function(data) {
-				data = JSON.parse(data);
-
-				$('.temps>a')
-					//.attr('title', '<strong>'+data.pseudo+'</strong>')
-					.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(data.inscription, false)+"</p><p>Points: "+data.points+"</p><p><a href='index.php?sort=new&pseudo="+data.pseudo+"'> Posts:</a> "+data.posts+"</p>")
-					.click(function(e){e.stopPropagation();}).popover();
-			},
-			'text'
-		  );
-
-
-	$('.tags').append("<span class='glyphicon glyphicon-pencil' title='Modifier les tags' data-toggle='tooltip' id='change_tags'></span>");
-	$("[data-toggle='tooltip']").tooltip();
-
-	if($("#idUser").val() == $('#id_user').val()) {
-		$("#change_tags").show();
-	} else {
-		$("#change_tags").hide();
-	}
-
-	var change = function() {
-		$('.tags').html("");
-		var str;
-		if(!$('#tagsstr').val())
-			str = "";
-		else
-			str = $('#tagsstr').val();
-		$('.tags').append("<input id='tagsinput' type='text' data-role='tagsinput' placeholder='+ tags' value='"+str+"'/><span class='glyphicon glyphicon-ok' id='change_tags_ok' title='Appliquer les tags' data-toggle='tooltip'></span>");
-		$('#tagsinput').tagsinput({
-			maxTags: 10,
-			maxChars: 20,
-			trimValue: true
+if($('#idUser').val() == $('#id_user').val()) {
+	$("#change_tags").show();
+} else {
+	$("#change_tags").hide();
+}
+$(document).click(function() {
+		$('#main_page .popover').popover('hide');
 		});
+$(window).on('load', function() {
+
+
+
+		//initialise le clipboard
+		$('.big-img-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
+
+		var c = new Clipboard($(".big-img-link").get(0));
+		c.on('success', function() {
+				//change le titre du tooltip quand on a copié
+				$('.big-img-link').attr('title', 'Lien copié !').tooltip('fixTitle').tooltip('show');
+				});
+
+		//remet le titre original au hoverOut
+		$('.big-card-link').on('mouseout', function() {
+				$(this).attr('title', 'Copier le lien').tooltip('fixTitle');
+				});
+
+		$('.big-img-facebook').click(shareFacebook);
+		$('.big-img-twitter').click(shareTwitter);
+		$('.big-img-gplus').click(shareGplus);
+
+		$('.big-img-container').find(".card-thumb-up").click(function() {
+				thumbUp(idhash, $('.big-img-container'));
+				});
+
+		$('.big-img-container').find(".card-thumb-down").click(function() {
+				thumbDown(idhash, $('.big-img-container'));
+				});
+		$('.elapsed').html(getTimeElapsed($('#dateCreation').val()));
+
+		$('.temps>a')
+			.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed($('#inscription').val(), false)+"</p><p>Points: "+$('#pointsUser').val()+"</p><p><a href='index.php?sort=new&pseudo="+$('#pseudo').val()+"'> Posts:</a> "+$('#posts').val()+"</p>")
+			.click(function(e){e.stopPropagation();}).popover();
+
 		$("[data-toggle='tooltip']").tooltip();
 
-		$('#change_tags_ok').click(function() {
 
-			$.post("MODELS/change_tags.php", {tags: $('#tagsinput').val(), id: $(".big-img-container").attr('id')});
-			var tags = $('#tagsinput').val().split(",");
-			$('#tagsstr').val($('#tagsinput').val());
-			$('.tags').html("");
-			for(var i=0; i < tags.length; ++i) {
-				if(tags[i])
-					$('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
-			}
-			$(".tags").append("<span class='glyphicon glyphicon-pencil' title='Modifier les tags' data-toggle='tooltip' id='change_tags'></span>");
-			$("[data-toggle='tooltip']").tooltip();
-			$('#change_tags').click(change);
 
-		});
-	}
+		$('#change_tags').click(function() {
+				$('.big-img-container').data('tags', $('#tagsstr').val());
+				changeTags($('.big-img-container'));
+				});
 
-	$('#change_tags').click(change);
-	//initialise les tooltips des boutons de partage
-	$("[data-toggle='tooltip']").tooltip();
-	$("[data-toggle='popover']").popover();
+		$('.big-card-signal').click(function() {
+				report($('.big-img-container'));
+				});
+
+		//suppression
+		$('.big-card-remove').click(function() {
+				if(supprime_restore($('.big-img-container')) != -1)
+					window.location.href = 'index.php';
+				});
+
+		//ban + suppression
+		$('.big-card-ban').click(function() {
+				if(ban_sup($('.big-img-container'), $('#idUser').val()) != -1)
+					window.location.href = 'index.php';
+				});
+
+
+		//initialise les tooltips des boutons de partage
+		$("[data-toggle='tooltip']").tooltip();
+		$("[data-toggle='popover']").popover();
 
 
 });

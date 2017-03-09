@@ -42,6 +42,13 @@ if (!$_SESSION) {
 	header("HTTP/1.0 403 Forbidden");
 	exit();
 }
+$referer = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+$domaine= parse_url(SITE_DOMAINE, PHP_URL_HOST);
+if ($referer != $domaine) {
+	header("HTTP/1.0 403 Forbidden");
+	exit();
+}
+
 $id_user = $_SESSION['id'];
 if (!$id_user) {
 	header("HTTP/1.0 403 Forbidden");

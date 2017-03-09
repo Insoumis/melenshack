@@ -251,6 +251,7 @@ CARTES
 	font-size: 20px;
 	user-select: none;
 	cursor: pointer;
+	padding-left: 2px;
 }
 .big-card-sup-def {
 	float: left;
@@ -338,7 +339,7 @@ CARTES
 }
 .big-card-img>img {
 	height: auto;
-	max-width: 100%;
+	width: 100%;
 	user-select: none;
 }
 .big-card-votes {
@@ -358,9 +359,11 @@ CARTES
 	margin-top: 4px;
 	font-size: 25px;
 	float: right;
+	margin-left: 15px;
 }
 .big-card-align {
 	display: inline-block;
+	max-width: 100%;
 }
 
 
@@ -387,9 +390,11 @@ CARTES
 }
 
 .tags {
-	overflow: hidden;
 	word-wrap: normal;
-	width: 100%;
+	max-width: 100%;
+}
+.card .tags, .big-card .tags {
+	overflow: hidden;
 }
 
 #change_tags {
@@ -681,7 +686,8 @@ SOURCES IMG
 	word-wrap: break-word;
 	margin-left: 50px;
 	margin-right: 50px;
-	margin-bottom: 50px;
+	margin-bottom: 10px;
+	text-align: center;
 }
 .big-img {
 
@@ -690,7 +696,6 @@ SOURCES IMG
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 10px;
-	margin-top: 15px;
 	text-align: center;
 }
 .big-img-titre {
@@ -699,17 +704,17 @@ SOURCES IMG
 	font-size: 40px;
 }
 .big-img-info {
-	max-width: 400px;
 	word-wrap: break-word;
 	font-size: 28px;
 	margin: auto;
-	margin-top: 20px;
+	margin-top: 5px;
 }
 .big-img-info .points {
 	display: inline;
 	float:right;
 	margin-right: 20px;
 	font-size: 35px;
+	margin-left: 15px;
 
 }
 .big-img-info .votes {
@@ -723,6 +728,7 @@ SOURCES IMG
 	font-size: 16px;
 	margin-top: 0;
 	margin-bottom: 5px;
+	text-align: center;
 }
 .big-img-container .temps>a {
 	font-weight: bold;
@@ -740,9 +746,25 @@ SOURCES IMG
 	height: 50px;
 	cursor: pointer;
 }
+.big-img-link {
+	font-size: 40px;
+	cursor: pointer;
+	margin: 0;
+	margin-top: 5px;
+	margin-left: 5px;
+	float: left;
+}
+.big-img-link:hover {
+	color: grey;
+}
 .big-img-header {
 	text-align: center;
 	margin-bottom: 60px;
+}
+.temps .big-card-signal, .temps .big-card-remove, .temps .big-card-ban {
+	float: none;
+	margin-right: 15px;
+	margin-left: -5px;
 }
 
 .big-share {
