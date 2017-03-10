@@ -969,4 +969,8 @@ h1 {
 
 #tableuser td, #tableuser th {
 	padding-left: 20px;
-	padding-right: 20px;}
+	padding-right: 20px;
+}
+.radio label {
+	margin-right:20px;
+}

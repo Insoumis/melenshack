@@ -397,7 +397,8 @@ function ban_sup(card, iduser) {
 			'MODELS/ban_conf.php',
 			{
 				id_user: iduser,
-				token : token
+				token : token,
+				value: 1
 			},
 			function(e) {
 			},
