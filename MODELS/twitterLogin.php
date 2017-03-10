@@ -14,11 +14,12 @@ if(!isset($_SESSION))
 $creds = json_decode(file_get_contents("../../twitter_credentials.json"), true);
 
 
+$protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://';
 
 if(isset($_GET['request'])) {
 
 	$connection = new TwitterOAuth($creds['consumer_key'], $creds['consumer_secret']);
-	$callback = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']).$creds['oauth_callback'];
+	$callback = $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']).$creds['oauth_callback'];
 	$request_token = $connection->oauth('oauth/request_token', array('oauth_callback' => $callback));
 
 	if($request_token) {

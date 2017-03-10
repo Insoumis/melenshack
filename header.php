@@ -2,6 +2,8 @@
 
 include 'MODELS/auth_cookie.php';
 
+$protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://';
+
 checkCookie();
 
 ob_start();
