@@ -5,7 +5,7 @@ require_once ('includes/token.class.php');
 include_once ("includes/GIFDecoder.class.php");
 include_once ("includes/identifiants.php");
 include_once ('includes/securite.class.php');
-include 'check_grade.php';
+include_once 'check_grade.php';
 
 /*
 ERREURS RETOURNEES:
