@@ -30,6 +30,11 @@
 				<input type="hidden" name="token" id="token" value="<?php echo $token_A?>">
 				<br><input class="btn btn-primary" type="submit" value="Promote">
 				</form></td></tr></table>
+
+				<h3>Stats</h3>
+				<p>Nombre d'utilisateurs inscrits : <?php echo $nbuser ?></p>
+				<p>Nombre d'utilisateurs réseaux sociaux : <?php echo $nbfederated ?></p>
+				<p>Nombre de posts : <?php echo $nbposts ?></p>
 			<?php if(!empty($listuser)): ?>
 				<h3>Liste des utilisateurs gradés</h3>
 				<center>
@@ -40,7 +45,7 @@
 					</tr>
 					<?php echo $listuser; ?>
 				</table>
-				</center>
+				</center><br><br>
 			<?php endif ?>
 
 

@@ -39,3 +39,20 @@ while($res = $req->fetch()) {
     $gradeUser = $res["grade"];
     $listuser = $listuser . "<tr> <td> " . $pseudo . " </td><td> " .  $gradeUser . " </td></tr> ";
 }
+
+$req = $bdd->prepare ('SELECT count(*) FROM users WHERE 1');
+$req->execute ();
+$res = $req->fetch();
+$nbuser = $res[0];
+
+$req = $bdd->prepare ('SELECT count(*) FROM federated_users WHERE 1');
+$req->execute ();
+$res = $req->fetch();
+$nbfederated = $res[0];
+
+$req = $bdd->prepare ('SELECT count(*) FROM images WHERE 1');
+$req->execute ();
+$res = $req->fetch();
+$nbposts = $res[0];
+
+
