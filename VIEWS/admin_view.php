@@ -12,7 +12,7 @@
 		<?php endif ?>
 	<div class="formAdmin">
 		<h1>Page d'administration</h1>
-		<div class="sub">Grade : <?php echo $grade ?></div><br><br>
+		<div class="sub">Grade : <?php echo $grade ?></div>
 		<a class="btn btn-warning btn-lg" href='index.php?sort=report'>Posts signalés</a><br><br>
 		<a class="btn btn-danger btn-lg" href='index.php?sort=deleted'>Posts supprimés</a><br><br>
 				<table class="form-group col-xs-6"><tr><td>
