@@ -5,6 +5,7 @@ require_once ('includes/token.class.php');
 include_once ("includes/GIFDecoder.class.php");
 include_once ("includes/identifiants.php");
 include_once ('includes/securite.class.php');
+include_once 'check_grade.php';
 
 /*
 ERREURS RETOURNEES:
@@ -97,7 +98,7 @@ if ($decoded_response->success == false) {
     exit();
 }
 
-$titre = $_POST['titre'];
+$titre = htmlspecialchars($_POST['titre']);
 if (strlen ($titre) > 255 || strlen ($titre) == 0) {
     header ('Location:../upload.php?erreur=titre');
     exit();
@@ -140,7 +141,7 @@ if (!empty($_POST['url'])) {
 
     addToFiles ('file', $url);
     $image_type = htmlspecialchars($_FILES['file']["type"]);
-    var_dump($_FILES['file']);
+    //var_dump($_FILES['file']);
 
     if (in_array ($image_type, array("image/png", "image/jpeg","image/jpg", "image/gif", "image/bmp"))) {
         //Good !
@@ -191,7 +192,6 @@ if (!empty($_POST['url'])) {
     header ('Location:../upload.php?erreur='); // Soit url, soit image, pas les 2 en meme temps
     exit();
 } else {
-
     if (empty($_FILES['file'])) {
         header ('Location:../upload.php?erreur=image'); //pas d'image
         exit();
@@ -204,7 +204,7 @@ if (!empty($_POST['url'])) {
         header ('Location:../upload.php?erreur=format');
         exit();
     }
-    if ($extension_image = "gif") {
+    if ($extension_image == "gif") {
         if ($img['size'] > (MAX_SIZE+5000000)) { // 5 Mo en + pour les gifs
             header ('Location:../upload.php?erreur=size');
             exit();

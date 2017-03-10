@@ -32,19 +32,30 @@ if (!$resultat) {
 }
 $id = $resultat['id'];
 
-$req = $bdd->prepare ('SELECT * FROM report WHERE id_image = :id_image AND id_user = :id_user');
+$req2 = $bdd->prepare ('SELECT grade FROM users WHERE id = :id_user ');
+$req2->execute ([
+    ':id_user' => $id_user,
+]);
+$resultat2 = $req2->fetch ()['grade'];
+
+if ($resultat2 < 1) {
+    //pas assez gradé
+    header('HTTP/1.0 403 Forbidden');
+    exit();
+}
+
+$req = $bdd->prepare ('SELECT * FROM report WHERE id_image = :id_image');
 $req->execute ([
     ':id_image' => $id,
-    ':id_user' => $id_user,
 ]);
 
 $resultat = $req->fetch ();
 
 if(!$resultat OR $resultat == null) {
-
-    $req = $bdd->prepare ('INSERT INTO report(id_user, id_image) VALUES(:id_user, :id_image)');
+    exit(); // Le post n'est pas dans la table report
+} else {
+    $req = $bdd->prepare ('DELETE FROM report WHERE id_image = :id_image');
     $req->execute ([
-        ':id_user' => $id_user,
         ':id_image' => $id,
     ]);
 }

@@ -70,6 +70,15 @@ $(document).ready(function() {
 		report($('.big-card'));
 	});
 
+	//signalement
+	$('.big-card-removesignal').click(function() {
+		if(removesignal($('.big-card')) != -1) {
+			$("#"+$(".big-card").attr("id")+".card").remove();
+			closeBigCard();
+			updateMasonry();
+		}
+	});
+
 	//suppression definitive
 	$('.big-card-sup-def').click(function() {
 		if(supprime_def($('.big-card')) != -1) {
