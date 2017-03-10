@@ -22,15 +22,17 @@
 					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer" class="big-card-remove glyphicon glyphicon-trash"></span>
 				<?php else: ?>
 
-				<?php if($sort == "deleted"): ?>
+				<?php if($sort == "deleted") { ?>
 					<span data-placement='bottom' data-toggle="tooltip" title="Restaurer" class="big-card-remove glyphicon glyphicon-trash voted"></span>
 					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer définitivement" class="big-card-sup-def glyphicon glyphicon-erase"></span>
-					<?php else: ?>
+				<?php } else if($sort == "report") { ?>
+					<span data-placement='bottom' data-toggle="tooltip" title="Restaurer" class="big-card-removesignal glyphicon glyphicon-ok-sign"></span>
+					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer" class="big-card-remove glyphicon glyphicon-trash"></span>
+			    <?php } else { ?>
 					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer" class="big-card-remove glyphicon glyphicon-trash"></span>
 					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer et bannir" class="big-card-ban glyphicon glyphicon-ban-circle"></span>
-					<?php endif ?>
-				
-				<?php endif ?>
+				<?php } endif ?>
+
 				
 				<div class="big-card-infos">
 					<span class="glyphicon glyphicon-time"></span> <span class="big-card-tmps"></span> par <strong><a data-placement='bottom' data-toggle='popover' data-html="true" class="big-img-author" href='#'></a></strong>

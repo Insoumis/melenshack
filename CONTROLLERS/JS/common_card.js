@@ -337,6 +337,33 @@ function report(card) {
 	$('.big-card').data('card').data('report', 1);
 }
 
+function removesignal(card) {
+	if($('#connected').val() == 'no') {
+		showVoteError();
+		return;
+	}
+	if(card.find(".big-card-remmovesignal").hasClass('voted'))
+		return;
+
+	var conf = false;
+	var token = $("#token").html();
+	conf = confirm('Voulez-vous vraiment retirer le signalement de ce post ?');
+	if(!conf)
+		return -1;
+
+	$.post(
+		'MODELS/removereport_conf.php',
+		{
+			idhash: card.attr('id'),
+			token : token
+		},
+		function(e) {
+			updateReport(card, 1);
+		},
+		'text'
+	);
+}
+
 function supprime_def(card) {
 	var conf = false;
 	var token = $("#token").html();

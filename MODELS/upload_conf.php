@@ -5,7 +5,7 @@ require_once ('includes/token.class.php');
 include_once ("includes/GIFDecoder.class.php");
 include_once ("includes/identifiants.php");
 include_once ('includes/securite.class.php');
-include_once '/MODELS/check_grade.php';
+include 'check_grade.php';
 
 /*
 ERREURS RETOURNEES:
@@ -141,7 +141,7 @@ if (!empty($_POST['url'])) {
 
     addToFiles ('file', $url);
     $image_type = htmlspecialchars($_FILES['file']["type"]);
-    var_dump($_FILES['file']);
+    //var_dump($_FILES['file']);
 
     if (in_array ($image_type, array("image/png", "image/jpeg","image/jpg", "image/gif", "image/bmp"))) {
         //Good !
