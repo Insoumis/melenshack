@@ -44,6 +44,12 @@ function closeBigCard() {
 $(document).ready(function() {
 
 	initMasonry();
+	
+	//stop le gif playing meme si souris quitte vite
+	$(window).hover(function(e) {
+		if($(e.target).closest('.card.playing').length == 0)
+			$('.playing').mouseleave();
+	});
 
 	$('#searchinput').on('keyup', updateSearch);
 
@@ -111,10 +117,7 @@ $(document).ready(function() {
 	$('.big-card-link').on('mouseout', function() {
 		$(this).attr('title', 'Copier le lien').tooltip('fixTitle');
 	});
-	//stop le gif playing meme si souris quitte vite
-	$('body').hover(function() {
-		$('.playing').mouseleave();
-	});
+
 
 	//ferme les share si on clique ailleurs
 	$('.card-container').click(function() {
@@ -415,24 +418,23 @@ function addCard(c) {
 	//HOVER IMG
 	card.mouseenter(function(e) {
 		var ext = urlSource.split('.').pop();
-		if(ext == 'gif' && !$(this).hasClass("opened")) {
-			$(this).addClass("playing");
-			$(this).find('.gif-overlay').hide();
+		if(ext == 'gif' && !card.hasClass("opened") && !card.hasClass("playing")) {
+			card.addClass("playing");
+			card.find('.gif-overlay').hide();
 			var bigImg = $('<img/>');
 			bigImg.attr('src', urlSource);
 			bigImg.height(card.find('.card-img>img').height());
 			bigImg.on('load', function() {
 				card.find('.card-img>img').replaceWith(bigImg);
 			});
-			e.stopPropagation();
 		}
 	});
 
-	card.mouseleave(function() {
+	card.mouseleave(function(e) {
 		var ext = urlSource.split('.').pop();
-		if(ext == 'gif' && !$(this).hasClass("opened")) {
-			$(this).find('.gif-overlay').show();
-			$(this).removeClass('playing');
+		if(ext == 'gif' && !card.hasClass("opened") && card.hasClass("playing")) {
+			card.find('.gif-overlay').show();
+			card.removeClass('playing');
 			var img = $('<img/>');
 			img.attr('src', url);
 			img.on('load', function() {

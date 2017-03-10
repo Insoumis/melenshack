@@ -781,7 +781,7 @@ SOURCES IMG
 h1 {
 	font-size: 40px;
 }
-.upload .sub {
+.sub {
 	font-size: 15px;
 	margin-bottom: 30px;
 }
@@ -947,6 +947,7 @@ h1 {
 #loginForm, #registerForm, #pseudoForm {
 	text-align: center;
     margin-bottom: 20px;
+	margin-top: 50px;
 }
 #loginForm label, #registerForm label, #pseudoForm label {
 	font-size: 15px;
