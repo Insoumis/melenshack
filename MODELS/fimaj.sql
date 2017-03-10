@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 09 Mars 2017 à 20:52
+-- Généré le :  Ven 10 Mars 2017 à 22:35
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -122,7 +122,8 @@ CREATE TABLE `users` (
   `pseudo` varchar(255) DEFAULT NULL,
   `dateinscription` datetime NOT NULL,
   `grade` int(11) NOT NULL DEFAULT '0',
-  `gradeupdatedby` int(11) DEFAULT NULL
+  `gradeupdatedby` int(11) DEFAULT NULL,
+  `datepseudochange` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
