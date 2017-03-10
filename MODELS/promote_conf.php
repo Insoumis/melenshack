@@ -31,7 +31,7 @@ if(!isset($_POST['value'])) {
 	exit();
 }
 
-if((Token::verifier(600, 'admin')) == false) {
+if(!Token::verifier(600, 'A') && !Token::verifier(600, 'admin')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit();
 }

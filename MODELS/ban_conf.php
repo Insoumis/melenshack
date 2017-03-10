@@ -23,11 +23,18 @@ if ($referer != $domaine) {
     exit();
 }
 
-if((Token::verifier(600, 'A')) == false) {
+if(!Token::verifier(600, 'A') && !Token::verifier(600, 'admin')) {
     header('HTTP/1.0 403 Forbidden');
     echo 'Erreur Token';
     exit();
 }
+
+if(!isset($_POST['value']) || ($_POST['value'] != 0 && $_POST['value'] != 1)) {
+	echo $_POST['value'];
+	exit();
+}
+$value = $_POST['value'];
+
 
 if(!empty($_POST['id_user']))
 	$idban = Securite::bdd($_POST['id_user']);
@@ -73,10 +80,28 @@ if ($grade <= $gradeban) {
     exit();
 }
 
+if($value == 1) {
+	
+	$req = $bdd->prepare ("SELECT * FROM ban WHERE id_user = :idban");
+	$req->execute ([
+	    ':idban' => $idban,
+	]);
+	$resultat = $req->fetch ();
 
-$req = $bdd->prepare ('INSERT INTO ban(id_user) VALUES(:id_user)');
-$req->execute ([
-    ':id_user' => $idban,
-]);
+	if($resultat) {
+		exit();
+	}
 
+	$req = $bdd->prepare ('INSERT INTO ban(id_user) VALUES(:id_user)');
+	$req->execute ([
+	    ':id_user' => $idban,
+	]);
+
+} else {
+	$req = $bdd->prepare ('DELETE FROM ban WHERE id_user = :id_user');
+	$req->execute ([
+	    ':id_user' => $idban,
+	]);
+
+}
 header('Location:../admin.php');
