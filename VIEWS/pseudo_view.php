@@ -30,6 +30,7 @@
 		<br>
 		<input class="form-control input-lg" id="pseudo" type="text" placeholder="Nouveau pseudo" name="pseudo">
 		<br>
+		<input type="hidden" name="token" id="token" value="<?php echo $token_A?>">
 		<input type="submit" value="Changer" class="btn btn-primary btn-lg">
 	</div>
 	</div>

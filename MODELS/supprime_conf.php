@@ -78,6 +78,6 @@ if ($resultat < 1 && $id_user != $id_poster) {
 
 $req = $bdd->prepare ('UPDATE images SET supprime = :sup WHERE nom_hash = :idhash');
 $req->execute ([
-	':idhash' => $_POST['idhash'],
+	':idhash' => htmlspecialchars($_POST['idhash']),
 	':sup' => $val
 ]);

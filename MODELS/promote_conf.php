@@ -79,7 +79,7 @@ if ("42" < $val) {
 
 $req = $bdd->prepare ('UPDATE users SET grade = :val, gradeupdatedby = :gradeupdatedby WHERE pseudo = :pseudo');
 $req->execute ([
-	':pseudo' => $_POST['pseudo'],
+	':pseudo' => htmlspecialchars($_POST['pseudo']),
 	':val' => $val,
 	':gradeupdatedby' => $id_user,
 ]);
