@@ -81,6 +81,16 @@ if ($grade <= $gradeban) {
 }
 
 if($value == 1) {
+	
+	$req = $bdd->prepare ("SELECT * FROM ban WHERE id_user = :idban");
+	$req->execute ([
+	    ':idban' => $idban,
+	]);
+	$resultat = $req->fetch ();
+
+	if($resultat) {
+		exit();
+	}
 
 	$req = $bdd->prepare ('INSERT INTO ban(id_user) VALUES(:id_user)');
 	$req->execute ([
