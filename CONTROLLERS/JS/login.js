@@ -83,9 +83,9 @@ function checkTwitterLogin() {
 
 function onTwitterClose(data) {
 	if(data == "success") {
-		window.location.href = 'index.php';
+		window.location.href = '../index.php';
 	} else if(data.includes("pseudo")){
-		window.location.href = 'pseudo.php?erreur=fromregister'+data;
+		window.location.href = '../pseudo.php?erreur=fromregister'+data;
 	} else if(data == "banni") {
 		showErreur('Erreur ! Vous avez été banni !');
 	} else {
