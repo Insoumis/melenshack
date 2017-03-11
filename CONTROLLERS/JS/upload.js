@@ -119,8 +119,9 @@ $("#titre").on('input', function() {
 		checkSubmit();
 });
 
-$("#drop").click(function() {
+$("#drop").click(function(e) {
 	$("#filelabel").click();
+	e.stopPropagation();
 });
 
 function checkSubmit() {

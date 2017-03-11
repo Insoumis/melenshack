@@ -2,17 +2,24 @@
 
 	
 	<meta property="og:url"                content=<?php echo "'$protocol.$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]'" ?> >
-	<meta property="og:type"               content="article" >
 	<meta property="og:locale"              content="fr_FR" >
 	<meta property="og:description"        content="Mélenshack, la banque d'images de la France Insoumise !" >
 	<meta property="og:app_id"              content="1849815745277262" >
 	<?php if(isset($urlSource)): ?>
+	<?php endif ?>
+
+
+	<?php if(strpos(basename($_SERVER['REQUEST_URI']), 'view.php') === false): ?>	
+	<meta property="og:type"               content="website" >
+	<?php else: ?>
+
+	<meta property="og:type"               content="article" >
 	<meta property="og:title"              content=<?php echo "'$titre'" ?> >
-	<meta property="og:image"              content=<?php echo "'$protocol.$_SERVER[HTTP_HOST]".dirname($_SERVER['REQUEST_URI'])."/$urlSource'" ?> >
+	<meta property="og:image"              content=<?php echo "'$protocol$_SERVER[HTTP_HOST]".dirname($_SERVER['REQUEST_URI'])."/$urlSource'" ?> >
 	<meta property="og:image:width"              content=<?php echo "'$width'" ?> >
 	<meta property="og:image:height"              content=<?php echo "'$height'" ?> >
+	<meta name="robots" content="noindex">
 	<?php endif ?>
-	
 
 	<meta charset="utf-8">
 	<meta name="description" content="La banque d'images de la France Insoumise">
