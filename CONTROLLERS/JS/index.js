@@ -420,13 +420,13 @@ function addCard(c) {
 	card.addClass('card');
 	card.removeClass('template');
 
-	var e = urlSource.split('.').pop();
+	var e = url.split('.').pop();
 	if(e == 'gif')
 		card.find('.gif-overlay').show();
 
 	//HOVER IMG
 	card.mouseenter(function(e) {
-		var ext = urlSource.split('.').pop();
+		var ext = url.split('.').pop();
 		if(ext == 'gif' && !card.hasClass("opened") && !card.hasClass("playing")) {
 			card.addClass("playing");
 			card.find('.gif-overlay').hide();
@@ -440,7 +440,7 @@ function addCard(c) {
 	});
 
 	card.mouseleave(function(e) {
-		var ext = urlSource.split('.').pop();
+		var ext = url.split('.').pop();
 		if(ext == 'gif' && !card.hasClass("opened") && card.hasClass("playing")) {
 			card.find('.gif-overlay').show();
 			card.removeClass('playing');

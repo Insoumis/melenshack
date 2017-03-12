@@ -12,18 +12,6 @@ if(isset($grade) && $grade > 0)
 
 	$infos = json_decode($infosJson, true);
 
-	$id = $infos['id'];
-	$idhash = $infos['idhash'];
-	$titre = $infos['titre'];
-	$idUser = $infos['idUser'];
-	$pseudoUser = $infos['pseudoUser'];
-	$urlSource = $infos['urlSource'];
-	$points = $infos['pointsTotaux'];
-	$tagsstr = $infos['tags'];
-	$tags = explode(",", $infos['tags']);
-	$dateCreation = $infos['dateCreation'];
-	//$format = $infos['dateCreation'];
-
 $showPage = true;
 if($infos == -1)
 	$showPage = false;
@@ -41,6 +29,7 @@ else {
 	$vote = $infos['ancien_vote'];
 	$report = $infos['ancien_report'];
 	$supprime = $infos['supprime'];
+	$type = $infos["type"];
 
 	$inscription = $infos['inscription'];
 	$pointsUser = $infos['pointsUser'];

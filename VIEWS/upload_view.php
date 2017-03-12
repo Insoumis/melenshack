@@ -53,7 +53,6 @@
 				</div>
 				<input type="hidden" id="max" name="taille_max" value=<?php echo "'$maxsize'" ?> />
 			</form>
-
 			<?php endif ?>
 		</div>
 	</body>
