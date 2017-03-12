@@ -13,33 +13,30 @@
 			<?php endif ?>
 			<?php if($showPage): ?>
 
-			<form class="upload" action="MODELS/upload_conf.php" autocomplete="off" method="post" enctype="multipart/form-data">
-				<h1>Ajouter une image</h1>
-				<div class="sub">Pour ajouter plusieurs images, <a href="upload_masse.php">cliquez ici</a></div>
+			<form class="upload" action="MODELS/upload_masse_conf.php" autocomplete="off" method="post" enctype="multipart/form-data">
+				<h1>Ajouter des images</h1>
 				<div class="form-group col-xs-5">
-					<label for="titre">Titre de l'image (optionnel):</label>
+					<label for="titre">Titre des images (optionnel) :</label>
 					<input type="text" class="form-control input-lg" name="titre" id="titre" placeholder="Titre de votre post" autofocus>
 
 					<p id="formats"><small>Formats acceptés: JPG, PNG, GIF. Poids max: <?php echo $maxsize/1000000 ?> Mo</small></p>
 					<label for="file" id="drop">
-						<div>
 							<p>
 							<label for="file" id="filelabel">	
-								<strong><span class="glyphicon glyphicon-folder-open"></span>Choisissez une image</strong>													<input id="file" name="file" type="file" style="display: none;">
-							</label> ou glissez la ici</p>
+								<strong><span class="glyphicon glyphicon-folder-open"></span>Choisissez des images</strong>													<input id="file" name="file[]" type="file" style="display: none;" multiple>
+							</label> ou glissez les ici</p>
 
 							<div id="nameContainer" hidden>
-								<p><span class="glyphicon glyphicon-ok"></span><span id="name"></span></p>
+								<p><span id="name"></span></p>
 							</div>
 							<div id="errorContainer" hidden>
 								<p><span class="glyphicon glyphicon-remove"></span><span id="error"></span></p>
 							</div>
-						</div>
 					</label>
 
 					<div id="urlgroup" class="form-group form-inline">
-						<label for="url" id="urltext">ou entrez l'URL de l'image:</label>
-						<input type="url" id="url" name="url" class="form-control"/>
+						<label for="url" id="urltext">ou entrez les URLs des images:<br>(une par ligne)</label>
+						<textarea wrap="off" id="url" name="url" class="form-control"></textarea>
 					</div>
 
 					<div class="tags">
@@ -47,7 +44,6 @@
 						<br>
 						<select multiple name="tags[]" id="tagsinput" type="text" data-role="tagsinput"></select>
 					</div>
-					<div class="g-recaptcha" data-sitekey="6LeKlhgUAAAAAAaxaZrJdqgzv57fCkNmX5UcXrwG" data-callback="recaptchaCallback"></div>
 					<br>
 					<input type="hidden" name="token" id="token" value="<?php echo $token_upload?>">
 					<input type="submit" id="submit" class="btn btn-primary btn-lg" name="submit" value="Poster l'image" accept="image/*" required>

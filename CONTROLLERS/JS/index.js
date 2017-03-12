@@ -169,6 +169,7 @@ $(window).scroll(function() {
 });
 
 
+
 //récupère les $size prochaines cartes depuis le serveur et les affiche
 function getCards(size) {
     fetching = true;
@@ -220,6 +221,7 @@ function getCards(size) {
             fetching = false;
 	
 			updateMasonry();
+			$(window).scroll();
 
 		}
 	});
