@@ -79,6 +79,17 @@ if (strlen ($titre) > 255){
 	header ('Location:../upload_masse.php?erreur=titre');
 	exit();
 }
+if (isset($_POST['pseudo'])) {
+	$pseudoAuthor = htmlspecialchars ($_POST['pseudo']);
+	if (strlen ($pseudoAuthor) > 255 || strlen ($pseudoAuthor) == 0) {
+		header ('Location:../upload.php?erreur=pseudo');
+		exit();
+	}
+	if ($pseudo != $pseudoAuthor) {
+		$pseudo = $pseudoAuthor;
+	}
+}
+
 if (!empty($_POST['tags'])) {
 	$nb_id = 0;
 	$tagsstr = "";
@@ -106,7 +117,7 @@ if(!empty($_FILES['file'])) {
 	foreach($arr as $f) {
 		if(empty($f['name']))
 			continue;
-		$res = insertImageFromFile($f, $id_user, $titre, $tagsstr);
+		$res = insertImageFromFile($f, $id_user, $titre, $tagsstr, $pseudo);
 		if(strpos($res, '?erreur=') !== false) {
 			header("Location:../upload_masse.php$res");
 			exit();
@@ -125,7 +136,7 @@ if(!empty($_POST['url'])) {
 	$urls = explode("\n", trim($_POST['url']));
 
 	foreach($urls as $u) {
-		$res = insertImageFromUrl(trim($u), $id_user, $titre, $tagsstr);
+		$res = insertImageFromUrl(trim($u), $id_user, $titre, $tagsstr, $pseudo);
 		if(strpos($res, '?erreur=') !== false) {
 			header("Location:../upload_masse.php$res");
 			exit();
