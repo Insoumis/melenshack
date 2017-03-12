@@ -1,7 +1,7 @@
 <head>
 
 	
-	<meta property="og:url"                content=<?php echo "'$protocol.$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]'" ?> >
+	<meta property="og:url"                content=<?php echo "'$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]'" ?> >
 	<meta property="og:locale"              content="fr_FR" >
 	<meta property="og:description"        content="Mélenshack, la banque d'images de la France Insoumise !" >
 	<meta property="og:app_id"              content="1849815745277262" >
