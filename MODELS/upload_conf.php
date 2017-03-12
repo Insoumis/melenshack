@@ -88,6 +88,7 @@ if (!$id_user) header ('Location:../upload.php?erreur=notlogged');
 
 $pseudo = $_SESSION['pseudo'];
 if (!$pseudo) header ('Location:../upload.php?erreur=pseudo');
+if (strlen($pseudo) > 250) header ('Location:../upload.php?erreur=pseudo');
 
 if((Token::verifier(3600, 'upload')) == false) {
     header ('Location:../upload.php?erreur=token');
@@ -136,6 +137,17 @@ if (strlen ($titre) > 255 || strlen ($titre) == 0) {
     header ('Location:../upload.php?erreur=titre');
     exit();
 }
+if (isset($_POST['pseudo'])) {
+    $pseudoAuthor = htmlspecialchars ($_POST['pseudo']);
+    if (strlen ($pseudoAuthor) > 255 || strlen ($pseudoAuthor) == 0) {
+        header ('Location:../upload.php?erreur=pseudo');
+        exit();
+    }
+    if ($pseudo != $pseudoAuthor) {
+        $pseudo = $pseudoAuthor;
+    }
+}
+
 if (!empty($_POST['tags'])) {
     $nb_id = 0;
     $tagsstr = "";
@@ -202,10 +214,11 @@ if (!empty($_POST['url'])) {
     }
 
 
-    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, url, genre, tags, date_creation) VALUES(:titre, :id_user, :url, :genre, :tags, NOW())');
+    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, pseudo_author, url, genre, tags, date_creation) VALUES(:titre, :id_user, :pseudo_author, :url, :genre, :tags, NOW())');
     $req->execute ([
         ':titre' => htmlspecialchars ($_POST['titre']),
         ':id_user' => $id_user,
+        ':pseudo_author' => $pseudo,
         ':url' => $url,
         ':genre' => "url",
         ':tags' => $tagsstr,
@@ -247,10 +260,11 @@ if (!empty($_POST['url'])) {
         }
     }
 
-    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, nom_original, format, genre, tags, date_creation) VALUES(:titre, :id_user, :nom_original, :format, :genre, :tags, NOW())');
+    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, pseudo_author, nom_original, format, genre, tags, date_creation) VALUES(:titre, :id_user, :pseudo_author, :nom_original, :format, :genre, :tags, NOW())');
     $req->execute ([
         ':titre' => htmlspecialchars ($_POST['titre']),
         ':id_user' => $id_user,
+        ':pseudo_author' => $pseudo,
         ':nom_original' => htmlspecialchars ($img['name']), // A FAIRE ! : Verifier que < 255
         ':genre' => "image",
         ':format' => $extension_image,

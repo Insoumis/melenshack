@@ -4,6 +4,7 @@ $fromregister = false;
 $pseudo = "";
 
 if(isset($_GET['erreur']) && !empty($_GET['erreur'])) {
+
 	if ($_GET['erreur'] == 'fromregister') {
 		$fromregister = true;
 		if (!empty($_GET['pseudo'])) {
@@ -17,10 +18,11 @@ if(isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 		$errmsg = "Afin d'éviter les abus, vous ne pouvez changer votre pseudo qu'une fois par heure. Veuillez réessayer plus tard.";
 	} else if ($_GET['erreur'] == "token") {
 		$errmsg = "Mauvais token. Veuillez réessayer.";
-}
-	
-}
+	} else if ($_GET['erreur'] == "pseudo") {
+			$errmsg = "Pseudo invalide";
+	}
 
+}
 $showPage = true;
 if(!isset($_SESSION['id'])) {
 	$showPage = false;
