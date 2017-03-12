@@ -22,6 +22,7 @@ else {
 	$idUser = $infos['idUser'];
 	$pseudoUser = $infos['pseudoUser'];
 	$urlSource = $infos['urlSource'];
+	$urlThumbnail = $infos['urlThumbnail'];
 	$points = $infos['pointsTotaux'];
 	$tagsstr = $infos['tags'];
 	$tags = explode(",", $infos['tags']);
