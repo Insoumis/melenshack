@@ -332,7 +332,7 @@ function addCard(c) {
 			changeTitre(big);
 		});
 
-		if(idUser == $('#id_user').val() || $("#grade").val() > 0) {
+		if(idUser == $('#id_user').val() || $("#grade").val() >= 5) {
 			big.find('.big-card-remove').show();
 			big.find('.big-card-signal').hide();
 		} else {
@@ -340,7 +340,7 @@ function addCard(c) {
 			big.find('.big-card-signal').show();
 		}
 
-		if($('#grade').val() > 0) {
+		if($('#grade').val() >= 5) {
 			big.find('.big-card-ban').show();
 			big.find('.big-card-sup-def').show();
 

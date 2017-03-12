@@ -1,7 +1,7 @@
 <?php
 
 $showSupprime = false;
-if(isset($grade) && $grade > 0)
+if(isset($grade) && $grade >= 5)
 	$showSupprime = true;
 
 //url params

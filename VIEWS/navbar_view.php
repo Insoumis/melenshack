@@ -35,7 +35,7 @@
 						<br><br>
 						<a href='pseudo.php'><span class='glyphicon glyphicon glyphicon-pencil'></span>Changer mon pseudo</a>
 						<br><br>
-						<?php if($grade > 0): ?>
+						<?php if($grade > 5): ?>
 
 						<a href='admin.php'><span class='glyphicon glyphicon glyphicon-cog'></span>Modération</a>
 						<br><br>
