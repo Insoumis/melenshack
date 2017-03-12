@@ -19,17 +19,34 @@ window.fbAsyncInit = function() {
 	fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
+function showErreur(msg) {
+	var e = `<div class='alert alert-danger erreur'>
+	      <a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+		  </div>`;
+
+	var erreur = $(e);
+	$('#main_page').prepend(erreur);
+
+	//fade out au bout de 2s
+	erreur.delay(2000).animate({'opacity': '0'}, 1000, function() {
+		erreur.remove();		
+	});
+
+}
+
 function checkFBLogin() {
 	FB.login(function(response) {
 		if(response.status != "connected")
 			return;
 		$.post('MODELS/facebookLogin.php', null, function(data) {
-			if(data == "error") {
-
-			} else if(data == "success") {
+			if(data == "success") {
 				window.location.href = 'index.php';
-			} else {
+			} else if(data.includes("pseudo")){
 				window.location.href = 'pseudo.php?erreur=fromregister'+data;
+			} else if(data == "banni") {
+				showErreur('Erreur ! Vous avez été banni !');
+			} else {
+				showErreur('Erreur ! Veuillez recommencer.');
 			}
 		});
 	});
@@ -45,12 +62,14 @@ function checkGoogleLogin(googleUser) {
 		var idToken = googleUser.getAuthResponse().id_token;
 
 		$.post('MODELS/googleLogin.php', {idtoken: idToken}, function(data) {
-			if(data == "error") {
-
-			} else if(data == "success") {
+			if(data == "success") {
 				window.location.href = 'index.php';
-			} else {
+			} else if(data.includes("pseudo")){
 				window.location.href = 'pseudo.php?erreur=fromregister'+data;
+			} else if(data == "banni") {
+				showErreur('Erreur ! Vous avez été banni !');
+			} else {
+				showErreur('Erreur ! Veuillez recommencer.');
 			}
 		});
 	}
@@ -63,14 +82,14 @@ function checkTwitterLogin() {
 }
 
 function onTwitterClose(data) {
-	if(data == "error") {
-
-	} else if(data == "redirect") {
-		window.location.href = "../pseudo.php";
-	} else if(data == "success") {
+	if(data == "success") {
 		window.location.href = '../index.php';
-	} else {
+	} else if(data.includes("pseudo")){
 		window.location.href = '../pseudo.php?erreur=fromregister'+data;
+	} else if(data == "banni") {
+		showErreur('Erreur ! Vous avez été banni !');
+	} else {
+		showErreur('Erreur ! Veuillez recommencer.');
 	}
 }
 

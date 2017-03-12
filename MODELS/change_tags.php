@@ -15,13 +15,13 @@ if(empty($_REQUEST['id'])) {
 	echo "mauvaise image";
 	exit();
 }
-
+/*
 $referer = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
 $domaine= parse_url(SITE_DOMAINE, PHP_URL_HOST);
 if ($referer != $domaine) {
 	header("HTTP/1.0 403 Forbidden");
 	exit();
-}
+} */
 
 if(count(explode(",", $_REQUEST['tags'])) > 10) {
 	echo "trop de tags";

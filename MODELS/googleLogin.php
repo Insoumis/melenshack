@@ -36,6 +36,19 @@ $res = $req->fetch();
 if($res) { //deja inscrit
 	//on update les infos
 	$id_user = $res['id_user'];
+
+	$req = $bdd->prepare ('SELECT id FROM ban WHERE id_user = :id_user');
+	$req->execute ([
+		'id_user' => $id_user,
+	]);
+	$resultat = $req->fetch ();
+
+	if ($resultat) {
+		//La marteau du ban a frappé :)
+		echo "banni";
+		exit();
+	}
+
 	$req = $bdd->prepare("UPDATE federated_users SET name=:name, email=:email, picture=:picture WHERE id_user=:id_user");
 	$req->execute([
 		':id_user' => $id_user,

@@ -9,11 +9,12 @@ if (!isset($_SESSION)) {
 if (!$_SESSION) {
     exit();
 };
+/*
 $referer = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
 $domaine= parse_url(SITE_DOMAINE, PHP_URL_HOST);
 if ($referer != $domaine) {
     exit();
-}
+} */
 
 $id_user = $_SESSION['id'];
 if (!$id_user) {

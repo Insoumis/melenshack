@@ -30,7 +30,7 @@ if(Token::verifier(600, 'inscription'))
 	}
 	
 	// Verification de la validité du captcha
-	$response = file_get_contents ("https://www.google.com/recaptcha/api/siteverify?secret=6LefaBUUAAAAAOCU1GRih8AW-4pMJkiRRKHBmPiE&response=" . $captcha);
+	$response = file_get_contents ("https://www.google.com/recaptcha/api/siteverify?secret=6LeKlhgUAAAAAJGHPPA35YtfqvOHfH89BB9xvipi&response=" . $captcha);
 	$decoded_response = json_decode ($response);
 	if ($decoded_response->success == false) {
     	header ('Location:../register.php?erreur=captcha');

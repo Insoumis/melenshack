@@ -3,7 +3,7 @@
 require_once 'MODELS/includes/token.class.php';
 $token = Token::generer('inscription');
 
-$googleKey = "6LefaBUUAAAAALVKIo2DiW_hWLs2kijFTrlUHGMb";
+$googleKey = "6LeKlhgUAAAAAAaxaZrJdqgzv57fCkNmX5UcXrwG";
 
 $errmsg = "";
 $showPage = true;

@@ -55,7 +55,7 @@ if(isset($_GET['request'])) {
 		else
 			$picture = $content['profile_image_url'];
 
-		if(array_key_exists('email')) {
+		if(array_key_exists('email', $content)) {
 			$email = $content['email'];
 		} else
 			$email = null;
@@ -70,27 +70,41 @@ if(isset($_GET['request'])) {
 		if($res) { //deja inscrit
 			//on update les infos
 			$id_user = $res['id_user'];
-			$req = $bdd->prepare("UPDATE federated_users SET name=:name, email=:email, picture=:picture WHERE id_user=:id_user");
-			$req->execute([
-				':id_user' => $id_user,
-				':name' => $name,
-				':email' => $email,
-				':picture' => $picture,
+			
+			$req = $bdd->prepare ('SELECT id FROM ban WHERE id_user = :id_user');
+			$req->execute ([
+				'id_user' => $id_user,
 			]);
+			$resultat = $req->fetch ();
 
-			$req = $bdd->prepare("SELECT pseudo FROM users WHERE id=:id_user");
-			$req->execute([
-				':id_user' => $id_user,
-			]);
-			$res = $req->fetch();
-			$pseudo = $res['pseudo'];
+			if ($resultat) {
+				//La marteau du ban a frappé :)
+				echo "<input id='result' value='banni' hidden>";
+			} else {
 
-			if($pseudo)
-				$_SESSION['pseudo'] = $pseudo;
 
-			$_SESSION['id'] = $id_user;
-			$_SESSION['type'] = 'google';
-			echo "<input id='result' value='success' hidden>";
+				$req = $bdd->prepare("UPDATE federated_users SET name=:name, email=:email, picture=:picture WHERE id_user=:id_user");
+				$req->execute([
+					':id_user' => $id_user,
+					':name' => $name,
+					':email' => $email,
+					':picture' => $picture,
+				]);
+
+				$req = $bdd->prepare("SELECT pseudo FROM users WHERE id=:id_user");
+				$req->execute([
+					':id_user' => $id_user,
+				]);
+				$res = $req->fetch();
+				$pseudo = $res['pseudo'];
+
+				if($pseudo)
+					$_SESSION['pseudo'] = $pseudo;
+
+				$_SESSION['id'] = $id_user;
+				$_SESSION['type'] = 'google';
+				echo "<input id='result' value='success' hidden>";
+			}
 
 		} else { //on l'inscrit
 			$req = $bdd->prepare('INSERT INTO users(dateinscription) VALUES(NOW());');

@@ -315,8 +315,9 @@ function report(card) {
 		showVoteError();
 		return;
 	}
-	if(card.find(".big-card-signal").hasClass('voted'))
+	if(card.find(".big-card-signal").hasClass('voted')) {
 		return;
+	}
 
 	var conf = false;
 	conf = confirm('Voulez-vous vraiment signaler ce post ?');
@@ -342,7 +343,7 @@ function removesignal(card) {
 		showVoteError();
 		return;
 	}
-	if(card.find(".big-card-remmovesignal").hasClass('voted'))
+	if(!card.find(".big-card-signal").hasClass('voted'))
 		return;
 
 	var conf = false;
