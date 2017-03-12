@@ -54,7 +54,6 @@
 				<input type="hidden" id="max" name="taille_max" value=<?php echo "'$maxsize'" ?> />
 			<small>Merci de faire attention à la provenance de vos images ! Préférez les images libres de droit, issues du site officiel ou créées par vous.</small>
 			</form>
-
 			<?php endif ?>
 		</div>
 	</body>

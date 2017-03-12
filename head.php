@@ -5,9 +5,6 @@
 	<meta property="og:locale"              content="fr_FR" >
 	<meta property="og:description"        content="Mélenshack, la banque d'images de la France Insoumise !" >
 	<meta property="og:app_id"              content="1849815745277262" >
-	<?php if(isset($urlSource)): ?>
-	<?php endif ?>
-
 
 	<?php if(strpos(basename($_SERVER['REQUEST_URI']), 'view.php') === false): ?>	
 	<meta property="og:type"               content="website" >
@@ -15,7 +12,11 @@
 
 	<meta property="og:type"               content="article" >
 	<meta property="og:title"              content=<?php echo "'$titre'" ?> >
-	<meta property="og:image"              content=<?php echo "'$protocol$_SERVER[HTTP_HOST]".dirname($_SERVER['REQUEST_URI'])."/$urlSource'" ?> >
+		<?php if($type == "url"): ?>
+			<meta property="og:image"              content=<?php echo "'$urlSource'" ?> >
+		<?php else: ?>
+			<meta property="og:image"              content=<?php echo "'$protocol$_SERVER[HTTP_HOST]".dirname($_SERVER['REQUEST_URI'])."/$urlSource'" ?> >
+		<?php endif ?>
 	<meta property="og:image:width"              content=<?php echo "'$width'" ?> >
 	<meta property="og:image:height"              content=<?php echo "'$height'" ?> >
 	<meta name="robots" content="noindex">

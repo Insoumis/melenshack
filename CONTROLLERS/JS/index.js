@@ -314,6 +314,21 @@ function addCard(c) {
 		big.find('.big-img-author').html(pseudoUser);
 		big.find('.big-card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
 
+		big.find('.big-card-title').append("<span class='glyphicon glyphicon-pencil' title='Modifier le titre' data-toggle='tooltip' id='change_titre'></span>");
+		$("[data-toggle='tooltip']").tooltip();
+
+		if(idUser == $('#id_user').val()) {
+			$("#change_titre").show();
+		} else {
+			$("#change_titre").hide();
+		}
+
+		big.data('titre', c.titre);
+		big.find('#change_titre').click(function() {
+			big.data('titre', card.data('titre'));
+
+			changeTitre(big);
+		});
 
 		if(idUser == $('#id_user').val() || $("#grade").val() > 0) {
 			big.find('.big-card-remove').show();

@@ -166,7 +166,8 @@ window.onload = function() {
 	try {
 		window.opener.onTwitterClose(document.getElementById('result').value);
 	}
-	catch (err) {}
+	catch (err) {window.close();
+}
 		window.close();
 	return false;
 };

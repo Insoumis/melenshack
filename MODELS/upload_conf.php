@@ -66,7 +66,6 @@ function setTransparency($new_image,$image_source)
     imagecolortransparent($new_image, $transparencyIndex);
 
 }
-
 /*
 $framegif = ('/var/www/html/melenshack/images/frames/frame01.gif');
 if (is_file ($framegif)) {
@@ -340,12 +339,12 @@ $framegif = ('/var/www/html/melenshack/images/frames/frame01.gif');
     if (is_file ($framegif)) {
         chmod ($framegif, 0777);
         if (unlink ($framegif)) {
-           // echo 'File deleted';
+            echo 'File deleted';
         } else {
-           // echo 'Cannot remove that file';
+            echo 'Cannot remove that file';
         }
     } else {
-       // echo 'Ce nest pas fichier remove that file';
+        echo 'Ce nest pas fichier remove that file';
     }
 }
 
