@@ -2,7 +2,7 @@
 
 include_once ("includes/constants.php");
 require_once ('includes/token.class.php');
-include_once ("includes/GIFDecoder.class.php");
+include_once ("includes/GIFDecoders.class.php");
 include_once ("includes/identifiants.php");
 include_once ('includes/securite.class.php');
 include_once 'check_grade.php';
@@ -42,6 +42,7 @@ function addToFiles ($key, $url)
 
     $imgRawData = file_get_contents ($url);
     file_put_contents ($tempName, $imgRawData);
+
     $_FILES[$key] = array(
         'name' => $originalName,
         'type' => mime_content_type ($tempName),
@@ -50,6 +51,19 @@ function addToFiles ($key, $url)
         'size' => strlen ($imgRawData),
     );
 }
+/*
+$framegif = ('/var/www/html/melenshack/images/frames/frame01.gif');
+if (is_file ($framegif)) {
+    chmod ($framegif, 0777);
+    if (unlink ($framegif)) {
+        echo 'File deleted';
+    } else {
+        echo 'Cannot remove that file';
+    }
+} else {
+    echo 'Ce nest pas fichier remove that file';
+} */
+
 if (!isset($_SESSION)) {
     session_start ();
 }
@@ -64,12 +78,16 @@ if((Token::verifier(3600, 'upload')) == false) {
     header ('Location:../upload.php?erreur=token');
     exit();
 }
+/*
 $referer = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
 $domaine= parse_url(SITE_DOMAINE, PHP_URL_HOST);
+echo $referer.'</br>';
+echo $domaine.'</br>';
 if ($referer != $domaine) {
     header ('Location:../upload.php?erreur=referer');
     exit();
-}
+    echo'lol';
+} */
 
 $captcha = $_POST['g-recaptcha-response'];
 if (!$captcha) {
@@ -91,7 +109,7 @@ if ($resultat) {
 
 
 // Verification de la validité du captcha
-$response = file_get_contents ("https://www.google.com/recaptcha/api/siteverify?secret=6LefaBUUAAAAAOCU1GRih8AW-4pMJkiRRKHBmPiE&response=" . $captcha);
+$response = file_get_contents ("https://www.google.com/recaptcha/api/siteverify?secret=6LeKlhgUAAAAAJGHPPA35YtfqvOHfH89BB9xvipi&response=" . $captcha);
 $decoded_response = json_decode ($response);
 if ($decoded_response->success == false) {
     header ('Location:../upload.php?erreur=captcha');
@@ -141,9 +159,8 @@ if (!empty($_POST['url'])) {
 
     addToFiles ('file', $url);
     $image_type = htmlspecialchars($_FILES['file']["type"]);
-    //var_dump($_FILES['file']);
-
-    if (in_array ($image_type, array("image/png", "image/jpeg","image/jpg", "image/gif", "image/bmp"))) {
+    
+    if (in_array ($image_type, array("image/png", "image/jpeg","image/jpg", "image/gif"))) {
         //Good !
         if ($image_type =="image/png") {
             $extension_image = "png";
@@ -151,17 +168,16 @@ if (!empty($_POST['url'])) {
             $extension_image = "gif";
         } elseif ($image_type =="image/jpeg" OR $image_type =="image/jpg") {
             $extension_image = "jpg";
-        } elseif ($image_type =="image/bmp") {
-            $extension_image = "bmp";
         }
     } else {
-        header ('Location:../upload.php?erreur=notimage');
+       header ('Location:../upload.php?erreur=notimage');
         exit();
     }
 
-    $req = $bdd->prepare ('SELECT id FROM images WHERE url = :url');
+    $req = $bdd->prepare ('SELECT id FROM images WHERE url = :url AND supprime = :supprime');
     $req->execute ([
         ':url' => $url,
+        ':supprime' => 0,
     ]);
     $resultat = $req->fetch ();
 
@@ -198,7 +214,7 @@ if (!empty($_POST['url'])) {
     }
     $img = $_FILES['file'];
 
-    $extensions_valides = array('jpg', 'jpeg', 'gif', 'png', 'bmp');
+    $extensions_valides = array('jpg', 'jpeg', 'gif', 'png');
     $extension_image = strtolower (substr (strrchr ($img['name'], '.'), 1));
     if (!in_array ($extension_image, $extensions_valides)) {
         header ('Location:../upload.php?erreur=format');
@@ -236,17 +252,19 @@ if (!empty($_POST['url'])) {
     ]);
 }
 
-$direction = '/../images/' . $id . "." . $extension_image;
-$imagebase = __DIR__ . $direction;
+$direction = '/images/' . $id . "." . $extension_image;
+//$imagebase = __DIR__ . $direction;
+$imagebase = '/var/www/html/melenshack'.$direction;
+
+//var_dump($_FILES['file']);
 
 if (is_uploaded_file($_FILES['file']['tmp_name'])) {
    move_uploaded_file ($_FILES['file']['tmp_name'], $imagebase);
 } else {
-    echo "Vous ne passerez pas !";
+    //echo "Vous ne passerez pas ! </br>";
     rename ($_FILES['file']['tmp_name'], $imagebase);
-    unlink($_FILES['file']['tmp_name']);
+    //unlink($_FILES['file']['tmp_name']);
 }
-
 
 if ($extension_image != "gif") {
     list($width, $height) = getimagesize ($imagebase);
@@ -255,7 +273,7 @@ if ($extension_image != "gif") {
     $i = 1;
     foreach ($gifDecoder->GIFGetFrames () as $frame) {
         if ($i < 2) {
-            fwrite (fopen (__DIR__ . "/../images/frames/frame0$i.gif", "wb"), $frame);
+            fwrite (fopen ("/var/www/html/melenshack/images/frames/frame0$i.gif", "a+"), $frame);
         }
         $i++;
     }
@@ -268,8 +286,6 @@ if (($extension_image == "jpg") OR ($extension_image == "jpeg")) {
     $source = imagecreatefromjpeg ($imagebase);
 } elseif ($extension_image == "png") {
     $source = imagecreatefrompng ($imagebase);
-} elseif ($extension_image == "bmp") {
-    $source = imagecreatefromwbmp ($imagebase);
 } elseif ($extension_image == "gif") {
     $source = imagecreatefromgif ($imagebase);
 }
@@ -289,8 +305,6 @@ if (($extension_image == "jpg") OR ($extension_image == "jpeg")) {
     imagejpeg ($thumb, __DIR__ . '/../vignettes/' . $id . '.jpg');
 } elseif ($extension_image == "png") {
     imagepng ($thumb, __DIR__ . '/../vignettes/' . $id . '.png');
-} elseif ($extension_image == "bmp") {
-    imagepng ($thumb, __DIR__ . '/../vignettes/' . $id . '.bmp');
 } elseif ($extension_image == "gif") {
     imagegif ($thumb, __DIR__ . '/../vignettes/' . $id . '.gif');
 }
@@ -301,6 +315,19 @@ if (!empty($_POST['url'])) {
         'id' => $idbase,
     ]);
     unlink(__DIR__ .'/../images/'. $id .'.'.$extension_image);
+}
+if ($extension_image == "gif") {
+$framegif = ('/var/www/html/melenshack/images/frames/frame01.gif');
+    if (is_file ($framegif)) {
+        chmod ($framegif, 0777);
+        if (unlink ($framegif)) {
+            echo 'File deleted';
+        } else {
+            echo 'Cannot remove that file';
+        }
+    } else {
+        echo 'Ce nest pas fichier remove that file';
+    }
 }
 
 header ('Location:../view.php?id=' . $id);

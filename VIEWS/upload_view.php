@@ -19,7 +19,7 @@
 					<label for="titre">Titre de l'image:</label>
 					<input type="text" class="form-control input-lg" name="titre" id="titre" placeholder="Titre de votre post" required autofocus>
 
-					<p id="formats"><small>Formats acceptés: JPG, PNG, BMP, GIF. Poids max: <?php echo $maxsize/1000000 ?> Mo</small></p>
+					<p id="formats"><small>Formats acceptés: JPG, PNG, GIF. Poids max: <?php echo $maxsize/1000000 ?> Mo</small></p>
 					<label for="file" id="drop">
 						<div>
 							<p>
@@ -46,12 +46,13 @@
 						<br>
 						<select multiple name="tags[]" id="tagsinput" type="text" data-role="tagsinput"></select>
 					</div>
-					<div class="g-recaptcha" data-sitekey="6LefaBUUAAAAALVKIo2DiW_hWLs2kijFTrlUHGMb" data-callback="recaptchaCallback"></div>
+					<div class="g-recaptcha" data-sitekey="6LeKlhgUAAAAAAaxaZrJdqgzv57fCkNmX5UcXrwG" data-callback="recaptchaCallback"></div>
 					<br>
 					<input type="hidden" name="token" id="token" value="<?php echo $token_upload?>">
 					<input type="submit" id="submit" class="btn btn-primary btn-lg" name="submit" value="Poster l'image" accept="image/*" required disabled>
 				</div>
 				<input type="hidden" id="max" name="taille_max" value=<?php echo "'$maxsize'" ?> />
+			<small>Merci de faire attention à la provenance de vos images ! Préférez les images libres de droit, issues du site officiel ou créées par vous.</small>
 			</form>
 			<?php endif ?>
 		</div>

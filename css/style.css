@@ -799,7 +799,10 @@ h1 {
 .upload {
 	text-align: center;
 	width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+}
+.upload #submit {
+	margin-bottom:15px;
 }
 .form-group {
 	margin: 0 auto;
