@@ -1,4 +1,5 @@
 
+
 //carte dont le menu share est ouvert
 var currentCardShare;
 
@@ -161,8 +162,9 @@ $(document).ready(function() {
 
 //quand l'user atteind le bas de la page, rajoute 20 cartes
 $(window).scroll(function() {
-	if(!fin && $(window).scrollTop() + $(window).height() > $(document).height() - 20) {
+	if(!fetching && $(window).scrollTop() + $(window).height() > $(document).height() - 60) {
 		getCards(10);
+		console.log($(window).scrollTop()+":"+$(window).height());
 	}
 });
 
@@ -307,11 +309,26 @@ function addCard(c) {
 		big.attr('id', idhash);
 		big.data('card', card);
 		big.data('id_user', idUser);
-		big.find('.big-card-title').append('<a href='+ urlBase + 'view.php?id=' + idhash +">"+ titre+'</a>');
+		big.find('.big-card-title').html('<a href='+ urlBase + 'view.php?id=' + idhash +">"+ titre+'</a>');
 		big.find('.big-card-tmps').html(temps);
 		big.find('.big-img-author').html(pseudoUser);
 		big.find('.big-card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
 
+		big.find('.big-card-title').append("<span class='glyphicon glyphicon-pencil' title='Modifier le titre' data-toggle='tooltip' id='change_titre'></span>");
+		$("[data-toggle='tooltip']").tooltip();
+
+		if(idUser == $('#id_user').val()) {
+			$("#change_titre").show();
+		} else {
+			$("#change_titre").hide();
+		}
+
+		big.data('titre', c.titre);
+		big.find('#change_titre').click(function() {
+			big.data('titre', card.data('titre'));
+
+			changeTitre(big);
+		});
 
 		if(idUser == $('#id_user').val() || $("#grade").val() > 0) {
 			big.find('.big-card-remove').show();
@@ -420,13 +437,13 @@ function addCard(c) {
 	card.addClass('card');
 	card.removeClass('template');
 
-	var e = urlSource.split('.').pop();
+	var e = url.split('.').pop();
 	if(e == 'gif')
 		card.find('.gif-overlay').show();
 
 	//HOVER IMG
 	card.mouseenter(function(e) {
-		var ext = urlSource.split('.').pop();
+		var ext = url.split('.').pop();
 		if(ext == 'gif' && !card.hasClass("opened") && !card.hasClass("playing")) {
 			card.addClass("playing");
 			card.find('.gif-overlay').hide();
@@ -440,7 +457,7 @@ function addCard(c) {
 	});
 
 	card.mouseleave(function(e) {
-		var ext = urlSource.split('.').pop();
+		var ext = url.split('.').pop();
 		if(ext == 'gif' && !card.hasClass("opened") && card.hasClass("playing")) {
 			card.find('.gif-overlay').show();
 			card.removeClass('playing');

@@ -22,15 +22,16 @@ if ($referer != $domaine) {
 	header("HTTP/1.0 403 Forbidden");
 	exit();
 } */
+$titre = htmlspecialchars($_REQUEST['titre']);
 
-if(count(explode(",", $_REQUEST['tags'])) > 10) {
-	echo "trop de tags";
+if(strlen($titre) > 250) {
+	echo "Titre trop grand";
 	exit();
 }
 
-$req = $bdd->prepare("UPDATE images SET tags=:tags WHERE nom_hash=:idhash AND id_user=:iduser");
+$req = $bdd->prepare("UPDATE images SET tags=:tags WHERE nom_hash=:idhash AND id_user=:iduser ");
 if($req->execute([
-	':tags' => Securite::bdd($_REQUEST['tags']),
+	':titre' => Securite::bdd($_REQUEST['titre']),
 	':idhash' => Securite::bdd($_REQUEST['id']),
 	':iduser' => Securite::bdd($_SESSION['id'])
 ])) {

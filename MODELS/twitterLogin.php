@@ -55,7 +55,7 @@ if(isset($_GET['request'])) {
 		else
 			$picture = $content['profile_image_url'];
 
-		if(array_key_exists('email')) {
+		if(array_key_exists('email', $content)) {
 			$email = $content['email'];
 		} else
 			$email = null;
