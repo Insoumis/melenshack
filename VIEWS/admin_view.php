@@ -35,7 +35,7 @@
 				<label for="pseudop"><h4>Promote un user :</h4></label>
 				
 				<input class="form-control" id="pseudop"type="text" placeholder="pseudo" name="pseudo" />
-				<br><input class="form-control" type="number" max="<?php echo $grade ?>" min="0" placeholder="grade" name="value" />
+				<br><input class="form-control" type="number" max="<?php echo $grade ?>" min="0" placeholder="grade" name="value" />0: Peut seulement voter<br>1: Peut upload<br>2: peut upload en masse<br>5: modérateur<br>
 				<input type="hidden" name="token" id="token" value="<?php echo $token_A?>">
 				<br><input class="btn btn-primary" type="submit" value="Promote">
 				</form></td></tr></table>

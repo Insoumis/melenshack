@@ -97,7 +97,16 @@ if($value == 1) {
 	$req->execute ([
 	    ':id_user' => $idban,
 	]);
+	
+	$req = $bdd->prepare ('DELETE FROM vote WHERE id_user = :id_user');
+	$req->execute ([
+	    ':id_user' => $idban,
+	]);
 
+	$req = $bdd->prepare ('DELETE FROM report WHERE id_user = :id_user');
+	$req->execute ([
+	    ':id_user' => $idban,
+	]);
 } else {
 	$req = $bdd->prepare ('DELETE FROM ban WHERE id_user = :id_user');
 	$req->execute ([

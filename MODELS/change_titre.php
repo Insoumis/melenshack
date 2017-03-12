@@ -29,7 +29,7 @@ if(strlen($titre) > 250) {
 	exit();
 }
 
-$req = $bdd->prepare("UPDATE images SET tags=:tags WHERE nom_hash=:idhash AND id_user=:iduser ");
+$req = $bdd->prepare("UPDATE images SET titre=:titre WHERE nom_hash=:idhash AND id_user=:iduser ");
 if($req->execute([
 	':titre' => Securite::bdd($_REQUEST['titre']),
 	':idhash' => Securite::bdd($_REQUEST['id']),

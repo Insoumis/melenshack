@@ -4,42 +4,44 @@ var image = false;
 
 function recaptchaCallback() {
 		captchaChecked = true;
-		checkSubmit();
 }
 
 function readURL(input) {
-		if(input.files && input.files[0]) {
-				var reader = new FileReader();
+		if(input.files) {
+			for (var f=0; f < input.files.length; f++) {
+				if(f >= input.files.length)
+					break;
+				console.log(input.files[f]);
+
 				counter = 0;
-				reader.onload = function(e) {
-						if(input.files[0].size > $("#max").val()) {
+				
+				var t = input.files[f].type;
+				if(!(t == "image/gif" || t == "image/png" || t == "image/jpg" || t == "image/jpeg" || t == "image/bmp")) {
+					alert("L'image "+ input.files[f].name+" n'est pas valide !");
+					continue;
+				}
+
+				var file = input.files[f];
+						if(file.size > $("#max").val()) {
 								alert("Fichier trop lourd !");
 								return;
 						}
 						image = true;
-						$('#name').html(input.files[0].name);
+						e = $("<span title='Ciquez pour supprimer'><br><span class='glyphicon glyphicon-ok'></span class='namestr'>"+file.name+"</span>").click(function() {
+							$(this).remove();
+
+						});
+
+						$('#name').append(e);
 						$('#errorContainer').hide();
 						$('#nameContainer').show();
 						$("#drop").css('border', '3px dashed green')	
 						.css('background', 'white');
-						checkSubmit();
-				}
-				var t = input.files[0].type;
-				if(t == "image/gif" || t == "image/png" || t == "image/jpg" || t == "image/jpeg" || t == "image/bmp")
-					reader.readAsDataURL(input.files[0]);
-				else {
-					$('#error').html("Format invalide !");
-					$('#nameContainer').hide();
-					$('#errorContainer').show();
-					$("#drop").css('border', '3px dashed red')	
-					.css('background', 'white');
-
-				}
+			}
 		} else if(input) {
 				var x = document.getElementById("url").value;
 				$("#preview").attr("src", x).width(800);
 				image = true;
-				checkSubmit();
 		}
 		else {
 				image = false;
@@ -73,7 +75,6 @@ $(document).on('dragleave', '#drop', function(e) {
 		}
 		return false;
 });
-
 
 $(document).on('drop', '#drop', function(e) {
 		counter = 0;
@@ -115,20 +116,10 @@ $("#url").change(function() {
 		readURL(this);
 });
 
-$("#titre").on('input', function() {
-		checkSubmit();
-});
-
 $("#drop").click(function(e) {
 	$("#filelabel").click();
 	e.stopPropagation();
 });
-
-function checkSubmit() {
-		if($("#titre").val()) {
-				$("#submit").prop("disabled", false);	
-		}
-}
 
 $('#tagsinput').tagsinput({
 	  maxTags: 10,

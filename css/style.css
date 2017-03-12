@@ -787,6 +787,9 @@ h1 {
 	font-size: 15px;
 	margin-bottom: 30px;
 }
+.upload textarea#url {
+	min-height: 100px;
+}
 .upload label {
 	font-size: 18px;
 }
@@ -841,14 +844,19 @@ h1 {
 #nameContainer, #errorContainer {
 	position: absolute;
 	bottom: 0;
-	width: 100%;
+	width: 98%;
+	max-height: 45%;
+	overflow-y: scroll;
 }
 #nameContainer p, #errorContainer p {
 	left: -50%;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	margin-right: 20px;
 	white-space: nowrap;
+}
+
+#nameContainer span, #errorContainer span {
+	cursor: pointer;
 }
 #nameContainer {
 	color: green;

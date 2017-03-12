@@ -68,6 +68,17 @@ if (!$resultat) {
 }
 $id = $resultat['id'];
 
+$req = $bdd->prepare ('SELECT id FROM ban WHERE id_user = :id_user');
+$req->execute ([
+    'id_user' => $id_user,
+]);
+$resultat = $req->fetch ();
+
+if($resultat) {
+	header("HTTP/1.0 403 Forbidden");
+	exit();
+}
+
 $req = $bdd->prepare ('SELECT * FROM vote WHERE id_image = :id_image AND id_user = :id_user');
 $req->execute ([
 	':id_image' => $id,

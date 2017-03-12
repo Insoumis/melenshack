@@ -74,6 +74,7 @@ if ($sort == "hot") {
 	$req->execute();
 
 
+
     
 
     while ($resultat = $req->fetch()) {
@@ -159,5 +160,32 @@ if ($sort == "hot") {
 	echo json_encode($json);
 
 
+}
+elseif ($sort == "test") {
+
+	$req = $bdd->prepare ("
+	SELECT nom_hash FROM images 
+		INNER JOIN users ON id_user = users.id 
+	WHERE (supprime=0 
+			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
+			AND (:pseudo = '' OR pseudo = :pseudo) 
+			AND tags RLIKE :tagsr) 
+			AND users.id NOT IN
+				(SELECT id_user FROM ban WHERE 1)
+	ORDER BY LOG10(ABS(nb_vote_positif - nb_vote_negatif) + 1) * SIGN(nb_vote_positif - nb_vote_negatif)
+    + (UNIX_TIMESTAMP(date_creation) / 300000) DESC LIMIT :size" );
+
+	$req->bindParam(':size', $size, PDO::PARAM_INT);
+	$req->bindParam(':search', $search, PDO::PARAM_STR);
+	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
+	$req->execute();
+
+
+
+	while ($resultat = $req->fetch()) {
+		array_push($json, json_decode(getInfo($resultat["nom_hash"])));
+	}
+	echo json_encode($json);
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 
-include_once 'MODELS/includes/constants.php';
 include_once 'MODELS/check_grade.php';
+include_once 'MODELS/includes/constants.php';
 
 $maxsize = MAX_SIZE;
 $token_upload = Token::generer('upload');
@@ -31,8 +31,6 @@ if(isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 			$errmsg = "Erreur de tags!";
 		else if ($erreur == "url")
 			$errmsg = "URL trop longue !";
-		else if ($erreur == "grade")
-			$errmsg = "Vous n'êtes pas assez gradé pour pouvoir ajouter une image ! Contactez le Discord de la France Insoumise pour obtenir les droits.";
 		else if ($erreur == "pseudo")
 			$errmsg = "Vous devez choisir un pseudo pour poster une image ! <a href='pseudo.php'>Choisir un pseudo</a>";
 		else
@@ -44,8 +42,9 @@ if(isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 } else if(!isset($_SESSION['pseudo'])) {
 	$errmsg = "Vous devez choisir un pseudo pour poster une image ! <a href='pseudo.php'>Choisir un pseudo</a>";
 	$showPage = false;
-} else if ($grade < 1) {
-	$errmsg = "Vous n'êtes pas assez gradé pour pouvoir ajouter une image ! Contactez le Discord de la France Insoumise pour obtenir les droits.";
+} else if ($grade < 2) {
+	$errmsg = "Vous n'êtes pas assez gradé pour pouvoir ajouter des images en masse ! Contactez le Discord de la France Insoumise pour obtenir les droits.";
 	$showPage = false;
 }
+
 
