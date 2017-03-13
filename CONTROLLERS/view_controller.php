@@ -20,7 +20,7 @@ else {
 	$idhash = $infos['idhash'];
 	$titre = $infos['titre'];
 	$idUser = $infos['idUser'];
-	$pseudoUser = $infos['pseudoUser'];
+	$pseudoUser = $infos['pseudoAuthor'];
 	$urlSource = $infos['urlSource'];
 	$urlThumbnail = $infos['urlThumbnail'];
 	$points = $infos['pointsTotaux'];

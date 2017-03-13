@@ -42,7 +42,7 @@ if ($referer != $domaine) {
 } */
 
 
-
+/*
 $captcha = $_POST['g-recaptcha-response'];
 if (!$captcha) {
 
@@ -61,7 +61,7 @@ if ($decoded_response->success == false) {
 
 
 
-
+*/
 $req = $bdd->prepare ('SELECT grade FROM users WHERE id = :id_user');
 $req->execute ([
     'id_user' => $id_user,

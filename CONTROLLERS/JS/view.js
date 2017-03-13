@@ -46,11 +46,6 @@ $(window).on('load', function() {
 		$("[data-toggle='tooltip']").tooltip();
 
 
-
-		$('#change_tags').click(function() {
-				changeTags($('.big-img-container'));
-				});
-
 		$('.big-card-signal').click(function() {
 				report($('.big-img-container'));
 				});
