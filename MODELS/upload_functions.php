@@ -103,6 +103,10 @@ function createImagesVignettes($file, $id, $fromurl = false) {
 	} elseif ($extension_image == "gif") {
 		$source = imagecreatefromgif ($imagebase);
 	}
+    if (!$source) {
+        header ('Location:../upload.php?erreur=image');
+        exit();
+    }
 
 	if ($width >= $height) {
 		$ratio = $width / VIGNETTE_WIDTH;
@@ -145,7 +149,7 @@ function createImagesVignettes($file, $id, $fromurl = false) {
 
 }
 
-function insertImageFromFile($img, $id_user, $titre, $tagsstr) {
+function insertImageFromFile($img, $id_user, $titre, $tagsstr, $pseudo) {
 	global $bdd;
 
 	$image_type = htmlspecialchars($img["type"]);
@@ -171,11 +175,11 @@ function insertImageFromFile($img, $id_user, $titre, $tagsstr) {
         }
     }
 
-    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, nom_original, format, genre, tags, date_creation) VALUES(:titre, :id_user, :nom_original, :format, :genre, :tags, NOW())');
+    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, pseudo_author, format, genre, tags, date_creation) VALUES(:titre, :id_user, :pseudo_author, :format, :genre, :tags, NOW())');
     $req->execute ([
         ':titre' => htmlspecialchars ($titre),
         ':id_user' => $id_user,
-        ':nom_original' => htmlspecialchars ($img['name']), // A FAIRE ! : Verifier que < 255
+        ':pseudo_author' => $pseudo,
         ':genre' => "image",
         ':format' => $extension_image,
         ':tags' => $tagsstr,
@@ -193,7 +197,7 @@ function insertImageFromFile($img, $id_user, $titre, $tagsstr) {
 	return $id;
 }
 
-function insertImageFromUrl($url, $id_user, $titre, $tagsstr) {
+function insertImageFromUrl($url, $id_user, $titre, $tagsstr, $pseudo) {
 	global $bdd;
 
 	$a = retrieve_remote_file_size ($url); // Vérification de la taille de l'image
@@ -219,10 +223,11 @@ function insertImageFromUrl($url, $id_user, $titre, $tagsstr) {
     }
 
 
-    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, url, genre, tags, date_creation) VALUES(:titre, :id_user, :url, :genre, :tags, NOW())');
+    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, pseudo_author, url, genre, tags, date_creation) VALUES(:titre, :id_user, :pseudo_author, :url, :genre, :tags, NOW())');
     $req->execute ([
         ':titre' => htmlspecialchars ($titre),
         ':id_user' => $id_user,
+        ':pseudo_author' => $pseudo,
         ':url' => $url,
         ':genre' => "url",
         ':tags' => $tagsstr,

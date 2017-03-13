@@ -17,8 +17,12 @@ if (!$id_user) {
 	header("HTTP/1.0 403 Forbidden");
 	exit();
 }
+$pseudo_actuel = htmlspecialchars($_SESSION['pseudo']);
+if (!$pseudo_actuel) header ('Location:../pseudo.php?erreur=pseudo');
 
 $pseudo = htmlspecialchars($_POST['pseudo']);
+if (!$pseudo) header ('Location:../pseudo.php?erreur=pseudo');
+if (strlen($pseudo) > 250) header ('Location:../pseudo.php?erreur=pseudo');
 
 if(!isset($_SESSION['id'])) {
 	header('Location:../pseudo.php?erreur=notlogged');
@@ -64,6 +68,13 @@ if ($datebdd != 'null') {
 $req = $bdd->prepare("UPDATE users SET pseudo=:pseudo, datepseudochange = NOW() WHERE id=:id");
 $req->execute([
 	':pseudo' => htmlspecialchars($pseudo),
+	':id' => $_SESSION['id'],
+]);
+
+$req = $bdd->prepare("UPDATE images SET pseudo_author=:pseudo WHERE pseudo_author=:pseudo_actuel AND id_user =:id");
+$req->execute([
+	':pseudo' => htmlspecialchars($pseudo),
+	':pseudo_actuel' => $pseudo_actuel,
 	':id' => $_SESSION['id'],
 ]);
 

@@ -11,26 +11,28 @@
 	<?php if($showPage): ?>
 		<div class="big-img-container" id=<?php echo "'$idhash'" ?>>
 			<!-- header : infos et boutons partage -->
-			<div class="big-img-titre"><?php echo $titre ?></div>
+			<div class="big-img-titre"><a href='#'><?php echo $titre ?></a></div><br>
 			<div class='temps'>
-			<?php if($report==1): ?>
+			<?php if($report==1 && !$showSupprime): ?>
 					<span data-placement='bottom' data-toggle="tooltip" title="Signalé" class="big-card-signal glyphicon glyphicon-warning-sign voted"></span>
-					<?php else: ?>
+					<?php elseif(!$showSupprime): ?>
 					<span data-placement='bottom' data-toggle="tooltip" title="Signaler" class="big-card-signal glyphicon glyphicon-warning-sign"></span>
 					<?php endif ?>
 					
 					
-					<?php if($supprime==0): ?>
+					<?php if($supprime==0 && $showSupprime): ?>
 					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer" class="big-card-remove glyphicon glyphicon-trash"></span>
 					<?php else: ?>
 					<span data-placement='bottom' data-toggle="tooltip" title="Restaurer" class="big-card-remove glyphicon glyphicon-trash voted"></span>
 					<?php endif ?>
-			<?php if($showSupprime): ?>
+			<?php if($showBan): ?>
 					
 					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer et bannir" class="big-card-ban glyphicon glyphicon-ban-circle"></span>
 				
 			<?php endif ?>
-
+			<?php if($showSupprime): ?>
+					<span data-placement='bottom' data-toggle="tooltip" title="Modifier" class="big-card-edit glyphicon glyphicon-pencil"></span>
+			<?php endif ?>
 				<span class="glyphicon glyphicon-time"></span> <span class="elapsed"></span><?php echo " par <a data-toggle='popover' data-html='true'>$pseudoUser</a>" ?>
 				<input id="inscription" value="<?php echo $inscription ?>" hidden>
 				<input id="pointsUser" value="<?php echo $pointsUser ?>" hidden>
@@ -75,7 +77,6 @@
 			echo "<input type='text' id='tagsstr' value='$tagsstr' hidden>";
 
 			?>
-			<span class='glyphicon glyphicon-pencil' title='Modifier les tags' data-toggle='tooltip' id='change_tags'></span>
 			</div>
 		</div>
 	<?php else: ?>

@@ -3,6 +3,7 @@
 <?php echo $HEAD ?>
 <body>
 	<?php echo $NAVBAR ?>
+	<?php if($showPage): ?>
 	<div id="main_page">
 		<?php if(!empty($errmsg)): ?>
 			<div class='alert alert-danger erreur'>
@@ -41,7 +42,7 @@
 				</form></td></tr></table>
 
 				<h3>Stats</h3>
-				<p>Nombre d'utilisateurs inscrits : <?php echo $nbuser ?></p>
+				<p>Nombre d'utilisateurs totaux : <?php echo $nbuser ?></p>
 				<p>Nombre d'utilisateurs réseaux sociaux : <?php echo $nbfederated ?></p>
 				<p>Nombre de posts : <?php echo $nbposts ?></p>
 			<?php if(!empty($listuser)): ?>
@@ -60,5 +61,6 @@
 
 	</div>
 	</div>
+	<?php endif ?>
 </body>
 </html>

@@ -40,6 +40,9 @@ function updateSearch() {
 function closeBigCard() {
 	$('.big-card-container').hide();
 	updateVote($('.big-card').data('card'), $('.big-card').data('vote'));
+	
+	if($('.big-card').hasClass("editing"))
+		validateEdit($(".big-card"));
 }
 
 $(document).ready(function() {
@@ -69,6 +72,13 @@ $(document).ready(function() {
 	//signalement
 	$('.big-card-signal').click(function() {
 		report($('.big-card'));
+	});
+	
+	$('.big-card-edit').click(function() {
+		if($('.big-card').hasClass("editing"))
+			validateEdit($(".big-card"));
+		else
+			startEdit($('.big-card'));
 	});
 
 	//signalement
@@ -162,9 +172,8 @@ $(document).ready(function() {
 
 //quand l'user atteind le bas de la page, rajoute 20 cartes
 $(window).scroll(function() {
-	if(!fetching && $(window).scrollTop() + $(window).height() > $(document).height() - $(window).height()*0.3) {
+	if(!fin && !fetching && $(window).scrollTop() + $(window).height() > $(document).height() - $(window).height()*0.3) {
 		getCards(10);
-		console.log($(window).scrollTop()+":"+$(window).height());
 	}
 });
 
@@ -236,6 +245,7 @@ function addCard(c) {
 	var titre = c.titre;
 	var dateCreation = c.dateCreation;
 	var pseudoUser = c.pseudoUser;
+	var pseudoAuthor = c.pseudoAuthor;
 	var idUser = c.idUser;
 	var points = c.pointsTotaux;
 	var url = c.urlThumbnail;
@@ -257,7 +267,7 @@ function addCard(c) {
 	card.data('id_user', idUser);
 	card.find('.card-img>img').attr('src', url);
 	card.find('.card-title').html(titre);
-	card.find('.card-author>a').html(pseudoUser);
+	card.find('.card-author>a').html(pseudoAuthor);
 	card.find('.card-time').html(getTimeElapsed(dateCreation, true));
 	card.find('.card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
 
@@ -300,9 +310,17 @@ function addCard(c) {
 	});
 
 
-	card.find('.card-author>a')
-		.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(inscription, false)+"</p><p>Points: "+pointsUser+"</p><p><a href='index.php?sort=new&pseudo="+pseudoUser+"'> Posts:</a> "+posts+"</p>").click(function(e){e.stopPropagation();}).popover('fixTitle');
-
+	if (pseudoUser == pseudoAuthor) {
+		card.find('.card-author>a')
+			.attr('data-content', "<p>Inscrit il y a " + getTimeElapsed(inscription, false) + "</p><p>Points: " + pointsUser + "</p><p><a href='index.php?sort=new&pseudo=" + pseudoUser + "'> Posts:</a> " + posts + "</p>").click(function (e) {
+			e.stopPropagation();
+		}).popover('fixTitle');
+	} else {
+		card.find('.card-author>a')
+			.attr('data-content', "<p> Conçu par " + pseudoAuthor + "</p><p><a href='index.php?sort=new&pseudo=" + pseudoUser + "'> Posté par " + pseudoUser + "</a></p>").click(function (e) {
+			e.stopPropagation();
+		}).popover('fixTitle');
+	}
 	//bouton OPEN
 	card.find(".card-open, .card-img").click(function() {
 		var card = $(this).closest(".card, .card-big");
@@ -313,10 +331,9 @@ function addCard(c) {
 		big.data('id_user', idUser);
 		big.find('.big-card-title').html('<a href='+ urlBase + 'view.php?id=' + idhash +">"+ titre+'</a>');
 		big.find('.big-card-tmps').html(temps);
-		big.find('.big-img-author').html(pseudoUser);
+		big.find('.big-img-author').html(pseudoAuthor);
 		big.find('.big-card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
 
-		big.find('.big-card-title').append("<span class='glyphicon glyphicon-pencil' title='Modifier le titre' data-toggle='tooltip' id='change_titre'></span>");
 		$("[data-toggle='tooltip']").tooltip();
 
 		if(idUser == $('#id_user').val()) {
@@ -332,15 +349,17 @@ function addCard(c) {
 			changeTitre(big);
 		});
 
-		if(idUser == $('#id_user').val() || $("#grade").val() > 0) {
+		if(idUser == $('#id_user').val() || $("#grade").val() >= 5) {
 			big.find('.big-card-remove').show();
+			big.find('.big-card-edit').show();
 			big.find('.big-card-signal').hide();
 		} else {
 			big.find('.big-card-remove').hide();
 			big.find('.big-card-signal').show();
+			big.find('.big-card-edit').hide();
 		}
 
-		if($('#grade').val() > 0) {
+		if($('#grade').val() >= 5) {
 			big.find('.big-card-ban').show();
 			big.find('.big-card-sup-def').show();
 
@@ -355,7 +374,6 @@ function addCard(c) {
 			if(tags[i])
 				big.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
 		}
-		big.find('.tags').append("<span class='glyphicon glyphicon-pencil' title='Modifier les tags' data-toggle='tooltip' id='change_tags'></span>");
 		$("[data-toggle='tooltip']").tooltip();
 
 		if(idUser == $('#id_user').val()) {
@@ -372,11 +390,18 @@ function addCard(c) {
 		});
 
 
-
-
-		big.find('.big-img-author')
-			.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed(inscription, false)+"</p><p>Points: "+pointsUser+"</p><p><a href='index.php?sort=new&pseudo="+pseudoUser+"'> Posts:</a> "+posts+"</p>").click(function(e){e.stopPropagation();}).popover('fixTitle')
-			.click(function(e){e.stopPropagation();}).popover('fixTitle');
+		if (pseudoUser == pseudoAuthor) {
+			big.find('.big-img-author')
+				.attr('data-content', "<p>Inscrit il y a " + getTimeElapsed(inscription, false) + "</p><p>Points: " + pointsUser + "</p><p><a href='index.php?sort=new&pseudo=" + pseudoUser + "'> Posts:</a> " + posts + "</p>").click(function (e) {
+				e.stopPropagation();
+			}).popover('fixTitle')
+		}
+		else {
+			big.find('.big-img-author')
+				.attr('data-content', "<p> Conçu par " + pseudoAuthor + "</p><p><a href='index.php?sort=new&pseudo=" + pseudoUser + "'> Posté par " + pseudoUser + "</a></p>").click(function (e) {
+				e.stopPropagation();
+			}).popover('fixTitle');
+		}
 
 
 

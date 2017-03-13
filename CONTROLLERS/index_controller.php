@@ -1,7 +1,7 @@
 <?php
 
 $showSupprime = false;
-if(isset($grade) && $grade > 0)
+if(isset($grade) && $grade >= 5)
 	$showSupprime = true;
 
 //url params
@@ -14,3 +14,7 @@ $search_tags = "";
 if(isset($_REQUEST['tag'])) {
 	$search_tags = $_REQUEST['tag'];
 }
+
+$showPage = true;
+if($grade < 5 && ($_REQUEST['sort'] == "deleted" || $_REQUEST['sort'] == "report"))
+	$showPage = false;

@@ -1,37 +1,16 @@
-//A FAIRE : FUSIONNER CE SCRIPT AVEC COMMON CARDS
 
 //id de l'image
 var idhash = $('.big-img-container').attr('id');
 
 $("[data-toggle='tooltip']").tooltip();
-if($('#idUser').val() == $('#id_user').val() || $("#grade").val() > 0) {
-	$('.big-card-remove').show();
-	$('.big-card-signal').hide();
-} else {
-	$('.big-card-remove').hide();
-	$('.big-card-signal').show();
-}
 
-if($('#grade').val() > 0) {
-	$('.big-card-ban').show();
-	$('.big-card-sup-def').show();
-
-} else {
-	$('.big-card-ban').hide();
-	$('.big-card-sup-def').hide();
-}
-
-if($('#idUser').val() == $('#id_user').val()) {
-	$("#change_tags").show();
-} else {
-	$("#change_tags").hide();
-}
 $(document).click(function() {
 		$('#main_page .popover').popover('hide');
 		});
 $(window).on('load', function() {
 
 
+		$('.big-img-container').data('tags', $('#tagsstr').val());
 
 		//initialise le clipboard
 		$('.big-img-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
@@ -69,13 +48,19 @@ $(window).on('load', function() {
 
 
 		$('#change_tags').click(function() {
-				$('.big-img-container').data('tags', $('#tagsstr').val());
 				changeTags($('.big-img-container'));
 				});
 
 		$('.big-card-signal').click(function() {
 				report($('.big-img-container'));
 				});
+		
+		$('.big-card-edit').click(function() {
+			if(!$('.big-img-container').hasClass('editing'))
+				startEdit($('.big-img-container'));
+			else
+				validateEdit($('.big-img-container'));
+		});
 
 		//suppression
 		$('.big-card-remove').click(function() {

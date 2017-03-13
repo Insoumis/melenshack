@@ -47,6 +47,11 @@
 						<br>
 						<select multiple name="tags[]" id="tagsinput" type="text" data-role="tagsinput"></select>
 					</div>
+					<?php if($showPseudo): ?>
+						<br><label for="pseudo">Pseudo affiché (optionnel): </label>
+						<input type="text" id="pseudo" name="pseudo" class="form-control"/>
+
+					<?php endif ?>
 					<div class="g-recaptcha" data-sitekey="6LeKlhgUAAAAAAaxaZrJdqgzv57fCkNmX5UcXrwG" data-callback="recaptchaCallback"></div>
 					<br>
 					<input type="hidden" name="token" id="token" value="<?php echo $token_upload?>">

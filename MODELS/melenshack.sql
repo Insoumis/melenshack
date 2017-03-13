@@ -1,14 +1,14 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 4.5.4.1deb2ubuntu2
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Dim 12 Mars 2017 à 02:17
+-- Généré le :  Dim 12 Mars 2017 à 19:36
 -- Version du serveur :  5.7.17-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.15-0ubuntu0.16.04.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+SET time_zone = "+01:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -88,6 +88,7 @@ CREATE TABLE `images` (
   `nb_vote_positif` int(11) NOT NULL DEFAULT '0',
   `nb_vote_negatif` int(11) NOT NULL DEFAULT '0',
   `id_user` int(11) NOT NULL,
+  `pseudo_author` varchar(255) DEFAULT 'Inconnu',
   `date_creation` datetime NOT NULL,
   `nom_original` varchar(255) DEFAULT NULL,
   `nom_hash` varchar(255) DEFAULT NULL,

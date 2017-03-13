@@ -43,8 +43,10 @@ if(isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 	$errmsg = "Vous devez choisir un pseudo pour poster une image ! <a href='pseudo.php'>Choisir un pseudo</a>";
 	$showPage = false;
 } else if ($grade < 2) {
-	$errmsg = "Vous n'êtes pas assez gradé pour pouvoir ajouter des images en masse ! Contactez le Discord de la France Insoumise pour obtenir les droits.";
+	$errmsg = "Vous n'êtes pas assez gradé pour pouvoir ajouter des images en masse ! Contactez <a href='http://discord.insoumis.online/'>le Discord de la France Insoumise</a> pour obtenir les droits.";
 	$showPage = false;
 }
 
-
+$showPseudo = false;
+if($grade >= 5)
+	$showPseudo = true;
