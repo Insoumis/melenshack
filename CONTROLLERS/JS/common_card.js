@@ -35,7 +35,7 @@ function shareFacebook(e) {
 	//ne propage pas l'event à la carte
 	e.stopPropagation();
 	var card = $(e.target).closest(".card, .big-card, .big-img-container");
-	var url = urlBase+"view.php?id=" + card.attr("id");
+	var url = urlBase + card.attr("id");
 
 	FB.ui(
 			{
@@ -48,7 +48,7 @@ href: url
 function shareTwitter(e) {
 	e.stopPropagation();
 	var card = $(e.target).closest(".card, .big-card, .big-img-container");
-	var url = urlBase+"view.php?id=" + card.attr("id");
+	var url = urlBase + card.attr("id");
 	window.open("https://twitter.com/share?url="+escape(url)+"&hashtags=jlm2017", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 
 }
@@ -56,7 +56,7 @@ function shareTwitter(e) {
 function shareGplus(e) {
 	e.stopPropagation();
 	var card = $(e.target).closest(".card, .big-card, .big-img-container");
-	var url = urlBase+"view.php?id=" + card.attr("id");
+	var url = urlBase+ card.attr("id");
 	window.open("https://plus.google.com/share?url="+escape(url), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 
 

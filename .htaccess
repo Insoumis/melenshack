@@ -6,5 +6,6 @@ RewriteRule "^random$" "index.php?sort=random" [PT]
 RewriteRule "^admin$" "admin.php" [PT]
 RewriteRule "^upload$" "upload.php" [PT]
 RewriteRule "^mass$" "upload_masse.php" [PT]
+RewriteRule "^42$" "42" [PT]
 
-RewriteRule "^([a-zA-Z0-9]*)$" "view.php?id=$1" [PT]
+RewriteRule "^([a-zA-Z0-9]+)$" "/view.php?id=$1" [R]

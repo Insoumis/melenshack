@@ -269,7 +269,7 @@ function addCard(c) {
 	card.find('.card-title').html(titre);
 	card.find('.card-author>a').html(pseudoAuthor);
 	card.find('.card-time').html(getTimeElapsed(dateCreation, true));
-	card.find('.card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
+	card.find('.card-link').attr('data-clipboard-text', urlBase + idhash);
 
 
 	card.data('tags', c.tags);
@@ -332,7 +332,7 @@ function addCard(c) {
 		big.find('.big-card-title').html('<a href='+ urlBase + 'view.php?id=' + idhash +">"+ titre+'</a>');
 		big.find('.big-card-tmps').html(temps);
 		big.find('.big-img-author').html(pseudoAuthor);
-		big.find('.big-card-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
+		big.find('.big-card-link').attr('data-clipboard-text', urlBase + idhash);
 
 		$("[data-toggle='tooltip']").tooltip();
 
@@ -413,9 +413,13 @@ function addCard(c) {
 
 
 		big.find('.big-card-points').html(card.find('.card-points').html());
-		big.find('.big-card-img').attr('src', urlSource).on('load',
+		
+		$(".big-card-container").show();
+		big.find(".big-card-img").attr('src', url);
+		
+		var i = $("<img/>").addClass("big-card-img").attr('src', urlSource).on('load',
 				function() {
-					$('.big-card-container').show();
+					$('.big-card-img').replaceWith($(i));
 				});
 
 	});

@@ -13,7 +13,7 @@ $(window).on('load', function() {
 		$('.big-img-container').data('tags', $('#tagsstr').val());
 
 		//initialise le clipboard
-		$('.big-img-link').attr('data-clipboard-text', urlBase + 'view.php?id=' + idhash);
+		$('.big-img-link').attr('data-clipboard-text', urlBase + idhash);
 
 		var c = new Clipboard($(".big-img-link").get(0));
 		c.on('success', function() {

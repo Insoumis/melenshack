@@ -3,6 +3,24 @@ include_once ("includes/constants.php");
 include_once ("includes/GIFDecoders.class.php");
 include_once ("includes/identifiants.php");
 
+function encode($str) {
+//longueur str max: ~15
+
+	$str = base_convert($str, 16, 8);
+
+	$keys = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
+	$index = 0;
+	$res = '';
+	do {
+		$i1 = $str[$index];
+		$i2 = $str[$index+1];
+		$res .= $keys[intval($i2)+8*intval($i1)];
+
+		$index += 2;
+	} while($index < strlen($str));
+	return $res;
+}
+
 function retrieve_remote_file_size ($url)
 {
     $ch = curl_init ($url);
@@ -186,7 +204,7 @@ function insertImageFromFile($img, $id_user, $titre, $tagsstr, $pseudo) {
     ]);
 
     $idbase = $bdd->lastInsertId ();
-    $id = sha1 ($idbase . SALT_ID);
+    $id = encode(substr(md5($idbase . SALT_ID), 0, 12));
 
     $req = $bdd->prepare ('UPDATE images SET nom_hash = :nom_hash  WHERE id = :id ');
     $req->execute ([
@@ -234,7 +252,7 @@ function insertImageFromUrl($url, $id_user, $titre, $tagsstr, $pseudo) {
     ]);
 
     $idbase = $bdd->lastInsertId ();
-    $id = sha1 ($idbase . SALT_ID);
+    $id = encode(substr(md5($idbase . SALT_ID), 0, 12));
 
     $req = $bdd->prepare ('UPDATE images SET nom_hash = :nom_hash  WHERE id = :id ');
     $req->execute ([
