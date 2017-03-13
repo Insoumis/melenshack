@@ -8,6 +8,9 @@
 
 	<?php if(!isset($urlSource)): ?>
 	<meta property="og:type"               content="website" >
+	<meta property="og:image"              content="assets/melenshack.png">
+	<meta property="og:image:width"              content="1600">
+	<meta property="og:image:height"              content="480">
 	<?php else: ?>
 
 	<meta property="og:type"               content="article" >
