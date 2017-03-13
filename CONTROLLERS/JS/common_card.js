@@ -1,8 +1,7 @@
-/*
+/* 
+   SCRIPT COMMUN DE PARTAGE / VOTE DES CARTES
 
-SCRIPT COMMUN DE PARTAGE / VOTE DES CARTES
-
-*/
+ */
 
 
 var urlBase = location.href.substring(0, location.href.lastIndexOf("/")+1);
@@ -14,21 +13,21 @@ var now = new Date();
 //Facebook SDK pour le partage
 window.fbAsyncInit = function() {
 	FB.init({
-		appId      : '1849815745277262',
-		xfbml      : true,
-		version    : 'v2.8'
-	});
-	
-	FB.AppEvents.logPageView();
+appId      : '1849815745277262',
+xfbml      : true,
+version    : 'v2.8'
+});
+
+FB.AppEvents.logPageView();
 };
 
 (function(d, s, id){
-	var js, fjs = d.getElementsByTagName(s)[0];
-	if (d.getElementById(id)) {return;}
-	js = d.createElement(s); js.id = id;
-	js.src = "//connect.facebook.net/fr_FR/sdk.js";
-	fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
+ var js, fjs = d.getElementsByTagName(s)[0];
+ if (d.getElementById(id)) {return;}
+ js = d.createElement(s); js.id = id;
+ js.src = "//connect.facebook.net/fr_FR/sdk.js";
+ fjs.parentNode.insertBefore(js, fjs);
+ }(document, 'script', 'facebook-jssdk'));
 
 
 //Fonctions de partage
@@ -39,11 +38,11 @@ function shareFacebook(e) {
 	var url = urlBase+"view.php?id=" + card.attr("id");
 
 	FB.ui(
- 	{
-		method: 'share',
-		hashtag: '#jlm2017',
-		href: url
-	}, function(response){});
+			{
+method: 'share',
+hashtag: '#jlm2017',
+href: url
+}, function(response){});
 }
 
 function shareTwitter(e) {
@@ -71,22 +70,22 @@ function getTimeElapsed(date, minimise=false) {
 
 	date = new Date(date);
 	var diff = now - date;
-	
+
 	diff = Math.floor(diff/1000);
 	var s = diff % 60;
-	
+
 	diff = Math.floor((diff-s)/60);
 	var min = diff % 60;
-	
+
 	diff = Math.floor((diff-min)/60);
 	var h = diff % 24;
-	
+
 	diff = Math.floor((diff-h)/24);
 	var d = diff % 30;
-	
+
 	diff = Math.floor((diff-d)/30);
 	var m = diff % 12;
-	
+
 	diff = Math.floor((diff-m)/12);
 	var y = diff;
 
@@ -162,7 +161,7 @@ function thumbUp(id, card) {
 
 	if(!currentV) {
 		currentV = card.find('.card-points').html();
-	
+
 	}
 
 	if(!btn.hasClass("voted")) {
@@ -171,11 +170,11 @@ function thumbUp(id, card) {
 
 		if(card.find(".card-thumb-down").hasClass("voted")) 
 			currentV ++;
-		
-	
+
+
 		currentV++;
-	
-					
+
+
 		card.find(".card-thumb-down").removeClass("voted");
 		if(!card.hasClass('big-img-container')) {
 			card.css('background', '#23b9d0');
@@ -185,7 +184,7 @@ function thumbUp(id, card) {
 			card.parent().stop(true, false).animate({backgroundColor: 'rgba(255, 255, 255, 0)'}, 700);
 		}
 		vote(id, 1);
-        card.data('vote', 1);
+		card.data('vote', 1);
 
 	} else {
 		currentV--;
@@ -193,20 +192,20 @@ function thumbUp(id, card) {
 		btn.css('color', 'black');
 		btn.tooltip('hide');
 		btn.on('mouseout', function() {
-			btn.css('color', '');
-		});
+				btn.css('color', '');
+				});
 
 		vote(id, 0);
-        card.data('vote', 0);
+		card.data('vote', 0);
 	}
 
 	card.find('.big-card-points, .card-points, .points').html(currentV);
 }
 
-	
+
 function thumbDown(id, card) {
-	
-    var btn = card.find('.card-thumb-down');
+
+	var btn = card.find('.card-thumb-down');
 
 	if($('#connected').val() == "no") {
 		showVoteError();
@@ -215,18 +214,18 @@ function thumbDown(id, card) {
 	var currentV = card.find('.big-card-points, .points').html();
 	if(!currentV)
 		currentV = card.find('.card-points').html();
-	
+
 	if(!btn.hasClass("voted")) {
 		btn.addClass("voted");
 		btn.css('color', '');
-		
+
 		if(card.find(".card-thumb-up").hasClass("voted"))
 			currentV --;
-	
+
 		currentV--;
-					
+
 		card.find(".card-thumb-up").removeClass("voted");
-		
+
 		if(!card.hasClass('big-img-container')) {
 			card.css('background', '#e23d22');
 			card.stop(true, false).animate({backgroundColor: '#ffffff'}, 700);
@@ -236,49 +235,49 @@ function thumbDown(id, card) {
 		}
 
 		vote(id, -1);
-        card.data('vote', -1);
+		card.data('vote', -1);
 	} else {
 		currentV++;
 		btn.removeClass('voted');
 		btn.css('color', 'black');
 		btn.tooltip('hide');
 		btn.on('mouseout', function() {
-			btn.css('color', '');
-		});
+				btn.css('color', '');
+				});
 		vote(id, 0);
-        card.data('vote', 0);
+		card.data('vote', 0);
 	}
 	card.find('.big-card-points, .card-points, .points').html(currentV);
 
 }
-	
+
 
 
 function updateVote(card,ancien) {
-	
-		ancien = parseInt(ancien);
-        $(card).data('vote', ancien);
-		if(ancien == 1) {
-			$(card).find('.card-thumb-up').addClass('voted');
-			$(card).find('.card-thumb-down').removeClass('voted');
-		} else if(ancien == -1) {
-			$(card).find('.card-thumb-down').addClass('voted');
-			$(card).find('.card-thumb-up').removeClass('voted');
-		} else {
-			$(card).find('.card-thumb-down').removeClass('voted');
-			$(card).find('.card-thumb-up').removeClass('voted');
-		}
+
+	ancien = parseInt(ancien);
+	$(card).data('vote', ancien);
+	if(ancien == 1) {
+		$(card).find('.card-thumb-up').addClass('voted');
+		$(card).find('.card-thumb-down').removeClass('voted');
+	} else if(ancien == -1) {
+		$(card).find('.card-thumb-down').addClass('voted');
+		$(card).find('.card-thumb-up').removeClass('voted');
+	} else {
+		$(card).find('.card-thumb-down').removeClass('voted');
+		$(card).find('.card-thumb-up').removeClass('voted');
+	}
 }
 
 function updateReport(card, ancien) {
 
 	ancien = parseInt(ancien);
-    $(card).data('report', ancien);
-	
+	$(card).data('report', ancien);
+
 	if(ancien == 1) {
-			$(card).find('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle');
+		$(card).find('.big-card-signal').addClass('voted').attr('title', 'Signalé').tooltip('fixTitle');
 	} else {
-			$(card).find('.big-card-signal').removeClass('voted').attr('title', 'Signaler').tooltip('fixTitle');
+		$(card).find('.big-card-signal').removeClass('voted').attr('title', 'Signaler').tooltip('fixTitle');
 	}
 }
 
@@ -286,28 +285,28 @@ function updateReport(card, ancien) {
 //envoie vote au serveur
 function vote(id, vote) {
 	$.post(
-		'MODELS/vote_conf.php',
-		{idhash: id,
-		 vote: vote},
-		'text'
-	);
+			'MODELS/vote_conf.php',
+			{idhash: id,
+vote: vote},
+'text'
+);
 }
 
 
 //affiche erreur si pas loggé
 function showVoteError() {
 	var e = `<div id='voteerror' class='alert alert-danger erreur'>
-	      <a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-		  Vous devez être connecté pour pouvoir voter. <a href='login.php'>Se connecter</a>.
-		  </div>`;
+		<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+		Vous devez être connecté pour pouvoir voter. <a href='login.php'>Se connecter</a>.
+		</div>`;
 
 	var erreur = $(e);
 	$('#main_page').prepend(erreur);
 
 	//fade out au bout de 2s
 	erreur.delay(2000).animate({'opacity': '0'}, 1000, function() {
-		erreur.remove();		
-	});
+			erreur.remove();		
+			});
 }
 
 function report(card) {
@@ -327,16 +326,16 @@ function report(card) {
 	$.post(
 			'MODELS/report_conf.php',
 			{
-				idhash: card.attr('id'),
-			},
-			function(e) {
-				updateReport(card, 1);
-			},
-			'text'
-		  );
+idhash: card.attr('id'),
+},
+function(e) {
+updateReport(card, 1);
+},
+'text'
+);
 	card.data('report', 1);
 	$('.big-card').data('card').data('report', 1);
-}
+	}
 
 function removesignal(card) {
 	if($('#connected').val() == 'no') {
@@ -353,17 +352,17 @@ function removesignal(card) {
 		return -1;
 
 	$.post(
-		'MODELS/removereport_conf.php',
-		{
-			idhash: card.attr('id'),
-			token : token
-		},
-		function(e) {
-			updateReport(card, 1);
-		},
-		'text'
-	);
-}
+			'MODELS/removereport_conf.php',
+			{
+idhash: card.attr('id'),
+token : token
+},
+function(e) {
+updateReport(card, 1);
+},
+'text'
+);
+	}
 
 function supprime_def(card) {
 	var conf = false;
@@ -377,14 +376,14 @@ function supprime_def(card) {
 	$.post(
 			'MODELS/supprime_def_conf.php',
 			{
-				idhash: card.attr('id'),
-				token : token
-			},
-			function(e) {
-			},
-			'text'
-		  );
-}
+idhash: card.attr('id'),
+token : token
+},
+function(e) {
+},
+'text'
+);
+	}
 function supprime_restore(card) {
 	var conf = false;
 	var value = 1;
@@ -402,15 +401,15 @@ function supprime_restore(card) {
 	$.post(
 			'MODELS/supprime_conf.php',
 			{
-				idhash: $(card).attr('id'),
-				value: value,
-				token : token
-			},
-			function(e) {
-			},
-			'text'
-		  );
-}
+idhash: $(card).attr('id'),
+value: value,
+token : token
+},
+function(e) {
+},
+'text'
+);
+	}
 
 function ban_sup(card, iduser) {
 	var conf = false;
@@ -424,71 +423,151 @@ function ban_sup(card, iduser) {
 	$.post(
 			'MODELS/ban_conf.php',
 			{
-				id_user: iduser,
-				token : token,
-				value: 1
-			},
-			function(e) {
-			},
-			'text'
-		  );
+id_user: iduser,
+token : token,
+value: 1
+},
+function(e) {
+},
+'text'
+);
 
 	//send remove to server
 	$.post(
 			'MODELS/supprime_conf.php',
 			{
-				idhash: $(card).attr('id'),
-				value: 1,
-				token : token
-			},
-			function(e) {
-				$("#"+$(card).attr("id")+".card").remove();
-			},
-			'text'
-		  );
-}
+idhash: $(card).attr('id'),
+value: 1,
+token : token
+},
+function(e) {
+$("#"+$(card).attr("id")+".card").remove();
+},
+'text'
+);
+	}
 
 function changeTags(card) {
-			card.find('.tags').html("");
-			card.find('.tags').append("<input id='tagsinput' type='text' data-role='tagsinput' placeholder='+ tags' value='"+card.data('tags')+"'/><span class='glyphicon glyphicon-ok' id='change_tags_ok' title='Appliquer les tags' data-toggle='tooltip'></span>");
-			$('#tagsinput').tagsinput({
-				maxTags: 10,
-				maxChars: 20,
-				trimValue: true
-			});
-			$("[data-toggle='tooltip']").tooltip();
+	card.find('.tags').html("");
+	card.find('.tags').append("<input id='tagsinput' type='text' data-role='tagsinput' placeholder='+ tags' value='"+card.data('tags')+"'/><span class='glyphicon glyphicon-ok' id='change_tags_ok' title='Appliquer les tags' data-toggle='tooltip'></span>");
+	$('#tagsinput').tagsinput({
+maxTags: 10,
+maxChars: 20,
+trimValue: true
+});
+$("[data-toggle='tooltip']").tooltip();
 
-			card.find('#change_tags_ok').click(function(e) {
+card.find('#change_tags_ok').click(function(e) {
 
-				var tags =$('#tagsinput').val();
-				$.post("MODELS/change_tags.php", {tags: tags, id: card.attr('id')});
-				card.data('tags', tags);
-				if(card.data('card'))
-					card.data('card').data('tags', tags);
-				tags = tags.split(",");
-				card.find('.tags').html("");
-				for(var i=0; i < tags.length; ++i) {
-					if(tags[i])
-						card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
-				}
-				card.find(".tags").append("<span class='glyphicon glyphicon-pencil' title='Modifier les tags' data-toggle='tooltip' id='change_tags'></span>");
-				$("[data-toggle='tooltip']").tooltip();
-				card.find('#change_tags').click(function() {
+		var tags =$('#tagsinput').val();
+		$.post("MODELS/change_tags.php", {tags: tags, id: card.attr('id')});
+		card.data('tags', tags);
+		if(card.data('card'))
+		card.data('card').data('tags', tags);
+		tags = tags.split(",");
+		card.find('.tags').html("");
+		for(var i=0; i < tags.length; ++i) {
+		if(tags[i])
+		card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
+		}
+		card.find(".tags").append("<span class='glyphicon glyphicon-pencil' title='Modifier les tags' data-toggle='tooltip' id='change_tags'></span>");
+		$("[data-toggle='tooltip']").tooltip();
+		card.find('#change_tags').click(function() {
 
-					changeTags(card);
+				changeTags(card);
 				});
 
-				if(card.data('card')) {
+		if(card.data('card')) {
 
-				
-					card.data("card").find(".tags").html("");
-					for(var i=0; i < tags.length; ++i) {
-						if(i>3)
-							break;
-						if(tags[i])
-							card.data('card').find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
-					}
-				}
 
-			});
+			card.data("card").find(".tags").html("");
+			for(var i=0; i < tags.length; ++i) {
+				if(i>3)
+					break;
+				if(tags[i])
+					card.data('card').find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
+			}
+		}
+
+});
+}
+
+function startEdit(card) {
+	card.addClass("editing");
+
+	card.find('.big-card-edit').removeClass('glyphicon-pencil').addClass("glyphicon-ok");
+
+	//titre
+	var titre = card.find('.big-card-title a, .big-img-titre a').html();
+	card.find(".big-card-title, .big-img-titre").html("<input type='text' class='input-lg form-control' value='"+titre+"' placeholder='Titre'/>");
+
+	//tags
+	card.find('.tags').html("<input id='tagsinput' type='text' data-role='tagsinput' placeholder='+ tags' value='"+card.data('tags')+"'/>");
+	$('#tagsinput').tagsinput({
+		maxTags: 10,
+		maxChars: 20,
+		trimValue: true
+	});
+	$("[data-toggle='tooltip']").tooltip();
+
+	//pseudo
+	if($("#grade").val() >= 5) {
+		var pseudo = card.find(".big-img-author, .temps a").html();
+		card.find('.big-img-author, .temps a').replaceWith($("<input class='big-img-author' type='text' value='"+pseudo+"' placeholder='Pseudo'/>"));
+	}
+}
+
+function validateEdit(card) {
+	card.removeClass('editing');
+
+	card.find('.big-card-edit').addClass('glyphicon-pencil').removeClass("glyphicon-ok");
+	
+	//titre
+	var titre = card.find(".big-card-title input, .big-img-titre input").val();
+	card.find(".big-card-title, .big-img-titre").html("<a href='view.php?id="+card.attr('id')+"'>"+titre+"</a>");
+	if(card.data('card')) {
+		card.data('card').find('.card-title').html(titre);
+	}
+	$.post("MODELS/change_titre.php", {titre: titre, id: card.attr('id')});
+
+	//tags
+	var tags = card.find('#tagsinput').val();
+	card.find('#tagsinput').remove();
+	$.post("MODELS/change_tags.php", {tags: tags, id: card.attr('id')});
+	card.data('tags', tags);
+	if(card.data('card'))
+		card.data('card').data('tags', tags);
+	tags = tags.split(",");
+	card.find('.tags').html("");
+	for(var i=0; i < tags.length; ++i) {
+		if(tags[i])
+			card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
+	}
+	$("[data-toggle='tooltip']").tooltip();
+
+	if(card.data('card')) {
+
+		card.data("card").find(".tags").html("");
+		for(var i=0; i < tags.length; ++i) {
+			if(i>3)
+				break;
+			if(tags[i])
+				card.data('card').find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
+		}
+	}
+
+	if($('#grade').val() >= 5) {
+		var pseudo = card.find("input.big-img-author").val();
+		card.find('.big-img-author, .temps a').replaceWith($("<a data-placement='bottom' data-toggle='popover' data-html='true' class='big-img-author' href='#' data-original-title='' title='' data-content=\""+"<p>Inscrit il y a 2 jours</p><p>Points: 1</p><p><a href='index.php?sort=new&amp;pseudo=eee'> Posts:</a> 1</p>\">"+pseudo+"</a>"));
+		$("[data-toggle='popover']").popover();
+
+		if(card.data('card')) {
+			card.data('card').find('.card-author a').html(pseudo);
+		}
+		
+		$.post("MODELS/change_author.php", {pseudo: pseudo, id: card.attr('id')});
+
+	}
+
+
 }

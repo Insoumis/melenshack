@@ -54,5 +54,6 @@ $req = $bdd->prepare ('SELECT count(*) FROM images WHERE 1');
 $req->execute ();
 $res = $req->fetch();
 $nbposts = $res[0];
-
-
+$showPage = false;
+if($grade >= 5)
+	$showPage = true;

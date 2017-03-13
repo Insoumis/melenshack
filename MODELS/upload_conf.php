@@ -46,6 +46,28 @@ if ($referer != $domaine) {
     echo'lol';
 } */
 
+
+
+
+$captcha = $_POST['g-recaptcha-response'];
+if (!$captcha) {
+
+	    header ('Location:../upload.php?erreur=captcha');
+		    exit();
+}
+
+// Verification de la validité du captcha
+$response = file_get_contents ("https://www.google.com/recaptcha/api/siteverify?secret=6LefaBUUAAAAAOCU1GRih8AW-4pMJkiRRKHBmPiE&response=" . $captcha);
+$decoded_response = json_decode ($response);
+if ($decoded_response->success == false) {
+
+	    header ('Location:../upload.php?erreur=captcha');
+		    exit();
+}
+
+
+
+
 $req = $bdd->prepare ('SELECT grade FROM users WHERE id = :id_user');
 $req->execute ([
     'id_user' => $id_user,

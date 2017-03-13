@@ -10,7 +10,7 @@
 
 
 	<!-- container principal -->
-
+	<?php if($showPage): ?>
 	<div id='main_page'>
 
 	<div class="big-card-container" hidden>
@@ -20,21 +20,21 @@
 				<?php if(!$showSupprime): ?>
 					<span data-placement='bottom' data-toggle="tooltip" title="Signaler" class="big-card-signal glyphicon glyphicon-warning-sign"></span>
 					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer" class="big-card-remove glyphicon glyphicon-trash"></span>
+					<span data-placement='bottom' data-toggle="tooltip" title="Modifier" class="big-card-edit glyphicon glyphicon-pencil"></span>
 				<?php else: ?>
 
-				<?php if($sort == "deleted") { ?>
+				<?php if($sort == "deleted"): ?>
 					<span data-placement='bottom' data-toggle="tooltip" title="Restaurer" class="big-card-remove glyphicon glyphicon-trash voted"></span>
 					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer définitivement" class="big-card-sup-def glyphicon glyphicon-erase"></span>
-				<?php } else if($sort == "report") { ?>
-					<span data-placement='bottom' data-toggle="tooltip" title="Restaurer" class="big-card-removesignal glyphicon glyphicon-ok-sign"></span>
-					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer" class="big-card-remove glyphicon glyphicon-trash"></span>
-			    <?php } else { ?>
+			    <?php else: ?>
 					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer" class="big-card-remove glyphicon glyphicon-trash"></span>
 					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer et bannir" class="big-card-ban glyphicon glyphicon-ban-circle"></span>
-				<?php } endif ?>
+					<span data-placement='bottom' data-toggle="tooltip" title="Modifier" class="big-card-edit glyphicon glyphicon-pencil"></span>
+				<?php endif ?>
+				<?php endif ?>
 
 				
-				<div class="big-card-infos">
+				<div class="big-card-infos form-inline">
 					<span class="glyphicon glyphicon-time"></span> <span class="big-card-tmps"></span> par <strong><a data-placement='bottom' data-toggle='popover' data-html="true" class="big-img-author" href='#'></a></strong>
 				</div>
 				<span data-placement='bottom' data-toggle="tooltip" title="Fermer" class="big-card-close glyphicon glyphicon-remove"></span>
@@ -118,6 +118,7 @@
 </div>
 
 </div>
+<?php endif ?>
 <script src="libs/bootstrap-tagsinput.min.js"></script>
 <script src="CONTROLLERS/JS/common_card.js"></script>
 <script src="CONTROLLERS/JS/index.js"></script>

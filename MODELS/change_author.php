@@ -2,6 +2,7 @@
 
 include_once ("includes/identifiants.php");
 include_once ('includes/securite.class.php');
+include_once 'check_grade.php';
 
 if(empty($_SESSION))
 	session_start();
@@ -15,6 +16,10 @@ if(empty($_REQUEST['id'])) {
 	echo "mauvaise image";
 	exit();
 }
+if($grade < 5) {
+	echo "Pas assez gradé";
+	exit();
+}
 /*
 $referer = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
 $domaine= parse_url(SITE_DOMAINE, PHP_URL_HOST);
@@ -22,17 +27,17 @@ if ($referer != $domaine) {
 	header("HTTP/1.0 403 Forbidden");
 	exit();
 } */
+$pseudo = htmlspecialchars($_REQUEST['pseudo']);
 
-if(count(explode(",", $_REQUEST['tags'])) > 10) {
-	echo "trop de tags";
+if(strlen($pseudo) > 250) {
+	echo "Pseudo trop grand";
 	exit();
 }
 
-$req = $bdd->prepare("UPDATE images INNER JOIN users ON id_user=users.id SET tags=:tags WHERE nom_hash=:idhash AND (id_user=:iduser OR grade >= 5)");
+$req = $bdd->prepare("UPDATE images SET pseudo_author=:pseudo WHERE nom_hash=:idhash");
 if($req->execute([
-	':tags' => Securite::bdd($_REQUEST['tags']),
+	':pseudo' => Securite::bdd($pseudo),
 	':idhash' => Securite::bdd($_REQUEST['id']),
-	':iduser' => Securite::bdd($_SESSION['id'])
 ])) {
 	header("Location:../view.php?id=$_REQUEST[id]");
 } else {

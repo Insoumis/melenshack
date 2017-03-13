@@ -231,8 +231,24 @@ CARTES
 	padding-top: 0;
 	margin-bottom: 10px;
 	word-wrap: break-word;
+	text-align: center;
 }
 
+.big-card-title input{
+	font-weight: bold;
+	font-size: 40px;
+	line-height: 50px;
+	max-width: 70%;
+	text-align: center;
+	margin: auto;
+	margin-top: 2px;
+	margin-bottom: 2px
+}
+
+.big-card-title a {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
 .big-card-close {
 	float: right;
 	margin-left: 20px;
@@ -266,6 +282,13 @@ CARTES
 	user-select: none;
 	cursor: pointer;
 }
+.big-card-edit {
+	float: left;
+	font-size: 20px;
+	user-select: none;
+	cursor: pointer;
+	margin-left: 10px;
+}
 .big-card-ban {
 	float:left;
 	font-size: 20px;
@@ -288,6 +311,12 @@ CARTES
 .big-card-ban:hover {
 	color: red;
 }
+.big-card-edit:hover {
+	color: grey;
+}
+.big-card-edit.glyphicon-ok {
+	color: green;
+}
 .big-card-signal.voted {
 	color: orange;
 }
@@ -303,8 +332,20 @@ CARTES
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	padding-right: 50px;
-	padding-left: 50px;
+	padding-right: 60px;
+}
+.big-card-infos input, .temps input {
+	padding-left: 5px;
+	padding-right: 5px;
+	max-width: 20%;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	text-align: center;
+}
+.big-card-infos input:focus, .temps input:focus {
+	border: none;
+	outline: none;
+	border: 1px solid #66afe9;
 }
 .big-card-infos a:hover {
 	text-decoration : none;
@@ -709,6 +750,18 @@ SOURCES IMG
 	font-weight: bold;
 	font-size: 40px;
 }
+.big-img-titre a {
+	color: black;
+}
+.big-img-titre input {
+	text-align: center;
+	font-weight: bold;
+	font-size: 40px;
+	margin: auto;
+	margin-top: 5px;
+	margin-bottom: 6px;
+	width: auto;
+}
 .big-img-info {
 	word-wrap: break-word;
 	font-size: 28px;
@@ -767,7 +820,7 @@ SOURCES IMG
 	text-align: center;
 	margin-bottom: 60px;
 }
-.temps .big-card-signal, .temps .big-card-remove, .temps .big-card-ban {
+.temps .big-card-signal, .temps .big-card-remove, .temps .big-card-ban, .temps .big-card-edit {
 	float: none;
 	margin-right: 15px;
 	margin-left: -5px;

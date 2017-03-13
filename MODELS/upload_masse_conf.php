@@ -1,5 +1,8 @@
 <?php
 
+set_time_limit(3600);
+
+
 include_once ("includes/constants.php");
 require_once ('includes/token.class.php');
 include_once ("includes/GIFDecoders.class.php");

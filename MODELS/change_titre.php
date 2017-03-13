@@ -2,6 +2,7 @@
 
 include_once ("includes/identifiants.php");
 include_once ('includes/securite.class.php');
+include_once 'check_grade.php';
 
 if(empty($_SESSION))
 	session_start();
@@ -29,7 +30,7 @@ if(strlen($titre) > 250) {
 	exit();
 }
 
-$req = $bdd->prepare("UPDATE images SET titre=:titre WHERE nom_hash=:idhash AND id_user=:iduser ");
+$req = $bdd->prepare("UPDATE images INNER JOIN users ON id_user=users.id SET titre=:titre WHERE nom_hash=:idhash AND (id_user=:iduser OR grade >= 5) ");
 if($req->execute([
 	':titre' => Securite::bdd($_REQUEST['titre']),
 	':idhash' => Securite::bdd($_REQUEST['id']),

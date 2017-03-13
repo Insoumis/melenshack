@@ -44,6 +44,12 @@
 						<br>
 						<select multiple name="tags[]" id="tagsinput" type="text" data-role="tagsinput"></select>
 					</div>
+					<?php if($showPseudo): ?>
+						<br><label for="pseudo">Pseudo affiché (optionnel): </label>
+						<input type="text" id="pseudo" name="pseudo" class="form-control"/>
+
+					<?php endif ?>
+
 					<br>
 					<input type="hidden" name="token" id="token" value="<?php echo $token_upload?>">
 					<input type="submit" id="submit" class="btn btn-primary btn-lg" name="submit" value="Poster l'image" accept="image/*" required>

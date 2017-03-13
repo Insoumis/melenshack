@@ -2,9 +2,9 @@
 
 require 'MODELS/cardsinfo.php';
 
-$showSupprime = false;
-if(isset($grade) && $grade > 0)
-	$showSupprime = true;
+$showBan = false;
+if(isset($grade) && $grade >= 5)
+	$showBan = true;
 	$idhash = $_GET['id'];
 
 	//récupère les infos du post
@@ -40,8 +40,11 @@ else {
 	$width = getimagesize($urlSource)[0];
 	$height = getimagesize($urlSource)[1];
 
-	$showPage = true;
-	if($supprime && $grade == 0)
+	if($supprime && $grade < 5)
 		$showPage = false;
+
+	$showSupprime = false;
+	if($grade >= 5 || $idUser == $_SESSION['id'])
+		$showSupprime = true;
 
 }
