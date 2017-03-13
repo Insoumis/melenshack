@@ -1,0 +1,10 @@
+RewriteEngine on
+RewriteRule "^hot$" "index\.php\?sort=hot" [PT]
+RewriteRule "^new$" "index\.php\?sort=new" [PT]
+RewriteRule "^top$" "index\.php\?sort=top" [PT]
+RewriteRule "^random$" "index.php?sort=random" [PT]
+RewriteRule "^admin$" "admin.php" [PT]
+RewriteRule "^upload$" "upload.php" [PT]
+RewriteRule "^mass$" "upload_masse.php" [PT]
+
+RewriteRule "^([a-zA-Z0-9]*)$" "view.php?id=$1" [PT]

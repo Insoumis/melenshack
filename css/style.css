@@ -235,6 +235,8 @@ CARTES
 }
 
 .big-card-title input{
+	padding-top:0;
+	padding-bottom: 0;
 	font-weight: bold;
 	font-size: 40px;
 	line-height: 50px;
@@ -335,6 +337,9 @@ CARTES
 	padding-right: 60px;
 }
 .big-card-infos input, .temps input {
+	line-height: 100%;
+	padding-top:0;
+	padding-bottom: 0;
 	padding-left: 5px;
 	padding-right: 5px;
 	max-width: 20%;
@@ -833,6 +838,9 @@ SOURCES IMG
 }
 
 
+.big-img-titre .input-lg {
+	padding: 0 5px;
+}
 h1 {
 	font-size: 40px;
 }
