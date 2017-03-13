@@ -103,6 +103,10 @@ function createImagesVignettes($file, $id, $fromurl = false) {
 	} elseif ($extension_image == "gif") {
 		$source = imagecreatefromgif ($imagebase);
 	}
+    if (!$source) {
+        header ('Location:../upload.php?erreur=image');
+        exit();
+    }
 
 	if ($width >= $height) {
 		$ratio = $width / VIGNETTE_WIDTH;
