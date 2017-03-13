@@ -30,7 +30,7 @@ if(!empty($_POST['tag'])) {
 $json = array();
 
 
-if ($sort == "hot") {
+if ($sort == "top") {
 
 	$req = $bdd->prepare ("
 	SELECT nom_hash FROM images 
@@ -161,7 +161,7 @@ if ($sort == "hot") {
 
 
 }
-elseif ($sort == "test") {
+elseif ($sort == "hot") {
 
 	$req = $bdd->prepare ("
 	SELECT nom_hash FROM images 
@@ -173,8 +173,9 @@ elseif ($sort == "test") {
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1)
 	ORDER BY LOG10(ABS(nb_vote_positif - nb_vote_negatif) + 1) * SIGN(nb_vote_positif - nb_vote_negatif)
-    + (UNIX_TIMESTAMP(date_creation) / 300000) DESC LIMIT :size" );
+    + (UNIX_TIMESTAMP(date_creation) / 300000) DESC LIMIT :startIndex, :size" );
 
+	$req->bindParam(':startIndex', $startIndex, PDO::PARAM_INT);
 	$req->bindParam(':size', $size, PDO::PARAM_INT);
 	$req->bindParam(':search', $search, PDO::PARAM_STR);
 	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);

@@ -16,8 +16,8 @@
 						<a href="index.php?sort=new"><div class="hidden-sm hidden-xs">Nouveauté</div><span class="glyphicon glyphicon-time visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
-					<li title="Au Hasard" id="random" <?php if($isRandomActive) echo "class='actif'"; ?>>
-						<a href="index.php?sort=random"><div class="hidden-sm hidden-xs">Au Hasard</div><span class="glyphicon glyphicon-random visible-sm visible-xs icon"></span></a>
+					<li title="Le Top" id="random" <?php if($isTopActive) echo "class='actif'"; ?>>
+						<a href="index.php?sort=top"><div class="hidden-sm hidden-xs">Le Meilleur</div><span class="glyphicon glyphicon-heart-empty visible-sm visible-xs icon"></span></a>
 					</li>
 					<li title="Ajouter une image" class="btn-danger"><a id="ajouter_img" href="upload.php"><div class="hidden-sm hidden-xs">Ajouter une image</div><span class="glyphicon glyphicon-cloud-upload visible-sm visible-xs icon"></span></a></li>
 				</ul>

@@ -52,7 +52,7 @@
 
 					<br>
 					<input type="hidden" name="token" id="token" value="<?php echo $token_upload?>">
-					<input type="submit" id="submit" class="btn btn-primary btn-lg" name="submit" value="Poster l'image" accept="image/*" required>
+					<input type="submit" id="submit" class="btn btn-primary btn-lg" name="submit" value="Poster les images" accept="image/*" required>
 				</div>
 				<input type="hidden" id="max" name="taille_max" value=<?php echo "'$maxsize'" ?> />
 			<small>Merci de faire attention à la provenance de vos images ! Préférez les images libres de droit, issues du site officiel ou créées par vous.</small>

@@ -79,7 +79,7 @@ $baseName= basename($_SERVER['PHP_SELF']);
 
 $isHotActive = false;
 $isNewActive = false;
-$isRandomActive = false;
+$isTopActive = false;
 
 $showSearch = false;
 if($baseName == "index.php")
@@ -87,8 +87,8 @@ if($baseName == "index.php")
 
 if($baseName == "index.php" && $sort == "new")
 	$isNewActive = true;
-else if($baseName == "index.php" && $sort == "random")
-	$isRandomActive = true;
+else if($baseName == "index.php" && $sort == "top")
+	$isTopActive = true;
 else if($baseName == "index.php" && $sort == "hot")
 	$isHotActive = true;
 

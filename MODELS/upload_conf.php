@@ -89,15 +89,17 @@ if (strlen ($titre) > 255) {
     exit();
 }
 
-if (isset($_POST['pseudo'])) {
+if (!empty($_POST['pseudo']) && $grade >= 5) {
     $pseudoAuthor = htmlspecialchars ($_POST['pseudo']);
-    if (strlen ($pseudoAuthor) > 255 || strlen ($pseudoAuthor) == 0) {
+    if (strlen ($pseudoAuthor) > 255) {
         header ('Location:../upload.php?erreur=pseudo');
         exit();
     }
     if ($pseudo != $pseudoAuthor) {
         $pseudo = $pseudoAuthor;
     }
+} else {
+	$pseudo = $_SESSION['pseudo'];
 }
 
 if (!empty($_POST['tags'])) {
