@@ -9,15 +9,15 @@
 			<div id="navbar" style="display: flex;">
 				<ul class="nav navbar-nav">
 					<li title="Populaire" id="hot" <?php if($isHotActive) echo "class='actif'"; ?>>
-						<a href="index.php?sort=hot"><div class="hidden-sm hidden-xs">Populaire</div><span class="glyphicon glyphicon-fire visible-sm visible-xs icon"></span></a>
+						<a href="hot"><div class="hidden-sm hidden-xs">Populaire</div><span class="glyphicon glyphicon-fire visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
 					<li title="Nouveauté" id="new" <?php if($isNewActive) echo "class='actif'"; ?>>
-						<a href="index.php?sort=new"><div class="hidden-sm hidden-xs">Nouveauté</div><span class="glyphicon glyphicon-time visible-sm visible-xs icon"></span></a>
+						<a href="new"><div class="hidden-sm hidden-xs">Nouveauté</div><span class="glyphicon glyphicon-time visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
-					<li title="Le Top" id="random" <?php if($isTopActive) echo "class='actif'"; ?>>
-						<a href="index.php?sort=top"><div class="hidden-sm hidden-xs">Le Meilleur</div><span class="glyphicon glyphicon-heart-empty visible-sm visible-xs icon"></span></a>
+					<li title="Le Top" id="top" <?php if($isTopActive) echo "class='actif'"; ?>>
+						<a href="top"><div class="hidden-sm hidden-xs">Le Meilleur</div><span class="glyphicon glyphicon-heart-empty visible-sm visible-xs icon"></span></a>
 					</li>
 					<li title="Ajouter une image" class="btn-danger"><a id="ajouter_img" href="upload.php"><div class="hidden-sm hidden-xs">Ajouter une image</div><span class="glyphicon glyphicon-cloud-upload visible-sm visible-xs icon"></span></a></li>
 				</ul>

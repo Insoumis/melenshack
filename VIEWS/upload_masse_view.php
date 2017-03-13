@@ -17,7 +17,7 @@
 				<h1>Ajouter des images</h1>
 				<div class="form-group col-xs-5">
 					<label for="titre">Titre des images (optionnel) :</label>
-					<input type="text" class="form-control input-lg" name="titre" id="titre" placeholder="Titre de votre post" autofocus>
+					<input type="text" class="form-control input-lg" name="titre" id="titre" placeholder="Titre commun" autofocus>
 
 					<p id="formats"><small>Formats acceptés: JPG, PNG, GIF. Poids max: <?php echo $maxsize/1000000 ?> Mo</small></p>
 					<label for="file" id="drop">

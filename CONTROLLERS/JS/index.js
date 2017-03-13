@@ -164,7 +164,7 @@ $(document).ready(function() {
 	});
 
 	//au chargement: affiche 30 cartes
-	getCards(10);
+	getCards(15);
 
 });
 
@@ -418,12 +418,16 @@ function addCard(c) {
 
 		big.find('.big-card-points').html(card.find('.card-points').html());
 		
-		$(".big-card-container").show();
-		big.find(".big-card-img").attr('src', url);
 		
-		var i = $("<img/>").addClass("big-card-img").attr('src', urlSource).on('load',
+		var timeout = window.setTimeout(function() {
+			big.find(".big-card-img").attr('src', url);
+			$(".big-card-container").show();
+
+		}, 1500);
+		big.find('.big-card-img').attr('src', urlSource).on('load',
 				function() {
-					$('.big-card-img').replaceWith($(i));
+					window.clearTimeout(timeout);
+					$(".big-card-container").show();
 				});
 
 	});
