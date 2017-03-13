@@ -240,6 +240,8 @@ function getCards(size) {
 
 //ajoute une carte à la page
 function addCard(c) {
+	if(!c)
+		return;
 	var idhash= c.idhash;
 	var id = c.id;
 	var titre = c.titre;
@@ -250,7 +252,9 @@ function addCard(c) {
 	var points = c.pointsTotaux;
 	var url = c.urlThumbnail;
 	var urlSource = c.urlSource;
-	var tags = c.tags.split(',');
+	var tags = [];
+	if(c.tags)
+		tags = c.tags.split(',');
 	var ancien_vote = c.ancien_vote;
 	var ancien_report = c.ancien_report;
 	var inscription = c.inscription;
@@ -259,7 +263,7 @@ function addCard(c) {
 	var posts = c.posts;
 	var supprime = c.supprime;
 	//string du temps passé depuis le post
-	var temps = getTimeElapsed(dateCreation);
+	var temps = getTimeElapsed(dateCreation, false);
 
 	//récupère le template
 	var card = $('.template').clone();
@@ -317,7 +321,7 @@ function addCard(c) {
 		}).popover('fixTitle');
 	} else {
 		card.find('.card-author>a')
-			.attr('data-content', "<p> Conçu par " + pseudoAuthor + "</p><p><a href='index.php?sort=new&pseudo=" + pseudoUser + "'> Posté par " + pseudoUser + "</a></p>").click(function (e) {
+			.attr('data-content', "<p> Conçu par<a href='index.php?sort=new&pseudo="+pseudoAuthor+"'> " + pseudoAuthor + "</a></p><p><a href='index.php?sort=new&pseudo=" + pseudoUser + "'> Posté par" + pseudoUser + "</a></p>").click(function (e) {
 			e.stopPropagation();
 		}).popover('fixTitle');
 	}
@@ -329,7 +333,7 @@ function addCard(c) {
 		big.attr('id', idhash);
 		big.data('card', card);
 		big.data('id_user', idUser);
-		big.find('.big-card-title').html('<a href='+ urlBase + 'view.php?id=' + idhash +">"+ titre+'</a>');
+		big.find('.big-card-title').html('<a href='+ urlBase + idhash +">"+ titre+'</a>');
 		big.find('.big-card-tmps').html(temps);
 		big.find('.big-img-author').html(pseudoAuthor);
 		big.find('.big-card-link').attr('data-clipboard-text', urlBase + idhash);
@@ -467,11 +471,11 @@ function addCard(c) {
 
 	card.addClass('card');
 	card.removeClass('template');
-
-	var e = url.split('.').pop();
-	if(e == 'gif')
-		card.find('.gif-overlay').show();
-
+	if(url) {
+		var e = url.split('.').pop();
+		if(e == 'gif')
+			card.find('.gif-overlay').show();
+	}
 	//HOVER IMG
 	card.mouseenter(function(e) {
 		var ext = url.split('.').pop();

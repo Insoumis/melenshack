@@ -11,7 +11,6 @@ function readURL(input) {
 			for (var f=0; f < input.files.length; f++) {
 				if(f >= input.files.length)
 					break;
-				console.log(input.files[f]);
 
 				counter = 0;
 				

@@ -30,11 +30,22 @@ if(strlen($titre) > 250) {
 	exit();
 }
 
-$req = $bdd->prepare("UPDATE images INNER JOIN users ON id_user=users.id SET titre=:titre WHERE nom_hash=:idhash AND (id_user=:iduser OR grade >= 5) ");
+
+$req = $bdd->prepare("SELECT id_user FROM images WHERE nom_hash=:idhash ");
+$req->execute([
+	':idhash' => Securite::bdd($_REQUEST['id']),
+]);
+$idPosteur = $req->fetch()['id_user'];
+
+if($grade < 5 && $idPosteur != $_SESSION['id']) {
+	echo "Pas la permission";
+	exit();
+}
+
+$req = $bdd->prepare("UPDATE images SET titre=:titre WHERE nom_hash=:idhash");
 if($req->execute([
 	':titre' => Securite::bdd($_REQUEST['titre']),
 	':idhash' => Securite::bdd($_REQUEST['id']),
-	':iduser' => Securite::bdd($_SESSION['id'])
 ])) {
 	header("Location:../view.php?id=$_REQUEST[id]");
 } else {

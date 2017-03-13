@@ -66,7 +66,7 @@ function shareGplus(e) {
 
 
 //Retourne un string du temps passé depuis un timestamp
-function getTimeElapsed(date, minimise=false) {
+function getTimeElapsed(date, minimise) {
 
 	date = new Date(date);
 	var diff = now - date;
@@ -498,7 +498,12 @@ function startEdit(card) {
 	card.find('.big-card-edit').removeClass('glyphicon-pencil').addClass("glyphicon-ok");
 
 	//titre
-	var titre = card.find('.big-card-title a, .big-img-titre a').html();
+	var titre = card.find('.big-card-title a, .big-img-titre a').html()
+		.replace(/&/g, "&amp;")
+		.replace(/'/g, "&#039;")
+		.replace(/"/g, "&quot;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;");
 	card.find(".big-card-title, .big-img-titre").html("<input type='text' class='input-lg form-control' value='"+titre+"' placeholder='Titre'/>");
 
 	//tags

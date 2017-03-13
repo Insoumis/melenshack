@@ -37,7 +37,7 @@ $(window).on('load', function() {
 		$('.big-img-container').find(".card-thumb-down").click(function() {
 				thumbDown(idhash, $('.big-img-container'));
 				});
-		$('.elapsed').html(getTimeElapsed($('#dateCreation').val()));
+		$('.elapsed').html(getTimeElapsed($('#dateCreation').val(), false));
 
 		$('.temps>a')
 			.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed($('#inscription').val(), false)+"</p><p>Points: "+$('#pointsUser').val()+"</p><p><a href='index.php?sort=new&pseudo="+$('#pseudo').val()+"'> Posts:</a> "+$('#posts').val()+"</p>")

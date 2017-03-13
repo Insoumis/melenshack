@@ -37,7 +37,7 @@ if ($sort == "top") {
 		INNER JOIN users ON id_user = users.id 
 	WHERE (supprime=0 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search)
-			AND (:pseudo = '' OR pseudo = :pseudo) 
+			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
 			AND tags RLIKE :tagsr)
 			AND users.id NOT IN 
 				(SELECT id_user FROM ban WHERE 1)
@@ -60,7 +60,7 @@ if ($sort == "top") {
 		INNER JOIN users ON id_user = users.id 
 	WHERE (supprime=0 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
-			AND (:pseudo = '' OR pseudo = :pseudo) 
+			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
 			AND tags RLIKE :tagsr) 
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1)
@@ -89,7 +89,7 @@ if ($sort == "top") {
 		INNER JOIN users ON id_user = users.id 
 	WHERE (supprime=0 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
-			AND (:pseudo = '' OR pseudo = :pseudo) 
+			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
 			AND tags RLIKE :tagsr) 
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1)
@@ -114,7 +114,7 @@ if ($sort == "top") {
 		INNER JOIN users ON images.id_user = users.id 
 	WHERE (supprime=0 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
-			AND (:pseudo = '' OR pseudo = :pseudo) 
+			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
 			AND tags RLIKE :tagsr) 
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1)
@@ -140,7 +140,7 @@ if ($sort == "top") {
 		INNER JOIN users ON id_user = users.id 
 	WHERE (supprime=1 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
-			AND (:pseudo = '' OR pseudo = :pseudo) 
+			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
 			AND tags RLIKE :tagsr)
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1)
@@ -168,7 +168,7 @@ elseif ($sort == "hot") {
 		INNER JOIN users ON id_user = users.id 
 	WHERE (supprime=0 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
-			AND (:pseudo = '' OR pseudo = :pseudo) 
+			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
 			AND tags RLIKE :tagsr) 
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1)

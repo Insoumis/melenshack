@@ -2,6 +2,7 @@
 
 include_once ("includes/identifiants.php");
 include_once ('includes/securite.class.php');
+include_once 'check_grade.php';
 
 if(empty($_SESSION))
 	session_start();
@@ -28,11 +29,21 @@ if(count(explode(",", $_REQUEST['tags'])) > 10) {
 	exit();
 }
 
-$req = $bdd->prepare("UPDATE images INNER JOIN users ON id_user=users.id SET tags=:tags WHERE nom_hash=:idhash AND (id_user=:iduser OR grade >= 5)");
+$req = $bdd->prepare("SELECT id_user FROM images WHERE nom_hash=:idhash ");
+$req->execute([
+	':idhash' => Securite::bdd($_REQUEST['id']),
+]);
+$idPosteur = $req->fetch()['id_user'];
+
+if($grade < 5 && $idPosteur != $_SESSION['id']) {
+	echo "Pas la permission";
+	exit();
+}
+
+$req = $bdd->prepare("UPDATE images SET tags=:tags WHERE nom_hash=:idhash");
 if($req->execute([
 	':tags' => Securite::bdd($_REQUEST['tags']),
 	':idhash' => Securite::bdd($_REQUEST['id']),
-	':iduser' => Securite::bdd($_SESSION['id'])
 ])) {
 	header("Location:../view.php?id=$_REQUEST[id]");
 } else {
