@@ -22,7 +22,7 @@
 					
 					<?php if($supprime==0 && $showSupprime): ?>
 					<span data-placement='bottom' data-toggle="tooltip" title="Supprimer" class="big-card-remove glyphicon glyphicon-trash"></span>
-					<?php else: ?>
+					<?php elseif($showSupprime): ?>
 					<span data-placement='bottom' data-toggle="tooltip" title="Restaurer" class="big-card-remove glyphicon glyphicon-trash voted"></span>
 					<?php endif ?>
 			<?php if($showBan): ?>
