@@ -38,7 +38,11 @@ function updateSearch() {
 }
 
 function closeBigCard() {
-	$('.big-card-container').hide();
+	$(".big-card").css('width','100%');
+	$(".big-card").stop(true, false).animate({'width':'0px'}, 200);
+	$('.big-card-container').delay(100).stop(true, false).animate({'opacity':'0'}, 200, function() {
+		$('.big-card-container').hide();
+	});
 	updateVote($('.big-card').data('card'), $('.big-card').data('vote'));
 	
 	if($('.big-card').hasClass("editing"))
@@ -419,15 +423,14 @@ function addCard(c) {
 		big.find('.big-card-points').html(card.find('.card-points').html());
 		
 		
-		var timeout = window.setTimeout(function() {
-			big.find(".big-card-img").attr('src', url);
-			$(".big-card-container").show();
-
-		}, 1500);
 		big.find('.big-card-img').attr('src', urlSource).on('load',
 				function() {
-					window.clearTimeout(timeout);
-					$(".big-card-container").show();
+					$(".big-card").css('width','30px');
+					$(".big-card-container").css('opacity','0');
+					$(".big-card").stop(true, false).animate({'width':'100%'}, 300);
+					$('.big-card-container').show();
+					$(".big-card-container").stop(true, false).animate({'opacity':'1'}, 200, function() {
+					});
 				});
 
 	});
