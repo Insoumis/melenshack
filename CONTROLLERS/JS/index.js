@@ -21,7 +21,8 @@ function initMasonry() {
 		itemSelector: '.card',
 		columnWidth: 370,
 		fitWidth: true,
-		stagger: 30
+		stagger: 0,
+		transitionDuration: '0.3s',
 	});
 }
 function updateMasonry() {
@@ -193,7 +194,7 @@ function getCards(size) {
 	var tag = $('#search_tag').val();
 
 	$.ajax({
-		url: 'MODELS/requestajax.php',
+		url: '/MODELS/requestajax.php',
 		type: 'POST',
 		data: {
 			'size': size,
@@ -213,7 +214,7 @@ function getCards(size) {
 				}
 			}
 	    
-            if(i < size) {
+            if(i < 2) {
 				fin = true;
 			}
 			currentIndex += i;
@@ -230,7 +231,7 @@ function getCards(size) {
 				$("#main_page").append($("<center><h3 id='nothing'>Fin du flux.</h3></center>"));
 			} else if(t > 0 && !fin) {
 				$('#nothing').remove();
-            }
+            		}
             fetching = false;
 	
 			updateMasonry();
@@ -238,6 +239,7 @@ function getCards(size) {
 
 		}
 	});
+	setTimeout(function() {fetching = false;}, 200);
 }
 
 

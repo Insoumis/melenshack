@@ -146,6 +146,6 @@ if (!empty($_POST['url'])) {
     $res = createImagesVignettes($_FILES['file'], $id);
 }
 if($res == "redirect")
-    header ('Location:../view.php?id=' . $id);
+    header ('Location:../' . $id);
 else
     header ('Location:../upload.php'.$res);

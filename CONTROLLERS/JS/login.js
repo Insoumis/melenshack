@@ -40,7 +40,7 @@ function checkFBLogin() {
 			return;
 		$.post('MODELS/facebookLogin.php', null, function(data) {
 			if(data == "success") {
-				window.location.href = 'index.php';
+				window.location.href = '/';
 			} else if(data.includes("pseudo")){
 				window.location.href = 'pseudo.php?erreur=fromregister'+data;
 			} else if(data == "banni") {
@@ -63,7 +63,7 @@ function checkGoogleLogin(googleUser) {
 
 		$.post('MODELS/googleLogin.php', {idtoken: idToken}, function(data) {
 			if(data == "success") {
-				window.location.href = 'index.php';
+				window.location.href = '/';
 			} else if(data.includes("pseudo")){
 				window.location.href = 'pseudo.php?erreur=fromregister'+data;
 			} else if(data == "banni") {
@@ -83,7 +83,7 @@ function checkTwitterLogin() {
 
 function onTwitterClose(data) {
 	if(data == "success") {
-		window.location.href = '../index.php';
+		window.location.href = '../';
 	} else if(data.includes("pseudo")){
 		window.location.href = '../pseudo.php?erreur=fromregister'+data;
 	} else if(data == "banni") {

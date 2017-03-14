@@ -37,8 +37,13 @@ else {
 	$posts = $infos['posts'];
 	$idUser = $infos['idUser'];
 
-	$width = getimagesize($urlSource)[0];
-	$height = getimagesize($urlSource)[1];
+	if($type == 'url') {	
+		$width = getimagesize($urlSource)[0];
+		$height = getimagesize($urlSource)[1];
+	} else {
+		$width = getimagesize(substr($urlSource, 1))[0];
+		$height = getimagesize(substr($urlSource, 1))[1];
+	}
 
 	if($supprime && $grade < 5)
 		$showPage = false;

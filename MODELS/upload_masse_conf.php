@@ -2,6 +2,9 @@
 
 set_time_limit(3600);
 
+ini_set('upload_max_filesize', '256M');
+ini_set('max_file_uploads', '500');
+ini_set('post_max_size', '256M');
 
 include_once ("includes/constants.php");
 require_once ('includes/token.class.php');
@@ -12,7 +15,6 @@ include_once ('upload_functions.php');
 include_once 'check_grade.php';
 
 function reArrayFiles(&$file_post) {
-
 
 	$file_ary = array();
 	$file_count = count($file_post['name']);
@@ -76,11 +78,13 @@ if ($resultat) {
 	exit();
 }
 
+if(!empty($_POST['titre'])) {
 
-$titre = htmlspecialchars($_POST['titre']);
-if (strlen ($titre) > 255){
-	header ('Location:../upload_masse.php?erreur=titre');
-	exit();
+	$titre = htmlspecialchars($_POST['titre']);
+	if (strlen ($titre) > 255){
+		header ('Location:../upload_masse.php?erreur=titre');
+		exit();
+	}
 }
 if (!empty($_POST['pseudo']) && $grade >= 5) {
 	$pseudoAuthor = htmlspecialchars ($_POST['pseudo']);
@@ -122,6 +126,9 @@ if(!empty($_FILES['file'])) {
 	foreach($arr as $f) {
 		if(empty($f['name']))
 			continue;
+		
+
+		
 		$res = insertImageFromFile($f, $id_user, $titre, $tagsstr, $pseudo);
 		if(strpos($res, '?erreur=') !== false) {
 			header("Location:../upload_masse.php$res");

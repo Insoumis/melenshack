@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 include("includes/identifiants.php");
 include_once("includes/constants.php");
 include("cardsinfo.php");
@@ -21,8 +23,11 @@ if(!empty($_POST['pseudo']))
 else
 	$pseudo = "";
 
+$concours = 0;
 if(!empty($_POST['tag'])) {
 	$tag = $_POST['tag'];
+	if($tag == 'concours')
+		$concours = 1;
 
 	$tagsr = ".*".$tag.".*";
 } else
@@ -38,15 +43,17 @@ if ($sort == "top") {
 	WHERE (supprime=0 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search)
 			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
-			AND tags RLIKE :tagsr)
+			AND ((:concours=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*concours.*')
+				OR (:concours=1 AND tags RLIKE :tagsr))
 			AND users.id NOT IN 
-				(SELECT id_user FROM ban WHERE 1)
+				(SELECT id_user FROM ban WHERE 1))
 	ORDER BY pointsTotaux DESC LIMIT :startIndex , :size" );
 	$req->bindParam(':startIndex', $startIndex, PDO::PARAM_INT);
 	$req->bindParam(':size', $size, PDO::PARAM_INT);
 	$req->bindParam(':search', $search, PDO::PARAM_STR);
 	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
+	$req->bindParam(':concours', $concours, PDO::PARAM_BOOL);
 	$req->execute();
 
     while ($resultat = $req->fetch()) {
@@ -61,9 +68,10 @@ if ($sort == "top") {
 	WHERE (supprime=0 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
 			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
-			AND tags RLIKE :tagsr) 
+			AND ((:concours=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*concours.*')
+				OR (:concours=1 AND tags RLIKE :tagsr))
 			AND users.id NOT IN
-				(SELECT id_user FROM ban WHERE 1)
+				(SELECT id_user FROM ban WHERE 1))
 	ORDER BY date_creation DESC LIMIT :startIndex , :size" );
 	
 	$req->bindParam(':startIndex', $startIndex, PDO::PARAM_INT);
@@ -71,6 +79,7 @@ if ($sort == "top") {
 	$req->bindParam(':search', $search, PDO::PARAM_STR);
 	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
+	$req->bindParam(':concours', $concours, PDO::PARAM_BOOL);
 	$req->execute();
 
 
@@ -90,15 +99,17 @@ if ($sort == "top") {
 	WHERE (supprime=0 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
 			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
-			AND tags RLIKE :tagsr) 
+			AND ((:concours=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*concours.*')
+				OR (:concours=1 AND tags RLIKE :tagsr))
 			AND users.id NOT IN
-				(SELECT id_user FROM ban WHERE 1)
+				(SELECT id_user FROM ban WHERE 1))
 	ORDER BY RAND() DESC LIMIT :size" );
 	
 	$req->bindParam(':size', $size, PDO::PARAM_INT);
 	$req->bindParam(':search', $search, PDO::PARAM_STR);
 	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
+	$req->bindParam(':concours', $concours, PDO::PARAM_BOOL);
 	$req->execute();
 
 
@@ -115,9 +126,10 @@ if ($sort == "top") {
 	WHERE (supprime=0 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
 			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
-			AND tags RLIKE :tagsr) 
+			AND ((:concours=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*concours.*')
+				OR (:concours=1 AND tags RLIKE :tagsr))
 			AND users.id NOT IN
-				(SELECT id_user FROM ban WHERE 1)
+				(SELECT id_user FROM ban WHERE 1))
 	GROUP BY images.id ORDER BY count(*) DESC LIMIT :startIndex , :size");
 	
 	
@@ -127,6 +139,7 @@ if ($sort == "top") {
 	$req->bindParam(':search', $search, PDO::PARAM_STR);
 	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
+	$req->bindParam(':concours', $concours, PDO::PARAM_BOOL);
 	$req->execute();
     
 
@@ -141,9 +154,10 @@ if ($sort == "top") {
 	WHERE (supprime=1 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
 			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
-			AND tags RLIKE :tagsr)
+			AND ((:concours=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*concours.*')
+				OR (:concours=1 AND tags RLIKE :tagsr))
 			AND users.id NOT IN
-				(SELECT id_user FROM ban WHERE 1)
+				(SELECT id_user FROM ban WHERE 1))
 	ORDER BY date_creation DESC LIMIT :startIndex , :size" );
 	
 	$req->bindParam(':startIndex', $startIndex, PDO::PARAM_INT);
@@ -151,6 +165,7 @@ if ($sort == "top") {
 	$req->bindParam(':search', $search, PDO::PARAM_STR);
 	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
+	$req->bindParam(':concours', $concours, PDO::PARAM_BOOL);
 	$req->execute();
     
 
@@ -169,9 +184,10 @@ elseif ($sort == "hot") {
 	WHERE (supprime=0 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
 			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
-			AND tags RLIKE :tagsr) 
+			AND ((:concours=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*concours.*')
+				OR (:concours=1 AND tags RLIKE :tagsr))
 			AND users.id NOT IN
-				(SELECT id_user FROM ban WHERE 1)
+				(SELECT id_user FROM ban WHERE 1))
 	ORDER BY LOG10(ABS(nb_vote_positif - nb_vote_negatif) + 1) * SIGN(nb_vote_positif - nb_vote_negatif)
     + (UNIX_TIMESTAMP(date_creation) / 300000) DESC LIMIT :startIndex, :size" );
 
@@ -180,6 +196,7 @@ elseif ($sort == "hot") {
 	$req->bindParam(':search', $search, PDO::PARAM_STR);
 	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
+	$req->bindParam(':concours', $concours, PDO::PARAM_BOOL);
 	$req->execute();
 
 

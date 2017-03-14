@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://melenshack.fr/sitemap.xml

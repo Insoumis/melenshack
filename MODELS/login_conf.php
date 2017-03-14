@@ -79,7 +79,7 @@ if(Token::verifier(600, 'connexion'))
 			if($resultat['pseudo'])
 				$_SESSION['pseudo'] = $resultat['pseudo'];
 			$_SESSION['type'] = 'classic';
-			header ('Location:../index.php');
+			header ('Location:../');
 
 		}
 	}

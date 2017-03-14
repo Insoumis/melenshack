@@ -18,3 +18,7 @@ if(isset($_REQUEST['tag'])) {
 $showPage = true;
 if($grade < 5 && ($_REQUEST['sort'] == "deleted" || $_REQUEST['sort'] == "report"))
 	$showPage = false;
+
+$concours = false;
+if($_REQUEST['tag'] == 'concours')
+	$concours = true;

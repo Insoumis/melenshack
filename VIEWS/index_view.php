@@ -12,6 +12,14 @@
 	<!-- container principal -->
 	<?php if($showPage): ?>
 	<div id='main_page'>
+	<?php if($concours): ?>
+		<div id='concours' class='alert alert-success'>
+				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+				Vous êtes sur la page du <strong>concours</strong> ! L'ordre des images est <strong>aléatoire</strong>. <a href='/login.php'>Connectez-vous</a> pour pouvoir voter !<br>Pour voir les images hors-concours, <a href='/'>cliquez ici</a>.
+		</div>
+
+	<?php endif ?>
+
 
 	<div class="big-card-container" hidden>
 	<div class="big-card-overlay">
@@ -46,9 +54,9 @@
 			<div class="big-card-align">
 
 			<div class="big-card-share">
-				<img data-toggle="tooltip" title="Facebook" class="big-card-facebook" src="assets/Facebook.png"/>
-				<img data-toggle="tooltip" title="Twitter" class="big-card-twitter" src="assets/Twitter.png"/>
-				<img data-toggle="tooltip" title="Google Plus" class="big-card-gplus" src="assets/Google_plus.png"/>
+				<img alt="facebook" data-toggle="tooltip" title="Facebook" class="big-card-facebook" src="/assets/Facebook.png"/>
+				<img alt="twitter" data-toggle="tooltip" title="Twitter" class="big-card-twitter" src="/assets/Twitter.png"/>
+				<img alt="gplus" data-toggle="tooltip" title="Google Plus" class="big-card-gplus" src="/assets/Google_plus.png"/>
 				<span data-toggle="tooltip" title="Copier le lien" class="glyphicon glyphicon-link big-card-link" ></span>
 			</div>
 
@@ -62,7 +70,7 @@
 
 			<br>
 			<div class="big-card-img">
-				<img class='big-card-img' src="" />
+				<img alt='grande image' class='big-card-img' src="" />
 			</div>
 			</div>
 			<div class="tags"></div>
@@ -74,8 +82,8 @@
 	
 		<div class="template">
 			<div class="card-img" title="Agrandir">
-				<div class="gif-overlay" hidden><img src="assets/gif_overlay.png"/></div>
-				<img />
+				<div class="gif-overlay" hidden><img alt='overlay' src="/assets/gif_overlay.png"/></div>
+				<img alt='overlay' src='#' />
 			</div>
 
 			<div class="card-title">
@@ -105,9 +113,9 @@
 					<span data-toggle="tooltip" title="J'aime pas" class="glyphicon glyphicon-thumbs-down card-thumb-down" ></span>
 				</div>
 			<div hidden class="card-share-buttons">
-				<img data-toggle="tooltip" title="Facebook" class="card-facebook" src="assets/Facebook.png"/>
-				<img data-toggle="tooltip" title="Twitter" class="card-twitter" src="assets/Twitter.png"/>
-				<img data-toggle="tooltip" title="Google Plus" class="card-gplus" src="assets/Google_plus.png"/>
+				<img alt="facebook" data-toggle="tooltip" title="Facebook" class="card-facebook" src="/assets/Facebook.png"/>
+				<img alt='twitter' data-toggle="tooltip" title="Twitter" class="card-twitter" src="/assets/Twitter.png"/>
+				<img alt="gplus" data-toggle="tooltip" title="Google Plus" class="card-gplus" src="/assets/Google_plus.png"/>
 
 			</div>
 	</div>
@@ -119,8 +127,8 @@
 
 </div>
 <?php endif ?>
-<script src="libs/bootstrap-tagsinput.min.js"></script>
-<script src="CONTROLLERS/JS/common_card.js"></script>
-<script src="CONTROLLERS/JS/index.js"></script>
+<script src="/libs/bootstrap-tagsinput.min.js"></script>
+<script src="/CONTROLLERS/JS/common_card.js"></script>
+<script src="/CONTROLLERS/JS/index.js"></script>
 </body>
 </html>

@@ -48,7 +48,7 @@
 						<select multiple name="tags[]" id="tagsinput" type="text" data-role="tagsinput"></select>
 					</div>
 					<?php if($showPseudo): ?>
-						<br><label for="pseudo">Pseudo affiché (optionnel): </label>
+						<br><label for="pseudo">Pseudo du créateur (optionnel): </label>
 						<input type="text" id="pseudo" name="pseudo" class="form-control"/>
 
 					<?php endif ?>

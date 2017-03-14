@@ -44,13 +44,14 @@ NAVBAR
 	color: black;
 }
 
-.popover-title {
+nav .popover-title {
 	overflow: hidden;
 }
-#decoli .popover a{
+nav .popover a{
 	white-space: nowrap;
+	color: black;
 }
-#decoli .popover .glyphicon:not(.settings) {
+nav .popover .glyphicon:not(.settings) {
 	margin-right: 10px;
 }
 #coli>a, #decoli>a {
@@ -92,6 +93,22 @@ nav {
 }
 .navbar .glyphicon.icon {
 	font-size: 20px;
+	cursor: pointer;
+}
+#plus .glyphicon {
+	line-height: 100%;
+	margin-left:10px;
+	margin-right: 10px;
+}
+#plus {
+	display: table;
+	height: 100%;
+}
+#plus a {
+	padding: 0;
+	margin: 0;
+	display: table-cell;
+	vertical-align: middle;
 }
 .navbar-toggle {
 	border-color: #ddd !important;
@@ -111,6 +128,7 @@ nav {
 	box-sizing: border-box;
 	margin-left: 0;
 	margin-right: 0;
+	cursor: pointer;
 }
 .navbar li a {
 	color: black ;
@@ -1047,4 +1065,11 @@ h1 {
 }
 .radio label {
 	margin-right:20px;
+}
+.alert#concours {
+	margin-left: 10%;
+	margin-right: 10%;
+	width: auto;
+	font-size: 16px;
+	text-align:center;
 }

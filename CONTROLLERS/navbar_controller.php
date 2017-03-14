@@ -8,33 +8,38 @@ $("nav").ready(function() {
 	var useropened = false;
 
 	$('#decoli>img').hover(function() {
-		$(this).attr('src', 'assets/phi_blanc.png');
+		$(this).attr('src', '/assets/phi_blanc.png');
 		$(this).parent().stop(true,false).animate({'background-color':'#d9534f', 'borderColor':'#23b9d0'}, 200);
 	}, function() {
 		if(!useropened) {
-			$(this).attr('src', 'assets/phi.png');	
+			$(this).attr('src', '/assets/phi.png');	
 			$(this).parent().stop(true,false).animate({'background-color':'', 'borderColor':'#e23d22'}, 200);
 		}
 	});
 
 	$(document).click(function() {
 		useropened = false;
-		$("#decoli>img").attr('src', 'assets/phi.png')
+		$("#decoli>img").attr('src', '/assets/phi.png')
 			.parent().stop(true,false).animate({'background-color':'', 'borderColor':'#e23d22'}, 200);
 		$("#decoli>img").popover('hide');
+		$("#plus").popover('hide');
 	});
 	$('#decoli>img').click(function(e) {
 		useropened = !useropened;
 		e.stopPropagation();
 		if(!useropened) {
-			$(this).attr('src', 'assets/phi.png');	
+			$(this).attr('src', '/assets/phi.png');	
 			$(this).parent().stop(true,false).animate({'background-color':'', 'borderColor':'#e23d22'}, 200);
 		} else {
 			
-			$(this).attr('src', 'assets/phi_blanc.png');
+			$(this).attr('src', '/assets/phi_blanc.png');
 			$(this).parent().stop(true,false).animate({'background-color':'#d9534f', 'borderColor':'#23b9d0'}, 200);
 		}
 
+	});
+
+	$('#plus').click(function(e) {
+		e.stopPropagation();
 	});
 
 	$('body').on('hidden.bs.popover', function (e) {

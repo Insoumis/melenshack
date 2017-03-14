@@ -4,7 +4,8 @@
  */
 
 
-var urlBase = location.href.substring(0, location.href.lastIndexOf("/")+1);
+//var urlBase = location.href.substring(0, location.href.lastIndexOf("/")+1);
+var urlBase = window.location.protocol + '//' + window.location.hostname+'/';
 
 //date actuelle
 var now = new Date();
@@ -40,7 +41,6 @@ function shareFacebook(e) {
 	FB.ui(
 			{
 method: 'share',
-hashtag: '#jlm2017',
 href: url
 }, function(response){});
 }
@@ -49,7 +49,7 @@ function shareTwitter(e) {
 	e.stopPropagation();
 	var card = $(e.target).closest(".card, .big-card, .big-img-container");
 	var url = urlBase + card.attr("id");
-	window.open("https://twitter.com/share?url="+escape(url)+"&hashtags=jlm2017", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+	window.open("https://twitter.com/share?url="+escape(url), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 
 }
 

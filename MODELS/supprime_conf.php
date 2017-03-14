@@ -70,7 +70,7 @@ $req->execute ([
 ]);
 $resultat = $req->fetch ()['grade'];
 
-if ($resultat < 1 && $id_user != $id_poster) {
+if ($resultat < 5 && $id_user != $id_poster) {
     //pas assez gradé ou pas poster original
 	header('HTTP/1.0 403 Forbidden');
     exit();

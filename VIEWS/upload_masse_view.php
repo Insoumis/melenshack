@@ -17,9 +17,9 @@
 				<h1>Ajouter des images</h1>
 				<div class="form-group col-xs-5">
 					<label for="titre">Titre des images (optionnel) :</label>
-					<input type="text" class="form-control input-lg" name="titre" id="titre" placeholder="Titre commun" autofocus>
+					<input type="text" class="form-control input-lg" name="titre" id="titre" placeholder="Titre de votre post" autofocus>
 
-					<p id="formats"><small>Formats acceptés: JPG, PNG, GIF. Poids max: <?php echo $maxsize/1000000 ?> Mo</small></p>
+					<p id="formats"><small>Formats acceptés: JPG, PNG, GIF. Poids max: 100 Mo pour l'ensemble des images</small></p>
 					<label for="file" id="drop">
 							<p>
 							<label for="file" id="filelabel">	
@@ -45,14 +45,14 @@
 						<select multiple name="tags[]" id="tagsinput" type="text" data-role="tagsinput"></select>
 					</div>
 					<?php if($showPseudo): ?>
-						<br><label for="pseudo">Pseudo affiché (optionnel): </label>
+						<br><label for="pseudo">Pseudo du créateur (optionnel): </label>
 						<input type="text" id="pseudo" name="pseudo" class="form-control"/>
 
 					<?php endif ?>
 
 					<br>
 					<input type="hidden" name="token" id="token" value="<?php echo $token_upload?>">
-					<input type="submit" id="submit" class="btn btn-primary btn-lg" name="submit" value="Poster les images" accept="image/*" required>
+					<input type="submit" id="submit" class="btn btn-primary btn-lg" name="submit" value="Poster l'image" accept="image/*" required>
 				</div>
 				<input type="hidden" id="max" name="taille_max" value=<?php echo "'$maxsize'" ?> />
 			<small>Merci de faire attention à la provenance de vos images ! Préférez les images libres de droit, issues du site officiel ou créées par vous.</small>
