@@ -43,7 +43,7 @@ else
 	$idban = '';
 
 if(!empty($_POST['pseudo']))
-	$pseudo = Securite::bdd($_POST['pseudo']);
+	$pseudo = $_POST['pseudo'];
 else
 	$pseudo = '';
 

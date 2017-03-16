@@ -285,7 +285,7 @@ function updateReport(card, ancien) {
 //envoie vote au serveur
 function vote(id, vote) {
 	$.post(
-			'MODELS/vote_conf.php',
+			'/MODELS/vote_conf.php',
 			{idhash: id,
 vote: vote},
 'text'
@@ -324,7 +324,7 @@ function report(card) {
 		return -1;
 
 	$.post(
-			'MODELS/report_conf.php',
+			'/MODELS/report_conf.php',
 			{
 idhash: card.attr('id'),
 },
@@ -352,7 +352,7 @@ function removesignal(card) {
 		return -1;
 
 	$.post(
-			'MODELS/removereport_conf.php',
+			'/MODELS/removereport_conf.php',
 			{
 idhash: card.attr('id'),
 token : token
@@ -374,7 +374,7 @@ function supprime_def(card) {
 
 	//send remove to server
 	$.post(
-			'MODELS/supprime_def_conf.php',
+			'/MODELS/supprime_def_conf.php',
 			{
 idhash: card.attr('id'),
 token : token
@@ -399,17 +399,18 @@ function supprime_restore(card) {
 		return -1;
 	//send remove to server
 	$.post(
-			'MODELS/supprime_conf.php',
+			'/MODELS/supprime_conf.php',
 			{
-idhash: $(card).attr('id'),
-value: value,
-token : token
-},
-function(e) {
-},
-'text'
-);
-	}
+				idhash: $(card).attr('id'),
+				value: value,
+				token : token
+			},
+			function(e) {
+				console.log(e);
+			},
+			'text'
+	);
+}
 
 function ban_sup(card, iduser) {
 	var conf = false;
@@ -421,7 +422,7 @@ function ban_sup(card, iduser) {
 
 	//ban
 	$.post(
-			'MODELS/ban_conf.php',
+			'/MODELS/ban_conf.php',
 			{
 id_user: iduser,
 token : token,
@@ -434,7 +435,7 @@ function(e) {
 
 	//send remove to server
 	$.post(
-			'MODELS/supprime_conf.php',
+			'/MODELS/supprime_conf.php',
 			{
 idhash: $(card).attr('id'),
 value: 1,
@@ -460,7 +461,7 @@ $("[data-toggle='tooltip']").tooltip();
 card.find('#change_tags_ok').click(function(e) {
 
 		var tags =$('#tagsinput').val();
-		$.post("MODELS/change_tags.php", {tags: tags, id: card.attr('id')});
+		$.post("/MODELS/change_tags.php", {tags: tags, id: card.attr('id')}, function(e){ console.log(e)});
 		card.data('tags', tags);
 		if(card.data('card'))
 		card.data('card').data('tags', tags);
@@ -468,7 +469,7 @@ card.find('#change_tags_ok').click(function(e) {
 		card.find('.tags').html("");
 		for(var i=0; i < tags.length; ++i) {
 		if(tags[i])
-		card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
+		card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+encodeURIComponent(tags[i])+"'><span class='tag-item'>"+tags[i]+"</span></a>");
 		}
 		card.find(".tags").append("<span class='glyphicon glyphicon-pencil' title='Modifier les tags' data-toggle='tooltip' id='change_tags'></span>");
 		$("[data-toggle='tooltip']").tooltip();
@@ -499,11 +500,7 @@ function startEdit(card) {
 
 	//titre
 	var titre = card.find('.big-card-title a, .big-img-titre a').html()
-		.replace(/&/g, "&amp;")
 		.replace(/'/g, "&#039;")
-		.replace(/"/g, "&quot;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;");
 	card.find(".big-card-title, .big-img-titre").html("<input type='text' class='input-lg form-control' value='"+titre+"' placeholder='Titre'/>");
 
 	//tags
@@ -529,16 +526,16 @@ function validateEdit(card) {
 	
 	//titre
 	var titre = card.find(".big-card-title input, .big-img-titre input").val();
-	card.find(".big-card-title, .big-img-titre").html("<a href='view.php?id="+card.attr('id')+"'>"+titre+"</a>");
+	card.find(".big-card-title, .big-img-titre").html("<a href='"+card.attr('id')+"'>"+titre+"</a>");
 	if(card.data('card')) {
 		card.data('card').find('.card-title').html(titre);
 	}
-	$.post("MODELS/change_titre.php", {titre: titre, id: card.attr('id')});
+	$.post("/MODELS/change_titre.php", {titre: titre, id: card.attr('id')});
 
 	//tags
 	var tags = card.find('#tagsinput').val();
 	card.find('#tagsinput').remove();
-	$.post("MODELS/change_tags.php", {tags: tags, id: card.attr('id')});
+	$.post("/MODELS/change_tags.php", {tags: tags, id: card.attr('id')});
 	card.data('tags', tags);
 	if(card.data('card'))
 		card.data('card').data('tags', tags);
@@ -570,7 +567,7 @@ function validateEdit(card) {
 			card.data('card').find('.card-author a').html(pseudo);
 		}
 		
-		$.post("MODELS/change_author.php", {pseudo: pseudo, id: card.attr('id')});
+		$.post("/MODELS/change_author.php", {pseudo: pseudo, id: card.attr('id')});
 
 	}
 

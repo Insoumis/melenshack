@@ -47,7 +47,7 @@ $val = Securite::bdd(intval($_POST['value']));
 
 $req = $bdd->prepare ('SELECT id FROM users WHERE pseudo = :pseudo ');
 $req->execute ([
-    ':pseudo' => Securite::bdd($_POST['pseudo']),
+    ':pseudo' => $_POST['pseudo'],
 ]);
 $resultat = $req->fetch ();
 

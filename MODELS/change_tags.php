@@ -35,7 +35,7 @@ $req->execute([
 ]);
 $idPosteur = $req->fetch()['id_user'];
 
-if($grade < 5 && $idPosteur != $_SESSION['id']) {
+if($grade < 5  && $idPosteur != $_SESSION['id']) {
 	echo "Pas la permission";
 	exit();
 }
@@ -45,7 +45,7 @@ if($req->execute([
 	':tags' => Securite::bdd($_REQUEST['tags']),
 	':idhash' => Securite::bdd($_REQUEST['id']),
 ])) {
-	header("Location:../view.php?id=$_REQUEST[id]");
+	echo "Success";
 } else {
 	echo "Erreur";
 }

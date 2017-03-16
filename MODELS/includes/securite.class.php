@@ -13,7 +13,6 @@
 			else
 			{
 				$string = htmlspecialchars($string);
-				$string = addcslashes($string, '%_');
 			}
 				
 			return $string;

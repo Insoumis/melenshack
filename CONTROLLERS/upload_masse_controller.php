@@ -3,6 +3,8 @@
 include_once 'MODELS/check_grade.php';
 include_once 'MODELS/includes/constants.php';
 
+if(!isset()
+
 $maxsize = MAX_SIZE;
 $token_upload = Token::generer('upload');
 
@@ -31,6 +33,8 @@ if(isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 			$errmsg = "Erreur de tags!";
 		else if ($erreur == "url")
 			$errmsg = "URL trop longue !";
+		else if($erreur == "grade")
+			$errmsg = "Vous n'êtes pas assez gradé pour pouvoir ajouter s images en masse ! Communiquez votre pseudo <strong>$_SESSION[pseudo]</strong> sur <a href='http://discord.insoumis.online/'>le Discord de la France Insoumise</a> pour obtenir les droits (demandez <strong>@Entropy</strong>, <strong>@Maxgoods</strong> et <strong>@Miidnight</strong> sur le salon <strong>#operation_18mars</strong>).";
 		else if ($erreur == "pseudo")
 			$errmsg = "Vous devez choisir un pseudo pour poster une image ! <a href='pseudo.php'>Choisir un pseudo</a>";
 		else
@@ -43,7 +47,7 @@ if(isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 	$errmsg = "Vous devez choisir un pseudo pour poster une image ! <a href='pseudo.php'>Choisir un pseudo</a>";
 	$showPage = false;
 } else if ($grade < 2) {
-	$errmsg = "Vous n'êtes pas assez gradé pour pouvoir ajouter des images en masse ! Contactez <a href='http://discord.insoumis.online/'>le Discord de la France Insoumise</a> pour obtenir les droits.";
+	$errmsg = "Vous n'êtes pas assez gradé pour pouvoir ajouter s images en masse ! Communiquez votre pseudo <strong>$_SESSION[pseudo]</strong> sur <a href='http://discord.insoumis.online/'>le Discord de la France Insoumise</a> pour obtenir les droits (demandez <strong>@Entropy</strong>, <strong>@Maxgoods</strong> et <strong>@Miidnight</strong> sur le salon <strong>#operation_18mars</strong>).";
 	$showPage = false;
 }
 

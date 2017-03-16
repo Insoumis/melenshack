@@ -87,7 +87,7 @@ nav {
 	-webkit-box-shadow: 0 8px 3px -6px #999;
 	-moz-box-shadow: 0 8px 3px -6px #999;
 	box-shadow: 0 8px 3px -6px #999;
-	border: none;	
+	border: none;
 	vertical-align: middle;
 	background-color: #fff;
 }
@@ -1058,7 +1058,6 @@ h1 {
 #tableuser {
 	background: white;
 }
-
 #tableuser td, #tableuser th {
 	padding-left: 20px;
 	padding-right: 20px;
@@ -1067,9 +1066,9 @@ h1 {
 	margin-right:20px;
 }
 .alert#concours {
-	margin-left: 10%;
-	margin-right: 10%;
-	width: auto;
-	font-size: 16px;
-	text-align:center;
+	 margin-left: 10%;
+	 margin-right: 10%;
+	 width: auto;
+	 font-size: 16px;
+	 text-align: center;
 }

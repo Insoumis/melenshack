@@ -14,18 +14,18 @@ $startIndex = intval($_POST['startIndex']);
 $size = intval($_POST['size']);
 
 if(!empty($_POST['search']))
-	$search = "%".$_POST['search']."%";
+	$search = "%".urldecode($_POST['search'])."%";
 else
 	$search = "%";
 
 if(!empty($_POST['pseudo']))
-	$pseudo = $_POST['pseudo'];
+	$pseudo = urldecode($_POST['pseudo']);
 else
 	$pseudo = "";
 
 $concours = 0;
 if(!empty($_POST['tag'])) {
-	$tag = $_POST['tag'];
+	$tag = urldecode($_POST['tag']);
 	if($tag == 'concours')
 		$concours = 1;
 

@@ -47,7 +47,7 @@ if($req->execute([
 	':titre' => Securite::bdd($_REQUEST['titre']),
 	':idhash' => Securite::bdd($_REQUEST['id']),
 ])) {
-	header("Location:../view.php?id=$_REQUEST[id]");
+	header("Location:../$_REQUEST[id]");
 } else {
 	echo "Erreur";
 }

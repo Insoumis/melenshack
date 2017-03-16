@@ -28,7 +28,7 @@
 				session_start ();
 			}
 			if(isset($_SESSION[$nom.'_token']) && isset($_SESSION[$nom.'_token_time']) && isset($_REQUEST['token']))
-				if($_SESSION[$nom.'_token'] == $_REQUEST['token']) 
+				if($_SESSION[$nom.'_token'] == $_REQUEST['token'])
 					if($_SESSION[$nom.'_token_time'] >= (time() - $temps))
 							return true;
 			return false;

@@ -15,8 +15,19 @@
 	<?php if($concours): ?>
 		<div id='concours' class='alert alert-success'>
 				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-				Vous êtes sur la page du <strong>concours</strong> ! L'ordre des images est <strong>aléatoire</strong>. <a href='/login.php'>Connectez-vous</a> pour pouvoir voter !<br>Pour voir les images hors-concours, <a href='/'>cliquez ici</a>.
+				Vous êtes sur la page du <strong>concours</strong> ! L'ordre des images est <strong>aléatoire</strong>.<br>Pour voir les images hors-concours, <a href='/'>cliquez ici</a>.
 		</div>
+
+	<?php else: ?>
+
+		<div id="concours" class="alert alert-info">
+			<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+			<h4 class="text-center"><span class="glyphicon glyphicon-info-sign"></span> Je peux pas #JaiBastille&nbsp;!</h4>
+			<a href="/concours">Un concours est lancé ! Cours découvrir le contenu #JaiBastille et viens au secours de la VIeme République en cliquant sur ce lien !</a>
+		</div>
+
+
+
 
 	<?php endif ?>
 
@@ -82,8 +93,8 @@
 	
 		<div class="template">
 			<div class="card-img" title="Agrandir">
-				<div class="gif-overlay" hidden><img alt='overlay' src="/assets/gif_overlay.png"/></div>
-				<img alt='overlay' src='#' />
+				<div class="gif-overlay" hidden><img alt='chargement...' src="/assets/gif_overlay.png"/></div>
+				<img alt='chargement...' src='#' />
 			</div>
 
 			<div class="card-title">

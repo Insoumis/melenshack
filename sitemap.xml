@@ -13,7 +13,7 @@
   <url>
     <loc>https://melenshack.fr/new</loc>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://melenshack.fr/top</loc>
@@ -23,14 +23,14 @@
   <url>
     <loc>https://melenshack.fr/random</loc>
     <changefreq>daily</changefreq>
-    <priority>0.7</priority>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://melenshack.fr/login.php</loc>
-    <priority>0.6</priority>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://melenshack.fr/concours</loc>
-    <priority>0.6</priority>
+    <priority>0.3</priority>
   </url>
 </urlset>

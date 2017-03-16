@@ -12,11 +12,11 @@
 						<a href="/hot"><div class="hidden-sm hidden-xs">Populaire</div><span class="glyphicon glyphicon-fire visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
-					<li title="Nouveaut�" id="new" <?php if($isNewActive) echo "class='actif'"; ?>>
+					<li title="Nouveauté" id="new" <?php if($isNewActive) echo "class='actif'"; ?>>
 						<a href="/new"><div class="hidden-sm hidden-xs">Nouveauté</div><span class="glyphicon glyphicon-time visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
-					<li title="Le Meileur" id="top" <?php if($isTopActive) echo "class='actif'"; ?>>
+					<li title="Le Meilleur" id="top" <?php if($isTopActive) echo "class='actif'"; ?>>
 						<a href="/top"><div class="hidden-sm hidden-xs">Le Meilleur</div><span class="glyphicon glyphicon-heart-empty visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
@@ -24,6 +24,8 @@
 						<a href='/random'><span class='glyphicon glyphicon-random'></span>Aléatoire</a>
 						<br><br>
 						<a href='/concours'><span class='glyphicon glyphicon-certificate'></span>Concours</a>
+						<br></br>
+						<a href='/apropos.php'><span class='glyphicon glyphicon-question-sign'></span>A propos</a>
 
 						" data-placement="bottom">
 

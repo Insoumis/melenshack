@@ -6,7 +6,7 @@
 	<meta property="og:description"        content="Mélenshack, la banque d'images de la France Insoumise !" >
 	<meta property="fb:app_id"              content="1849815745277262" >
 
-	<?php if(!isset($urlSource)): ?>
+	<?php if(!isset($urlSource) && $supprime == '0'): ?>
 	<meta property="og:type"               content="website" >
 	<meta property="og:image"              content=<?php echo "'".$protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI'])."assets/melenshack.png'" ?> >
 	<meta property="og:image:width"              content="1600">
@@ -15,7 +15,7 @@
 
 	<meta name="twitter:card" content="summary_large_image">
 	<meta property="og:type"               content="article" >
-	<meta property="og:title"              content=<?php if(!empty($titre)) echo "'$titre'";
+	<meta property="og:title"              content=<?php if(!empty($titre)) echo '"'.htmlspecialchars($titre).'"';
 															else echo "'Mélenshack'" ?> >
 		<?php if($type == "url"): ?>
 			<meta property="og:image"              content=<?php  if(isset($urlSource)) echo "'$urlSource'" ?> >
@@ -33,7 +33,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="/css/bootstrap.css">
-	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/style.css?v1.04">
 	<link rel="stylesheet" href="/css/bootstrap-tagsinput.css"/>
 
 	<script src="/libs/jquery.min.js"></script>

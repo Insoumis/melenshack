@@ -46,8 +46,10 @@ function closeBigCard() {
 	});
 	updateVote($('.big-card').data('card'), $('.big-card').data('vote'));
 	
-	if($('.big-card').hasClass("editing"))
+	if($('.big-card').hasClass("editing")) {
 		validateEdit($(".big-card"));
+		updateMasonry()
+	}
 }
 
 $(document).ready(function() {
@@ -80,9 +82,10 @@ $(document).ready(function() {
 	});
 	
 	$('.big-card-edit').click(function() {
-		if($('.big-card').hasClass("editing"))
+		if($('.big-card').hasClass("editing")) {
 			validateEdit($(".big-card"));
-		else
+			updateMasonry()
+		} else
 			startEdit($('.big-card'));
 	});
 
@@ -177,7 +180,7 @@ $(document).ready(function() {
 
 //quand l'user atteind le bas de la page, rajoute 20 cartes
 $(window).scroll(function() {
-	if(!fin && !fetching && $(window).scrollTop() + $(window).height() > $(document).height() - $(window).height()*0.3) {
+	if(/*!fin &&*/ !fetching && $(window).scrollTop() + $(window).height() > $(document).height() - $(window).height()*0.3) {
 		getCards(10);
 	}
 });
@@ -201,8 +204,8 @@ function getCards(size) {
 			'sort': sort,
 			'startIndex': currentIndex,
 			'search': search,
-			'pseudo': pseudo,
-			'tag': tag
+			'pseudo': encodeURI(pseudo),
+			'tag': encodeURI(tag)
 		},
 		success: function(data) {
 			data = JSON.parse(data);
@@ -288,7 +291,7 @@ function addCard(c) {
 		if(i>3)
 			break;
 		if(tags[i])
-			card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
+			card.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+encodeURIComponent(tags[i])+"'><span class='tag-item'>"+tags[i]+"</span></a>");
 	}
 
     
@@ -318,16 +321,20 @@ function addCard(c) {
 	card.find(".card-thumb-down").click(function() {
 		thumbDown(idhash, card);
 	});
-
+	var plus = "";
+	if($('#search_tag').val() == 'concours')
+		plus = "&tag=concours";
 
 	if (pseudoUser == pseudoAuthor) {
 		card.find('.card-author>a')
-			.attr('data-content', "<p>Inscrit il y a " + getTimeElapsed(inscription, false) + "</p><p>Points: " + pointsUser + "</p><p><a href='index.php?sort=new&pseudo=" + pseudoUser + "'> Posts:</a> " + posts + "</p>").click(function (e) {
+			.attr('data-content', "<p>Inscrit il y a " + getTimeElapsed(inscription, false) + "</p><p>Points: " + pointsUser + "</p><p><a href='index.php?sort=new&pseudo=" + pseudoUser+plus + "'> Posts:</a> " + posts + "</p>").click(function (e) {
 			e.stopPropagation();
 		}).popover('fixTitle');
 	} else {
+		
+
 		card.find('.card-author>a')
-			.attr('data-content', "<p> Conçu par<a href='index.php?sort=new&pseudo="+pseudoAuthor+"'> " + pseudoAuthor + "</a></p><p><a href='index.php?sort=new&pseudo=" + pseudoUser + "'> Posté par" + pseudoUser + "</a></p>").click(function (e) {
+			.attr('data-content', "<p> Conçu par<a href='index.php?sort=new&pseudo="+pseudoAuthor+plus+"'> " + pseudoAuthor + "</a></p><p>Posté par <a href='index.php?sort=new&pseudo=" + pseudoUser+plus + "'>" + pseudoUser + "</a></p>").click(function (e) {
 			e.stopPropagation();
 		}).popover('fixTitle');
 	}
@@ -382,7 +389,7 @@ function addCard(c) {
 		tags = card.data('tags').split(',');
 		for(var i=0; i < tags.length; ++i) {
 			if(tags[i])
-				big.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+tags[i]+"'><span class='tag-item'>"+tags[i]+"</span></a>");
+				big.find('.tags').append("<a href='index.php?sort="+$('#sort').val()+"&tag="+encodeURIComponent(tags[i])+"'><span class='tag-item'>"+tags[i]+"</span></a>");
 		}
 		$("[data-toggle='tooltip']").tooltip();
 
