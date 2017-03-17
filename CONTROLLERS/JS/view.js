@@ -9,7 +9,6 @@ $(document).click(function() {
 		});
 $(window).on('load', function() {
 
-
 		$('.big-img-container').data('tags', $('#tagsstr').val());
 
 		//initialise le clipboard
@@ -31,14 +30,27 @@ $(window).on('load', function() {
 		$('.big-img-gplus').click(shareGplus);
 
 		$('.big-img-container').find(".card-thumb-up").click(function() {
-				thumbUp(idhash, $('.big-img-container'));
+				thumbUp($('.big-img-container').attr('id'), $('.big-img-container'));
 				});
 
 		$('.big-img-container').find(".card-thumb-down").click(function() {
-				thumbDown(idhash, $('.big-img-container'));
+				thumbDown($('.big-img-container').attr('id'), $('.big-img-container'));
 				});
 		$('.elapsed').html(getTimeElapsed($('#dateCreation').val(), false));
-
+		/*
+		if (pseudoUser == pseudoAuthor) {
+			$('.temps a')
+				.attr('data-content', "<p>Inscrit il y a " + getTimeElapsed($("#inscription").val(), false) + "</p><p>Points: " + $("#pointsUser").val() + "</p><p><a href='index.php?sort=new&pseudo=" + $("#pseudo")/val() + "'> Posts:</a> " + $("#posts").val() + "</p>").click(function (e) {
+				e.stopPropagation();
+			}).popover();
+		} else {
+			
+	
+			$('.temps a')
+				.attr('data-content', "<p> Conçu par<a href='index.php?sort=new&pseudo="+pseudoAuthor+plus+"'> " + pseudoAuthor + "</a></p><p>Posté par <a href='index.php?sort=new&pseudo=" + pseudoUser+plus + "'>" + pseudoUser + "</a></p>").click(function (e) {
+				e.stopPropagation();
+			}).popover('fixTitle');
+		}*/
 		$('.temps>a')
 			.attr('data-content', "<p>Inscrit il y a "+getTimeElapsed($('#inscription').val(), false)+"</p><p>Points: "+$('#pointsUser').val()+"</p><p><a href='index.php?sort=new&pseudo="+$('#pseudo').val()+"'> Posts:</a> "+$('#posts').val()+"</p>")
 			.click(function(e){e.stopPropagation();}).popover();

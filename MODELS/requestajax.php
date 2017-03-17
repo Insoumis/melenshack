@@ -118,7 +118,7 @@ if ($sort == "top") {
 		array_push($json, json_decode(getInfo($resultat["nom_hash"])));
 	}
 	echo json_encode($json);
-} elseif ($sort == "report" && $grade > 0) {
+} elseif ($sort == "report" && $grade >= 5) {
 	$req = $bdd->prepare ("
 	SELECT images.nom_hash, count(*) FROM images 
 		INNER JOIN report ON images.id = report.id_image 
@@ -126,8 +126,7 @@ if ($sort == "top") {
 	WHERE (supprime=0 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
 			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
-			AND ((:concours=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*concours.*')
-				OR (:concours=1 AND tags RLIKE :tagsr))
+			AND tags RLIKE :tagsr
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1))
 	GROUP BY images.id ORDER BY count(*) DESC LIMIT :startIndex , :size");
@@ -139,7 +138,6 @@ if ($sort == "top") {
 	$req->bindParam(':search', $search, PDO::PARAM_STR);
 	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
-	$req->bindParam(':concours', $concours, PDO::PARAM_BOOL);
 	$req->execute();
     
 
@@ -147,15 +145,14 @@ if ($sort == "top") {
 		array_push($json, json_decode(getInfo($resultat["nom_hash"])));
 	}
 	echo json_encode($json);
-} elseif($sort == "deleted" && $grade > 0) {
+} elseif($sort == "deleted" && $grade >= 5) {
 	$req = $bdd->prepare ("
 	SELECT nom_hash FROM images 
 		INNER JOIN users ON id_user = users.id 
 	WHERE (supprime=1 
 			AND (titre LIKE :search OR tags LIKE :search OR users.pseudo LIKE :search) 
 			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
-			AND ((:concours=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*concours.*')
-				OR (:concours=1 AND tags RLIKE :tagsr))
+			AND tags RLIKE :tagsr
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1))
 	ORDER BY date_creation DESC LIMIT :startIndex , :size" );
@@ -165,7 +162,6 @@ if ($sort == "top") {
 	$req->bindParam(':search', $search, PDO::PARAM_STR);
 	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
-	$req->bindParam(':concours', $concours, PDO::PARAM_BOOL);
 	$req->execute();
     
 

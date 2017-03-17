@@ -9,7 +9,7 @@ RewriteRule "^admin$" "admin.php" [PT]
 RewriteRule "^upload$" "upload.php" [PT]
 RewriteRule "^mass$" "upload_masse.php" [PT]
 RewriteRule "^42$" "42" [PT]
-RewriteRule "^concours$" "index.php?sort=random&tag=concours" [PT]
+RewriteRule "^concours$" "index.php?sort=top&tag=concours" [PT]
 
 RewriteRule "^([a-zA-Z0-9-_]+)$" "/view.php?id=$1" [PT]
 

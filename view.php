@@ -1,7 +1,8 @@
 <?php
-require 'header.php';
 
 require 'CONTROLLERS/view_controller.php';
+
+require 'header.php';
 
 require 'VIEWS/view_view.php';
 

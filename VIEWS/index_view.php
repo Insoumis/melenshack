@@ -15,7 +15,7 @@
 	<?php if($concours): ?>
 		<div id='concours' class='alert alert-success'>
 				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-				Vous êtes sur la page du <strong>concours</strong> ! L'ordre des images est <strong>aléatoire</strong>.<br>Pour voir les images hors-concours, <a href='/'>cliquez ici</a>.
+				Vous êtes sur la page du <strong>concours</strong> ! <br>Pour voir les images hors-concours, <a href='/'>cliquez ici</a>.
 		</div>
 
 	<?php else: ?>

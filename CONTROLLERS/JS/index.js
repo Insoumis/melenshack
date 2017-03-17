@@ -180,7 +180,7 @@ $(document).ready(function() {
 
 //quand l'user atteind le bas de la page, rajoute 20 cartes
 $(window).scroll(function() {
-	if(/*!fin &&*/ !fetching && $(window).scrollTop() + $(window).height() > $(document).height() - $(window).height()*0.3) {
+	if(!fetching && $(window).scrollTop() + $(window).height() > $(document).height() - $(window).height()*0.3) {
 		getCards(10);
 	}
 });
@@ -217,7 +217,7 @@ function getCards(size) {
 				}
 			}
 	    
-            if(i < 2) {
+            if(i == 0) {
 				fin = true;
 			}
 			currentIndex += i;

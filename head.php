@@ -6,18 +6,13 @@
 	<meta property="og:description"        content="Mélenshack, la banque d'images de la France Insoumise !" >
 	<meta property="fb:app_id"              content="1849815745277262" >
 
-	<?php if(!isset($urlSource) && $supprime == '0'): ?>
-	<meta property="og:type"               content="website" >
-	<meta property="og:image"              content=<?php echo "'".$protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI'])."assets/melenshack.png'" ?> >
-	<meta property="og:image:width"              content="1600">
-	<meta property="og:image:height"              content="480">
-	<?php else: ?>
+	<?php if(isset($urlSource)): ?>
 
 	<meta name="twitter:card" content="summary_large_image">
 	<meta property="og:type"               content="article" >
 	<meta property="og:title"              content=<?php if(!empty($titre)) echo '"'.htmlspecialchars($titre).'"';
 															else echo "'Mélenshack'" ?> >
-		<?php if($type == "url"): ?>
+		<?php if(strpos($urlSource, 'http') !== false): ?>
 			<meta property="og:image"              content=<?php  if(isset($urlSource)) echo "'$urlSource'" ?> >
 		<?php else: ?>
 			<meta property="og:image"              content=<?php echo "'$protocol$_SERVER[HTTP_HOST]"."$urlSource'" ?> >
