@@ -174,6 +174,16 @@ if ($sort == "top") {
 }
 elseif ($sort == "hot") {
 
+	$coefredressement = 0;
+	/*
+	if ($tagsr) {
+		if (!empty($tagsr)) {
+		   $coefredressement = $coefredressement + 10; // Gros boost = 1, Boost moyen = 0.5, Boost faible = 0.2
+		} else {
+			$coefredressement = $coefredressement + 0;
+		}
+	} */
+
 	$req = $bdd->prepare ("
 	SELECT nom_hash FROM images 
 		INNER JOIN users ON id_user = users.id 
@@ -185,7 +195,7 @@ elseif ($sort == "hot") {
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1))
 	ORDER BY LOG10(ABS(nb_vote_positif - nb_vote_negatif) + 1) * SIGN(nb_vote_positif - nb_vote_negatif)
-    + (UNIX_TIMESTAMP(date_creation) / 300000) DESC LIMIT :startIndex, :size" );
+    + (UNIX_TIMESTAMP(date_creation) / 300000) + :coefredressement DESC LIMIT :startIndex, :size" );
 
 	$req->bindParam(':startIndex', $startIndex, PDO::PARAM_INT);
 	$req->bindParam(':size', $size, PDO::PARAM_INT);
@@ -193,6 +203,7 @@ elseif ($sort == "hot") {
 	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
 	$req->bindParam(':concours', $concours, PDO::PARAM_BOOL);
+	$req->bindParam(':coefredressement', $coefredressement, PDO::PARAM_INT);
 	$req->execute();
 
 

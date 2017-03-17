@@ -8,11 +8,11 @@
 	
 			<div id="navbar" style="display: flex;">
 				<ul class="nav navbar-nav">
-					<li title="Populaire" id="hot" <?php if($isHotActive) echo "class='actif'"; ?>>
+					<li title="Populaire" id="hot" <?php if($isHotActive && $_REQUEST['tag'] != "18mars") echo "class='actif'"; ?>>
 						<a href="/hot"><div class="hidden-sm hidden-xs">Populaire</div><span class="glyphicon glyphicon-fire visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
-					<li title="Nouveauté" id="new" <?php if($isNewActive) echo "class='actif'"; ?>>
+					<li title="Nouveauté" id="new" <?php if($isNewActive ) echo "class='actif'"; ?>>
 						<a href="/new"><div class="hidden-sm hidden-xs">Nouveauté</div><span class="glyphicon glyphicon-time visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
@@ -24,9 +24,10 @@
 						<a href='/random'><span class='glyphicon glyphicon-random'></span>Aléatoire</a>
 						<br><br>
 						<a href='/concours'><span class='glyphicon glyphicon-certificate'></span>Concours</a>
+						<br><br>
+						<a href='/18mars'><span class='glyphicon glyphicon-bell'></span>Evénement</a>
 						<br></br>
 						<a href='/apropos.php'><span class='glyphicon glyphicon-question-sign'></span>A propos</a>
-
 						" data-placement="bottom">
 
 

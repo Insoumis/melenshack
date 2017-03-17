@@ -18,6 +18,13 @@
 				Vous êtes sur la page du <strong>concours</strong> ! <br>Pour voir les images hors-concours, <a href='/'>cliquez ici</a>.
 		</div>
 
+	<?php elseif($evenement): ?>
+		<div id='concours' class='alert alert-success'>
+				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+				Vous êtes sur la page de l'événement du <strong>18 Mars</strong> ! Pour participer, <a href="/upload.php">ajoutez une image</a> avec le tag <strong><span style="font-size: 20px">   18mars</span></strong>.
+		</div>
+
+
 	<?php else: ?>
 
 		<div id="concours" class="alert alert-info">

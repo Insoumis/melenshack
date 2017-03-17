@@ -22,3 +22,7 @@ if($grade < 5 && ($_REQUEST['sort'] == "deleted" || $_REQUEST['sort'] == "report
 $concours = false;
 if($_REQUEST['tag'] == 'concours')
 	$concours = true;
+
+$evenement = false;
+if($_REQUEST['tag'] == '18mars')
+	$evenement = true;

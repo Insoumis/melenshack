@@ -10,6 +10,7 @@ RewriteRule "^upload$" "upload.php" [PT]
 RewriteRule "^mass$" "upload_masse.php" [PT]
 RewriteRule "^42$" "42" [PT]
 RewriteRule "^concours$" "index.php?sort=top&tag=concours" [PT]
+RewriteRule "^18mars$" "index.php?sort=new&tag=18mars" [PT]
 
 RewriteRule "^([a-zA-Z0-9-_]+)$" "/view.php?id=$1" [PT]
 

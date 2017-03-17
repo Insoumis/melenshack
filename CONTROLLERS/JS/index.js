@@ -496,13 +496,13 @@ function addCard(c) {
 	card.mouseenter(function(e) {
 		var ext = url.split('.').pop();
 		if(ext == 'gif' && !card.hasClass("opened") && !card.hasClass("playing")) {
-			card.addClass("playing");
 			card.find('.gif-overlay').hide();
 			var bigImg = $('<img/>');
 			bigImg.attr('src', urlSource);
 			bigImg.height(card.find('.card-img>img').height());
 			bigImg.on('load', function() {
 				card.find('.card-img>img').replaceWith(bigImg);
+				card.addClass("playing");
 			});
 		}
 	});

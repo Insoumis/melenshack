@@ -6,8 +6,11 @@
 	<meta property="og:description"        content="Mélenshack, la banque d'images de la France Insoumise !" >
 	<meta property="fb:app_id"              content="1849815745277262" >
 
-	<?php if(isset($urlSource)): ?>
+	<?php if(!isset($urlSource)): ?>
+	<meta property="og:title"              content="Mélenshack">
 
+
+	<?php else: ?>
 	<meta name="twitter:card" content="summary_large_image">
 	<meta property="og:type"               content="article" >
 	<meta property="og:title"              content=<?php if(!empty($titre)) echo '"'.htmlspecialchars($titre).'"';
