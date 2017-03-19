@@ -6,9 +6,9 @@
 														 <img alt="melenshack" class="visible-xs" src="/assets/melenshack_text.svg" id="logo"/></a>
 			</div> <!-- navbar-header -->
 	
-			<div id="navbar" style="display: flex;">
+			<div id="navbar" class="flexnav">
 				<ul class="nav navbar-nav">
-					<li title="Populaire" id="hot" <?php if($isHotActive && $_REQUEST['tag'] != "18mars") echo "class='actif'"; ?>>
+					<li title="Populaire" id="hot" <?php if($isHotActive ) echo "class='actif'"; ?>>
 						<a href="/hot"><div class="hidden-sm hidden-xs">Populaire</div><span class="glyphicon glyphicon-fire visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
@@ -16,16 +16,14 @@
 						<a href="/new"><div class="hidden-sm hidden-xs">Nouveauté</div><span class="glyphicon glyphicon-time visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
-					<li title="Le Meilleur" id="top" <?php if($isTopActive && $_REQUEST['tag'] != "concours") echo "class='actif'"; ?>>
+					<li title="Le Meilleur" id="top" <?php if($isTopActive && $_REQUEST['tag'] != "concours"&& $_REQUEST['tag'] != "18mars") echo "class='actif'"; ?>>
 						<a href="/top"><div class="hidden-sm hidden-xs">Le Meilleur</div><span class="glyphicon glyphicon-heart-empty visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
 					<li id="plus" data-toggle="popover" data-html="true" title="" data-content="
 						<a href='/random'><span class='glyphicon glyphicon-random'></span>Aléatoire</a>
 						<br><br>
-						<a href='/concours'><span class='glyphicon glyphicon-certificate'></span>Concours</a>
-						<br><br>
-						<a href='/18mars'><span class='glyphicon glyphicon-bell'></span>Evénement</a>
+						<a href='/18mars'><span class='glyphicon glyphicon-book'></span>Archives</a>
 						<br></br>
 						<a href='/apropos.php'><span class='glyphicon glyphicon-question-sign'></span>A propos</a>
 						" data-placement="bottom">

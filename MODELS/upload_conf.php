@@ -106,7 +106,7 @@ if (!empty($_POST['tags'])) {
     $nb_id = 0;
     $tagsstr = "";
     foreach ($_POST['tags'] as $id => $tag) {
-        if ($id == 0) {
+	if ($id == 0) {
             $tagsstr = htmlspecialchars ($tag);
         } else
             $tagsstr = $tagsstr . ',' . htmlspecialchars ($tag);

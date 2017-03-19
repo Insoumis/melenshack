@@ -23,6 +23,14 @@ body {
 NAVBAR
 ------
  */
+.flexnav {
+	display: flex;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+
+}
 .vdivide {
 	margin-top: 10px;
 	width: 2px;
@@ -958,7 +966,17 @@ h1 {
 	padding: 0 5px;
 	margin: 0;
 	margin-top: -2px;
-	flex: 1;
+	width: auto;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	-webkit-flex: auto 1;
+	-moz-flex: auto 1;
+	-ms-flex: auto 1;
+	-o-flex: auto 1;
+	flex: auto 1;
 }
 #urlgroup {
 	padding:0;
@@ -966,6 +984,10 @@ h1 {
 	width: 100%;
 	text-align: left;
 	display: flex;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
 	margin-bottom: 20px;
 }
 .g-recaptcha {

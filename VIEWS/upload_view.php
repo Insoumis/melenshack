@@ -43,7 +43,7 @@
 					</div>
 
 					<div class="tags">
-						<label for="tagsinput"><span class="glyphicon glyphicon-tags"></span>Tags (séparés par des virgules) (optionnel):<br><small>Pour participer à l'événement du 18 Mars, ajoutez le tag '18mars'.</small></label>
+						<label for="tagsinput"><span class="glyphicon glyphicon-tags"></span>Tags (séparés par des virgules) (optionnel):</label>
 						<br>
 						<select multiple name="tags[]" id="tagsinput" type="text" data-role="tagsinput"></select>
 					</div>

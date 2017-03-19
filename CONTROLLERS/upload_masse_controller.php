@@ -3,7 +3,6 @@
 include_once 'MODELS/check_grade.php';
 include_once 'MODELS/includes/constants.php';
 
-if(!isset()
 
 $maxsize = MAX_SIZE;
 $token_upload = Token::generer('upload');

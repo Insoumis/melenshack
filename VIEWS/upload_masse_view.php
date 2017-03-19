@@ -40,7 +40,7 @@
 					</div>
 
 					<div class="tags">
-						<label for="tagsinput"><span class="glyphicon glyphicon-tags"></span>Tags (séparés par des virgules) (optionnel):<br><small>Pour participer au concours #JaiBastille, ajoutez le tag 'concours'.</small> </label>
+						<label for="tagsinput"><span class="glyphicon glyphicon-tags"></span>Tags (séparés par des virgules) (optionnel):</label>
 						<br>
 						<select multiple name="tags[]" id="tagsinput" type="text" data-role="tagsinput"></select>
 					</div>

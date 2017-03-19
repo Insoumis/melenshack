@@ -10,7 +10,7 @@
 	<meta property="og:title"              content="Mélenshack">
 
 
-	<?php else: ?>
+	<?php elseif(!$supprime): ?>
 	<meta name="twitter:card" content="summary_large_image">
 	<meta property="og:type"               content="article" >
 	<meta property="og:title"              content=<?php if(!empty($titre)) echo '"'.htmlspecialchars($titre).'"';

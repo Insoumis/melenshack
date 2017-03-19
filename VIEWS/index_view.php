@@ -15,25 +15,14 @@
 	<?php if($concours): ?>
 		<div id='concours' class='alert alert-success'>
 				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-				Vous êtes sur la page du <strong>concours</strong> ! <br>Pour voir les images hors-concours, <a href='/'>cliquez ici</a>.
+				Aucun concours n'est lancé pour le moment.
 		</div>
 
 	<?php elseif($evenement): ?>
 		<div id='concours' class='alert alert-success'>
 				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-				Vous êtes sur la page de l'événement du <strong>18 Mars</strong> ! Pour participer, <a href="/upload.php">ajoutez une image</a> avec le tag <strong><span style="font-size: 20px">   18mars</span></strong>.
+				Vous êtes sur la page de l'événement du <strong>18 Mars</strong> ! Visionnez et partagez les archives du concours #JaiBastille et des photos de la marche !
 		</div>
-
-
-	<?php else: ?>
-
-		<div id="concours" class="alert alert-info">
-			<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-			<h4 class="text-center"><span class="glyphicon glyphicon-info-sign"></span> Je peux pas #JaiBastille&nbsp;!</h4>
-			<a href="/concours">Un concours est lancé ! Cours découvrir le contenu #JaiBastille et viens au secours de la VIeme République en cliquant sur ce lien !</a>
-		</div>
-
-
 
 
 	<?php endif ?>

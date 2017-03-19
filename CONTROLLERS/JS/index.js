@@ -228,10 +228,10 @@ function getCards(size) {
 			});
 			if(t == 0) {
 				$('#nothing').remove();
-				$("#main_page").append($("<center><h3 id='nothing'>Rien n'a été trouvé.</h3></center>"));
+				$('#main_page').append($("<center id='nothing'><h3>Rien n'a été trouvé.</h3></center>"));
 			} else if(t > 0 && fin) {
 				$('#nothing').remove();
-				$("#main_page").append($("<center><h3 id='nothing'>Fin du flux.</h3></center>"));
+				$("#main_page").append($("<center id='nothing'><h3>Fin du flux.</h3></center>"));
 			} else if(t > 0 && !fin) {
 				$('#nothing').remove();
             		}

@@ -51,5 +51,8 @@ else {
 	$showSupprime = false;
 	if($grade >= 5 || $idUser == $_SESSION['id'])
 		$showSupprime = true;
+}
 
+if(!$showPage) {
+	header("HTTP/1.0 404 Not Found");
 }

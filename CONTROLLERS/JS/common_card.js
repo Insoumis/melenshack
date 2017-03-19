@@ -295,10 +295,7 @@ vote: vote},
 
 //affiche erreur si pas loggé
 function showVoteError() {
-	var e = `<div id='voteerror' class='alert alert-danger erreur'>
-		<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-		Vous devez être connecté pour pouvoir voter. <a href='login.php'>Se connecter</a>.
-		</div>`;
+	var e = "<div id='voteerror' class='alert alert-danger erreur'><a href='#' class='close' data-dismiss='alert' aria-label='fermer'>×</a>Vous devez être connecté pour pouvoir voter. <a href='login.php'>Se connecter</a></div>";
 
 	var erreur = $(e);
 	$('#main_page').prepend(erreur);

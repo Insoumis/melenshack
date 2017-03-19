@@ -24,11 +24,15 @@ else
 	$pseudo = "";
 
 $concours = 0;
+$tag18mars = 0;
 if(!empty($_POST['tag'])) {
 	$tag = urldecode($_POST['tag']);
-	if($tag == 'concours')
+	if($tag == 'concours') {
 		$concours = 1;
-
+	}
+	else if(strtoupper($tag) == '18MARS') {
+		$tag18mars = 1;
+	}
 	$tagsr = ".*".$tag.".*";
 } else
 	$tagsr = ".*";
@@ -45,6 +49,8 @@ if ($sort == "top") {
 			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
 			AND ((:concours=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*concours.*')
 				OR (:concours=1 AND tags RLIKE :tagsr))
+			AND ((:tag18mars=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*18mars.*')
+				OR (:tag18mars=1 AND tags RLIKE :tagsr))
 			AND users.id NOT IN 
 				(SELECT id_user FROM ban WHERE 1))
 	ORDER BY pointsTotaux DESC LIMIT :startIndex , :size" );
@@ -54,6 +60,7 @@ if ($sort == "top") {
 	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
 	$req->bindParam(':concours', $concours, PDO::PARAM_BOOL);
+	$req->bindParam(':tag18mars', $tag18mars, PDO::PARAM_BOOL);
 	$req->execute();
 
     while ($resultat = $req->fetch()) {
@@ -70,6 +77,8 @@ if ($sort == "top") {
 			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
 			AND ((:concours=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*concours.*')
 				OR (:concours=1 AND tags RLIKE :tagsr))
+			AND ((:tag18mars=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*18mars.*')
+				OR (:tag18mars=1 AND tags RLIKE :tagsr))
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1))
 	ORDER BY date_creation DESC LIMIT :startIndex , :size" );
@@ -80,6 +89,7 @@ if ($sort == "top") {
 	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
 	$req->bindParam(':concours', $concours, PDO::PARAM_BOOL);
+	$req->bindParam(':tag18mars', $tag18mars, PDO::PARAM_BOOL);
 	$req->execute();
 
 
@@ -101,6 +111,8 @@ if ($sort == "top") {
 			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
 			AND ((:concours=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*concours.*')
 				OR (:concours=1 AND tags RLIKE :tagsr))
+			AND ((:tag18mars=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*18mars.*')
+				OR (:tag18mars=1 AND tags RLIKE :tagsr))
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1))
 	ORDER BY RAND() DESC LIMIT :size" );
@@ -110,6 +122,7 @@ if ($sort == "top") {
 	$req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
 	$req->bindParam(':concours', $concours, PDO::PARAM_BOOL);
+	$req->bindParam(':tag18mars', $tag18mars, PDO::PARAM_BOOL);
 	$req->execute();
 
 
@@ -173,16 +186,9 @@ if ($sort == "top") {
 
 }
 elseif ($sort == "hot") {
-
 	$coefredressement = 0;
-	/*
-	if ($tagsr) {
-		if (!empty($tagsr)) {
-		   $coefredressement = $coefredressement + 10; // Gros boost = 1, Boost moyen = 0.5, Boost faible = 0.2
-		} else {
-			$coefredressement = $coefredressement + 0;
-		}
-	} */
+
+	// Gros boost = 1, Boost moyen = 0.5, Boost faible = 0.2
 
 	$req = $bdd->prepare ("
 	SELECT nom_hash FROM images 
@@ -192,6 +198,8 @@ elseif ($sort == "hot") {
 			AND (:pseudo = '' OR pseudo = :pseudo OR pseudo_author = :pseudo) 
 			AND ((:concours=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*concours.*')
 				OR (:concours=1 AND tags RLIKE :tagsr))
+			AND ((:tag18mars=0 AND tags RLIKE :tagsr AND tags NOT RLIKE '.*18mars.*')
+				OR (:tag18mars=1 AND tags RLIKE :tagsr))
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1))
 	ORDER BY LOG10(ABS(nb_vote_positif - nb_vote_negatif) + 1) * SIGN(nb_vote_positif - nb_vote_negatif)
@@ -204,6 +212,7 @@ elseif ($sort == "hot") {
 	$req->bindParam(':tagsr', $tagsr, PDO::PARAM_STR);
 	$req->bindParam(':concours', $concours, PDO::PARAM_BOOL);
 	$req->bindParam(':coefredressement', $coefredressement, PDO::PARAM_INT);
+	$req->bindParam(':tag18mars', $tag18mars, PDO::PARAM_BOOL);
 	$req->execute();
 
 
