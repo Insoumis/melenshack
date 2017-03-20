@@ -4,6 +4,7 @@
 
 require_once 'includes/vendor/autoload.php';
 require_once 'includes/identifiants.php';
+include_once("auth_cookie.php");
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
@@ -125,6 +126,8 @@ if(isset($_GET['request'])) {
 
 			$_SESSION['id'] = $id_user;
 			$_SESSION['type'] = 'twitter';
+			
+			createCookie($id_user);
 
 			//vérifie si pseudo déja pris
 			$req = $bdd->prepare("SELECT * FROM users WHERE pseudo=:pseudo");

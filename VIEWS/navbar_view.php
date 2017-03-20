@@ -8,7 +8,7 @@
 	
 			<div id="navbar" class="flexnav">
 				<ul class="nav navbar-nav">
-					<li title="Populaire" id="hot" <?php if($isHotActive ) echo "class='actif'"; ?>>
+					<li title="Populaire" id="hot" <?php if($isHotActive && $_REQUEST['tag'] != "20mars") echo "class='actif'"; ?>>
 						<a href="/hot"><div class="hidden-sm hidden-xs">Populaire</div><span class="glyphicon glyphicon-fire visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>

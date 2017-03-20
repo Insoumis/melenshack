@@ -180,7 +180,7 @@ $(document).ready(function() {
 
 //quand l'user atteind le bas de la page, rajoute 20 cartes
 $(window).scroll(function() {
-	if(!fetching && $(window).scrollTop() + $(window).height() > $(document).height() - $(window).height()*0.3) {
+	if(!fin && !fetching && $(window).scrollTop() + $(window).height() > $(document).height() - $(window).height()*0.3) {
 		getCards(10);
 	}
 });
@@ -198,7 +198,7 @@ function getCards(size) {
 
 	$.ajax({
 		url: '/MODELS/requestajax.php',
-		type: 'POST',
+		type: 'GET',
 		data: {
 			'size': size,
 			'sort': sort,
@@ -217,7 +217,7 @@ function getCards(size) {
 				}
 			}
 	    
-            if(i == 0) {
+            if(data.length == 0) {
 				fin = true;
 			}
 			currentIndex += i;
@@ -238,11 +238,9 @@ function getCards(size) {
             fetching = false;
 	
 			updateMasonry();
-			$(window).scroll();
 
 		}
 	});
-	setTimeout(function() {fetching = false;}, 200);
 }
 
 

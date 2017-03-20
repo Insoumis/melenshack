@@ -6,27 +6,27 @@ include_once("includes/constants.php");
 include("cardsinfo.php");
 include("check_grade.php");
 
-if (empty($_POST['sort']) || !is_numeric($_POST['startIndex']) || !is_numeric($_POST['size'])) {
+if (empty($_REQUEST['sort']) || !is_numeric($_REQUEST['startIndex']) || !is_numeric($_REQUEST['size'])) {
     exit();
 }
-$sort = htmlspecialchars($_POST['sort']);
-$startIndex = intval($_POST['startIndex']);
-$size = intval($_POST['size']);
+$sort = htmlspecialchars($_REQUEST['sort']);
+$startIndex = intval($_REQUEST['startIndex']);
+$size = intval($_REQUEST['size']);
 
-if(!empty($_POST['search']))
-	$search = "%".urldecode($_POST['search'])."%";
+if(!empty($_REQUEST['search']))
+	$search = "%".urldecode($_REQUEST['search'])."%";
 else
 	$search = "%";
 
-if(!empty($_POST['pseudo']))
-	$pseudo = urldecode($_POST['pseudo']);
+if(!empty($_REQUEST['pseudo']))
+	$pseudo = urldecode($_REQUEST['pseudo']);
 else
 	$pseudo = "";
 
 $concours = 0;
 $tag18mars = 0;
-if(!empty($_POST['tag'])) {
-	$tag = urldecode($_POST['tag']);
+if(!empty($_REQUEST['tag'])) {
+	$tag = urldecode($_REQUEST['tag']);
 	if($tag == 'concours') {
 		$concours = 1;
 	}

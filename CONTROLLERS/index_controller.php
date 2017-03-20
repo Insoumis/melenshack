@@ -26,3 +26,6 @@ if($_REQUEST['tag'] == 'concours')
 $evenement = false;
 if($_REQUEST['tag'] == '18mars')
 	$evenement = true;
+$tag20mars = false;
+if($_REQUEST['tag'] == '20mars')
+	$tag20mars=true;

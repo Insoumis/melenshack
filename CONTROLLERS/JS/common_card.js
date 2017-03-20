@@ -152,7 +152,6 @@ function getTimeElapsed(date, minimise) {
 }
 function thumbUp(id, card) {
 	var btn = card.find('.card-thumb-up');
-	console.log('oui');
 	if($('#connected').val() == "no") {
 		showVoteError();
 		return;

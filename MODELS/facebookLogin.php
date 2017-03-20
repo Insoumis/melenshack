@@ -2,6 +2,7 @@
 
 require_once 'includes/vendor/autoload.php';
 require_once 'includes/identifiants.php';
+include_once("auth_cookie.php");
 
 if(!isset($_SESSION))
 	session_start();
@@ -127,6 +128,8 @@ if (isset($accessToken)) {
 
 			$_SESSION['id'] = $id_user;
 			$_SESSION['type'] = 'facebook';
+			
+			createCookie($id_user);
 
 			//vérifie si pseudo déja pris
 			$req = $bdd->prepare("SELECT * FROM users WHERE pseudo=:pseudo");

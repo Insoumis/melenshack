@@ -37,9 +37,9 @@
 	<script src="/libs/jquery.min.js"></script>
 	<script src="/libs/jquery-ui.min.js"></script><!-- ATTENTION : JQUERY UI AVANT BOOTSTRAP SINON PB TOOLTIP -->
 	<script src="/libs/bootstrap.min.js"></script>
-	<script src="/libs/clipboard.min.js"></script>
-	<script src="/libs/masonry.pkgd.min.js"></script>
-	<script src="/libs/imagesloaded.pkgd.min.js"></script>
+	<script src="/libs/clipboard.min.js" defer async></script>
+	<script src="/libs/masonry.pkgd.min.js" defer async></script>
+	<script src="/libs/imagesloaded.pkgd.min.js" defer async></script>
 
 
 	

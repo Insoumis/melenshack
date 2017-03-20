@@ -23,7 +23,11 @@
 				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
 				Vous êtes sur la page de l'événement du <strong>18 Mars</strong> ! Visionnez et partagez les archives du concours #JaiBastille et des photos de la marche !
 		</div>
-
+	<?php elseif($tag20mars): ?>
+		<div id='concours' class='alert alert-success'>
+				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+			Vous êtes sur la page de l'événement du débat du 20 mars. Pour ajouter une image, ajoutez le tag <strong>20mars</strong> !	
+		</div>
 
 	<?php endif ?>
 
@@ -90,7 +94,7 @@
 		<div class="template">
 			<div class="card-img" title="Agrandir">
 				<div class="gif-overlay" hidden><img alt='chargement...' src="/assets/gif_overlay.png"/></div>
-				<img alt='chargement...' src='#' />
+				<img alt='chargement...' />
 			</div>
 
 			<div class="card-title">
@@ -134,8 +138,8 @@
 
 </div>
 <?php endif ?>
-<script src="/libs/bootstrap-tagsinput.min.js"></script>
-<script src="/CONTROLLERS/JS/common_card.js"></script>
-<script src="/CONTROLLERS/JS/index.js"></script>
+<script src="/libs/bootstrap-tagsinput.min.js" defer></script>
+<script src="/CONTROLLERS/JS/common_card.js" defer></script>
+<script src="/CONTROLLERS/JS/index.js?c=cb2" defer></script>
 </body>
 </html>
