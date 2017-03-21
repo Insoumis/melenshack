@@ -94,7 +94,7 @@
 		<div class="template">
 			<div class="card-img" title="Agrandir">
 				<div class="gif-overlay" hidden><img alt='chargement...' src="/assets/gif_overlay.png"/></div>
-				<img alt='chargement...' />
+				<img src="/assets/looper.gif" />
 			</div>
 
 			<div class="card-title">

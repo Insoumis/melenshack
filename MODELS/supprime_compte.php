@@ -50,4 +50,9 @@ $req->execute ([
 	':id' => $id_user,
 ]);
 
+$req = $bdd->prepare ('UPDATE users SET gradeupdatedby=NULL WHERE gradeupdatedby = :id');
+$req->execute ([
+	':id' => $id_user,
+]);
+
 header('Location:disconnect_conf.php');
