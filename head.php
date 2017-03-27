@@ -9,6 +9,10 @@
 	<?php if(!isset($urlSource)): ?>
 	<meta property="og:title"              content="Mélenshack">
 
+	<meta property="og:type"               content="website" >
+	<meta property="og:image"              content=<?php echo "'$protocol$_SERVER[HTTP_HOST]"."/assets/melenshack.png'" ?> >
+	<meta property="og:image:width"              content="1600" >
+	<meta property="og:image:height"              content="480" >
 
 	<?php elseif(!$supprime): ?>
 	<meta name="twitter:card" content="summary_large_image">
@@ -38,7 +42,7 @@
 	<script src="/libs/jquery-ui.min.js"></script><!-- ATTENTION : JQUERY UI AVANT BOOTSTRAP SINON PB TOOLTIP -->
 	<script src="/libs/bootstrap.min.js"></script>
 	<script src="/libs/clipboard.min.js" defer async></script>
-	<script src="/libs/masonry.pkgd.min.js" defer async></script>
+	<script src="/libs/masonry.pkgd.min.js"></script>
 	<script src="/libs/imagesloaded.pkgd.min.js" defer async></script>
 
 

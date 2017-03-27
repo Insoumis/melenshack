@@ -12,25 +12,29 @@
 	<!-- container principal -->
 	<?php if($showPage): ?>
 	<div id='main_page'>
-	<?php if($concours): ?>
-		<div id='concours' class='alert alert-success'>
+	<?php if(!$concours && !$tagRennes && !$evenement): ?>
+	<div id='concours' class='alert alert-info'>
 				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-				Aucun concours n'est lancé pour le moment.
+			<a href="https://www.facebook.com/Melenshack/" target="_blank"><strong>Nouveau !</strong> Le MélenShack a maintenant sa page Facebook ! Venez la voir et la liker !</a> 
+		<!--<a href="https://melenshack.fr/rennes" ><strong>En direct !</strong> Vous avez la possibilité de voir et de poster des images du meeting de Rennes !</a> -->
 		</div>
+		<?php elseif($concours): ?>
+			<div id='concours' class='alert alert-success'>
+					<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+					Aucun concours n'est lancé pour le moment.
+			</div>
+		<?php elseif($evenement): ?>
+			<div id='concours' class='alert alert-success'>
+					<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+					Vous êtes sur la page de l'événement du <strong>18 Mars</strong> ! Visionnez et partagez les archives du concours #JaiBastille et des photos de la marche !
+			</div>
+		<?php elseif($tagRennes): ?>
+			<div id='concours' class='alert alert-success'>
+					<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+				Vous êtes sur la page de l'événement du meeting de Rennes. Visionnez et partagez les archives de ce meeting !
+			</div>
 
-	<?php elseif($evenement): ?>
-		<div id='concours' class='alert alert-success'>
-				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-				Vous êtes sur la page de l'événement du <strong>18 Mars</strong> ! Visionnez et partagez les archives du concours #JaiBastille et des photos de la marche !
-		</div>
-	<?php elseif($tag20mars): ?>
-		<div id='concours' class='alert alert-success'>
-				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-			Vous êtes sur la page de l'événement du débat du 20 mars. Pour ajouter une image, ajoutez le tag <strong>20mars</strong> !	
-		</div>
-
-	<?php endif ?>
-
+		<?php endif ?>
 
 	<div class="big-card-container" hidden>
 	<div class="big-card-overlay">
@@ -81,7 +85,7 @@
 
 			<br>
 			<div class="big-card-img">
-				<img alt='grande image' class='big-card-img' src="" />
+				<img alt='grande image' class='big-card-img' src="/assets/looper.gif" />
 			</div>
 			</div>
 			<div class="tags"></div>
@@ -140,6 +144,6 @@
 <?php endif ?>
 <script src="/libs/bootstrap-tagsinput.min.js" defer></script>
 <script src="/CONTROLLERS/JS/common_card.js" defer></script>
-<script src="/CONTROLLERS/JS/index.js?c=cb2" defer></script>
+<script src="/CONTROLLERS/JS/index.js?c=cb" defer></script>
 </body>
 </html>

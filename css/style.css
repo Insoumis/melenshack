@@ -454,7 +454,17 @@ CARTES
 	display: inline-block;
 
 }
-
+.change-img {
+	color: black;
+	font-size: 25px;
+	margin-bottom: 10px;
+}
+.change-img .glyphicon {
+	margin-right: 10px;
+}
+.change-img:hover {
+	text-decoration: none;
+}
 .tag-item {
 	border-radius: 5px;
 	background: #5bc0de;

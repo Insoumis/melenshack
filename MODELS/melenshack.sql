@@ -90,6 +90,7 @@ CREATE TABLE `images` (
   `id_user` int(11) NOT NULL,
   `pseudo_author` varchar(255) DEFAULT 'Inconnu',
   `date_creation` datetime NOT NULL,
+  `date_modif` datetime NOT NULL,
   `nom_original` varchar(255) DEFAULT NULL,
   `nom_hash` varchar(255) DEFAULT NULL,
   `format` varchar(10) DEFAULT NULL,

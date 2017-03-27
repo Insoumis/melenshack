@@ -64,7 +64,7 @@ if(Token::verifier(600, 'inscription'))
 					base64_encode(hash('sha384', $pass, true))
 								, PASSWORD_DEFAULT);
 			 	// Insertion du message à l'aide d'une requête préparée
-				$req = $bdd->prepare('INSERT INTO users(dateinscription) VALUES(NOW());');
+				$req = $bdd->prepare('INSERT INTO users(dateinscription) VALUES(NOW()));');
 				$req->execute();
 
 				$id = $bdd->lastInsertId();

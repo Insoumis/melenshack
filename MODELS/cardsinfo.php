@@ -77,17 +77,20 @@ function getInfo($idhash) {
 		$points = $points + intval($res['pointsTotaux']);
 	}
 
+	$cb = "";
+	if($resultat['date_creation'] != $resultat['date_modif'])
+		$cb = '?'.substr(md5($resultat['date_modif']), 0, 3);
 	if ($resultat["genre"] == "url") {
 
 		$info = array(
 			"idhash" => $id,
 			"id" => $resultat["id"],
 			"titre" => $resultat["titre"],
-			"dateCreation" => $resultat["date_creation"],
+			"dateCreation" => $resultat["date_modif"],
 			"pseudoUser" => $resultat["pseudo"],
 			"pseudoAuthor" => $resultat["pseudo_author"],
 			"idUser" => $resultat["id_user"],
-			"urlThumbnail" => "/vignettes/" . $id . '.' . $resultat["format"],
+			"urlThumbnail" => "/vignettes/" . $id . '.' . $resultat["format"].$cb,
 			"urlSource" => $resultat["url"],
 			"type" => "url",
 			"pointsTotaux" => $resultat["pointsTotaux"],
@@ -106,12 +109,12 @@ function getInfo($idhash) {
 			"idhash" => $id,
 			"id" => $resultat["id"],
 			"titre" => $resultat["titre"],
-			"dateCreation" => $resultat["date_creation"],
+			"dateCreation" => $resultat["date_modif"],
 			"pseudoUser" => $resultat["pseudo"],
 			"pseudoAuthor" => $resultat["pseudo_author"],
 			"idUser" => $resultat["id_user"],
-			"urlThumbnail" => "/vignettes/" . $id . '.' . $resultat["format"],
-			"urlSource" => "/images/" . $id . '.' . $resultat["format"],
+			"urlThumbnail" => "/vignettes/" . $id . '.' . $resultat["format"].$cb,
+			"urlSource" => "/images/" . $id . '.' . $resultat["format"].$cb,
 			"type" => $resultat["format"],
 			"pointsTotaux" => $resultat["pointsTotaux"],
 			"supprime" => $resultat["supprime"],

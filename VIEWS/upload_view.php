@@ -14,12 +14,18 @@
 			<?php if($showPage): ?>
 
 			<form class="upload" action="MODELS/upload_conf.php" autocomplete="off" method="post" enctype="multipart/form-data">
+				<?php if(!$change): ?>
 				<h1>Ajouter une image</h1>
 				<div class="sub">Pour ajouter plusieurs images, <a href="upload_masse.php">cliquez ici</a></div>
+				<?php else: ?>
+				<h1>Modifier une image</h1>
+				<?php endif ?>
 				<div class="form-group col-xs-5">
+					<?php if(!$change): ?>
 					<label for="titre">Titre de l'image (optionnel):</label>
 					<input type="text" class="form-control input-lg" name="titre" id="titre" placeholder="Titre de votre post" autofocus>
 
+					<?php endif ?>
 					<p id="formats"><small>Formats acceptés: JPG, PNG, GIF. Poids max: <?php echo $maxsize/1000000 ?> Mo</small></p>
 					<label for="file" id="drop">
 						<div>
@@ -41,7 +47,7 @@
 						<label for="url" id="urltext">ou entrez l'URL de l'image:</label>
 						<input type="url" id="url" name="url" class="form-control"/>
 					</div>
-
+					<?php if(!$change): ?>
 					<div class="tags">
 						<label for="tagsinput"><span class="glyphicon glyphicon-tags"></span>Tags (séparés par des virgules) (optionnel):</label>
 						<br>
@@ -54,6 +60,9 @@
 					<?php endif ?>
 					<!--<div class="g-recaptcha" data-sitekey="6LeKlhgUAAAAAAaxaZrJdqgzv57fCkNmX5UcXrwG" data-callback="recaptchaCallback"></div>
 					--><br>
+					<?php else: ?>
+					<input name="idhash" value='<?php echo $idhash ?>' hidden>
+					<?php endif ?>
 					<input type="hidden" name="token" id="token" value="<?php echo $token_upload?>">
 					<input type="submit" id="submit" class="btn btn-primary btn-lg" name="submit" value="Poster l'image" accept="image/*" required>
 				</div>

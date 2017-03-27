@@ -9,7 +9,7 @@ var urlBase = window.location.protocol + '//' + window.location.hostname+'/';
 
 //date actuelle
 var now = new Date();
-
+now = new Date(now.getTime() + now.getTimezoneOffset()*60*1000);
 
 //Facebook SDK pour le partage
 window.fbAsyncInit = function() {
@@ -507,7 +507,9 @@ function startEdit(card) {
 		trimValue: true
 	});
 	$("[data-toggle='tooltip']").tooltip();
-
+	
+	//change img
+	card.find(".big-card-align").append($("<a class='change-img' href='/upload.php?change="+card.attr('id')+"'><span class='glyphicon glyphicon-picture'></span>Modifier l'image</a>"));
 	//pseudo
 	if($("#grade").val() >= 5) {
 		var pseudo = card.find(".big-img-author, .temps a").html();
@@ -519,7 +521,8 @@ function validateEdit(card) {
 	card.removeClass('editing');
 
 	card.find('.big-card-edit').addClass('glyphicon-pencil').removeClass("glyphicon-ok");
-	
+	//change img
+	card.find(".change-img").remove();
 	//titre
 	var titre = card.find(".big-card-title input, .big-img-titre input").val();
 	card.find(".big-card-title, .big-img-titre").html("<a href='"+card.attr('id')+"'>"+titre+"</a>");

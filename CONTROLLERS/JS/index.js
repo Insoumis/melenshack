@@ -276,7 +276,9 @@ function addCard(c) {
 	var card = $('.template').clone();
 	card.attr('id', idhash);
 	card.data('id_user', idUser);
-	card.find('.card-img>img').attr('src', url);
+	card.find('.card-img>img').attr('src', url).on('load', function() {
+		updateMasonry();
+	});
 	card.find('.card-title').html(titre);
 	card.find('.card-author>a').html(pseudoAuthor);
 	card.find('.card-time').html(getTimeElapsed(dateCreation, true));
@@ -428,17 +430,17 @@ function addCard(c) {
 
 
 		big.find('.big-card-points').html(card.find('.card-points').html());
-		
-		
-		big.find('.big-card-img').attr('src', urlSource).on('load',
-				function() {
-					$(".big-card").css('width','30px');
+		$(".big-card").css('width','30px');
 					$(".big-card-container").css('opacity','0');
 					$(".big-card").stop(true, false).animate({'width':'100%'}, 300);
 					$('.big-card-container').show();
 					$(".big-card-container").stop(true, false).animate({'opacity':'1'}, 200, function() {
 					});
-				});
+
+		
+		big.find('.big-card-img').attr('src', urlSource).on('load',
+				function() {
+									});
 
 	});
 

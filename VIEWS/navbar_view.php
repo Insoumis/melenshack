@@ -16,14 +16,16 @@
 						<a href="/new"><div class="hidden-sm hidden-xs">Nouveauté</div><span class="glyphicon glyphicon-time visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
-					<li title="Le Meilleur" id="top" <?php if($isTopActive && $_REQUEST['tag'] != "concours"&& $_REQUEST['tag'] != "18mars") echo "class='actif'"; ?>>
+					<li title="Le Meilleur" id="top" <?php if($isTopActive && $_REQUEST['tag'] != "concours" && $_REQUEST['tag'] != "18mars" && $_REQUEST['tag'] != "rennes" && $_REQUEST['tag'] != "ressources") echo "class='actif'"; ?>>
 						<a href="/top"><div class="hidden-sm hidden-xs">Le Meilleur</div><span class="glyphicon glyphicon-heart-empty visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
 					<li id="plus" data-toggle="popover" data-html="true" title="" data-content="
 						<a href='/random'><span class='glyphicon glyphicon-random'></span>Aléatoire</a>
 						<br><br>
-						<a href='/18mars'><span class='glyphicon glyphicon-book'></span>Archives</a>
+						<a href='/archives.php'><span class='glyphicon glyphicon-book'></span>Archives</a>
+						<br><br>
+						<a href='/ressources'><span class='glyphicon glyphicon-hdd'></span>Ressources</a>
 						<br></br>
 						<a href='/apropos.php'><span class='glyphicon glyphicon-question-sign'></span>A propos</a>
 						" data-placement="bottom">

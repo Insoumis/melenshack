@@ -89,7 +89,7 @@ function createImagesVignettes($file, $id, $fromurl = false) {
     }
 	$direction = '/images/' . $id . "." . $extension_image;
 	$imagebase = __DIR__.'/..'.$direction;
-
+	unlink($direction);
 
 	if (is_uploaded_file($file['tmp_name'])) {
 		move_uploaded_file ($file['tmp_name'], $imagebase);
@@ -162,10 +162,68 @@ function createImagesVignettes($file, $id, $fromurl = false) {
 			unlink ($framegif);
 		}		
 	}
+	/*$ch = curl_init();
 
+	$creds = json_decode(file_get_contents("../../cloudflare_credentials.json"), true);
+	$headers = [ 
+	    'X-Auth-Email: '.$creds['auth_email'],
+	    'X-Auth-Key: '.$creds['auth_key'],
+	    'Content-Type: application/json'
+	];
+	curl_setopt($ch, CURLOPT_URL, "https://api.cloudflare.com/client/v4/zones/".$creds['zone']."/purge_cache");
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+	curl_setopt($ch, CURLOPT_POSTFIELDS, '{"files":["https://melenshack.fr/images/'.$id.'.'.$extension_image.'", "https://melenshack.fr/vignettes/'.$id.'.'.$extension_image.'"]}');
+	$result = curl_exec($ch);
+	curl_close($ch);*/	
+	
 	return "redirect";
 
 }
+function updateImageFromFile($img, $id_user, $grade, $id) {
+	global $bdd;
+
+	$image_type = htmlspecialchars($img["type"]);
+	if (in_array ($image_type, array("image/png", "image/jpeg","image/jpg", "image/gif"))) {
+        //Good !
+        if ($image_type =="image/png") {
+            $extension_image = "png";
+        } elseif ($image_type =="image/gif") {
+            $extension_image = "gif";
+        } elseif ($image_type =="image/jpeg" OR $image_type =="image/jpg") {
+            $extension_image = "jpg";
+        }
+    } else {
+		return ('?erreur=format');
+    }
+    if ($extension_image == "gif") {
+        if ($img['size'] > (MAX_SIZE+5000000)) { // 5 Mo en + pour les gifs
+            return ('?erreur=size');
+        }
+    } else {
+        if ($img['size'] > MAX_SIZE) {
+            return ('?erreur=size');
+        }
+    }
+
+    $req = $bdd->prepare('SELECT id_user FROM images WHERE nom_hash=:idhash');
+    $req->execute([
+	':idhash' => $id,
+    ]);
+    $res = $req->fetch();
+    if(!$grade && (!$res || $res['id_user'] != $id_user))
+   	return('?erreur=notfound');
+ 
+    $req = $bdd->prepare ('UPDATE images SET format=:format, genre=:genre, date_modif=NOW() WHERE nom_hash=:idhash');
+    $req->execute ([
+        ':genre' => "image",
+        ':format' => $extension_image,
+        ':idhash' => $id,
+    ]);
+
+    return $id;
+}
+
 
 function insertImageFromFile($img, $id_user, $titre, $tagsstr, $pseudo) {
 	global $bdd;
@@ -193,7 +251,7 @@ function insertImageFromFile($img, $id_user, $titre, $tagsstr, $pseudo) {
         }
     }
 
-    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, pseudo_author, format, genre, tags, date_creation) VALUES(:titre, :id_user, :pseudo_author, :format, :genre, :tags, NOW())');
+    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, pseudo_author, format, genre, tags, date_creation, date_modif) VALUES(:titre, :id_user, :pseudo_author, :format, :genre, :tags, NOW(), NOW())');
     $req->execute ([
         ':titre' => htmlspecialchars ($titre),
         ':id_user' => $id_user,
@@ -214,7 +272,6 @@ function insertImageFromFile($img, $id_user, $titre, $tagsstr, $pseudo) {
 
 	return $id;
 }
-
 function insertImageFromUrl($url, $id_user, $titre, $tagsstr, $pseudo) {
 	global $bdd;
 
@@ -241,7 +298,7 @@ function insertImageFromUrl($url, $id_user, $titre, $tagsstr, $pseudo) {
     }
 
 
-    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, pseudo_author, url, genre, tags, date_creation) VALUES(:titre, :id_user, :pseudo_author, :url, :genre, :tags, NOW())');
+    $req = $bdd->prepare ('INSERT INTO images(titre, id_user, pseudo_author, url, genre, tags, date_creation, date_modif) VALUES(:titre, :id_user, :pseudo_author, :url, :genre, :tags, NOW(), NOW())');
     $req->execute ([
         ':titre' => htmlspecialchars ($titre),
         ':id_user' => $id_user,
@@ -261,4 +318,47 @@ function insertImageFromUrl($url, $id_user, $titre, $tagsstr, $pseudo) {
     ]);
 
 	return $id;
+}
+function updateImageFromUrl($url, $id_user, $grade, $id) {
+	global $bdd;
+
+	$a = retrieve_remote_file_size ($url); // Vérification de la taille de l'image
+    if ($a > MAX_SIZE) {
+        return ('?erreur=size');
+    }
+
+    if(strlen($url) >= 250) {
+        return ("?erreur=url");
+    }
+
+    addToFiles ('file', $url);
+
+    $req = $bdd->prepare ('SELECT id FROM images WHERE url = :url AND supprime = :supprime');
+    $req->execute ([
+        ':url' => $url,
+        ':supprime' => 0,
+    ]);
+    $resultat = $req->fetch ();
+
+    if ($resultat) {
+        return ('?erreur=existe'); // Image existe déja.
+    }
+
+    $req = $bdd->prepare('SELECT id_user FROM images WHERE nom_hash=:idhash');
+    $req->execute([
+	':idhash' => $id,
+    ]);
+    $res = $req->fetch();
+    if(!$grade && (!$res || $res['id_user'] != $id_user))
+   	return('?erreur=notfound');
+ 
+
+    $req = $bdd->prepare ('UPDATE images SET url=:url, genre=:genre, date_modif=NOW() WHERE nom_hash=:idhash');
+    $req->execute ([
+        ':url' => $url,
+        ':genre' => "url",
+	':idhash' => $id,
+    ]);
+
+    return $id;
 }

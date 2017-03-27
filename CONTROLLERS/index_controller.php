@@ -29,3 +29,6 @@ if($_REQUEST['tag'] == '18mars')
 $tag20mars = false;
 if($_REQUEST['tag'] == '20mars')
 	$tag20mars=true;
+$tagRennes = false;
+if($_REQUEST['tag'] == 'rennes')
+	$tagRennes=true;

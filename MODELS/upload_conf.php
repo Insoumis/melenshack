@@ -107,7 +107,7 @@ if (!empty($_POST['tags'])) {
     $tagsstr = "";
     foreach ($_POST['tags'] as $id => $tag) {
 	if ($id == 0) {
-            $tagsstr = htmlspecialchars ($tag);
+            $tagsstr = $tagsstr . htmlspecialchars ($tag);
         } else
             $tagsstr = $tagsstr . ',' . htmlspecialchars ($tag);
         $nb_id = $id;
@@ -122,7 +122,12 @@ if (!empty($_POST['tags'])) {
 }
 if (!empty($_POST['url'])) {
     $url = htmlspecialchars ($_POST['url']);
-    $res = insertImageFromUrl($url, $id_user, $titre, $tagsstr,$pseudo);
+    
+    if(empty($_POST['idhash']))
+    	$res = insertImageFromUrl($url, $id_user, $titre, $tagsstr,$pseudo);
+    else
+    	$res = updateImageFromUrl($url, $id_user, ($grade>=5), $_POST['idhash']);
+	
     if(strpos($res, '?erreur=') !== false) {
         header("Location:../upload.php$res");
         exit();
@@ -137,7 +142,10 @@ if (!empty($_POST['url'])) {
         header ('Location:../upload.php?erreur=image'); //pas d'image
         exit();
     }
-    $res = insertImageFromFile($_FILES['file'], $id_user, $titre, $tagsstr, $pseudo);
+    if(empty($_POST['idhash']))
+    	$res = insertImageFromFile($_FILES['file'], $id_user, $titre, $tagsstr, $pseudo);
+    else
+    	$res = updateImageFromFile($_FILES['file'], $id_user, ($grade>=5), $_POST['idhash']);
     if(strpos($res, '?erreur=') !== false) {
         header("Location:../upload.php$res");
         exit();
