@@ -1,6 +1,7 @@
 <?php
 
-require 'MODELS/cardsinfo.php';
+require_once 'MODELS/cardsinfo.php';
+require_once 'MODELS/check_grade.php';
 
 $showBan = false;
 if(isset($grade) && $grade >= 5)

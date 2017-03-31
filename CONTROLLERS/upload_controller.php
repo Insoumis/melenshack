@@ -60,3 +60,8 @@ if(!empty($_GET['change'])) {
 	$change = true;
 	$idhash = $_GET['change'];
 }
+
+$tag = "";
+if(!empty($_GET['tag'])) {
+	$tag = $_GET['tag'];
+}

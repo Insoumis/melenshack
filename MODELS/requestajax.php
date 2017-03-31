@@ -79,7 +79,7 @@ if ($sort == "top") {
 				OR (:hidden=1 AND tags RLIKE :tagsr))
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1))
-	ORDER BY date_creation DESC LIMIT :startIndex , :size" );
+	ORDER BY date_modif DESC LIMIT :startIndex , :size" );
 	
 	$req->bindParam(':startIndex', $startIndex, PDO::PARAM_INT);
 	$req->bindParam(':size', $size, PDO::PARAM_INT);
@@ -165,7 +165,7 @@ if ($sort == "top") {
 			AND tags RLIKE :tagsr
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1))
-	ORDER BY date_creation DESC LIMIT :startIndex , :size" );
+	ORDER BY date_modif DESC LIMIT :startIndex , :size" );
 	
 	$req->bindParam(':startIndex', $startIndex, PDO::PARAM_INT);
 	$req->bindParam(':size', $size, PDO::PARAM_INT);
@@ -199,7 +199,7 @@ elseif ($sort == "hot") {
 			AND users.id NOT IN
 				(SELECT id_user FROM ban WHERE 1))
 	ORDER BY LOG10(ABS(nb_vote_positif - nb_vote_negatif) + 1) * SIGN(nb_vote_positif - nb_vote_negatif)
-    + (UNIX_TIMESTAMP(date_creation) / 300000) + :coefredressement DESC LIMIT :startIndex, :size" );
+    + (UNIX_TIMESTAMP(date_modif) / 300000) + :coefredressement DESC LIMIT :startIndex, :size" );
 
 	$req->bindParam(':startIndex', $startIndex, PDO::PARAM_INT);
 	$req->bindParam(':size', $size, PDO::PARAM_INT);

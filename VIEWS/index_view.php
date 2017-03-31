@@ -15,13 +15,12 @@
 	<?php if(!$concours && !$tagRennes && !$evenement): ?>
 	<div id='concours' class='alert alert-info'>
 				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-			<a href="https://www.facebook.com/Melenshack/" target="_blank"><strong>Nouveau !</strong> Le MélenShack a maintenant sa page Facebook ! Venez la voir et la liker !</a> 
-		<!--<a href="https://melenshack.fr/rennes" ><strong>En direct !</strong> Vous avez la possibilité de voir et de poster des images du meeting de Rennes !</a> -->
-		</div>
+			<strong>Inédit ! </strong>Retrouvez le Mélenshack sur les réseaux sociaux ! <a href="https://www.twitter.com/Melenshack/" target="_blank"><strong>Twitter</strong></a> et <a href="https://www.facebook.com/Melenshack/" target="_blank"><strong>Facebook</strong></a> !
+	</div>
 		<?php elseif($concours): ?>
 			<div id='concours' class='alert alert-success'>
 					<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-					Aucun concours n'est lancé pour le moment.
+				Vous êtes sur la page du concours. Pour participer, <a href="/upload.php?tag=concours">ajoutez une image</a> !
 			</div>
 		<?php elseif($evenement): ?>
 			<div id='concours' class='alert alert-success'>

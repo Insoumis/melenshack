@@ -51,7 +51,11 @@
 					<div class="tags">
 						<label for="tagsinput"><span class="glyphicon glyphicon-tags"></span>Tags (séparés par des virgules) (optionnel):</label>
 						<br>
-						<select multiple name="tags[]" id="tagsinput" type="text" data-role="tagsinput"></select>
+						<select multiple name="tags[]" id="tagsinput" type="text" data-role="tagsinput" >
+	<?php if($tag): ?>
+	<option selected value='<?php echo $tag ?>'><?php echo $tag ?></option>
+	<?php endif ?>
+	</select>
 					</div>
 					<?php if($showPseudo): ?>
 						<br><label for="pseudo">Pseudo du créateur (optionnel): </label>

@@ -46,7 +46,16 @@
 				<p>Nombre d'utilisateurs réseaux sociaux : <?php echo $nbfederated ?></p>
 				<p>Nombre de posts : <?php echo $nbposts ?></p>
 			<?php if(!empty($listuser)): ?>
-				<h3>Liste des utilisateurs gradés</h3>
+				<h3>10 derniers inscrits</h3>
+				<center>
+				<table class="table-bordered table-hover" id="tableuser">
+					<tr>
+						<th> Pseudo </th>
+					</tr>
+					<?php echo $last; ?>
+				</table>
+				</center><br><br>
+<h3>Liste des utilisateurs gradés</h3>
 				<center>
 				<table class="table-bordered table-hover" id="tableuser">
 					<tr>

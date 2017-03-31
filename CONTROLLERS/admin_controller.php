@@ -40,6 +40,14 @@ while($res = $req->fetch()) {
     $listuser = $listuser . "<tr> <td> " . $pseudo . " </td><td> " .  $gradeUser . " </td></tr> ";
 }
 
+$last = "";
+$req = $bdd->prepare ('SELECT * FROM users WHERE 1 ORDER BY dateinscription DESC LIMIT 10');
+$req->execute();
+while($res = $req->fetch()) {
+    $pseudo = $res["pseudo"];
+    $last = $last. "<tr> <td> " . $pseudo . " </td></tr> ";
+}
+
 $req = $bdd->prepare ('SELECT count(*) FROM users WHERE 1');
 $req->execute ();
 $res = $req->fetch();

@@ -26,6 +26,7 @@ if(Token::verifier(600, 'inscription'))
   	$captcha = $_POST['g-recaptcha-response'];
 	if (!$captcha) {
     	header ('Location:../register.php?erreur=captcha');
+		//echo 'captcha1';
     	exit();
 	}
 	
@@ -34,6 +35,7 @@ if(Token::verifier(600, 'inscription'))
 	$decoded_response = json_decode ($response);
 	if ($decoded_response->success == false) {
     	header ('Location:../register.php?erreur=captcha');
+		//echo 'captcha2';
     	exit();
 	}
 
@@ -64,7 +66,7 @@ if(Token::verifier(600, 'inscription'))
 					base64_encode(hash('sha384', $pass, true))
 								, PASSWORD_DEFAULT);
 			 	// Insertion du message à l'aide d'une requête préparée
-				$req = $bdd->prepare('INSERT INTO users(dateinscription) VALUES(NOW()));');
+				$req = $bdd->prepare('INSERT INTO users(dateinscription) VALUES(NOW());');
 				$req->execute();
 
 				$id = $bdd->lastInsertId();
@@ -118,29 +120,34 @@ if(Token::verifier(600, 'inscription'))
 			{
 			   // Doublon Pseudo ou email
 			  header('Location:../register.php?erreur=doublon');
+				//echo 'Doublon';
 			}
 		}
 		else 
 		{
 		  // Mauvais Mot de passe 
 		  header('Location:../register.php?erreur=pass');
+			//echo 'pass';
 		}
 	}
 	else 
 	{
 	   // Mauvais email
 	   header('Location:../register.php?erreur=email');
+		//echo 'email';
 	}
   } 
   else 
   {
  // Mauvais Mot de passe ou Login
 	header('Location:../register.php?erreur=loginmdp');
+	  //echo 'loginmdp';
   }
 }
 else 
 {
     //Mauvais Token
 	header('Location:../register.php?erreur=token');
+	//echo 'token';
 }
 ?>

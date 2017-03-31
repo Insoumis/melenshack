@@ -488,13 +488,13 @@ function addCard(c) {
 	card.addClass('card');
 	card.removeClass('template');
 	if(url) {
-		var e = url.split('.').pop();
+		var e = (url.split('?')[0]).split('.').pop();
 		if(e == 'gif')
 			card.find('.gif-overlay').show();
 	}
 	//HOVER IMG
 	card.mouseenter(function(e) {
-		var ext = url.split('.').pop();
+		var ext = (url.split('?')[0]).split('.').pop();
 		if(ext == 'gif' && !card.hasClass("opened") && !card.hasClass("playing")) {
 			card.find('.gif-overlay').hide();
 			var bigImg = $('<img/>');
@@ -508,7 +508,7 @@ function addCard(c) {
 	});
 
 	card.mouseleave(function(e) {
-		var ext = url.split('.').pop();
+		var ext = (url.split('?')[0]).split('.').pop();
 		if(ext == 'gif' && !card.hasClass("opened") && card.hasClass("playing")) {
 			card.find('.gif-overlay').show();
 			card.removeClass('playing');
