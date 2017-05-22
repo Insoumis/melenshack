@@ -73,3 +73,6 @@ $req->execute ([
 	':idhash' => $_POST['idhash'],
 	':sup' => $val
 ]);
+
+
+file_put_contents('/var/www/html/log', $_SESSION['pseudo'].' a supprime ('.$val.') l image '.$_POST['idhash']."\n",FILE_APPEND);

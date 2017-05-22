@@ -43,7 +43,7 @@
 
 				<h3>Stats</h3>
 				<p>Nombre d'utilisateurs totaux : <?php echo $nbuser ?></p>
-				<p>Nombre d'utilisateurs réseaux sociaux : <?php echo $nbfederated ?></p>
+				<p>Dont réseaux sociaux : <?php echo $nbfederated ?></p>
 				<p>Nombre de posts : <?php echo $nbposts ?></p>
 			<?php if(!empty($listuser)): ?>
 				<h3>10 derniers inscrits</h3>

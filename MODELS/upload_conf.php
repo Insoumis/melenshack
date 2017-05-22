@@ -30,6 +30,13 @@ if((Token::verifier(3600, 'upload')) == false) {
     header ('Location:../upload.php?erreur=token');
     exit();
 }
+
+$mode_maintenance = false;
+if ($mode_maintenance == true) {
+    header ('Location:../upload.php?erreur=maintenance');
+    exit();
+}
+
 /*
 $referer = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
 $domaine= parse_url(SITE_DOMAINE, PHP_URL_HOST);
@@ -106,6 +113,11 @@ if (!empty($_POST['tags'])) {
     $nb_id = 0;
     $tagsstr = "";
     foreach ($_POST['tags'] as $id => $tag) {
+	if($tag == "culture_insoumise" && ($grade < 5 && $pseudo != "Yourigan")) {
+		header ('Location:../upload.php?erreur=grade');
+        	exit();
+	} //projet culture insoumise de Yourigan, contacter Entropy pour infos
+	
 	if ($id == 0) {
             $tagsstr = $tagsstr . htmlspecialchars ($tag);
         } else

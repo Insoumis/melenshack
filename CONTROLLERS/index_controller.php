@@ -26,9 +26,24 @@ if($_REQUEST['tag'] == 'concours')
 $evenement = false;
 if($_REQUEST['tag'] == '18mars')
 	$evenement = true;
+
 $tag20mars = false;
 if($_REQUEST['tag'] == '20mars')
 	$tag20mars=true;
+
 $tagRennes = false;
 if($_REQUEST['tag'] == 'rennes')
 	$tagRennes=true;
+
+$tagMelenphone = false;
+if($_REQUEST['tag'] == 'melenphone')
+	$tagMelenphone = true;
+
+$tagCulture = false;
+if($_REQUEST['tag'] == 'culture_insoumise')
+	$tagCulture = true;
+
+
+$tagLegislatives = false;
+if($_REQUEST['tag'] == 'visuel_legislatives')
+	$tagLegislatives = true;

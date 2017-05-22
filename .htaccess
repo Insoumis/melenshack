@@ -1,6 +1,6 @@
 
-
 RewriteEngine on
+RewriteRule "^$" "top" [PT]
 RewriteRule "^hot$" "index\.php\?sort=hot" [PT]
 RewriteRule "^new$" "index\.php\?sort=new" [PT]
 RewriteRule "^top$" "index\.php\?sort=top" [PT]
@@ -8,11 +8,16 @@ RewriteRule "^random$" "index.php?sort=random" [PT]
 RewriteRule "^admin$" "admin.php" [PT]
 RewriteRule "^upload$" "upload.php" [PT]
 RewriteRule "^mass$" "upload_masse.php" [PT]
+RewriteRule "^mentions-legales$" "mentions-legales.php" [PT]
 RewriteRule "^42$" "42" [PT]
 RewriteRule "^concours$" "index.php?sort=top&tag=concours" [PT]
 RewriteRule "^18mars$" "index.php?sort=top&tag=18mars" [PT]
 RewriteRule "^ressources$" "index.php?sort=top&tag=ressources" [PT]
 RewriteRule "^rennes$" "index.php?sort=top&tag=rennes" [PT]
+RewriteRule "^logo_discord$" "index.php?sort=top&tag=logo_discord" [PT]
+RewriteRule "^melenphone$" "index.php?sort=hot&tag=melenphone" [PT]
+RewriteRule "^culture$" "index.php?sort=hot&tag=culture_insoumise" [PT]
+RewriteRule "^legislatives$" "index.php?sort=hot&tag=visuel_legislatives" [PT]
 
 RewriteRule "^([a-zA-Z0-9-_]+)$" "/view.php?id=$1" [PT]
 

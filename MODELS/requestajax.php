@@ -37,7 +37,7 @@ if(!empty($_REQUEST['tag'])) {
 $json = array();
 
 //tags caches
-$hiddenstr = '.*(concours|18mars|ressources|Rennes).*';
+$hiddenstr = '.*(concours|18mars|ressources|Rennes|logo_discord|melenphone|culture_insoumise|visuel_legislatives).*';
 
 if ($sort == "top") {
 

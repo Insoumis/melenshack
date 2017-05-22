@@ -8,7 +8,7 @@
 	
 			<div id="navbar" class="flexnav">
 				<ul class="nav navbar-nav">
-					<li title="Populaire" id="hot" <?php if($isHotActive && $_REQUEST['tag'] != "20mars") echo "class='actif'"; ?>>
+					<li title="Populaire" id="hot" <?php if($isHotActive && $_REQUEST['tag'] != "visuel_legislatives" && $_REQUEST['tag'] != "20mars" && $_REQUEST['tag'] != "culture_insoumise") echo "class='actif'"; ?>>
 						<a href="/hot"><div class="hidden-sm hidden-xs">Populaire</div><span class="glyphicon glyphicon-fire visible-sm visible-xs icon"></span></a>
 					</li>
 					<li class="vdivide"></li>
@@ -28,6 +28,8 @@
 						<a href='/ressources'><span class='glyphicon glyphicon-hdd'></span>Ressources</a>
 						<br></br>
 						<a href='/apropos.php'><span class='glyphicon glyphicon-question-sign'></span>A propos</a>
+						<br></br>
+						<a href='/mentions-legales'><span class='glyphicon glyphicon-question-sign'></span>Mentions Légales</a>
 						" data-placement="bottom">
 
 

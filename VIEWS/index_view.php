@@ -12,26 +12,48 @@
 	<!-- container principal -->
 	<?php if($showPage): ?>
 	<div id='main_page'>
-	<?php if(!$concours && !$tagRennes && !$evenement): ?>
-	<div id='concours' class='alert alert-info'>
+	<?php if(!$tagLegislatives && !$tagCulture && !$concours && !$tagRennes && !$tagMelenphone && !$evenement): ?>
+		<div id='concours' class='alert alert-info'>
 				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-			<strong>Inédit ! </strong>Retrouvez le Mélenshack sur les réseaux sociaux ! <a href="https://www.twitter.com/Melenshack/" target="_blank"><strong>Twitter</strong></a> et <a href="https://www.facebook.com/Melenshack/" target="_blank"><strong>Facebook</strong></a> !
-	</div>
+			    N'oubliez pas de suivre notre <a href="https://www.facebook.com/Melenshack" target="_blank"><strong>Facebook</strong></a> et notre <a href="https://www.twitter.com/Melenshack" target="_blank"><strong>Twitter</strong></a> !
+		</div>
 		<?php elseif($concours): ?>
-			<div id='concours' class='alert alert-success'>
+			<!--<div id='concours' class='alert alert-success'>
 					<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-				Vous êtes sur la page du concours. Pour participer, <a href="/upload.php?tag=concours">ajoutez une image</a> !
-			</div>
+			
+			</div>-->
 		<?php elseif($evenement): ?>
 			<div id='concours' class='alert alert-success'>
 					<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
 					Vous êtes sur la page de l'événement du <strong>18 Mars</strong> ! Visionnez et partagez les archives du concours #JaiBastille et des photos de la marche !
 			</div>
-		<?php elseif($tagRennes): ?>
+		<?php elseif($tagMelenphone): ?>
 			<div id='concours' class='alert alert-success'>
-					<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
-				Vous êtes sur la page de l'événement du meeting de Rennes. Visionnez et partagez les archives de ce meeting !
+				<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+				Vous êtes sur la page de l'événement 50.000 appels du <strong><a href="https://melenphone.fr/ng/">Melenphone</a></strong> ce jeudi 20 avril. Partagez ces visuels ou concevez vous même vos visuels à propos de cet événement !
 			</div>
+
+		<?php elseif($tagRennes): ?>
+		<div id='concours' class='alert alert-success'>
+			<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+			Vous êtes sur la page de l'événement du meeting de Rennes. Visionnez et partagez les archives de ce meeting !
+		</div>
+
+		<?php elseif($tagCulture): ?>
+		<div id='concours' class='alert alert-success'>
+			<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+			Vous êtes sur la page de l'émission CULTURE INSOUMISE de la WebRadio du Discord Insoumis.<br> Votez pour les &oelig;uvres culturelles que vous trouvez les plus intéressantes et que vous souhaitez promouvoir !	
+
+
+		</div>
+
+		<?php elseif($tagLegislatives): ?>
+		<div id='concours' class='alert alert-success'>
+			<a href="#" class="close" data-dismiss="alert" aria-label="fermer">×</a>
+			Vous êtes sur la page regroupant tous les visuels concernant les législatives ! Pour poster votre visuel, <a href='upload.php?tag=visuel_legislatives'>cliquez ici !</a><br>(Assurez-vous d'ajouter le tag <strong>visuel_legislatives</strong>)
+
+
+		</div>
 
 		<?php endif ?>
 
@@ -143,6 +165,6 @@
 <?php endif ?>
 <script src="/libs/bootstrap-tagsinput.min.js" defer></script>
 <script src="/CONTROLLERS/JS/common_card.js" defer></script>
-<script src="/CONTROLLERS/JS/index.js?c=cb" defer></script>
+<script src="/CONTROLLERS/JS/index.js?c=cb2" defer></script>
 </body>
 </html>

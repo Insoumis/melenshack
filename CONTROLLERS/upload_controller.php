@@ -34,6 +34,8 @@ if(isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 			$errmsg = "Erreur de tags!";
 		else if ($erreur == "url")
 			$errmsg = "URL trop longue !";
+		else if ($erreur == "maintenance")
+			$errmsg = "Une maintenance est en cours. Veuillez réessayer plus tard.";
 		else if ($erreur == "grade")
 			$errmsg = "Vous n'êtes pas assez gradé pour pouvoir ajouter une image ! Communiquez votre pseudo <strong>$_SESSION[pseudo]</strong> sur <a href='http://discord.insoumis.online/'>le Discord de la France Insoumise</a> pour obtenir les droits (demandez <strong>@Entropy</strong>, <strong>@Maxgoods</strong> et <strong>@Miidnight</strong>).";
 		else if ($erreur == "pseudo")
@@ -64,4 +66,9 @@ if(!empty($_GET['change'])) {
 $tag = "";
 if(!empty($_GET['tag'])) {
 	$tag = $_GET['tag'];
+}
+
+$mode_maintenance = false;
+if ($mode_maintenance == true) {
+	$showPage = false;
 }

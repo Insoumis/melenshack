@@ -11,6 +11,14 @@
 				<?php echo $errmsg ?>
 			</div>
 			<?php endif ?>
+			<?php if($mode_maintenance): ?>
+				<div class="form-group col-xs-6">
+					<br></br> <br></br>
+					<p>Vous ne pouvez pas ajouter d'images !</p>
+					<p>En effet, il est interdit de publier du contenu vis à vis de la campagne électorale après Vendredi 21 Avril 2017 à 23H59. (Heure de Paris)</p>
+					<p>Nous voulons respecter cette règle, c'est pourquoi aucun contenu ne sera publié sur Melenshack après Vendredi 21 Avril 2017 à 23H59 jusqu'à la fermeture des derniers bureaux de vote.(Dimanche 23 Avril 2017 à 20H00) </p>
+				</div>
+			<?php endif ?>
 			<?php if($showPage): ?>
 
 			<form class="upload" action="MODELS/upload_masse_conf.php" autocomplete="off" method="post" enctype="multipart/form-data">

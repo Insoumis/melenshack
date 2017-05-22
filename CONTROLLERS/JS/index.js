@@ -437,7 +437,7 @@ function addCard(c) {
 					$(".big-card-container").stop(true, false).animate({'opacity':'1'}, 200, function() {
 					});
 
-		
+		big.find(".big-card-img").attr('src', '/assets/looper.gif');	
 		big.find('.big-card-img').attr('src', urlSource).on('load',
 				function() {
 									});
@@ -489,8 +489,9 @@ function addCard(c) {
 	card.removeClass('template');
 	if(url) {
 		var e = (url.split('?')[0]).split('.').pop();
-		if(e == 'gif')
+		if(e == 'gif') {
 			card.find('.gif-overlay').show();
+		}
 	}
 	//HOVER IMG
 	card.mouseenter(function(e) {

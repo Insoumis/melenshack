@@ -53,3 +53,8 @@ if(isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 $showPseudo = false;
 if($grade >= 5)
 	$showPseudo = true;
+
+$mode_maintenance = false;
+if ($mode_maintenance == true) {
+	$showPage = false;
+}

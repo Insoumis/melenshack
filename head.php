@@ -7,7 +7,8 @@
 	<meta property="fb:app_id"              content="1849815745277262" >
 
 	<?php if(!isset($urlSource)): ?>
-	<meta property="og:title"              content="Mélenshack">
+	<meta property="og:title"              content=<?php if(!empty($titre)) echo '"'.htmlspecialchars($titre).' | Melenshack'.'"';
+													else echo "Mélenshack" ?> >
 
 	<meta property="og:type"               content="website" >
 	<meta property="og:image"              content=<?php echo "'$protocol$_SERVER[HTTP_HOST]"."/assets/melenshack.png'" ?> >
@@ -17,8 +18,8 @@
 	<?php elseif(!$supprime): ?>
 	<meta name="twitter:card" content="summary_large_image">
 	<meta property="og:type"               content="article" >
-	<meta property="og:title"              content=<?php if(!empty($titre)) echo '"'.htmlspecialchars($titre).'"';
-															else echo "'Mélenshack'" ?> >
+	<meta property="og:title"              content=<?php if(!empty($titre)) echo '"'.htmlspecialchars($titre).' | Melenshack'.'"';
+															else echo "Mélenshack" ?> >
 		<?php if(strpos($urlSource, 'http') !== false): ?>
 			<meta property="og:image"              content=<?php  if(isset($urlSource)) echo "'$urlSource'" ?> >
 		<?php else: ?>
@@ -29,8 +30,8 @@
 	<?php endif ?>
 
 	<meta charset="utf-8">
-	<meta name="description" content="La banque d'images de la France Insoumise">
-	<title>Mélenshack</title>
+	<meta name="description" content="La banque d'images de la France Insoumise et de son candidat, Jean-Luc Mélenchon">
+	<title><?php if(!empty($titre)) echo htmlspecialchars($titre). ' | Melenshack'; else echo "Mélenshack" ?></title>
 	<link rel="icon" type="image/png" href="/assets/melenshack_small.png">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
@@ -41,9 +42,9 @@
 	<script src="/libs/jquery.min.js"></script>
 	<script src="/libs/jquery-ui.min.js"></script><!-- ATTENTION : JQUERY UI AVANT BOOTSTRAP SINON PB TOOLTIP -->
 	<script src="/libs/bootstrap.min.js"></script>
-	<script src="/libs/clipboard.min.js" defer async></script>
+	<script src="/libs/clipboard.min.js"></script>
 	<script src="/libs/masonry.pkgd.min.js"></script>
-	<script src="/libs/imagesloaded.pkgd.min.js" defer async></script>
+	<script src="/libs/imagesloaded.pkgd.min.js"></script>
 
 
 	

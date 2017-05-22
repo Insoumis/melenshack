@@ -85,4 +85,6 @@ $req->execute ([
 ]);
 
 
+file_put_contents('/var/www/html/log', $_SESSION['pseudo'].' a promote '.$_POST['pseudo'].' au rang '.$val."\n", FILE_APPEND);
+
 header('Location:../admin.php');

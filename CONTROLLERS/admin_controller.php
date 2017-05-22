@@ -30,10 +30,8 @@ if (isset($_GET['erreur']) && !empty($_GET['erreur'])) {
 }
 
 $listuser = "";
-$req = $bdd->prepare ('SELECT * FROM users WHERE grade <> :grade ');
-$req->execute ([
-    ':grade' => 0,
-]);
+$req = $bdd->prepare ('SELECT * FROM users WHERE grade > 0 ORDER BY dateinscription DESC ');
+$req->execute ();
 while($res = $req->fetch()) {
     $pseudo = $res["pseudo"];
     $gradeUser = $res["grade"];

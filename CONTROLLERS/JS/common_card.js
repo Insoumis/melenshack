@@ -9,7 +9,7 @@ var urlBase = window.location.protocol + '//' + window.location.hostname+'/';
 
 //date actuelle
 var now = new Date();
-now = new Date(now.getTime() + now.getTimezoneOffset()*60*1000);
+//now = new Date(now.getTime() + now.getTimezoneOffset()*60*1000);
 
 //Facebook SDK pour le partage
 window.fbAsyncInit = function() {

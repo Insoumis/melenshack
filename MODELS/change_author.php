@@ -20,6 +20,12 @@ if($grade < 5) {
 	echo "Pas assez gradé";
 	exit();
 }
+
+$mode_maintenance = false;
+if ($mode_maintenance == true) {
+	echo "Interdit de modifier pendant le période electorale !";
+	exit();
+}
 /*
 $referer = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
 $domaine= parse_url(SITE_DOMAINE, PHP_URL_HOST);
